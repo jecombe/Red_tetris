@@ -1,6 +1,2 @@
-*~
-*.swp
-*.swo
-log
-tmp
 node_modules
+package-lock.json

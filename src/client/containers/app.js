@@ -1,18 +1,16 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React from 'react';
+import { connect } from 'react-redux';
+import Tetris from '../components/Tetris';
 
-
-const App = ({message}) => {
+function App() {
   return (
-    <span>{message}</span>
-  )
+    <div className="App">
+      <Tetris />
+    </div>
+  );
 }
+const mapStateToProps = (state) => ({
+  message: state.message,
+});
 
-const mapStateToProps = (state) => {
-  return {
-    message: state.message
-  }
-}
-export default connect(mapStateToProps, null)(App)
-
-
+export default connect(mapStateToProps, null)(App);

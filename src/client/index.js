@@ -5,36 +5,31 @@ import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import createSocketIoMiddleware from 'redux-socket.io';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-import { storeStateMiddleWare } from './middleware/storeStateMiddleWare';
+import io from 'socket.io-client';
 import reducer from './reducers';
 import App from './containers/app';
 import { alert } from './actions/alert';
+import { HashRouter } from 'react-router-dom';
+import rootReducer from './rootReducer';
 
-const initialState = {};
+const socket = io('http://localhost:3011');
+const socketIoMiddleware = createSocketIoMiddleware(socket, 'server/');
 
 const store = createStore(
-  reducer,
-  initialState,
-  applyMiddleware(thunk, createLogger()),
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk, socketIoMiddleware))
 );
 
+
+
 ReactDom.render((
+<HashRouter hashType={'noslash'}>
   <Provider store={store}>
     <App />
   </Provider>
+  </HashRouter>
 ), document.getElementById('app'));
 
-store.dispatch(alert('Soon, will be here a fantastic Tetris ...'));
-
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-
-// const title = 'My Simple Express React Webpack Babel Setup Environment';
-
-// ReactDOM.render(
-//   <div>{title}</div>,
-//   document.getElementById('app')
-// );
-
-// module.hot.accept();

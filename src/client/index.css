@@ -1,7 +1,6 @@
 body {
   margin: 0;
-  background-image: url('./img/space.jpg');
-
+  /* background-image: url('./img/space.jpg'); */
 }
 
 @font-face {

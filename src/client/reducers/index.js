@@ -1,3 +1,13 @@
-import alert from './alert';
+import { combineReducers } from 'redux';
 
-export default alert;
+import alert from './alert';
+import game from './game';
+import user from './user';
+
+const rootReducer = combineReducers({
+  alert,
+  game,
+  user
+});
+
+export default rootReducer;

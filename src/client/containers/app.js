@@ -1,18 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Connexion from '../components/Connexion';
-import { Route, Switch } from 'react-router-dom'
-import Tetris from '../components/Tetris';
+import { Route } from 'react-router-dom'
+
+import Login from './login';
+import Game from './game';
 
 function App() {
-
-
   return (
     <div className="App">
-
-    <Route exact path="/" component={Connexion} />
-    <Route exact path="/:room[:playerName]" component={Tetris} />
-
+      <Route exact path="/" component={Login} />
+      <Route exact path="/:room[:playerName]" component={Game} />
     </div>
   );
 }

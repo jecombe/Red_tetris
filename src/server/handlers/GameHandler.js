@@ -1,17 +1,4 @@
-import Player from './models/Player'
-import Game from './models/Game'
-
-export const loginUser = (socket, infoUser, userList, roomList) => {
-    let log = {
-        login: null
-    }
-
-    let newPlayer = new Player(socket.id, infoUser.username)
-    newPlayer.setStage();
-    userList.push(newPlayer)
-    log.login = infoUser.username
-    return log
-}
+import Game from '../models/Game';
 
 const create = (roomName, username, userList) => {
 
@@ -169,12 +156,10 @@ const isEmpty = onlineGame => {
 }
 
 const freeGame = (onlineGame, roomActual) => {
-
     let indexGame = calcIndexRoom(onlineGame, roomActual)
     onlineGame.splice(indexGame, 1)
-
-
 }
+
 export const freeUserInGame = (idSocket, onlineGame, userList) => {
 
     let login = searchUserInList(idSocket, userList)
@@ -192,4 +177,3 @@ export const freeUserInGame = (idSocket, onlineGame, userList) => {
 export const startGame = (game) => {
 
 }
-

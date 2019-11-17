@@ -1,4 +1,4 @@
-import { APPEND_MESSAGE, JUST_JOINED } from '../actions';
+import { JUST_JOINED } from '../actions';
 
 const initialState = {
     joined:null,
@@ -10,14 +10,9 @@ const initialState = {
 };
 
 const userReducer = (state = initialState, action) => {
+    console.log({action});
+
     switch(action.type) {
-       case APPEND_MESSAGE:
-         const temp = [...state.messages,action.payload];
-            return {
-                ...state,
-                messages:temp,
-            };
-    
         case JUST_JOINED:
             return {
                 ...state,

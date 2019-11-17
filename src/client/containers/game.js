@@ -5,8 +5,8 @@ import { store } from '../store';
 
 import { justJoined, appendMessage } from '../actions';
 
-import GameStatus from '../components/gameStatus/gameStatus';
-import GameBoard from '../components/gameBoard/gameBoard';
+import GameStatus from '../components/gameStatus';
+import GameBoard from '../components/gameBoard';
 
 const Game = (props, test) => {
 	const [handle, setHandle] = useState('');

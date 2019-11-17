@@ -1,5 +1,4 @@
 import React from 'react';
-import style from './loginRooms.css';
 
 const getMappedData = (dataProp, dataRoom) => {
      console.log("data room =>" , dataRoom);
@@ -17,5 +16,12 @@ const getMappedData = (dataProp, dataRoom) => {
 const LoginRooms = ({ roomList, dataRoom }) => {
   return <div className={style.LoginRooms}> {getMappedData(roomList, dataRoom)} </div>;
 };
+
+const LoginRoomsStyle = {
+  border: '1px solid blue',
+  textAlign: 'center',
+  margin: 'auto',
+  width: '70%'
+}
 
 export default LoginRooms;

@@ -1,12 +1,15 @@
 import React from 'react';
-import style from './gameStatus.css';
 
 const GameStatus = ({ handleSubmit }) => {
   return (
-    <div className={style.gameStatus}>
+    <div style={gameStatusStyle}>
         <button type="submit" onClick={handleSubmit}>Submit</button>
     </div>
   );
 };
+
+const gameStatusStyle = {
+    border: '1px solid black'
+}
 
 export default GameStatus;

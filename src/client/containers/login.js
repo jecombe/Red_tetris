@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 import socket from '../api';
 import store from '../store';
-import LoginForm from '../components/loginForm/loginForm';
-import LoginRooms from '../components/loginRooms/loginRooms';
+import LoginForm from '../components/loginForm';
+import LoginRooms from '../components/loginRooms';
 import { justJoined } from '../actions';
 
 const Login = props => {

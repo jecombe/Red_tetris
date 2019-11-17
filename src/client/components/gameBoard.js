@@ -1,12 +1,15 @@
 import React from 'react';
-import style from './gameBoard.css';
 
 const GameBoard = ({ handleSubmit }) => {
   return (
-    <div className={style.gameBoard}>
+    <div style={GameBoardStyle}>
         <button type="submit" onClick={handleSubmit}>Submit</button>
     </div>
   );
 };
+
+const GameBoardStyle = {
+    border: '1px solid yellow'
+}
 
 export default GameBoard;

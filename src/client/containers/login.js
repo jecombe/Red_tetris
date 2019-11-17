@@ -6,19 +6,24 @@ import store from '../store';
 import LoginForm from '../components/loginForm/loginForm';
 import { justJoined } from '../actions';
 
-const Login = props => {
-  console.log({props});
 
+
+const Login = props => {
   const [name, setName] = useState('');
   const [room, setRoom] = useState(0);
   const [serverRoom, setServerRoom] = useState(0);
 
-
   useEffect(() => {
     socket.on('getRoomList', payload => {
-      console.log(payload);
+      console.log('Use effect getRoomList');
+      console.log({payload});
     });
 
+    socket.on('joined', (data) => {
+      console.log('okokokok');
+      store.dispatch(justJoined(data));
+
+    });
   }, [0]);
 
   const handleNameChange = event => setName(event.target.value.trim());
@@ -39,15 +44,17 @@ const Login = props => {
       socket.emit('login', {
         username: name 
       });
+
       socket.emit('joinOrCreateGame', {
         gameName: room, 
         username: name
       });
-      socket.on('joined', (data) => {
 
-        console.log('okokokok');
-        store.dispatch(justJoined(data));
-      });
+      // socket.on('joined', (data) => {
+      //   console.log('okokokok');
+      //   store.dispatch(justJoined(data));
+      // });
+
       props.history.push(`/#${room}[${name}]`)
     }
     
@@ -56,6 +63,8 @@ const Login = props => {
     }
   }
 
+  console.log(props.roomList)
+
   return (
     <div>
       <LoginForm 
@@ -63,12 +72,18 @@ const Login = props => {
         handleRoomChange={handleRoomChange}  
         handleSubmit={handleSubmit}
       />
+
     </div>
   );
 }
 
 const mapStateToProps = (state) => {
-  return state;
+  const { joined, roomList } = state.user;
+
+	return {
+		joined,
+    roomList
+	};
 };
 
 export default connect(mapStateToProps)(Login);

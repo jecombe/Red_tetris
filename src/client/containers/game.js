@@ -9,8 +9,6 @@ import GameStatus from '../components/gameStatus/gameStatus';
 import GameBoard from '../components/gameBoard/gameBoard';
 
 const Game = (props, test) => {
-
-
 	const [handle, setHandle] = useState('');
 	const [textarea, setTextarea] = useState('');
 	const [error, setError] = useState(null);
@@ -48,11 +46,11 @@ const mapStateToProps = (state) => {
 
 	console.log('state print', state)
 
-	const { joined } = state.user;
+	const { joined, roomList } = state.user;
 
 	return {
 		joined,
-
+		roomList
 	};
 };
 

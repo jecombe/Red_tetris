@@ -22,9 +22,6 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 joined:action.payload.success,
-                userRoom: action.payload.room,
-                userList: action.payload.userList,
-                user: action.payload.user,
                 roomList: action.payload.roomList
             };
     

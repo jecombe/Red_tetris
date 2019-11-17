@@ -1,17 +1,32 @@
-class Game {
-    constructor(name) {
-      this.name = name;
-      this.playerlist = [];
+import Room from './Room'
+
+export default class Game extends Room {
+    constructor() {
+        super()
+        this.playerOwner = null,
+        this.gameStart = false,
+        this.piece = null
     }
-  
-    addPlayer(player) {
-      this.playerlist.push(player);
+
+    getgameName(){
+        return this.roomName
     }
-  
-    removePlayer(player) {
-      this.playerlist.filter(players => players !== player);
+    
+    setGameName(name){
+        this.roomName = name
+
     }
-  }
-  
-  export default Game;
-  
+
+    setPlayerOwner(owner){
+        this.playerOwner = owner
+    }
+
+    setUser(user){
+        this.users.push(user)
+    }
+
+    setGameStart(){
+        this.gameStart = true
+    }
+
+}

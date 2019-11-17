@@ -22,7 +22,7 @@ io.on('connection', (socket) => {
 
   console.log(socket);
   io.sockets.emit('getRoomList', {
-    'room': onlineGame
+    'roomList': onlineGame
   });
 
   socket.on('login', info => {
@@ -37,7 +37,7 @@ io.on('connection', (socket) => {
     createGame(game, onlineGame, userlist, socket)
     io.sockets.emit('joined', {
       'success': true,
-      'room': onlineGame
+      'roomList': onlineGame
     });
 
 

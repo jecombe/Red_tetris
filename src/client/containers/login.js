@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import socket from '../api';
@@ -7,9 +7,19 @@ import LoginForm from '../components/loginForm/loginForm';
 import { justJoined } from '../actions';
 
 const Login = props => {
+  console.log({props});
+
   const [name, setName] = useState('');
   const [room, setRoom] = useState(0);
   const [serverRoom, setServerRoom] = useState(0);
+
+
+  useEffect(() => {
+    socket.on('getRoomList', payload => {
+      console.log(payload);
+    });
+
+  }, [0]);
 
   const handleNameChange = event => setName(event.target.value.trim());
   const handleRoomChange = event => setRoom(event.target.value.trim());
@@ -47,28 +57,18 @@ const Login = props => {
   }
 
   return (
-    <LoginForm 
-      handleNameChange={handleNameChange} 
-      handleRoomChange={handleRoomChange}  
-      handleSubmit={handleSubmit}
-    />
+    <div>
+      <LoginForm 
+        handleNameChange={handleNameChange} 
+        handleRoomChange={handleRoomChange}  
+        handleSubmit={handleSubmit}
+      />
+    </div>
   );
 }
 
 const mapStateToProps = (state) => {
-
-  const { joined } = state.user;
-  const room = state.user.roomList
-  const userList = state.user.userList
-  console.log('state Connexion ', state)
-  const game = state.game
-
-  return {
-    joined,
-    room,
-    userList,
-    game
-  };
+  return state;
 };
 
 export default connect(mapStateToProps)(Login);

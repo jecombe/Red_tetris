@@ -10,7 +10,6 @@ const initialState = {
 };
 
 const userReducer = (state = initialState, action) => {
-    console.log('ICICICICICICICICICICI');
     switch(action.type) {
        case APPEND_MESSAGE:
          const temp = [...state.messages,action.payload];

@@ -1,4 +1,4 @@
-import {createStage} from '../stage'
+import { createStage } from '../stage'
 
 export default class Player {
     constructor(socketId, username) {
@@ -13,17 +13,19 @@ export default class Player {
     getLogin(){
         return this.login
     }
+
     getIdSocket(){
         return this.idSocket
     }
+
     isOwner(){
         return this.owner
     }
 
     setLogin(login){
         this.login = login
-
     }
+
     setOwner(){
         this.owner = true
     }

@@ -1,13 +1,24 @@
 import Player from '../models/Player';
 
-export const loginUser = (socket, infoUser, userList, roomList) => {
-    let log = {
-        login: null
-    }
+/* Create a new Player model and add it to userList */
 
-    let newPlayer = new Player(socket.id, infoUser.username)
-    newPlayer.setStage();
-    userList.push(newPlayer)
-    log.login = infoUser.username
-    return log
+export const playerLogin = (socketId, playerName, userList) => {
+    let player = new Player(socketId, playerName);
+    player.setStage();
+    userList.push(player);
+    return ;
 }
+
+// export const loginUser = (socket, infoUser, userList) => {
+//     let log = {
+//         login: null
+//     }
+
+//     console.log(socket);
+    
+//     let newPlayer = new Player(socket.id, infoUser.username)
+//     newPlayer.setStage();
+//     userList.push(newPlayer)
+//     log.login = infoUser.username
+//     return log
+// }

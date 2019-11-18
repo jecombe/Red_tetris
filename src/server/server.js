@@ -3,49 +3,17 @@ import http from 'http';
 import socketIO from 'socket.io';
 
 import appRoutes from './routes/app';
+import socketHandler from './socket';
 
-import { loginUser } from './handlers/PlayerHandler';
-import { createGame, freeUserInGame, startGame } from './handlers/GameHandler';
-
-
+const port = 8000;
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 
-app.use(appRoutes);
-
-
 var userlist = [];
-var onlineGame = [];
+let rooms = [];
 
+app.use(appRoutes);
+socketHandler(io, userlist, rooms);
 
-io.on('connection', (socket) => {
-
-  // console.log(socket);
-  io.sockets.emit('getRoomList', {
-    'roomList': onlineGame
-  });
-
-  socket.on('login', info => {
-    loginUser(socket, info, userlist)
-    console.log(userlist)
-  })
-
-  socket.on('joinOrCreateGame', game => {
-    createGame(game, onlineGame, userlist, socket)
-    io.sockets.emit('joined', {
-      'success': true,
-      'roomList': onlineGame
-    });
-  })
-
-  socket.on('startGame', game => {
-    startGame(game)
-  })
-
-  socket.on('disconnect', () => {
-    freeUserInGame(socket.id, onlineGame, userlist)
-  });
-});
-
-server.listen(8000, () => console.log('Running on localhost:8000'));
+server.listen(port, () => console.log(`Running on localhost:${port}`));

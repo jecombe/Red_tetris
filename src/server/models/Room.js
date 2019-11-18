@@ -1,7 +1,7 @@
 export default class Room {
-    constructor(){
-        this.roomName = null,
-        this.users = [],
-        this.owner = null
+    constructor(roomName, playerName){
+        this.name = roomName,
+        this.owner = playerName,
+        this.users = []
     }
 }

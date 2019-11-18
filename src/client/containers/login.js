@@ -2,90 +2,67 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import socket from '../api';
-import store from '../store';
 import LoginForm from '../components/loginForm';
 import LoginRooms from '../components/loginRooms';
-import { justJoined } from '../actions';
+
+import { addRoom } from '../actions';
 
 const Login = props => {
-  const [name, setName] = useState('');
-  const [room, setRoom] = useState(0);
-  const [serverRoom, setServerRoom] = useState(
- //   roomList: [ props.roomList ]
-  0);
-  
+
+  const [rooms, setRooms] = useState([]);
+
   useEffect(() => {
-    socket.on('getRoomList', payload => {
-      console.log('Use effect getRoomList');
-      console.log({payload});
-      setServerRoom(payload.roomList.roomName)
+    socket.on('rooms', payload => {
+      setRooms(payload.rooms);
     });
+  });
     
-    socket.on('joined', (data) => {
-      console.log({data});
-      store.dispatch(justJoined(data));
-      
-    });
-  }, [0]);
+  /* Create ref for child login form component */
+  let inputName = React.createRef();
+  let inputRoom = React.createRef();
+
+  const handleSubmit = e => {
+    e.preventDefault(); // event.persist();
   
-  const handleNameChange = event => setName(event.target.value.trim());
-  const handleRoomChange = event => setRoom(event.target.value.trim());
-  const handleSubmit = event => {
-    event.persist(); // or event.preventDefault();
-    console.log(event);
-    
-    if (!name) {
-      return alert("Name can't be empty");
+    const name = inputName.current.value.trim();
+    const room = inputRoom.current.value.trim();
+  
+    if (!name || !room) {
+      return ;
     }
-    if (room) {
-      
-      /*socket.emit('room', {
-        'room': room,
-        'name': name
-      });*/
-      socket.emit('login', {
-        username: name 
-      });
-      
-      socket.emit('joinOrCreateGame', {
-        gameName: room, 
-        username: name
-      });
-      
-      // socket.on('joined', (data) => {
-        //   console.log('okokokok');
-        //   store.dispatch(justJoined(data));
-        // });
-        
-      props.history.push(`/#${room}[${name}]`)
-    }
-    
     else {
-      console.log("EXITE PAS");
+      socket.emit('login', {
+        playerName: name
+      });
+
+      socket.emit('join', {
+        roomName: room,
+        playerName: name
+      });
     }
+  
+    // props.addRoom(room);
+    // props.history.push(`/#${room}[${name}]`)
+
   }
-  
-  
   return (
     <div>
-      {console.log(serverRoom)}    
-      <LoginForm 
-        handleNameChange={handleNameChange} 
-        handleRoomChange={handleRoomChange}  
+      <LoginForm
         handleSubmit={handleSubmit}
+        inputName={inputName}
+        inputRoom={inputRoom}
       />
-      <LoginRooms roomList={props.roomList} dataRoom={serverRoom} />
+      <LoginRooms rooms={rooms} />
     </div>
   );
 }
 
-const mapStateToProps = (state) => {
-  const { joined, roomList } = state.user;
+const mapStateToProps = state => ({
+  rooms: state.user.rooms
+});
 
-	return {
-		joined,
-    roomList
-	};
-};
+const mapDispatchToProps = {
+  addRoom
+}
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

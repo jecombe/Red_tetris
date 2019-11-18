@@ -7,6 +7,7 @@
 
 export const ALERT_POP = 'ALERT_POP';
 export const JUST_JOINED = 'JUST_JOINED';
+export const ADD_ROOM = 'ADD_ROOM';
 
 /*
  * action creators
@@ -29,4 +30,9 @@ export const justJoined = (bool) => ({
         userList: bool.userList,
         roomList: bool.roomList*/
     }
+});
+
+export const addRoom = data => ({
+    type: ADD_ROOM,
+    payload: data
 });

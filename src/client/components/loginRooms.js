@@ -1,23 +1,27 @@
 import React from 'react';
 
-const getMappedData = (dataProp, dataRoom) => {
-     console.log("data room =>" , dataRoom);
-    /*if (dataRoom) { 
-        console.log(dataRoom);
-          return dataRoom.map(item =>{
-          return <div key={item.roomName.toString()}>{item.roomName}</div>;
+const getMappedData = (rooms) => {
+     console.log("rooms =>" , rooms);
+    if (rooms) { 
+      return rooms.map(i =>{
+        return <div key={i.name}>{i.name}</div>;
       })
     }
     else {
      return "";
-    }*/
+    }
 }
 
-const LoginRooms = ({ roomList, dataRoom }) => {
-  return <div className={style.LoginRooms}> {getMappedData(roomList, dataRoom)} </div>;
+const LoginRooms = props => {
+  const { rooms } = props;
+  return (
+    <div style={loginRoomsStyle}> 
+      {getMappedData(rooms)}
+    </div>
+  );
 };
 
-const LoginRoomsStyle = {
+const loginRoomsStyle = {
   border: '1px solid blue',
   textAlign: 'center',
   margin: 'auto',

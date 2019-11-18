@@ -7,6 +7,8 @@ import './index.css';
 import store from './store';
 import App from './containers/app';
 
+console.log("Made By jecombe && dzonda at 42 Lyon campus");
+
 ReactDom.render((
   <HashRouter hashType={'noslash'}>
     <Provider store={store}>
@@ -14,4 +16,3 @@ ReactDom.render((
     </Provider>
   </HashRouter>
 ), document.getElementById('app'));
-

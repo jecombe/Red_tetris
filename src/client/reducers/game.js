@@ -1,5 +1,5 @@
 const initialState = {
-  board:null,
+  board: null,
 };
 
 const gameReducer = (state = initialState, action) => {

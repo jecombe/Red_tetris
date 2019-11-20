@@ -2,8 +2,7 @@ import Game from '../models/Game';
 
 const create = (roomName, username, userList) => {
 
-    let game = new Game()
-    game.setGameName(roomName)
+    let game = new Game(roomName)
     game.setPlayerOwner(username)
     userList.find(obj => {
         if (obj.login == username) {

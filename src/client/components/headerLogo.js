@@ -11,10 +11,11 @@ const HeaderLogo = () => {
 };
 
 const headerLogoStyle = {
-    display: "flex",
-    justifyContent: "center",
-    padding: '0.5%',
-    width: '100%'
+    // display: "flex",
+    // justifyContent: "center",
+    // padding: '0.5%',
+    // width: '100%',
+    border: '1px solid black'
 }
 
 const headerLogoImgStyle = {

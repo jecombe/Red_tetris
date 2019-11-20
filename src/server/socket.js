@@ -9,16 +9,14 @@ const socketHandler = (io, userlist, rooms) => {
             'rooms': rooms
         });
 
-        socket.on('login', info => {
-            playerLogin(socket.id, info.playerName, userlist);
-        });
-
         socket.on('join', info => {
+            playerLogin(socket.id, info.playerName, userlist);
             roomJoin(info.roomName, info.playerName, rooms);
+            socket.join("myroom");
+            socket.to("myroom").emit('srvMsg', `Your room is ${info.roomName}`);
             io.sockets.emit('rooms', {
                 'rooms': rooms
             });
-            
         });
 
         socket.on('joinOrCreateGame', game => {

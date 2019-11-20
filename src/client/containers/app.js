@@ -16,10 +16,10 @@ function App() {
   );
 }
 
-const mapStateToProps = (state) => ({
-	playerName: state.user.playerName,
-	playerRoom: state.user.playerRoom,
-	rooms: state.user.rooms,
-});
+// const mapStateToProps = (state) => ({
+// 	playerName: state.user.playerName,
+// 	playerRoom: state.user.playerRoom,
+// 	rooms: state.user.rooms,
+// });
 
-export default connect(mapStateToProps, null)(App);
+export default App;

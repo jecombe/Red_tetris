@@ -15,8 +15,13 @@ const Login = props => {
     socket.on('rooms', payload => {
       setRooms(payload.rooms);
     });
+
   });
-    
+
+  socket.on('srvMsg', payload => {
+    console.log(payload);
+  });
+
   /* Create ref for child login form component */
   let inputName = React.createRef();
   let inputRoom = React.createRef();
@@ -31,22 +36,18 @@ const Login = props => {
       return ;
     }
     else {
-      // socket.emit('login', {
-      //   playerName: name
-      // });
-
-      // socket.emit('join', {
-      //   roomName: room,
-      //   playerName: name
-      // });
+      socket.emit('join', {
+        roomName: room,
+        playerName: name
+      });
     }
 
     props.playerLogin({
       playerName: name,
       playerRoom: room
     });
-    // props.addRoom(room);
-    // props.history.push(`/#${room}[${name}]`)
+
+    props.history.push(`/#${room}[${name}]`)
   }
   return (
     <div>
@@ -61,7 +62,7 @@ const Login = props => {
 }
 
 const mapStateToProps = state => ({
-  rooms: state.user.rooms
+  // rooms: state.user.rooms
 });
 
 const mapDispatchToProps = {

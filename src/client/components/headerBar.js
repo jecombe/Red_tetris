@@ -10,14 +10,14 @@ const HeaderBar = props => {
     else playerRoom = `You are in ${playerRoom} room !`
 
     return (
-        <div>
-            <div style={style.headerInfoUserStyle}>
+        <div style={style.headerStyle}>
+            <div style={style.headerInfoSocketStyle}>
                 Welcome, {playerName}!
                 <br />
                 {playerRoom}
             </div>
             <div style={style.headerLogoStyle}>
-                <img style={headerLogoImgStyle} src={logo} alt="Logo" />
+                <img style={style.headerLogoImgStyle} src={logo} alt="Logo" />
             </div>
             <div style={style.headerInfoSocketStyle}>
                 Socket connection
@@ -27,6 +27,9 @@ const HeaderBar = props => {
 };
 
 const style = {
+    headerStyle: {
+        display: 'flex'
+    },
     headerLogoStyle: {
         // display: "flex",
         // justifyContent: "center",

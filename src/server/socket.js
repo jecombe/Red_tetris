@@ -6,7 +6,7 @@ const socketHandler = (io, userlist, rooms) => {
 
     io.on('connection', socket => {
         // console.log(socket);
-        io.sockets.emit('rooms', {
+        socket.emit('rooms', {
             'rooms': rooms
         });
 

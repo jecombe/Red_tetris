@@ -3,19 +3,22 @@ import { connect } from 'react-redux';
 
 import socket from '../api';
 import LoginForm from '../components/loginForm';
-import LoginRooms from '../components/loginRooms';
 
-import { addRoom, playerLogin } from '../actions';
+import { roomsGet, playerLogin } from '../actions';
 
 const Login = props => {
 
   const [rooms, setRooms] = useState([]);
 
-  useEffect(() => {
-    socket.on('rooms', payload => {
-      setRooms(payload.rooms);
-    });
+  // useEffect(() => {
 
+
+  // });
+
+  socket.on('rooms', payload => {
+    // setRooms(payload.rooms);
+    console.log(payload);
+    props.roomsGet(payload.rooms);
   });
 
   socket.on('srvMsg', payload => {
@@ -44,7 +47,6 @@ const Login = props => {
         gameName: room, 
         username: name
       });
-
     }
 
     props.playerLogin({
@@ -55,14 +57,12 @@ const Login = props => {
     props.history.push(`/#${room}[${name}]`)
   }
   return (
-    <div>
       <LoginForm
         handleSubmit={handleSubmit}
         inputName={inputName}
         inputRoom={inputRoom}
+        rooms={rooms}
       />
-      <LoginRooms rooms={rooms} />
-    </div>
   );
 }
 
@@ -71,7 +71,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  addRoom,
+  roomsGet,
   playerLogin
 }
 

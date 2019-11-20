@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Route } from 'react-router-dom'
 
 import Header from './header';
@@ -15,11 +14,5 @@ function App() {
     </div>
   );
 }
-
-// const mapStateToProps = (state) => ({
-// 	playerName: state.user.playerName,
-// 	playerRoom: state.user.playerRoom,
-// 	rooms: state.user.rooms,
-// });
 
 export default App;

@@ -16,6 +16,9 @@ const socketHandler = (io, userlist, rooms) => {
 
         socket.on('joinOrCreateGame', game => {
             createGame(game, rooms, userlist, socket)
+            socket.join(game.gameName)
+            io.sockets.in(game.gameName).emit('message', `HEY IT'S A TEST`);
+
             io.sockets.emit('joined', {
                 'success': true,
                 'rooms': rooms

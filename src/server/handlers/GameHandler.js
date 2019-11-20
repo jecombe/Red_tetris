@@ -5,14 +5,12 @@ const create = (roomName, username, userList) => {
     let game = new Game()
     game.setGameName(roomName)
     game.setPlayerOwner(username)
-
     userList.find(obj => {
         if (obj.login == username) {
             obj.owner = true
         }
     })
     return game
-
 }
 
 const findGame = (onlineGame, game) => {
@@ -28,14 +26,12 @@ const findGame = (onlineGame, game) => {
         }
     });
     return gameExiste
-
 }
 
 const addPlayerInGame = (onlineGame, game) => {
     onlineGame.find(obj => {
         if (obj.roomName == game.gameName) {
             obj.users.push(game.username)
-
         }
     })
 }
@@ -61,16 +57,13 @@ export const createGame = (game, onlineGame, userList, socket) => {
     return existeGame
 }
 
-
 const calcIndex = (userList, data) => {
-
     let index = userList.findIndex(info => info.login === data);
     return index
-
 }
+
 const searchUserInList = (idSocket, userList) => {
     let login
-
     userList.find(obj => {
         if (obj.idSocket == idSocket) {
             login = obj.login
@@ -78,11 +71,9 @@ const searchUserInList = (idSocket, userList) => {
         }
     })
     return login
-
 }
 
 const freeUserList = (userList, index) => {
-
     userList.splice(index, 1)
 }
 
@@ -95,9 +86,7 @@ const searchRoomInUser = (userList, login) => {
         }
     })
     return room;
-
 }
-
 
 const switchOwnerToPlayer = (userList, roomActual, loginNewOwner) => {
 
@@ -108,7 +97,6 @@ const switchOwnerToPlayer = (userList, roomActual, loginNewOwner) => {
             }
         }
     })
-
 }
 
 const calcIndexRoom = (onlineGame, roomName) => {
@@ -122,7 +110,6 @@ const isEmpty = onlineGame => {
     let empty = 'no'
 
     onlineGame.find(obj => {
-        console.log('obj ', obj.users)
 
         if (obj.users && obj.users.length) {
             empty = 'no'
@@ -149,7 +136,6 @@ const deleteUserInGame = (onlineGame, login, userList, roomActual) => {
 
     onlineGame.find(obj => {
         if (obj.roomName == roomActual) {
-
             const index = obj.users.indexOf(login);
             if (index !== -1) {
                 obj.users.splice(index, 1);
@@ -163,23 +149,30 @@ const deleteUserInGame = (onlineGame, login, userList, roomActual) => {
 
 }
 
+/*Free user in game*/
 export const freeUserInGame = (idSocket, onlineGame, userList) => {
 
+    /*Search user login in userList*/
     let login = searchUserInList(idSocket, userList)
+    /*Calcule index of Player in userList*/
     let index = calcIndex(userList, login)
-
+    /*Search room name of player*/
     let roomActual = searchRoomInUser(userList, login)
-
+    /*Search login of new owner*/
     let loginNewOwner = deleteUserInGame(onlineGame, login, userList, roomActual)
-
+    /*Switch owner false to true for new owner*/
     switchOwnerToPlayer(userList, roomActual, loginNewOwner)
+    /*Free old user in userList*/
     freeUserList(userList, index)
+    /*Check if there are users in current game, if there is no user, we can delete game actual*/
     let empty = isEmpty(onlineGame, roomActual)
     if (empty === 'yes') {
+        /*free game*/
         freeGame(onlineGame, roomActual)
     }
 }
 
+/*Start game (TO DO)*/
 export const startGame = (game) => {
 
 }

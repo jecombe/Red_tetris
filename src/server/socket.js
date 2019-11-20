@@ -1,6 +1,6 @@
 import { loginUser, playerLogin } from './handlers/PlayerHandler';
 import { roomJoin } from './handlers/RoomHandler';
-import { createGame, freeUserInGame, startGame } from './handlers/GameHandler';
+import { createGame, freeUserInGame, startGame , searchUserInList, searchRoomInUser} from './handlers/GameHandler';
 
 const socketHandler = (io, userlist, rooms) => {
 
@@ -30,7 +30,12 @@ const socketHandler = (io, userlist, rooms) => {
 
         socket.on('disconnect', () => {
             console.log('LIST ROOM BEFORE ', rooms, 'LIST USER BEFORE ', userlist)
-            freeUserInGame(socket.id, rooms, userlist)
+            /*Search user login in userList*/
+            let login = searchUserInList(socket.id, userlist)
+            /*Search room name of player*/
+            let roomActual = searchRoomInUser(userlist, login)
+            socket.leave(roomActual)
+            freeUserInGame(login, roomActual, rooms, userlist)
             console.log('LIST ROOM AFTER ', rooms, 'LIST USER AFTER ', userlist)
         });
     });

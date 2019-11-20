@@ -1,19 +1,14 @@
 import Room from './Room'
 
 export default class Game extends Room {
-    constructor() {
-        super()
+    constructor(nameGame) {
+        super(nameGame)
         this.gameStart = false,
         this.piece = null
     }
 
     getgameName(){
         return this.roomName
-    }
-    
-    setGameName(name){
-        this.roomName = name
-
     }
 
     setPlayerOwner(owner){

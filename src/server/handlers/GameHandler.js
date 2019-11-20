@@ -2,8 +2,7 @@ import Game from '../models/Game';
 
 const create = (roomName, username, userList) => {
 
-    let game = new Game()
-    game.setGameName(roomName)
+    let game = new Game(roomName)
     game.setPlayerOwner(username)
     userList.find(obj => {
         if (obj.login == username) {
@@ -62,7 +61,7 @@ const calcIndex = (userList, data) => {
     return index
 }
 
-const searchUserInList = (idSocket, userList) => {
+export const searchUserInList = (idSocket, userList) => {
     let login
     userList.find(obj => {
         if (obj.idSocket == idSocket) {
@@ -77,7 +76,7 @@ const freeUserList = (userList, index) => {
     userList.splice(index, 1)
 }
 
-const searchRoomInUser = (userList, login) => {
+export const searchRoomInUser = (userList, login) => {
     let room
     userList.find(obj => {
         if (obj.login == login) {
@@ -150,14 +149,10 @@ const deleteUserInGame = (onlineGame, login, userList, roomActual) => {
 }
 
 /*Free user in game*/
-export const freeUserInGame = (idSocket, onlineGame, userList) => {
+export const freeUserInGame = (login, roomActual ,onlineGame, userList) => {
 
-    /*Search user login in userList*/
-    let login = searchUserInList(idSocket, userList)
     /*Calcule index of Player in userList*/
     let index = calcIndex(userList, login)
-    /*Search room name of player*/
-    let roomActual = searchRoomInUser(userList, login)
     /*Search login of new owner*/
     let loginNewOwner = deleteUserInGame(onlineGame, login, userList, roomActual)
     /*Switch owner false to true for new owner*/

@@ -3,7 +3,6 @@ import Room from './Room'
 export default class Game extends Room {
     constructor() {
         super()
-        this.playerOwner = null,
         this.gameStart = false,
         this.piece = null
     }
@@ -18,7 +17,7 @@ export default class Game extends Room {
     }
 
     setPlayerOwner(owner){
-        this.playerOwner = owner
+        this.owner = owner
     }
 
     setUser(user){

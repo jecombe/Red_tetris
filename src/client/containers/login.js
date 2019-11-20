@@ -5,7 +5,7 @@ import socket from '../api';
 import LoginForm from '../components/loginForm';
 import LoginRooms from '../components/loginRooms';
 
-import { addRoom } from '../actions';
+import { addRoom, playerLogin } from '../actions';
 
 const Login = props => {
 
@@ -31,19 +31,22 @@ const Login = props => {
       return ;
     }
     else {
-      socket.emit('login', {
-        playerName: name
-      });
+      // socket.emit('login', {
+      //   playerName: name
+      // });
 
-      socket.emit('join', {
-        roomName: room,
-        playerName: name
-      });
+      // socket.emit('join', {
+      //   roomName: room,
+      //   playerName: name
+      // });
     }
-  
+
+    props.playerLogin({
+      playerName: name,
+      playerRoom: room
+    });
     // props.addRoom(room);
     // props.history.push(`/#${room}[${name}]`)
-
   }
   return (
     <div>
@@ -62,7 +65,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  addRoom
+  addRoom,
+  playerLogin
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

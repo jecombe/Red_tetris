@@ -1,4 +1,4 @@
-import { JUST_JOINED, ADD_ROOM } from '../actions';
+import { JUST_JOINED, ADD_ROOM, PLAYER_LOGIN } from '../actions';
 
 const initialState = {
     joined:null,
@@ -7,13 +7,12 @@ const initialState = {
     user:null,
     roomList: [],
     messages:[],
-    rooms: []
+    rooms: [],
+    playerName: null,
+    playerRoom: null
 };
 
 const userReducer = (state = initialState, action) => {
-    // console.log({action});
-    console.log(action);
-
     switch(action.type) {
         case JUST_JOINED:
             return {
@@ -25,6 +24,12 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 rooms: state.rooms.concat(action.payload)
+            };
+        case PLAYER_LOGIN:
+            return {
+                ...state,
+                playerName: action.payload.playerName,
+                playerRoom: action.payload.playerRoom
             };
         default:
             return state;

@@ -46,11 +46,12 @@ const mapStateToProps = (state) => {
 
 	console.log('state print', state)
 
-	const { joined, roomList } = state.user;
+	//const { joined, roomList } = state.user;
 
 	return {
-		joined,
-		roomList
+		state
+		//joined,
+		//roomList
 	};
 };
 

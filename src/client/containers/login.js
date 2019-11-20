@@ -36,10 +36,15 @@ const Login = props => {
       return ;
     }
     else {
-      socket.emit('join', {
-        roomName: room,
-        playerName: name
+      socket.emit('login', {
+        username: name 
       });
+      
+      socket.emit('joinOrCreateGame', {
+        gameName: room, 
+        username: name
+      });
+
     }
 
     props.playerLogin({

@@ -10,14 +10,15 @@ const Login = props => {
 
   const [rooms, setRooms] = useState([]);
 
-  // useEffect(() => {
+   /*useEffect(() => {
+
+  
 
 
-  // });
+   });*/
 
   socket.on('rooms', payload => {
     // setRooms(payload.rooms);
-    console.log(payload);
     props.roomsGet(payload.rooms);
   });
 

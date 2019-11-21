@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import socket from '../api';
 import { store } from '../store';
-
+import Stage from '../components/Stage'
 import { justJoined, appendMessage } from '../actions';
 
 import GameStatus from '../components/gameStatus';
@@ -34,6 +34,7 @@ const Game = (props, test) => {
 				{props.joined ? <em>You are connected</em> : <em >dont't connect</em>}
 			</div>
 			<GameStatus handleSubmit={handleSubmitStatus} />
+			<Stage stage={props.state.player.playerStage} />
 		</div>
 	);
 };

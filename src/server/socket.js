@@ -24,8 +24,10 @@ const socketHandler = (io, userlist, rooms) => {
                 'rooms': rooms
             });
         })
+        
         socket.on('startGame', game => {
-            startGame(game)
+            console.log('RESPONSE: ', game)
+            startGame(game, rooms)
         })
 
         socket.on('disconnect', () => {

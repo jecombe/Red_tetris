@@ -1,4 +1,5 @@
 import Room from './Room'
+import Piece from './Piece'
 
 export default class Game extends Room {
     constructor(nameGame) {
@@ -21,6 +22,7 @@ export default class Game extends Room {
 
     setGameStart(){
         this.gameStart = true
+        this.piece = new Piece()
     }
 
 }

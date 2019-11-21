@@ -167,7 +167,39 @@ export const freeUserInGame = (login, roomActual ,onlineGame, userList) => {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+const searchGameRoom = (rooms, room) => {
+    let objGame
+    rooms.find(obj => {
+        if (obj.roomName == room) {
+            objGame = obj
+            return objGame
+        }
+    })
+    return objGame
+
+}
+
 /*Start game (TO DO)*/
-export const startGame = (game) => {
+export const startGame = (game, rooms) => {
+
+    let user = game.username
+    let room = game.room
+    /*Return object Game, check with name of room*/
+    let objGame = searchGameRoom(rooms, room)
+    /*Start Game, game start true and random piece*/
+    objGame.setGameStart()
+    console.log('obj game', objGame)
 
 }

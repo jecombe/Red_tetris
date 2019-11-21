@@ -13,18 +13,15 @@ const Game = (props, test) => {
 	const [textarea, setTextarea] = useState('');
 	const [error, setError] = useState(null);
 
-	const handleSubmit = (handle, message) => {
-		// console.log("Called");
-		if (handle === '' || message === '') {
-			setError('Handle or message should not be null');
-			return;
-		}
-		setError('');
-
-	};
 
 	const handleSubmitStatus = () => {
-		console.log("Status reached");
+		console.log("Status reached", props);
+
+		socket.emit('startGame', {
+			username: props.state.player.playerName,
+			room: props.state.player.playerRoom
+		  });
+
 	};
 
 	const handleSubmitBoard = () => {
@@ -37,7 +34,6 @@ const Game = (props, test) => {
 				{props.joined ? <em>You are connected</em> : <em >dont't connect</em>}
 			</div>
 			<GameStatus handleSubmit={handleSubmitStatus} />
-			<GameBoard handleSubmit={handleSubmitBoard} />
 		</div>
 	);
 };

@@ -16,30 +16,34 @@ const LoginForm = props => {
   const { handleSubmit, inputName, inputRoom, rooms } = props;
   return (
     <div>
-      <div style={style.loginFormStyle}>
+      <div>
           <input id="name" ref={inputName} required placeholder="What is youur name .." /><br />
           <input id="room" ref={inputRoom} required placeholder="What is your room .." /><br />
           <button type="submit" onClick={handleSubmit}>Submit</button>
       </div>
-      <div style={style.loginRoomsStyle}> 
+      <div> 
           {mapRooms(rooms)}
       </div>
     </div>
   );
 };
 
-const style = {
-  loginFormStyle: {
-    textAlign: 'center',
-    margin: '30vh auto',
-    width: '70%'
-  },
-  loginRoomsStyle: {
-    border: '1px solid blue',
-    textAlign: 'center',
-    margin: 'auto',
-    width: '70%'
-  }
-}
+// const style = {
+//   loginStyle: {
+//     display: 'flex',
+// 		alignItems: 'center'
+//   },
+//   loginFormStyle: {
+//     textAlign: 'center',
+//     margin: '30vh auto',
+//     width: '70%'
+//   },
+//   loginRoomsStyle: {
+//     border: '1px solid blue',
+//     textAlign: 'center',
+//     margin: 'auto',
+//     width: '70%'
+//   }
+// }
 
 export default LoginForm;

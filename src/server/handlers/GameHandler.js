@@ -202,4 +202,6 @@ export const startGame = (game, rooms) => {
     objGame.setGameStart()
     console.log('obj game', objGame)
 
+    return objGame.piece
+
 }

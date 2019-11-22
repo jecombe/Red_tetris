@@ -17,7 +17,6 @@ const socketHandler = (io, userlist, rooms) => {
         socket.on('joinOrCreateGame', game => {
             createGame(game, rooms, userlist, socket)
             socket.join(game.gameName)
-            io.sockets.in(game.gameName).emit('message', `HEY IT'S A TEST`);
 
             io.sockets.emit('joined', {
                 'success': true,
@@ -27,7 +26,10 @@ const socketHandler = (io, userlist, rooms) => {
         
         socket.on('startGame', game => {
             console.log('RESPONSE: ', game)
-            startGame(game, rooms)
+
+            let piece = startGame(game, rooms)
+            io.sockets.in(game.room).emit('pieceStart', piece);
+
         })
 
         socket.on('disconnect', () => {

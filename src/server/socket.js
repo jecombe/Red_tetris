@@ -29,6 +29,12 @@ const socketHandler = (io, userlist, rooms) => {
             socket.join(game.roomActual)
 
             /*A definir*/
+            //console.log(objPlayerAfterGame.stage)
+            let stage = objPlayerAfterGame.stage
+            io.to(`${socket.id}`).emit('objPlayer', {
+                'player': stage
+
+            });
             io.sockets.emit('joined', {
                 'success': true,
                 'rooms': rooms

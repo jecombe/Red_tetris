@@ -1,35 +1,23 @@
 import React from 'react';
-import { Route } from 'react-router-dom'
 
 import Header from './header';
-import Login from './login';
-import Game from './game';
+import Main from './main';
+import Footer from './footer';
 
 function App() {
 	return (
-	<div style={style.appStyle}>
-		<div style={style.headerStyle}>
-			<Header />
-		</div>
-		<div style={style.bodyStyle}>
-			<Route exact path="/" component={Login} />
-			<Route exact path="/:room[:playerName]" component={Game} />
-		</div>
+	<div style={style.AppWrapper}>
+		<Header />
+		<Main />
+		<Footer />
     </div>
   );
 }
 
 const style = {
-	appStyle: {
+	AppWrapper: {
 		display: 'flex',
-		alignItems: 'center',
 		flexDirection: 'column'
-	},
-	headerStyle: {
-   		width: '100%'
-	},
-	bodyStyle: {
-  		width: '100%'
 	}
 }
 

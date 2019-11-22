@@ -5,12 +5,23 @@ import HeaderBar from '../components/headerBar';
 
 const Header = props => {
   return (
-    <HeaderBar 
-      playerName={props.playerName} 
-      playerRoom={props.playerRoom} 
-    />
+    <div style={style.HeaderStyle}>
+      <HeaderBar 
+        playerName={props.playerName} 
+        playerRoom={props.playerRoom} 
+      />
+    </div>
   );
 };
+
+const style = {
+  HeaderStyle: {
+    minHeight: '10vh',
+    border: '1px solid black',
+    display: 'flex',
+    alignItems: 'center',
+  }
+}
 
 const mapStateToProps = state => ({
 	playerName: state.player.playerName,

@@ -29,15 +29,25 @@ const Game = (props, test) => {
 	};
 
 	return (
-		<div>
-			<div>
-				{props.joined ? <em>You are connected</em> : <em >dont't connect</em>}
-			</div>
-			<GameStatus handleSubmit={handleSubmitStatus} />
+		<div style={style.GameStyle}>
 			<Stage stage={props.state.player.playerStage} />
+			<GameStatus handleSubmit={handleSubmitStatus} />
 		</div>
 	);
 };
+
+			// <div>
+			// 	{props.joined ? <em>You are connected</em> : <em >dont't connect</em>}
+			// </div>
+const style = {
+	GameStyle: {
+		display: 'flex',
+		flexGrow: '1',
+		justifyContent: 'space-around',
+		alignItems: 'center',
+		width: '100vw'
+	}
+}
 
 const mapStateToProps = (state) => {
 

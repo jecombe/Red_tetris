@@ -1,11 +1,15 @@
-html, body {
-  /* margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
+body {
+  margin: 0;
+  padding: 0; 
+  /* height: 100%;
+  width: 100%; */
   /* display: flex;
   flex-direction: column; */
-  font-family: 'Karmatic';
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Forced';
   /* max-height: 100%; */
   /* background-image: url('./img/space.jpg'); */
 }
@@ -23,4 +27,14 @@ html, body {
 @font-face {
   font-family: 'Game';
   src: url('font/game_over.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Squared';
+  src: url('font/Squared_Display.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Forced';
+  src: url('font/FORCED_SQUARE.ttf') format('truetype');
 }

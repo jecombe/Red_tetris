@@ -1,26 +1,28 @@
 import React from 'react';
-import logo from '../img/header3.png';
+import { FiUser, FiHome } from "react-icons/fi";
+import logo from '../img/header.png';
 
 const HeaderBar = props => {
     let { playerName, playerRoom } = props;
     
     if (!playerName) playerName = "Anonymous"
-
-    if (!playerRoom) playerRoom = "You are not in a room !"
-    else playerRoom = `You are in ${playerRoom} room !`
+    if (!playerRoom) playerRoom = "No room"
 
     return (
         <div style={style.headerStyle}>
-            <div style={style.headerInfoStyle}>
-                Welcome, {playerName}!
-                <br />
-                {playerRoom}
+            <div style={style.HeaderBarLoginStyle}>
+                <div>
+                    <FiUser /> {playerName}
+                </div>
+                <div>
+                    <FiHome /> {playerRoom}
+                </div>
             </div>
-            <div>
-                <img src={logo} style={style.headerLogoImgStyle} alt="Logo" />
+            <div style={style.HeaderBarImgStyle}>
+                <img src={logo} width="100%" alt="Logo" />
             </div>
-            <div style={style.headerInfoStyle}>
-                Socket connection
+            <div style={style.HeaderBarSocketStyle}>
+                Online
             </div>
         </div>
     );
@@ -28,16 +30,28 @@ const HeaderBar = props => {
 
 const style = {
     headerStyle: {
+        border: '1px solid blue',
         display: 'flex',
-        flexDirection: 'row',
+        alignItems: 'center',
         justifyContent: 'space-around',
-        alignItems: 'center'
+        fontSize: '26px',
+        flexGrow: '1'
     },
-    headerInfoStyle: {
-        border: '1px solid black'
+    HeaderBarLoginStyle : {
+        border: '1px solid blue',
+        display: 'flex',
+        flexDirection: 'column',
+        alignSelf: 'center'
     },
-    headerLogoImgStyle: {
-        width: '50%'
+    HeaderBarImgStyle : {
+        border: '1px solid blue',
+        display: 'flex',
+        justifyContent: 'center',
+    },
+    HeaderBarSocketStyle: {
+        border: '1px solid blue',
+        display: 'flex',
+        justifyContent: 'center',
     }
 }
 

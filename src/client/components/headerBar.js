@@ -10,42 +10,35 @@ const HeaderBar = props => {
     else playerRoom = `You are in ${playerRoom} room !`
 
     return (
-        <div>
-            <div>
+        <div style={style.headerStyle}>
+            <div style={style.headerInfoStyle}>
                 Welcome, {playerName}!
                 <br />
                 {playerRoom}
             </div>
-            <div >
-                <img src={logo} alt="Logo" />
-            </div>
             <div>
+                <img src={logo} style={style.headerLogoImgStyle} alt="Logo" />
+            </div>
+            <div style={style.headerInfoStyle}>
                 Socket connection
             </div>
         </div>
     );
 };
 
-// const style = {
-//     headerStyle: {
-//         display: 'flex'
-//     },
-//     headerLogoStyle: {
-//         // display: "flex",
-//         // justifyContent: "center",
-//         // padding: '0.5%',
-//         // width: '100%',
-//         border: '1px solid black'
-//     },
-//     headerLogoImgStyle: {
-//         width: '20%'
-//     },
-//     headerInfoSocketStyle: {
-//         //   order: '0',
-//         //   flex: '0 1 auto',
-//         //   alignSelf: 'auto',
-//         border: '1px solid black'
-//     }
-// }
+const style = {
+    headerStyle: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center'
+    },
+    headerInfoStyle: {
+        border: '1px solid black'
+    },
+    headerLogoImgStyle: {
+        width: '50%'
+    }
+}
 
 export default HeaderBar;

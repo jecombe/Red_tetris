@@ -14,6 +14,13 @@ const Game = (props, test) => {
 	const [error, setError] = useState(null);
 
 
+   useEffect(() => {
+	socket.on('pieceStart', payload => {
+		console.log(payload);
+	  });
+  
+
+   });
 	const handleSubmitStatus = () => {
 		console.log("Status reached", props);
 

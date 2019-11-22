@@ -4,6 +4,8 @@ import socket from '../api';
 import { store } from '../store';
 import Stage from '../components/Stage'
 import { justJoined, appendMessage } from '../actions';
+import { playerStartGame } from '../actions';
+
 
 import GameStatus from '../components/gameStatus';
 import GameBoard from '../components/gameBoard';
@@ -11,23 +13,23 @@ import GameBoard from '../components/gameBoard';
 const Game = (props, test) => {
 	const [handle, setHandle] = useState('');
 	const [textarea, setTextarea] = useState('');
-	const [error, setError] = useState(null);
+	const [piece, setPiece] = useState({});
 
 
    useEffect(() => {
-	socket.on('pieceStart', payload => {
-		console.log(payload);
-	  });
-  
 
-   });
+	  socket.on('pieceStart',(payload) => {
+		  console.log(payload)
+	  })
+   }, [piece]);
+
 	const handleSubmitStatus = () => {
-		console.log("Status reached", props);
-
-		socket.emit('startGame', {
-			username: props.state.player.playerName,
-			room: props.state.player.playerRoom
+		props.playerStartGame({
+			playerName: props.state.player.playerName,
+			playerRoom: props.state.player.playerRoom
 		  });
+
+	
 
 	};
 
@@ -37,6 +39,7 @@ const Game = (props, test) => {
 
 	return (
 		<div style={style.GameStyle}>
+			{console.log('PIECE RENDER ', piece)}
 			<Stage stage={props.state.player.playerStage} />
 			<GameStatus handleSubmit={handleSubmitStatus} />
 		</div>
@@ -56,6 +59,7 @@ const style = {
 	}
 }
 
+  
 const mapStateToProps = (state) => {
 
 	console.log('state print', state)
@@ -63,12 +67,17 @@ const mapStateToProps = (state) => {
 	//const { joined, roomList } = state.user;
 
 	return {
-		state
+		state,
 		//joined,
 		//roomList
 	};
 };
 
-export default connect(mapStateToProps)(Game);
+const mapDispatchToProps = {
+	//playerLogin,
+	playerStartGame
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
 
 

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import socket from '../api';
 import LoginForm from '../components/loginForm';
 
-import { roomsGet, playerLogin } from '../actions';
+import { roomsGet, playerLogin, playerLoginEnterGame } from '../actions';
 
 const Login = props => {
 
@@ -39,21 +39,26 @@ const Login = props => {
     if (!name || !room) {
       return ;
     }
-    else {
+    /*else {
       socket.emit('login', {
         username: name 
       });
       
-      socket.emit('joinOrCreateGame', {
+      /*socket.emit('joinOrCreateGame', {
         gameName: room, 
         username: name
       });
-    }
+    }*/
 
-    props.playerLogin({
+    /*props.playerLogin({
+      playerName: name,
+      playerRoom: room
+    });*/
+    props.playerLoginEnterGame({
       playerName: name,
       playerRoom: room
     });
+
 
     props.history.push(`/#${room}[${name}]`)
   }
@@ -73,7 +78,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   roomsGet,
-  playerLogin
+  //playerLogin,
+  playerLoginEnterGame
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -12,7 +12,7 @@ const create = (roomName, username, userList) => {
     return game
 }
 
-const findGame = (onlineGame, game) => {
+const findGame = (onlineGame, roomActual) => {
 
     let gameExiste = 'toCreate';
 
@@ -20,40 +20,50 @@ const findGame = (onlineGame, game) => {
         gameExiste = 'toCreate';
     }
     onlineGame.find(obj => {
-        if (obj.roomName == game.gameName) {
+        if (obj.roomName == roomActual) {
             gameExiste = 'toJoin';
         }
     });
     return gameExiste
 }
 
-const addPlayerInGame = (onlineGame, game) => {
+const addPlayerInGame = (onlineGame, username, roomActual) => {
+    let objGame
     onlineGame.find(obj => {
-        if (obj.roomName == game.gameName) {
-            obj.users.push(game.username)
+        if (obj.roomName == roomActual) {
+            obj.users.push(username)
+            objGame = obj
+            return objGame;
         }
     })
+    return objGame;
 }
 
 const addGameInPlayer = (userList, username, roomName) => {
+    let objPlayer;
     userList.find(obj => {
         if (obj.login == username) {
             obj.roomAssociate = roomName
+            objPlayer = obj
+            return objPlayer
         }
     })
+    return objPlayer
 }
+export const createGame = (onlineGame, userList, username, roomActual) => {
 
-export const createGame = (game, onlineGame, userList, socket) => {
 
-    let existeGame = findGame(onlineGame, game)
+    let existeGame = findGame(onlineGame, roomActual)
 
     if (existeGame === 'toCreate') {
-        let createGame = create(game.gameName, game.username, userList)
+        let createGame = create(roomActual, username, userList)
         onlineGame.push(createGame);
+
     }
-    addPlayerInGame(onlineGame, game)
-    addGameInPlayer(userList, game.username, game.gameName)
-    return existeGame
+    let objGame = addPlayerInGame(onlineGame, username, roomActual)
+   let objPlayer = addGameInPlayer(userList, username, roomActual)
+
+    return [objGame, objPlayer]
 }
 
 const calcIndex = (userList, data) => {

@@ -28,7 +28,7 @@ export const playerLogin = login => ({
 });
 */
 
-export const playerLoginEnterGame = (infoUserGame) => ( console.log('POPOPO',name, room),{
+export const playerLoginEnterGame = (infoUserGame) => ({
     type: PLAYER_LOGIN_ENTER_GAME,
     payload: {
         username: infoUserGame.playerName,

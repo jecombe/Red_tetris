@@ -15,6 +15,8 @@ const Game = (props, test) => {
 	const [textarea, setTextarea] = useState('');
 	const [piece, setPiece] = useState({});
 
+	/* Redirect user if name or room is empty but url matches "/:room[:playerName]" */
+	if (!props.playerName || !props.playerRoom) props.history.push("/");
 
    useEffect(() => {
 
@@ -60,18 +62,11 @@ const style = {
 }
 
   
-const mapStateToProps = (state) => {
-
-	console.log('state print', state)
-
-	//const { joined, roomList } = state.user;
-
-	return {
-		state,
-		//joined,
-		//roomList
-	};
-};
+const mapStateToProps = (state) => ({
+	state: state,
+	playerName: state.player.playerName,
+	playerRoom: state.player.playerRoom
+});
 
 const mapDispatchToProps = {
 	//playerLogin,

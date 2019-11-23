@@ -14,5 +14,4 @@ border: 4px solid red;
 width: 100%;
 max-width: 25vw;
 background: #111;
-
 `;

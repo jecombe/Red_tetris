@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 
-import rooms from './rooms';
+import app from './app';
 import player from './player';
 
 const rootReducer = combineReducers({
-  rooms,
+  app,
   player
 });
 

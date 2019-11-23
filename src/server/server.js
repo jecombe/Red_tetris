@@ -14,10 +14,19 @@ const io = socketIO(server, {
     pingTimeout: 15000,
 });
 
+let connections = [];
+
 var userlist = [];
 let rooms = [];
 
 app.use(appRoutes);
+
+io.use((socket, next) => {
+    connections.push(socket.id);
+    console.log(connections);
+    return next();
+});
+
 socketHandler(io, userlist, rooms);
 
 server.listen(port, () => console.log(`Running on localhost:${port}`));

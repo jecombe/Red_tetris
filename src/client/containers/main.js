@@ -1,28 +1,43 @@
 import React from 'react';
-import { Route } from 'react-router-dom'
+import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router-dom'
+import ClipLoader from 'react-spinners/ClipLoader';
 
+import socket from '../api';
+import { appConnected, appDisconnected } from '../actions';
 import Login from './login';
 import Game from './game';
 
-function Main() {
-        return (
-	<div style={style.MainStyle}>
-                <Route exact path="/" component={Login} />
-                <Route exact path="/:room[:playerName]" component={Game} />
+const MainRender = props => {
+    if (!props.connexion)
+        return <ClipLoader /> ;
+    
+    return (
+        <Switch>
+            <Route exact path="/:room[:playerName]" component={Game} />
+            <Route path="/" component={Login} />
+        </Switch>
+    );
+}
+
+const Main = props => {
+	socket.on('connect', props.appConnected);
+	socket.on('disconnect', props.appDisconnected);
+
+    return (
+        <div>
+            <MainRender connexion={props.connexion} />
         </div>
-  );
+    );
 }
 
-const style = {
-	MainStyle: {
-                border: '1px solid black',
-                display: 'flex',
-                flexGrow: '1',
-                justifyContent: 'center',
-                alignItems: 'center',
-                minHeight: '80vh',
-                width: '100vw'
-        }
+const mapStateToProps = state => ({
+    connexion: state.app.connexion,
+});
+
+const mapDispatchToProps = {
+    appConnected,
+    appDisconnected
 }
 
-export default Main;
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

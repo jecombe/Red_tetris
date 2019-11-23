@@ -1,14 +1,25 @@
 import React from 'react';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 const mapRooms = (rooms) => {
-  console.log("rooms =>" , rooms);
-  if (rooms) { 
+  // console.log("rooms =>" , rooms);
+  if (rooms.length !== 0) { 
     return rooms.map(i =>{
-      return <div key={i.name}>{i.name}</div>;
+      return (
+        <div key={i.roomName}>
+          {i.roomName}
+          <button type="submit">Join this room</button>
+        </div>
+      );
     })
   }
   else {
-    return "";
+    // console.log('here');
+    return (
+      <div>
+        No rooms available
+      </div>
+    );
   }
 }
 
@@ -21,29 +32,12 @@ const LoginForm = props => {
           <input id="room" ref={inputRoom} required placeholder="What is your room .." /><br />
           <button type="submit" onClick={handleSubmit}>Submit</button>
       </div>
-      <div> 
+      <div>
+          <h2>Join an existing room :</h2>
           {mapRooms(rooms)}
       </div>
     </div>
   );
 };
-
-// const style = {
-//   loginStyle: {
-//     display: 'flex',
-// 		alignItems: 'center'
-//   },
-//   loginFormStyle: {
-//     textAlign: 'center',
-//     margin: '30vh auto',
-//     width: '70%'
-//   },
-//   loginRoomsStyle: {
-//     border: '1px solid blue',
-//     textAlign: 'center',
-//     margin: 'auto',
-//     width: '70%'
-//   }
-// }
 
 export default LoginForm;

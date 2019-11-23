@@ -13,11 +13,9 @@ const store = createStore(
     rootReducer,
     composeWithDevTools(
         applyMiddleware(
-            storeStateMiddleWare,
             thunk,
+            socketIOEmitterMiddleware(socket),
             logger,
-            socketIOEmitterMiddleware(socket)
-
         )
     )
 );

@@ -5,8 +5,7 @@ import { createGame, freeUserInGame, startGame, searchUserInList, searchRoomInUs
 const socketHandler = (io, userlist, rooms) => {
 
     io.on('connection', socket => {
-        // console.log(socket);
-        socket.emit('rooms', {
+        io.emit('appGetRooms', {
             'rooms': rooms
         });
 
@@ -19,12 +18,19 @@ const socketHandler = (io, userlist, rooms) => {
             console.log('---------- create user and create or join game ----------', game.username, game.roomActual)
             /*Create user =======> si on gere les switch de room alors, il faut checker si le user existe, alors changer de room, sinon creer le user*/
             let objPlayerBeforeGame = loginUser(socket, game.username, userlist)
+        
             console.log('ONE: created user before game start ', objPlayerBeforeGame)
             /*Create or join game if existe*/
+            
             const [objGame, objPlayerAfterGame] = createGame(rooms, userlist, game.username, game.roomActual)
             console.log('- TWO: create game and add info in object Player')
             console.log('- ObjectGame -> ', objGame)
             console.log('- Object PLayer after join or create game -> ', objPlayerAfterGame)
+            
+            io.emit('appGetRooms', {
+                'rooms': rooms
+            });
+            
             /*Join room*/
             socket.join(game.roomActual)
 

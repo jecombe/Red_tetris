@@ -4,28 +4,15 @@ import { connect } from 'react-redux';
 import socket from '../api';
 import LoginForm from '../components/loginForm';
 
-import { roomsGet, playerLogin, playerLoginEnterGame } from '../actions';
+import { appGetRooms, playerLoginEnterGame } from '../actions';
 
 const Login = props => {
 
-  const [rooms, setRooms] = useState([]);
-
-   /*useEffect(() => {
-
+  /* Create a listener for rooms */
+  socket.on('appGetRooms', payload => {
+    props.appGetRooms(payload);
+  });
   
-
-
-   });*/
-
-  socket.on('rooms', payload => {
-    // setRooms(payload.rooms);
-    props.roomsGet(payload.rooms);
-  });
-
-  socket.on('srvMsg', payload => {
-    console.log(payload);
-  });
-
   /* Create ref for child login form component */
   let inputName = React.createRef();
   let inputRoom = React.createRef();
@@ -36,49 +23,33 @@ const Login = props => {
     const name = inputName.current.value.trim();
     const room = inputRoom.current.value.trim();
   
-    if (!name || !room) {
-      return ;
-    }
-    /*else {
-      socket.emit('login', {
-        username: name 
-      });
-      
-      /*socket.emit('joinOrCreateGame', {
-        gameName: room, 
-        username: name
-      });
-    }*/
+    /* Do nothing if name or room are null */
+    if (!name || !room) return ;
 
-    /*props.playerLogin({
-      playerName: name,
-      playerRoom: room
-    });*/
     props.playerLoginEnterGame({
       playerName: name,
       playerRoom: room
     });
 
-
     props.history.push(`/#${room}[${name}]`)
   }
+
   return (
       <LoginForm
         handleSubmit={handleSubmit}
         inputName={inputName}
         inputRoom={inputRoom}
-        rooms={rooms}
+        rooms={props.rooms}
       />
   );
 }
 
 const mapStateToProps = state => ({
-  // rooms: state.user.rooms
+  rooms: state.app.rooms
 });
 
 const mapDispatchToProps = {
-  roomsGet,
-  //playerLogin,
+  appGetRooms,
   playerLoginEnterGame
 }
 

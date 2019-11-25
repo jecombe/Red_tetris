@@ -4,8 +4,9 @@ import socket from '../api';
 import { store } from '../store';
 import Stage from '../components/Stage'
 import { justJoined, appendMessage } from '../actions';
-import { playerStartGame, appGetStage, appGetPieceStart } from '../actions';
+import { playerStartGame, appGetStage, appGetPieceStart, updateStage } from '../actions';
 
+import { usePlayer } from '../hooks/usePlayer';
 
 import GameStatus from '../components/gameStatus';
 import GameBoard from '../components/gameBoard';
@@ -13,6 +14,9 @@ import GameBoard from '../components/gameBoard';
 
 
 const Game = (props, test) => {
+
+	//const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer(props);
+
 
 	function PrintStage(props) {
 		const stage = props;
@@ -42,8 +46,15 @@ const Game = (props, test) => {
 	  socket.on('pieceStart', payload => {
 		  console.log('PIECE START ' ,payload)
 		  props.appGetPieceStart(payload);
+		  //resetPlayer(payload.form)
 
 	  });
+	  socket.on('stage', payload => {
+		console.log('NEW STAGE ' ,payload)
+		props.updateStage(payload);
+		//resetPlayer(payload.form)
+
+	});
 	  
 
 	 
@@ -96,7 +107,9 @@ const mapDispatchToProps = {
 	//playerLogin,
 	playerStartGame,
 	appGetStage,
-	appGetPieceStart
+	appGetPieceStart,
+	updateStage
+
 	
   }
 

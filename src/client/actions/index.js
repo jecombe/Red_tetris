@@ -13,6 +13,10 @@ export const PLAYER_LOGIN = 'PLAYER_LOGIN';
 export const PLAYER_LOGIN_ENTER_GAME = 'PLAYER_LOGIN_ENTER_GAME';
 export const PLAYER_START_GAME = 'PLAYER_START_GAME';
 
+
+export const UPDATE_STAGE = 'UPDATE_STAGE';
+
+
 /*
  * action creators
  */
@@ -39,6 +43,12 @@ export const appGetPieceStart = payload => ({
   type: APP_GET_PIECE_START,
   payload: payload.form
 })
+
+export const updateStage = payload => ({
+  type: UPDATE_STAGE,
+  payload: payload.newStage
+})
+
 
 export const playerLoginEnterGame = (infoUserGame) => ({
   type: PLAYER_LOGIN_ENTER_GAME,

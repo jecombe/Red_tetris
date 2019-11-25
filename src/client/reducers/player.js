@@ -1,10 +1,11 @@
-import { PLAYER_LOGIN, PLAYER_LOGIN_ENTER_GAME, APP_GET_STAGE } from '../actions';
+import { PLAYER_LOGIN, PLAYER_LOGIN_ENTER_GAME, APP_GET_STAGE, APP_GET_PIECE_START } from '../actions';
 import { createStage } from '../../server/stage';
 const initialState = {
     playerName: null,
     playerRoom: null,
     playerSocket: null,
-    playerStage: []
+    playerStage: [],
+    playerPieceStart: null
 };
 
 const playerReducer = (state = initialState, action) => {
@@ -24,6 +25,11 @@ const playerReducer = (state = initialState, action) => {
             return {
                 ...state,
                 playerStage: action.payload
+            };
+            case APP_GET_PIECE_START:
+            return {
+                ...state,
+                playerPieceStart: action.payload
             };
         default:
             return state;

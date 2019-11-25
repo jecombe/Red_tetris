@@ -4,7 +4,7 @@ import socket from '../api';
 import { store } from '../store';
 import Stage from '../components/Stage'
 import { justJoined, appendMessage } from '../actions';
-import { playerStartGame, appGetStage } from '../actions';
+import { playerStartGame, appGetStage, appGetPieceStart } from '../actions';
 
 
 import GameStatus from '../components/gameStatus';
@@ -38,6 +38,13 @@ const Game = (props, test) => {
 	socket.on('objPlayer', payload => {
 		props.appGetStage(payload);
 	  });
+
+	  socket.on('pieceStart', payload => {
+		  console.log('PIECE START ' ,payload)
+		  props.appGetPieceStart(payload);
+
+	  });
+	  
 
 	 
    }, []);
@@ -88,7 +95,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
 	//playerLogin,
 	playerStartGame,
-	appGetStage
+	appGetStage,
+	appGetPieceStart
 	
   }
 

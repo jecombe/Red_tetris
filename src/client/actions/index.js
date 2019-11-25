@@ -6,6 +6,8 @@ export const APP_CONNECTED = 'APP_CONNECTED';
 export const APP_DISCONNECTED = 'APP_DISCONNECTED';
 export const APP_GET_ROOMS = 'APP_GET_ROOMS';
 export const APP_GET_STAGE = 'APP_GET_STAGE';
+export const APP_GET_PIECE_START = 'APP_GET_PIECE_START';
+
 
 export const PLAYER_LOGIN = 'PLAYER_LOGIN';
 export const PLAYER_LOGIN_ENTER_GAME = 'PLAYER_LOGIN_ENTER_GAME';
@@ -31,6 +33,11 @@ export const appGetRooms = payload => ({
 export const appGetStage = payload => ({
   type: APP_GET_STAGE,
   payload: payload.stage
+})
+
+export const appGetPieceStart = payload => ({
+  type: APP_GET_PIECE_START,
+  payload: payload.form
 })
 
 export const playerLoginEnterGame = (infoUserGame) => ({

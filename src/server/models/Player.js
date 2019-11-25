@@ -36,8 +36,8 @@ export default class Player {
     }
 
     setPosition(x, y){
-        this.pos.x += x
-        this.pos.y += y
+        this.pos.x = x + this.pos.x
+        this.pos.y = y + this.pos.y
     }
 
 }

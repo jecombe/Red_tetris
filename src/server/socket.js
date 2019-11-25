@@ -3,11 +3,34 @@ import { roomJoin } from './handlers/RoomHandler';
 import { createGame, freeUserInGame, startGame, searchUserInList, searchRoomInUser } from './handlers/GameHandler';
 import { createStage } from './stage';
 
-const updateStage = (piece, obj) => {
+const updateStage = (piece, obj, start) => {
 
     // First flush the stage
-    console.log(obj.stage)
+
     obj.setPosition(10 / 2 - 2, 0)
+    const newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
+    console.log(piece)
+    piece.form.shape.forEach((row, y) => {
+      row.forEach((value, x) => {
+        if (value !== 0) {
+          newStage[y + obj.pos.y][x + obj.pos.x] = [
+            value,
+            `${obj.collided ? 'merged' : 'clear'}`,
+          ];
+        }
+      });
+    });
+    console.log('NEW STAGE ', newStage)
+    return newStage;
+  };
+
+
+
+const updateStagee = (piece, obj, start) => {
+
+    // First flush the stage
+    console.log('=:=:=:=:=:=:=:=:==:=> ', piece, '2 ', obj, '3 ',start)
+    console.log(obj.stage)
     const newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
     console.log(piece)
     piece.form.shape.forEach((row, y) => {
@@ -34,11 +57,19 @@ const updateStage = (piece, obj) => {
     })
     return objPlayer
 }
- const updatePlayerPos = ( x, y, obj) => {
+ const updatePlayerPos = ( x, y, obj, objGame) => {
 
-    obj.setPosition(x, y)
-    const newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
-console.log('new stage ',newStage)
+    console.log('POSITION', x.pos , 'y ', y)
+    console.log('OBJECT BEFORE ', obj)
+
+    obj.setPosition(x.pos, y)
+
+    console.log('OBJECT ', obj)
+    const newStage = updateStagee(objGame.piece, obj,0)
+    return newStage
+    //const newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
+    //console.log('new stage ', newStage)
+    //const newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
     /*setPlayer((prev) => ({
       ...prev,
       pos: { x: (prev.pos.x += x), y: (prev.pos.y += y) },
@@ -109,7 +140,7 @@ const socketHandler = (io, userlist, rooms) => {
             io.sockets.in(game.room).emit('pieceStart', piece);
             let obj = objPlayer(userlist, socket.id)
             io.sockets.in(game.room).emit('stage', {
-                'newStage': updateStage(piece, obj)
+                'newStage': updateStage(piece, obj, 1)
 
             });
 
@@ -118,19 +149,15 @@ const socketHandler = (io, userlist, rooms) => {
 
         })
 
-        socket.on('playerMoveTetro', pos => {
-
-          
+        socket.on('playerMoveTetro', pos => {          
             let obj = objPlayer(userlist, socket.id)
             let objGame = objGaming(rooms, obj.roomAssociate)
+            const newStage = updatePlayerPos(pos, 0, obj, objGame)
+            console.log('RESPONSE MOVE TETRO: ', objGame.roomName)
+            io.to(`${socket.id}`).emit('stage', {
+                'newStage': newStage
 
-            console.log('iobj game ', objGame)
-            //updatePlayerPos(pos, 0, obj, objGame)
-            console.log('RESPONSE MOVE TETRO: ', pos)
-        
-
-
-
+            });
 
         })
 

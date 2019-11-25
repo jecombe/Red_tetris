@@ -4,7 +4,7 @@ import socket from '../api';
 import { store } from '../store';
 import Stage from '../components/Stage'
 import { justJoined, appendMessage } from '../actions';
-import { playerStartGame, appGetStage, appGetPieceStart, updateStage } from '../actions';
+import { playerStartGame, appGetStage, appGetPieceStart, updateStage, moveTetro } from '../actions';
 
 import { usePlayer } from '../hooks/usePlayer';
 
@@ -60,6 +60,23 @@ const Game = (props, test) => {
 	 
    }, []);
 
+
+  const move = ({ keyCode }) => {
+  
+      if (keyCode === 37) {
+		console.log('LEFT');
+
+      } else if (keyCode === 38) {
+        console.log('HAUT');
+      } else if (keyCode === 39) {
+		console.log('RIGTH');
+		props.moveTetro(1)
+
+      } else if (keyCode === 40) {
+		console.log('BAS');
+    }
+  };
+
 	const handleSubmitStatus = () => {
 		props.playerStartGame({
 			playerName: props.state.player.playerName,
@@ -75,8 +92,7 @@ const Game = (props, test) => {
 	};
 
 	return (
-		<div style={style.GameStyle}>
-			{console.log('PIECE RENDER ', piece)}
+		<div style={style.GameStyle} tabIndex="0" onKeyDown={(e) => move(e)}>
 	<PrintStage stage={props.state.player.playerStage}/>
 			<GameStatus handleSubmit={handleSubmitStatus} />
 		</div>
@@ -108,7 +124,8 @@ const mapDispatchToProps = {
 	playerStartGame,
 	appGetStage,
 	appGetPieceStart,
-	updateStage
+	updateStage,
+	moveTetro
 
 	
   }

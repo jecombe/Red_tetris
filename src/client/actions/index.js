@@ -15,6 +15,7 @@ export const PLAYER_START_GAME = 'PLAYER_START_GAME';
 
 
 export const UPDATE_STAGE = 'UPDATE_STAGE';
+export const MOVE_TETRO = 'MOVE_TETRO';
 
 
 /*
@@ -50,6 +51,17 @@ export const updateStage = payload => ({
 })
 
 
+export const moveTetro = (pos) => ({
+  type: MOVE_TETRO,
+  payload: {
+      pos: pos
+  },
+  socket: {
+      send: {
+        channel: 'playerMoveTetro',
+      }
+    }
+});
 export const playerLoginEnterGame = (infoUserGame) => ({
   type: PLAYER_LOGIN_ENTER_GAME,
   payload: {

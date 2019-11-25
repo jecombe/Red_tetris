@@ -5,6 +5,7 @@
 export const APP_CONNECTED = 'APP_CONNECTED';
 export const APP_DISCONNECTED = 'APP_DISCONNECTED';
 export const APP_GET_ROOMS = 'APP_GET_ROOMS';
+export const APP_GET_STAGE = 'APP_GET_STAGE';
 
 export const PLAYER_LOGIN = 'PLAYER_LOGIN';
 export const PLAYER_LOGIN_ENTER_GAME = 'PLAYER_LOGIN_ENTER_GAME';
@@ -25,6 +26,11 @@ export const appDisconnected = () => ({
 export const appGetRooms = payload => ({
   type: APP_GET_ROOMS,
   payload: payload.rooms
+})
+
+export const appGetStage = payload => ({
+  type: APP_GET_STAGE,
+  payload: payload.stage
 })
 
 export const playerLoginEnterGame = (infoUserGame) => ({

@@ -4,26 +4,43 @@ import socket from '../api';
 import { store } from '../store';
 import Stage from '../components/Stage'
 import { justJoined, appendMessage } from '../actions';
-import { playerStartGame } from '../actions';
+import { playerStartGame, appGetStage } from '../actions';
 
 
 import GameStatus from '../components/gameStatus';
 import GameBoard from '../components/gameBoard';
 
+
+
 const Game = (props, test) => {
-	const [handle, setHandle] = useState('');
-	const [textarea, setTextarea] = useState('');
-	const [piece, setPiece] = useState({});
+
+	function PrintStage(props) {
+		const stage = props;
+		if (stage.stage && stage.stage.length) {
+
+		  return <Stage stage={stage.stage} />
+		}
+
+		return 0
+	  }
+
+	  
+	console.log('GAME PROPS ', props)
+	const [piece, setPiece] = useState([]);
 
 	/* Redirect user if name or room is empty but url matches "/:room[:playerName]" */
 	if (!props.playerName || !props.playerRoom) props.history.push("/");
 
+
+
    useEffect(() => {
 
-	  socket.on('pieceStart',(payload) => {
-		  console.log(payload)
-	  })
-   }, [piece]);
+	socket.on('objPlayer', payload => {
+		props.appGetStage(payload);
+	  });
+
+	 
+   }, []);
 
 	const handleSubmitStatus = () => {
 		props.playerStartGame({
@@ -42,7 +59,7 @@ const Game = (props, test) => {
 	return (
 		<div style={style.GameStyle}>
 			{console.log('PIECE RENDER ', piece)}
-			<Stage stage={props.state.player.playerStage} />
+	<PrintStage stage={props.state.player.playerStage}/>
 			<GameStatus handleSubmit={handleSubmitStatus} />
 		</div>
 	);
@@ -70,7 +87,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
 	//playerLogin,
-	playerStartGame
+	playerStartGame,
+	appGetStage
+	
   }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

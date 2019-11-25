@@ -8,6 +8,9 @@ import { appGetRooms, playerLoginEnterGame } from '../actions';
 
 const Login = props => {
 
+
+  console.log('LOGIN PROPS', props)
+
   /* Create a listener for rooms */
   socket.on('appGetRooms', payload => {
     props.appGetRooms(payload);

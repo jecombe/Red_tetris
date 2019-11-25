@@ -34,6 +34,28 @@ const updateStage = (piece, obj) => {
     })
     return objPlayer
 }
+ const updatePlayerPos = ( x, y, obj) => {
+
+    obj.setPosition(x, y)
+    const newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
+console.log('new stage ',newStage)
+    /*setPlayer((prev) => ({
+      ...prev,
+      pos: { x: (prev.pos.x += x), y: (prev.pos.y += y) },
+      collided,
+    }));*/
+  };
+
+  const objGaming = (onlineGame, roomActual) => {
+    let objGame
+    onlineGame.find(obj => {
+        if (obj.roomName == roomActual) {
+            objGame = obj
+            return objGame;
+        }
+    })
+    return objGame;
+}
 
 const socketHandler = (io, userlist, rooms) => {
 
@@ -90,6 +112,22 @@ const socketHandler = (io, userlist, rooms) => {
                 'newStage': updateStage(piece, obj)
 
             });
+
+
+
+
+        })
+
+        socket.on('playerMoveTetro', pos => {
+
+          
+            let obj = objPlayer(userlist, socket.id)
+            let objGame = objGaming(rooms, obj.roomAssociate)
+
+            console.log('iobj game ', objGame)
+            //updatePlayerPos(pos, 0, obj, objGame)
+            console.log('RESPONSE MOVE TETRO: ', pos)
+        
 
 
 

@@ -1,6 +1,39 @@
 import { loginUser, playerLogin } from './handlers/PlayerHandler';
 import { roomJoin } from './handlers/RoomHandler';
 import { createGame, freeUserInGame, startGame, searchUserInList, searchRoomInUser } from './handlers/GameHandler';
+import { createStage } from './stage';
+
+const updateStage = (piece, obj) => {
+
+    // First flush the stage
+    console.log(obj.stage)
+    obj.setPosition(10 / 2 - 2, 0)
+    const newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
+    console.log(piece)
+    piece.form.shape.forEach((row, y) => {
+      row.forEach((value, x) => {
+        if (value !== 0) {
+          newStage[y + obj.pos.y][x + obj.pos.x] = [
+            value,
+            `${obj.collided ? 'merged' : 'clear'}`,
+          ];
+        }
+      });
+    });
+    console.log('NEW STAGE ', newStage)
+    return newStage;
+  };
+
+  const objPlayer = (userList, id) => {
+    let objPlayer;
+    userList.find(obj => {
+        if (obj.idSocket == id) {
+            objPlayer = obj
+            return objPlayer
+        }
+    })
+    return objPlayer
+}
 
 const socketHandler = (io, userlist, rooms) => {
 
@@ -52,6 +85,11 @@ const socketHandler = (io, userlist, rooms) => {
 
             let piece = startGame(game, rooms)
             io.sockets.in(game.room).emit('pieceStart', piece);
+            let obj = objPlayer(userlist, socket.id)
+            io.sockets.in(game.room).emit('stage', {
+                'newStage': updateStage(piece, obj)
+
+            });
 
 
 

@@ -6,8 +6,11 @@ export default class Player {
         this.idSocket = socketId,
         this.owner = false,
         this.stage = null,
-        this.losing = false
-        this.roomAssociate = null
+        this.losing = false,
+        this.roomAssociate = null,
+        this.pos = { x: 0, y: 0 }
+        this.collided = false
+
     }
 
     getLogin(){
@@ -30,6 +33,11 @@ export default class Player {
 
     setStage(){
         this.stage = createStage();
+    }
+
+    setPosition(x, y){
+        this.pos.x = x
+        this.pos.y = y
     }
 
 }

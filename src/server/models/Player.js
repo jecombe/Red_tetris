@@ -31,8 +31,8 @@ export default class Player {
         this.owner = true
     }
 
-    setStage(){
-        this.stage = createStage();
+    setStage(stage){
+        this.stage = stage;
     }
 
     setPosition(x, y){

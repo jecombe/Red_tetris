@@ -210,7 +210,7 @@ export const startGame = (game, rooms) => {
     let objGame = searchGameRoom(rooms, room)
     /*Start Game, game start true and random piece*/
     objGame.setGameStart()
-    console.log('obj game', objGame)
+    //console.log('obj game', objGame)
 
     return objGame.piece
 

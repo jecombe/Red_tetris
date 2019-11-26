@@ -39,5 +39,17 @@ export default class Player {
         this.pos.x = x + this.pos.x
         this.pos.y = y + this.pos.y
     }
+    setPositionNull(){
+
+        this.pos = { x: 0, y: 0 }
+    }
+
+    setCollidedTrue(){
+        this.collided = true
+    }
+
+    setCollidedFalse(){
+        this.collided = false
+    }
 
 }

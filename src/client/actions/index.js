@@ -37,7 +37,10 @@ export const appGetRooms = payload => ({
 
 export const appGetStage = payload => ({
   type: APP_GET_STAGE,
-  payload: payload.stage
+  payload: {
+    stage: payload.stage,
+    collided: payload.collided
+  }
 })
 
 export const appGetPieceStart = payload => ({

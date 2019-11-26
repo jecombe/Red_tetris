@@ -48,14 +48,14 @@ const playerReducer = (state = initialState, action) => {
             case APP_GET_STAGE:
             return {
                 ...state,
-                playerStage: action.payload
+                playerStage: action.payload.stage,
+                collided: action.payload.collided
             };
             case APP_GET_PIECE_START:
             return {
                 ...state,
                 playerPieceStart: action.payload,
                 pos: { x: 10 / 2 - 2, y: 0 },
-                collided: false,
                 tetromino: action.payload,
                 test: updateStage(action.payload)
 
@@ -64,6 +64,7 @@ const playerReducer = (state = initialState, action) => {
             return {
                 ...state,
                 playerStage: action.payload
+                
 
             };
         default:

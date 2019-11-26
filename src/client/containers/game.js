@@ -40,6 +40,7 @@ const Game = (props, test) => {
    useEffect(() => {
 
 	socket.on('objPlayer', payload => {
+		console.log('PUTE ',payload)
 		props.appGetStage(payload);
 	  });
 
@@ -70,7 +71,9 @@ const Game = (props, test) => {
         console.log('HAUT');
       } else if (keyCode === 39) {
 		console.log('RIGTH');
+		
 		props.moveTetro(1)
+		
 
       } else if (keyCode === 40) {
 		console.log('BAS');

@@ -34,7 +34,7 @@ const updateStage = (prevStage, state) => {
   };
 const playerReducer = (state = initialState, action) => {
 
-    console.log('ICICICICICICICICICICI ', action.payload)
+    console.log('ICICICICICICICICICICI ', action.payload, 'FUCK YOU ', state)
     switch(action.type) {
         case PLAYER_LOGIN_ENTER_GAME:
             return {
@@ -57,7 +57,7 @@ const playerReducer = (state = initialState, action) => {
                 playerPieceStart: action.payload,
                 pos: { x: 10 / 2 - 2, y: 0 },
                 tetromino: action.payload,
-                test: updateStage(action.payload)
+               // test: updateStage(action.payload)
 
             };
             case UPDATE_STAGE:

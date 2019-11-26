@@ -19,6 +19,10 @@ export default class Player {
     getIdSocket(){
         return this.idSocket
     }
+
+    getroomAssociate(){
+        return this.roomAssociate
+    }
     isOwner(){
         return this.owner
     }

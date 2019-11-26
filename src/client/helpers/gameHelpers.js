@@ -10,7 +10,6 @@ export const checkCollision = (tetromino, objPlayer, { x: moveX, y: moveY }) => 
 
   let ret = false
 
-  console.log('len ', tetromino.form.shape.length)
   for (let y = 0; y < tetromino.form.shape.length; y += 1) {
     for (let x = 0; x < tetromino.form.shape[y].length; x += 1) {
       // 1. Check that we're on an actual Tetromino cell

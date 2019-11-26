@@ -46,7 +46,7 @@ const Game = (props, test) => {
 	  socket.on('pieceStart', payload => {
 		  console.log('PIECE START ' ,payload)
 		  props.appGetPieceStart(payload);
-		  setDropTime(1000);
+		  //setDropTime(1000);
 
 		  //resetPlayer(payload.form)
 
@@ -79,7 +79,7 @@ const Game = (props, test) => {
 		
 
       } else if (keyCode === 40) {
-		setDropTime(1000);
+		//setDropTime(1000);
 
 		  props.dropPlayer(1)
 		console.log('BAS');

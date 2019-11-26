@@ -3,17 +3,16 @@ import { connect } from 'react-redux';
 import socket from '../api';
 import { store } from '../store';
 import Stage from '../components/Stage'
-import { justJoined, appendMessage } from '../actions';
-import { playerStartGame, appGetStage, appGetPieceStart, updateStage, moveTetro } from '../actions';
+import { playerStartGame, appGetStage, appGetPieceStart, updateStage, moveTetro, dropPlayer } from '../actions';
 
-import { usePlayer } from '../hooks/usePlayer';
 
 import GameStatus from '../components/gameStatus';
-import GameBoard from '../components/gameBoard';
+import { useInterval } from '../hooks/useInterval';
 
 
 
 const Game = (props, test) => {
+	const [dropTime, setDropTime] = useState(null);
 
 	//const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer(props);
 
@@ -47,6 +46,8 @@ const Game = (props, test) => {
 	  socket.on('pieceStart', payload => {
 		  console.log('PIECE START ' ,payload)
 		  props.appGetPieceStart(payload);
+		  setDropTime(1000);
+
 		  //resetPlayer(payload.form)
 
 	  });
@@ -66,6 +67,8 @@ const Game = (props, test) => {
   
       if (keyCode === 37) {
 		console.log('LEFT');
+		props.moveTetro(-1)
+
 
       } else if (keyCode === 38) {
         console.log('HAUT');
@@ -76,6 +79,9 @@ const Game = (props, test) => {
 		
 
       } else if (keyCode === 40) {
+		setDropTime(1000);
+
+		  props.dropPlayer(1)
 		console.log('BAS');
     }
   };
@@ -90,10 +96,11 @@ const Game = (props, test) => {
 
 	};
 
-	const handleSubmitBoard = () => {
-		console.log("Board reached");
-	};
 
+/*	useInterval(() => {
+		props.dropPlayer(1)
+	  }, dropTime);
+*/
 	return (
 		<div style={style.GameStyle} tabIndex="0" onKeyDown={(e) => move(e)}>
 	<PrintStage stage={props.state.player.playerStage}/>
@@ -128,7 +135,8 @@ const mapDispatchToProps = {
 	appGetStage,
 	appGetPieceStart,
 	updateStage,
-	moveTetro
+	moveTetro,
+	dropPlayer
 
 	
   }

@@ -219,6 +219,7 @@ export const startGame = (game, rooms, userlist) => {
     let objGame = searchGameRoom(rooms, game.room)
     let objPlayer = searchObjPlayer(game.username,userlist)
     /*Start Game, game start true and random piece*/
+    objGame.setTetroNull()
     objGame.setGameStart()
     //console.log('obj game', objGame)
     return [objPlayer, objGame]

@@ -1,5 +1,6 @@
 import Room from './Room'
 import Piece from './Piece'
+import { threadId } from 'worker_threads'
 
 export default class Game extends Room {
     constructor(nameGame) {
@@ -8,6 +9,7 @@ export default class Game extends Room {
         this.piece = null,
         this.nextPiece = null
         this.userPiece = []
+        this.tetro = []
     }
 
     getgameName(){
@@ -29,7 +31,11 @@ export default class Game extends Room {
 
     setGameStart(){
         this.gameStart = true
-        this.piece = new Piece()
+        //this.piece = new Piece()
+        this.tetro.push(new Piece)
+        this.tetro.push(new Piece)
+        //this.setTetro(new Piece())
+
     }
 
     setPiece(){
@@ -45,37 +51,16 @@ export default class Game extends Room {
     }
 
     setUserPiece(username){
-        
-        /*const found = this.userPiece.find(element => element === username);
-    
-        console.log('FOUND ', found)
-        if (found === undefined)
-        {
-            console.log(' undefined ')
-            this.userPiece.push(username)
-    
-        }
-        else{
-            console.log('non undefined')
-    
-        }*/
-        console.log('===================================> ', this.userPiece)
-        if (this.userPiece && this.userPiece.length) {
-            //console.log('plain ')
-            this.userPiece = []
 
-        }
-        else
-        {
-            //console.log('vide ')
-            this.userPiece.push(username)
-            this.piece = this.nextPiece
-            this.nextPiece = new Piece()
+        this.userPiece = username
+    }
 
-
-        }
-    
-        }
+    setTetro(){
+        this.tetro.push(new Piece())
+    }
+    setTetroNull(){
+        this.tetro = []
+    }
 
         setUserPieceNull(){
             this.userPiece = []

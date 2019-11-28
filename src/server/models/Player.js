@@ -8,8 +8,10 @@ export default class Player {
         this.stage = null,
         this.losing = false,
         this.roomAssociate = null,
-        this.pos = { x: 0, y: 0 }
-        this.collided = false
+        this.pos = { x: 0, y: 0 },
+        this.collided = false,
+        this.piece = null
+        this.index = 0;
 
     }
 
@@ -54,6 +56,16 @@ export default class Player {
 
     setCollidedFalse(){
         this.collided = false
+    }
+
+    setPiece(piece)
+    {
+        this.piece = piece
+    }
+
+    setIndex(index)
+    {
+        this.index = index
     }
 
 }

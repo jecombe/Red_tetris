@@ -12,7 +12,6 @@ import { useInterval } from '../hooks/useInterval';
 
 
 const Game = (props, test) => {
-	const [dropTime, setDropTime] = useState(null);
 
 	//const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer(props);
 
@@ -29,12 +28,9 @@ const Game = (props, test) => {
 
 	  
 	console.log('GAME PROPS ', props)
-	const [piece, setPiece] = useState([]);
 
 	/* Redirect user if name or room is empty but url matches "/:room[:playerName]" */
 	if (!props.playerName || !props.playerRoom) props.history.push("/");
-
-
 
    useEffect(() => {
 
@@ -42,17 +38,12 @@ const Game = (props, test) => {
 		props.appGetStage(payload);
 	  });
 
-
 	  socket.on('stage', payload => {
 
 		console.log('STAGE ', payload)
 		props.updateStage(payload);
-		//resetPlayer(payload.form)
-
 	});
 	  
-
-	 
    }, []);
 
 
@@ -123,14 +114,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-	//playerLogin,
 	playerStartGame,
 	appGetStage,
 	updateStage,
 	moveTetro,
 	dropPlayer
-
-	
   }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

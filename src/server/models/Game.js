@@ -14,6 +14,11 @@ export default class Game extends Room {
         return this.roomName
     }
 
+    getOwnerGame()
+    {
+        return this.owner
+    }
+
     setPlayerOwner(owner){
         this.owner = owner
     }

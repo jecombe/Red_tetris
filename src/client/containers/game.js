@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import socket from '../api';
 import { store } from '../store';
 import Stage from '../components/Stage'
-import { playerStartGame, appGetStage, appGetPieceStart, updateStage, moveTetro, dropPlayer } from '../actions';
+import { playerStartGame, appGetStage, updateStage, moveTetro, dropPlayer } from '../actions';
 
 
 import GameStatus from '../components/gameStatus';
@@ -39,20 +39,13 @@ const Game = (props, test) => {
    useEffect(() => {
 
 	socket.on('objPlayer', payload => {
-		console.log('PUTE ',payload)
 		props.appGetStage(payload);
 	  });
 
-	  socket.on('pieceStart', payload => {
-		  console.log('PIECE START ' ,payload)
-		  props.appGetPieceStart(payload);
-		  //setDropTime(1000);
 
-		  //resetPlayer(payload.form)
-
-	  });
 	  socket.on('stage', payload => {
-		console.log('NEW STAGE ' ,payload)
+
+		console.log('STAGE ', payload)
 		props.updateStage(payload);
 		//resetPlayer(payload.form)
 
@@ -133,7 +126,6 @@ const mapDispatchToProps = {
 	//playerLogin,
 	playerStartGame,
 	appGetStage,
-	appGetPieceStart,
 	updateStage,
 	moveTetro,
 	dropPlayer

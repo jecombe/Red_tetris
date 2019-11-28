@@ -4,94 +4,9 @@ import { createGame, freeUserInGame, startGame, searchUserInList, searchRoomInUs
 import { createStage } from './stage';
 import { checkCollision } from '../client/helpers/gameHelpers';
 
-const objUser= (userList, id) => {
-  let objPlayer;
-  userList.find(obj => {
-      if (obj.login == id) {
-          objPlayer = obj
-          return objPlayer
-      }
-  })
-  return objPlayer
-}
-const searchAllUser = (game, userlist) =>{
-  console.log('userList ', userlist)
-  for(var i= 0; i < game.users.length; i++)
-{
-  //console.log('-------------------__> ', game.users[i])
-  let obj = objUser(userlist, game.users[i])
-   obj.setPositionNull();
-
-  obj.setPosition(10 / 2 - 2, 0)
 
 
-}
 
-
-}
-const updateStage = (piece, obj, fct, gameActual, userlist) => {
-
-    // First flush the stage
-  if (fct)
-  {
-    obj.setStage(createStage());
-  }
-
- // obj.setPositionNull();
-
-  let usr = searchAllUser(gameActual, userlist)
-  
-    //obj.setPosition(10 / 2 - 2, 0)
-    console.log('pUTIn ', obj.pos)
-    const newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
-    piece.form.shape.forEach((row, y) => {
-      row.forEach((value, x) => {
-        if (value !== 0) {
-          newStage[y + obj.pos.y][x + obj.pos.x] = [
-            value,
-            `${obj.collided ? 'merged' : 'clear'}`,
-          ];
-        }
-      });
-    });
-    return newStage;
-  };
-
-
- 
-
-const updateStagee = (piece, obj, objGame) => {
-
-
-  let newStage 
- 
-    if (objGame.userPiece && objGame.userPiece.length)
-    {
-
-        newStage = obj.stage
-        objGame.setUserPieceNull()
-        
-    }
-    else
-    {
-
-      newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
-    }
-
-    piece.form.shape.forEach((row, y) => {
-      row.forEach((value, x) => {
-        if (value !== 0) {
-          newStage[y + obj.pos.y][x + obj.pos.x] = [
-            value,
-            `${obj.collided ? 'merged' : 'clear'}`,
-          ];
-        }
-      });
-    });
-   
-
-    return newStage;
-  };
 
   const objPlayer = (userList, id) => {
     let objPlayer;
@@ -103,15 +18,7 @@ const updateStagee = (piece, obj, objGame) => {
     })
     return objPlayer
 }
- const updatePlayerPos = ( x, y, obj, objGame) => {
 
-
-    obj.setPosition(x.pos, y)
-
-    const newStage = updateStagee(objGame.piece, obj, objGame)
-    return newStage
-
-  };
 
   const objGaming = (onlineGame, roomActual) => {
     let objGame
@@ -134,7 +41,6 @@ const update = (piece, obj, objGame) => {
      {
          newStage = obj.stage
          let y = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
-
          
      }
      else
@@ -143,7 +49,6 @@ const update = (piece, obj, objGame) => {
        newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
      }
 
- 
      //console.log(piece)
      piece.form.shape.forEach((row, y) => {
        row.forEach((value, x) => {
@@ -163,20 +68,9 @@ const updatePlayerPosDown = ( x, y, obj, objGame) => {
 
 
   if (objGame.userPiece && objGame.userPiece.length){
-
       objGame.setUserPieceNull()
-
-
   }
-  console.log('ererererereerrrr> ', x, 'popopo ', y)
-  console.log('2ererererereerrrr> ', obj.pos.x, '2popopo ', obj.pos.x)
-
-
   obj.setPosition(x, y)
-
-  console.log('ererererereerrrr> ', obj.pos)
-
-  //console.log('UPDATE DOWN ', obj.stage)
 
   const newStage = update(objGame.piece, obj, objGame)
   return newStage
@@ -184,66 +78,14 @@ const updatePlayerPosDown = ( x, y, obj, objGame) => {
   
 };
 
-const updateStageee = (piece, obj, start) => {
-
-  // First flush the stage
-
-  const newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
-  piece.form.shape.forEach((row, y) => {
-    row.forEach((value, x) => {
-      if (value !== 0) {
-        newStage[y + obj.pos.y][x + obj.pos.x] = [
-          value,
-          `${obj.collided ? 'merged' : 'clear'}`,
-        ];
-      }
-    });
-  });
-  //console.log('NEW STAGE ', newStage)
-  return newStage;
-};
-
-
-
-const updatePlayerPose = ( x, y, obj, objGame) => {
-
-  //console.log('POSITION', x.pos , 'y ', y)
- //onsole.log('OBJECT BEFORE ', obj)
-
-  obj.setPosition(x, y)
-  ///console.log('OBJECT ', obj)
-  const newStage = updateStageee(objGame.piece, obj,0)
-  return newStage
-  //const newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
-  //console.log('new stage ', newStage)
-  //const newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
-  /*setPlayer((prev) => ({
-    ...prev,
-    pos: { x: (prev.pos.x += x), y: (prev.pos.y += y) },
-    collided,
-  }));*/
-};
-
-
-
-
-
 
 const updateStaging = (piece, obj) => {
 
-  // First flush the stage
-
- // obj.setPositionNull();
-
-  //obj.setPosition(10 / 2 - 2, 0)
 
   obj.setCollidedTrue()
 
   const newStage = obj.stage
-    //onst newStagee = obj.stage.map((row) => row.map((cell) => (cell[0] === 'clear' ? [0, 'clear'] : cell)));
-
-  //const newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
-  //console.log(piece)
+ 
   piece.form.shape.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== 0) {
@@ -255,7 +97,6 @@ const updateStaging = (piece, obj) => {
     });
   });
 
-  //console.log('NEW STAGE ', newStage)
   return newStage;
 };
 
@@ -270,12 +111,8 @@ const updateStaging2 = (piece, obj) => {
   obj.setPosition(10 / 2 - 2, 0)
 
 
-  console.log('---stage before ', obj.stage)
   const newStage = obj.stage
-    //onst newStagee = obj.stage.map((row) => row.map((cell) => (cell[0] === 'clear' ? [0, 'clear'] : cell)));
 
-  //const newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
-  //console.log(piece)
   piece.form.shape.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== 0) {
@@ -287,7 +124,7 @@ const updateStaging2 = (piece, obj) => {
     });
   });
 
-  //console.log('NEW STAGE ', newStage)
+
   return newStage;
 };
 
@@ -296,7 +133,69 @@ const updateStaging2 = (piece, obj) => {
 
 
 
+const objUser= (userList, id) => {
+  let objPlayer;
+  userList.find(obj => {
+      if (obj.login == id) {
+          objPlayer = obj
+          return objPlayer
+      }
+  })
+  return objPlayer
+}
 
+const searchAllUser = (game, userlist, piece) =>{
+  console.log('userList ', userlist)
+  const stage = createStage()
+
+  const newStage = stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
+  piece.form.shape.forEach((row, y) => {
+    row.forEach((value, x) => {
+      if (value !== 0) {
+        newStage[y + 0][x + 3] = [
+          value,
+          `${'clear'}`,
+        ];
+      }
+    });
+  });
+
+  for(var i = 0; i < game.users.length; i++)
+{
+  let obj = objUser(userlist, game.users[i])
+  console.log('before-> before ', obj.pos)
+
+  obj.setPositionNull();
+  console.log('before ', obj.pos)
+  obj.setPosition(10 / 2 - 2, 0)
+  console.log('after ', obj.pos)
+  obj.setStage(newStage)
+}
+
+return newStage
+}
+
+
+const updateStage = (piece, obj, gameActual, userlist) => {
+
+
+const newStage = searchAllUser(gameActual, userlist, piece)
+
+  //obj.setPosition(10 / 2 - 2, 0)
+  console.log('pUTIn ', obj.pos)
+  /*const newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
+  piece.form.shape.forEach((row, y) => {
+    row.forEach((value, x) => {
+      if (value !== 0) {
+        newStage[y + obj.pos.y][x + obj.pos.x] = [
+          value,
+          `${obj.collided ? 'merged' : 'clear'}`,
+        ];
+      }
+    });
+  });*/
+  return newStage;
+};
 
 
 
@@ -345,60 +244,20 @@ const socketHandler = (io, userlist, rooms) => {
 
         socket.on('startGame', game => {
 
-            let piece = startGame(game, rooms)
-            io.sockets.in(game.room).emit('pieceStart', piece);
-            let obj = objPlayer(userlist, socket.id)
-            let objGame = objGaming(rooms, obj.roomAssociate)
+            const [objPlayer, objGame] = startGame(game, rooms, userlist)
             objGame.setNextPiece()
             //faire a tout les users une posisiton voulus
             io.sockets.in(game.room).emit('stage', {
-                'newStage': updateStage(piece, obj, 1, objGame, userlist),
+                'newStage': updateStage(objGame.piece, objPlayer, objGame, userlist),
                 'collided': false
             });
-
-
-
-
-        })
-
-        socket.on('playerMoveTetro', pos => {          
-            let obj = objPlayer(userlist, socket.id)
-            let objGame = objGaming(rooms, obj.roomAssociate)
-            let ok = checkCollision(objGame.piece, obj, { x: pos.pos, y: 0 })
-            if (!ok)
-            {
-    
-
-              let newStage = updatePlayerPos(pos, 0, obj, objGame)
-              
-              obj.setStage(newStage)
-              io.to(`${socket.id}`).emit('stage', {
-                  'newStage': newStage,
-                  'collided': false
-  
-              });
-            }
-            else{
-              let newStage = updatePlayerPose(0, 0, obj, objGame)
-              io.to(`${socket.id}`).emit('stage', {
-                'newStage': newStage,
-                'collided': true
-
-            });
-
-            }
-          
-
         })
 
         socket.on('dropTetro', pos => {   
           
-          console.log(pos)
           let obj = objPlayer(userlist, socket.id)
-         // console.log('OOOOOBBBBJJJEEECCCCTTT ', obj)
 
           const roo = obj.getroomAssociate()
-          console.log('roomAssociate ', roo)
 
           let objGame = objGaming(rooms, roo)
 
@@ -406,7 +265,6 @@ const socketHandler = (io, userlist, rooms) => {
 
           if (!ok)
           {
-            console.log('++++++++++++++++++++++++++++++++++++')
         
             let newStage = updatePlayerPosDown(0, pos.pos, obj, objGame)
             obj.setStage(newStage)

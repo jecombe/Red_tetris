@@ -200,18 +200,28 @@ const searchGameRoom = (rooms, room) => {
     return objGame
 
 }
+const searchObjPlayer = (owner, userlist) => {
+    let objPlayer
+    userlist.find(obj => {
+        if (obj.login == owner) {
+            objPlayer = obj
+            return objPlayer
+        }
+    })
+    return objPlayer
+
+}
 
 /*Start game (TO DO)*/
-export const startGame = (game, rooms) => {
+export const startGame = (game, rooms, userlist) => {
 
-    let user = game.username
-    let room = game.room
-    /*Return object Game, check with name of room*/
-    let objGame = searchGameRoom(rooms, room)
+ /*Return object Game, check with name of room*/
+    let objGame = searchGameRoom(rooms, game.room)
+    let objPlayer = searchObjPlayer(game.username,userlist)
     /*Start Game, game start true and random piece*/
     objGame.setGameStart()
     //console.log('obj game', objGame)
-
-    return objGame.piece
+    return [objPlayer, objGame]
+    //return objGame.piece
 
 }

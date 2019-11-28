@@ -6,7 +6,6 @@ export const APP_CONNECTED = 'APP_CONNECTED';
 export const APP_DISCONNECTED = 'APP_DISCONNECTED';
 export const APP_GET_ROOMS = 'APP_GET_ROOMS';
 export const APP_GET_STAGE = 'APP_GET_STAGE';
-export const APP_GET_PIECE_START = 'APP_GET_PIECE_START';
 
 
 export const PLAYER_LOGIN = 'PLAYER_LOGIN';
@@ -44,10 +43,7 @@ export const appGetStage = payload => ({
   }
 })
 
-export const appGetPieceStart = payload => ({
-  type: APP_GET_PIECE_START,
-  payload: payload.form
-})
+
 
 export const updateStage = payload => ({
   type: UPDATE_STAGE,

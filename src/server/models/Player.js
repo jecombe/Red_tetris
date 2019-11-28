@@ -68,4 +68,11 @@ export default class Player {
         this.index = index
     }
 
+    setPlayerNull(){
+        this.collided = false,
+        this.pos = { x: 0, y: 0 },
+        this.piece = null,
+        this.index = 0
+    }
+
 }

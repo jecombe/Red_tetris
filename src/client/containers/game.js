@@ -13,9 +13,6 @@ import { useInterval } from '../hooks/useInterval';
 
 const Game = (props, test) => {
 
-	//const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer(props);
-
-
 	function PrintStage(props) {
 		const stage = props;
 		if (stage.stage && stage.stage.length) {
@@ -65,7 +62,7 @@ const Game = (props, test) => {
       } else if (keyCode === 40) {
 		//setDropTime(1000);
 
-		  props.dropPlayer(1)
+		  props.dropPlayer()
 		console.log('BAS');
     }
   };
@@ -92,10 +89,6 @@ const Game = (props, test) => {
 		</div>
 	);
 };
-
-			// <div>
-			// 	{props.joined ? <em>You are connected</em> : <em >dont't connect</em>}
-			// </div>
 const style = {
 	GameStyle: {
 		display: 'flex',

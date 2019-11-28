@@ -180,15 +180,6 @@ export const freeUserInGame = (login, roomActual ,onlineGame, userList) => {
 
 
 
-
-
-
-
-
-
-
-
-
 const searchGameRoom = (rooms, room) => {
     let objGame
     rooms.find(obj => {

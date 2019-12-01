@@ -16,6 +16,8 @@ export const PLAYER_START_GAME = 'PLAYER_START_GAME';
 export const UPDATE_STAGE = 'UPDATE_STAGE';
 export const MOVE_TETRO = 'MOVE_TETRO';
 export const MOVE_TETRO_DOWN = 'MOVE_TETRO_DOWN';
+export const SEND_POSITION = 'SEND_POSITION';
+
 
 
 /*
@@ -50,6 +52,17 @@ export const updateStage = payload => ({
   payload: payload.newStage
 })
 
+export const sendPosition = (pos) => ({
+  type: MOVE_TETRO,
+  payload: {
+      keyCode: pos
+  },
+  socket: {
+      send: {
+        channel: 'PositionTetro',
+      }
+    }
+});
 
 export const moveTetro = (pos) => ({
   type: MOVE_TETRO,

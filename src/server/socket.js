@@ -32,18 +32,7 @@ const objGaming = (onlineGame, roomActual) => {
 const update = (piece, obj, objGame) => {
 
 
-  let newStage
-
-  if (objGame.userPiece && objGame.userPiece.length) {
-    newStage = obj.stage
-    let y = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
-
-  }
-  else {
-
-    newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
-  }
-
+  let newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
   piece.form.shape.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== 0) {
@@ -110,13 +99,44 @@ const updateStage = (piece, gameActual, userlist) => {
 
 
 
+const updatePlayerPosition = (x, y, obj) => {
+
+
+  obj.setPosition(x, y)
+
+  const newStage = updateStagee(obj.piece, obj)
+  return newStage
+
+};
+
+const updateStagee = (piece, obj) => {
+
+
+  let newStage
+
+
+  newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
+
+  piece.form.shape.forEach((row, y) => {
+    row.forEach((value, x) => {
+      if (value !== 0) {
+        newStage[y + obj.pos.y][x + obj.pos.x] = [
+          value,
+          `${obj.collided ? 'merged' : 'clear'}`,
+        ];
+      }
+    });
+  });
+
+
+  return newStage;
+};
+
 
 const updatePlayerPosDown = (x, y, obj, objGame) => {
 
 
-  if (objGame.userPiece && objGame.userPiece.length) {
-    objGame.setUserPieceNull()
-  }
+
   obj.setPosition(x, y)
 
   const newStage = update(obj.piece, obj, objGame)
@@ -175,6 +195,69 @@ const updateStaging2 = (piece, obj) => {
 };
 
 
+
+
+const updateStageee = (piece, obj) => {
+
+  // First flush the stage
+
+  const newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
+  piece.form.shape.forEach((row, y) => {
+    row.forEach((value, x) => {
+      if (value !== 0) {
+        newStage[y + obj.pos.y][x + obj.pos.x] = [
+          value,
+          `${obj.collided ? 'merged' : 'clear'}`,
+        ];
+      }
+    });
+  });
+  return newStage;
+};
+
+const updatePlayerPositionCollision = (x, y, obj, objGame) => {
+
+  obj.setPosition(x, y)
+
+  const newStage = updateStageee(obj.piece, obj, 0)
+  return newStage
+
+};
+
+
+
+
+
+
+const moveTetro = (position, objUser, objGame) => {
+
+  if (!checkCollision(objUser.piece, objUser, { x: position, y: 0 }))
+    objUser.setStage(updatePlayerPosition(position, 0, objUser, objGame))
+  else
+    objUser.setStage(updatePlayerPositionCollision(0, 0, objUser, objGame))
+
+}
+
+
+
+
+const dropTetro = (objPlayer, objGame) => {
+
+
+  if (!checkCollision(objPlayer.piece, objPlayer, { x: 0, y: 1 })) {
+    objPlayer.setStage(updatePlayerPosDown(0, 1, objPlayer, objGame))
+  }
+  else {
+    objPlayer.setIndex(objPlayer.index + 1)
+    objPlayer.setStage(updateStaging(objPlayer.piece, objPlayer))
+    objPlayer.setPiece(objGame.tetro[objPlayer.index])
+    if (!objGame.tetro[objPlayer.index + 1]) 
+      objGame.setTetro()
+    objPlayer.setStage(updateStaging2(objPlayer.piece, objPlayer))
+  }
+}
+
+
 const socketHandler = (io, userlist, rooms) => {
 
   io.on('connection', socket => {
@@ -215,35 +298,29 @@ const socketHandler = (io, userlist, rooms) => {
       });
     })
 
-    socket.on('dropTetro', pos => {
+    socket.on('PositionTetro', keyCode => {
 
-      let obj = objPlayer(userlist, socket.id)
-      const room = obj.getroomAssociate()
-      let objGame = objGaming(rooms, room)
+      let objUser = objPlayer(userlist, socket.id)
+      let objGame = objGaming(rooms, objUser.roomAssociate)
 
-      let ok = checkCollision(obj.piece, obj, { x: 0, y: 1 })
-      if (!ok) {
-        let newStage = updatePlayerPosDown(0, 1, obj, objGame)
-        obj.setStage(newStage)
-      }
-      else {
-        obj.setIndex(obj.index + 1)
-        const stageBefore = updateStaging(obj.piece, obj)
-        obj.setStage(stageBefore)
-        obj.setPiece(objGame.tetro[obj.index])
-
-        if (!objGame.tetro[obj.index + 1]) {
-          objGame.setTetro()
-
-        }
-        let stageAfter = updateStaging2(obj.piece, obj)
-        obj.setStage(stageAfter)
+      if (keyCode.keyCode === 37) {
+        console.log('LEFT');
+        moveTetro(-1, objUser, objGame)
+      } else if (keyCode.keyCode === 38) {
+        console.log('HAUT');
+      } else if (keyCode.keyCode === 39) {
+        console.log('RIGTH');
+        moveTetro(1, objUser, objGame)
+      } else if (keyCode.keyCode === 40) {
+        //setDropTime(1000);
+        dropTetro(objUser, objGame)
+        console.log('BAS');
       }
       io.to(`${socket.id}`).emit('stage', {
-        'newStage': obj.stage,
-
+        'newStage': objUser.stage,
       });
     })
+
     socket.on('disconnect', () => {
       /*Search user login in userList*/
       let login = searchUserInList(socket.id, userlist)

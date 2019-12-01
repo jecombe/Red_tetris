@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import socket from '../api';
 import { store } from '../store';
 import Stage from '../components/Stage'
-import { playerStartGame, appGetStage, updateStage, moveTetro, dropPlayer } from '../actions';
+import { playerStartGame, appGetStage, updateStage, moveTetro, dropPlayer, sendPosition } from '../actions';
 
 
 import GameStatus from '../components/gameStatus';
@@ -44,6 +44,10 @@ const Game = (props, test) => {
    }, []);
 
 
+
+	 const move2 = ({ keyCode }) =>{
+		 props.sendPosition(keyCode)
+	 }
   const move = ({ keyCode }) => {
   
       if (keyCode === 37) {
@@ -83,7 +87,7 @@ const Game = (props, test) => {
 	  }, dropTime);
 */
 	return (
-		<div style={style.GameStyle} tabIndex="0" onKeyDown={(e) => move(e)}>
+		<div style={style.GameStyle} tabIndex="0" onKeyDown={(e) => move2(e)}>
 	<PrintStage stage={props.state.player.playerStage}/>
 			<GameStatus handleSubmit={handleSubmitStatus} />
 		</div>
@@ -111,7 +115,8 @@ const mapDispatchToProps = {
 	appGetStage,
 	updateStage,
 	moveTetro,
-	dropPlayer
+	dropPlayer,
+	sendPosition
   }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

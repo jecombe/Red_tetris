@@ -2,7 +2,7 @@ import { loginUser, playerLogin } from './handlers/PlayerHandler';
 import { roomJoin } from './handlers/RoomHandler';
 import { createGame, freeUserInGame, startGame, searchUserInList, searchRoomInUser } from './handlers/GameHandler';
 import { createStage } from './stage';
-import { checkCollision } from '../client/helpers/gameHelpers';
+import { checkCollision, checkCollision1 } from '../client/helpers/gameHelpers';
 
 
 const objPlayer = (userList, id) => {
@@ -145,7 +145,7 @@ const updatePlayerPosDown = (x, y, obj, objGame) => {
 
 };
 
-const updateStaging = (piece, obj) => {
+const updateStagingBeforeCollision = (piece, obj) => {
 
 
   obj.setCollidedTrue()
@@ -167,7 +167,7 @@ const updateStaging = (piece, obj) => {
 };
 
 
-const updateStaging2 = (piece, obj) => {
+const updateStagingAfterCollision = (piece, obj) => {
 
 
   obj.setPositionNull();
@@ -178,7 +178,6 @@ const updateStaging2 = (piece, obj) => {
 
 
   const newStage = obj.stage
-  console.log('++++++++++++++++++++++++++++++++> ', piece)
   piece.form.shape.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== 0) {
@@ -249,14 +248,43 @@ const dropTetro = (objPlayer, objGame) => {
   }
   else {
     objPlayer.setIndex(objPlayer.index + 1)
-    objPlayer.setStage(updateStaging(objPlayer.piece, objPlayer))
+    objPlayer.setStage(updateStagingBeforeCollision(objPlayer.piece, objPlayer))
     objPlayer.setPiece(objGame.tetro[objPlayer.index])
     if (!objGame.tetro[objPlayer.index + 1]) 
       objGame.setTetro()
-    objPlayer.setStage(updateStaging2(objPlayer.piece, objPlayer))
+    objPlayer.setStage(updateStagingAfterCollision(objPlayer.piece, objPlayer))
   }
 }
 
+
+const rotate = (matrix, dir) => {
+  // Make the rows to become cols (transpose)
+  const rotatedTetro = matrix.map((_, index) => matrix.map((col) => col[index]));
+  // Reverse each row to get a rotated matrix
+  if (dir > 0) return rotatedTetro.map((row) => row.reverse());
+  return rotatedTetro.reverse();
+};
+
+const playerRotate = (objPlayer, dir) => {
+  const clonedPlayer = JSON.parse(JSON.stringify(objPlayer));
+
+  clonedPlayer.piece = rotate(clonedPlayer.piece.form.shape, dir);
+
+  const pos = objPlayer.pos.x;
+  let offset = 1;
+  console.log("================++++++=+++++> ", clonedPlayer.piece)
+
+while (checkCollision1(clonedPlayer.piece, objPlayer, { x: 0, y: 0 })) {
+    clonedPlayer.pos.x += offset;
+    offset = -(offset + (offset > 0 ? 1 : -1));
+    if (offset > clonedPlayer.piece[0].length) {
+      rotate(clonedPlayer.piece, -dir);
+      clonedPlayer.pos.x = pos;
+      objPlayer.setPiece(clonedPlayer.piece)
+      return;
+    }
+  }
+}
 
 const socketHandler = (io, userlist, rooms) => {
 
@@ -278,9 +306,8 @@ const socketHandler = (io, userlist, rooms) => {
       socket.join(game.roomActual)
 
       /*A definir*/
-      let stage = objPlayerAfterGame.stage
       io.to(`${socket.id}`).emit('objPlayer', {
-        'stage': stage,
+        'stage': objPlayerAfterGame.stage,
 
       });
       io.sockets.emit('joined', {
@@ -307,6 +334,8 @@ const socketHandler = (io, userlist, rooms) => {
         console.log('LEFT');
         moveTetro(-1, objUser, objGame)
       } else if (keyCode.keyCode === 38) {
+
+        playerRotate(objUser, 1)
         console.log('HAUT');
       } else if (keyCode.keyCode === 39) {
         console.log('RIGTH');

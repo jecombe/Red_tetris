@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import socket from '../api';
 import { store } from '../store';
 import Stage from '../components/Stage'
-import { playerStartGame, appGetStage, updateStage, moveTetro, dropPlayer, sendPosition } from '../actions';
+import { playerStartGame, appGetStage, updateStage, sendPosition } from '../actions';
 
 
 import GameStatus from '../components/gameStatus';
@@ -45,31 +45,9 @@ const Game = (props, test) => {
 
 
 
-	 const move2 = ({ keyCode }) =>{
+	 const move = ({ keyCode }) =>{
 		 props.sendPosition(keyCode)
 	 }
-  const move = ({ keyCode }) => {
-  
-      if (keyCode === 37) {
-		console.log('LEFT');
-		props.moveTetro(-1)
-
-
-      } else if (keyCode === 38) {
-        console.log('HAUT');
-      } else if (keyCode === 39) {
-		console.log('RIGTH');
-		
-		props.moveTetro(1)
-		
-
-      } else if (keyCode === 40) {
-		//setDropTime(1000);
-
-		  props.dropPlayer()
-		console.log('BAS');
-    }
-  };
 
 	const handleSubmitStatus = () => {
 		props.playerStartGame({
@@ -87,7 +65,7 @@ const Game = (props, test) => {
 	  }, dropTime);
 */
 	return (
-		<div style={style.GameStyle} tabIndex="0" onKeyDown={(e) => move2(e)}>
+		<div style={style.GameStyle} tabIndex="0" onKeyDown={(e) => move(e)}>
 	<PrintStage stage={props.state.player.playerStage}/>
 			<GameStatus handleSubmit={handleSubmitStatus} />
 		</div>
@@ -114,8 +92,6 @@ const mapDispatchToProps = {
 	playerStartGame,
 	appGetStage,
 	updateStage,
-	moveTetro,
-	dropPlayer,
 	sendPosition
   }
 

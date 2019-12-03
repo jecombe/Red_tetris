@@ -13,6 +13,12 @@ import { useInterval } from '../hooks/useInterval';
 
 const Game = (props, test) => {
 
+
+
+
+const [dropTime, setDropTime] = useState(null);
+
+
 	function PrintStage(props) {
 		const stage = props;
 		if (stage.stage && stage.stage.length) {
@@ -36,8 +42,8 @@ const Game = (props, test) => {
 	  });
 
 	  socket.on('stage', payload => {
-
-		console.log('STAGE ', payload)
+		//setDropTime(1000)
+		//console.log('STAGE ', payload)
 		props.updateStage(payload);
 	});
 	  
@@ -60,10 +66,10 @@ const Game = (props, test) => {
 	};
 
 
-/*	useInterval(() => {
-		props.dropPlayer(1)
-	  }, dropTime);
-*/
+	/*useInterval(() => {
+		props.sendPosition(40)
+	  }, dropTime);*/
+
 	return (
 		<div style={style.GameStyle} tabIndex="0" onKeyDown={(e) => move(e)}>
 	<PrintStage stage={props.state.player.playerStage}/>

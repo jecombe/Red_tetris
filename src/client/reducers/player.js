@@ -30,7 +30,6 @@ const playerReducer = (state = initialState, action) => {
             case UPDATE_STAGE:
             return {
                 ...state,
-                playerStage: [],
                 playerStage: action.payload
                 
 

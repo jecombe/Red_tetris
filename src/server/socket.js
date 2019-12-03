@@ -272,7 +272,6 @@ const playerRotate = (objPlayer, dir) => {
 
   const pos = objPlayer.pos.x;
   let offset = 1;
-  console.log("================++++++=+++++> ", clonedPlayer.piece)
 
 while (checkCollision1(clonedPlayer.piece, objPlayer, { x: 0, y: 0 })) {
     clonedPlayer.pos.x += offset;
@@ -286,6 +285,27 @@ while (checkCollision1(clonedPlayer.piece, objPlayer, { x: 0, y: 0 })) {
   }
 }
 
+
+const moveTetroDown = (objPlayer, objGame) => {
+
+  let i = 0;
+  let checkColl = false
+while (checkColl != true){
+    i = i + 1
+   checkColl = checkCollision(objPlayer.piece, objPlayer, { x: 0, y: i })
+   checkColl = checkCollision(objPlayer.piece, objPlayer, { x: 0, y: i + 1 })
+}
+objPlayer.setStage(updatePlayerPosDown(0, i, objPlayer, objGame))
+objPlayer.setIndex(objPlayer.index + 1)
+    objPlayer.setStage(updateStagingBeforeCollision(objPlayer.piece, objPlayer))
+    objPlayer.setPiece(objGame.tetro[objPlayer.index])
+    if (!objGame.tetro[objPlayer.index + 1]) 
+      objGame.setTetro()
+    objPlayer.setStage(updateStagingAfterCollision(objPlayer.piece, objPlayer))
+
+
+
+}
 const socketHandler = (io, userlist, rooms) => {
 
   io.on('connection', socket => {
@@ -329,19 +349,19 @@ const socketHandler = (io, userlist, rooms) => {
 
       let objUser = objPlayer(userlist, socket.id)
       let objGame = objGaming(rooms, objUser.roomAssociate)
-
-      if (keyCode.keyCode === 37) {
+      if (keyCode.keyCode === 32) {
+        moveTetroDown(objUser, objGame)
+      }
+      else if (keyCode.keyCode === 37) {
         console.log('LEFT');
         moveTetro(-1, objUser, objGame)
       } else if (keyCode.keyCode === 38) {
-
         playerRotate(objUser, 1)
         console.log('HAUT');
       } else if (keyCode.keyCode === 39) {
         console.log('RIGTH');
         moveTetro(1, objUser, objGame)
       } else if (keyCode.keyCode === 40) {
-        //setDropTime(1000);
         dropTetro(objUser, objGame)
         console.log('BAS');
       }

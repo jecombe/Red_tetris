@@ -24,16 +24,14 @@ export const checkCollision = (tetromino, objPlayer, { x: moveX, y: moveY }) => 
             || objPlayer.stage[y + objPlayer.pos.y + moveY][x + objPlayer.pos.x + moveX][1]
               !== 'clear'
         ) {
-          console.log('1')
+          console.log('1TRUE ')
           ret = true
           return ret;
         }
-        console.log('2')
 
       }
     }
   }
-  console.log('3')
   return ret
 
 };

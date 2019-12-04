@@ -194,8 +194,6 @@ const updateStagingAfterCollision = (piece, obj) => {
 };
 
 
-
-
 const updateStageee = (piece, obj) => {
 
   // First flush the stage
@@ -224,10 +222,6 @@ const updatePlayerPositionCollision = (x, y, obj, objGame) => {
 };
 
 
-
-
-
-
 const moveTetro = (position, objUser, objGame) => {
 
   if (!checkCollision(objUser.piece, objUser, { x: position, y: 0 }))
@@ -236,9 +230,6 @@ const moveTetro = (position, objUser, objGame) => {
     objUser.setStage(updatePlayerPositionCollision(0, 0, objUser, objGame))
 
 }
-
-
-
 
 const dropTetro = (objPlayer, objGame) => {
 
@@ -265,24 +256,48 @@ const rotate = (matrix, dir) => {
   return rotatedTetro.reverse();
 };
 
+
+const updateStagingRotate = (piece, obj) => {
+
+
+
+  const newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
+
+  piece.form.shape.forEach((row, y) => {
+    row.forEach((value, x) => {
+      if (value !== 0) {
+        newStage[y + obj.pos.y][x + obj.pos.x] = [
+          value,
+          `${obj.collided ? 'merged' : 'clear'}`,
+        ];
+      }
+    });
+  });
+  return newStage;
+};
+
 const playerRotate = (objPlayer, dir) => {
+
   const clonedPlayer = JSON.parse(JSON.stringify(objPlayer));
-
-  clonedPlayer.piece = rotate(clonedPlayer.piece.form.shape, dir);
-
+  clonedPlayer.piece.form.shape = rotate(clonedPlayer.piece.form.shape, dir);
   const pos = objPlayer.pos.x;
   let offset = 1;
 
-while (checkCollision1(clonedPlayer.piece, objPlayer, { x: 0, y: 0 })) {
+while (checkCollision(clonedPlayer.piece, objPlayer, { x: 0, y: 0 })) {
     clonedPlayer.pos.x += offset;
     offset = -(offset + (offset > 0 ? 1 : -1));
     if (offset > clonedPlayer.piece[0].length) {
       rotate(clonedPlayer.piece, -dir);
       clonedPlayer.pos.x = pos;
-      objPlayer.setPiece(clonedPlayer.piece)
       return;
     }
   }
+  objPlayer.setPiece(clonedPlayer.piece)
+  objPlayer.setPositionNull()
+  objPlayer.setPosition(clonedPlayer.pos.x, clonedPlayer.pos.y)
+  objPlayer.setStage(updateStagingRotate(objPlayer.piece, objPlayer))
+
+
 }
 
 

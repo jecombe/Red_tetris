@@ -9,6 +9,7 @@ import { objPlayer, objGaming } from './utils';
 import { updateStage } from '../handlers/game/stageGame';
 
 export const actions = (socket, userlist, rooms, io) => {
+
   socket.on('LoginUserGame', (data) => loginUserGame(data, socket, userlist, rooms, io));
 
   socket.on('startGame', (data) => startGame(data, socket, userlist, rooms, io));

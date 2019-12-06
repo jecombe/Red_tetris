@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
+import params from '../../../params';
 
-const PORT = 8000;
-const socket = io.connect(`http://localhost:${PORT}`);
+const socket = io.connect(`${params.server.url}`);
 
 export default socket;

@@ -5,7 +5,7 @@ import player from './player';
 
 const rootReducer = combineReducers({
   app,
-  player
+  player,
 });
 
 export default rootReducer;

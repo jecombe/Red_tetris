@@ -7,8 +7,7 @@ export const STAGE_HEIGHT_SMALL = 8;
 export const createStage = () => Array.from(Array(STAGE_HEIGHT), () => new Array(STAGE_WIDTH).fill([0, 'clear']));
 
 export const checkCollision = (tetromino, objPlayer, { x: moveX, y: moveY }) => {
-
-  let ret = false
+  let ret = false;
 
   for (let y = 0; y < tetromino.form.shape.length; y += 1) {
     for (let x = 0; x < tetromino.form.shape[y].length; x += 1) {
@@ -24,22 +23,19 @@ export const checkCollision = (tetromino, objPlayer, { x: moveX, y: moveY }) => 
             || objPlayer.stage[y + objPlayer.pos.y + moveY][x + objPlayer.pos.x + moveX][1]
               !== 'clear'
         ) {
-          console.log('1TRUE ')
-          ret = true
+          console.log('1TRUE ');
+          ret = true;
           return ret;
         }
-
       }
     }
   }
-  return ret
-
+  return ret;
 };
 
 
 export const checkCollision1 = (tetromino, objPlayer, { x: moveX, y: moveY }) => {
-
-  let ret = false
+  let ret = false;
 
   for (let y = 0; y < tetromino.length; y += 1) {
     for (let x = 0; x < tetromino[y].length; x += 1) {
@@ -55,16 +51,14 @@ export const checkCollision1 = (tetromino, objPlayer, { x: moveX, y: moveY }) =>
             || objPlayer.stage[y + objPlayer.pos.y + moveY][x + objPlayer.pos.x + moveX][1]
               !== 'clear'
         ) {
-          console.log('1')
-          ret = true
+          console.log('1');
+          ret = true;
           return ret;
         }
-        console.log('2')
-
+        console.log('2');
       }
     }
   }
-  console.log('3')
-  return ret
-
+  console.log('3');
+  return ret;
 };

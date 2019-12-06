@@ -17,76 +17,74 @@ export const UPDATE_STAGE = 'UPDATE_STAGE';
 export const MOVE_TETRO = 'MOVE_TETRO';
 
 
-
 /*
  * action creators
  */
 
 export const appConnected = () => ({
-  type: APP_CONNECTED
-})
+  type: APP_CONNECTED,
+});
 
 export const appDisconnected = () => ({
-  type: APP_DISCONNECTED
-})
+  type: APP_DISCONNECTED,
+});
 
-export const appGetRooms = payload => ({
+export const appGetRooms = (payload) => ({
   type: APP_GET_ROOMS,
-  payload: payload.rooms
-})
+  payload: payload.rooms,
+});
 
-export const appGetStage = payload => ({
+export const appGetStage = (payload) => ({
   type: APP_GET_STAGE,
   payload: {
     stage: payload.stage,
-    collided: payload.collided
-  }
-})
+    collided: payload.collided,
+  },
+});
 
 
-
-export const updateStage = payload => ({
+export const updateStage = (payload) => ({
   type: UPDATE_STAGE,
-  payload: payload.newStage
-})
+  payload: payload.newStage,
+});
 
 export const sendPosition = (pos) => ({
   type: MOVE_TETRO,
   payload: {
-      keyCode: pos
+    keyCode: pos,
   },
   socket: {
-      send: {
-        channel: 'PositionTetro',
-      }
-    }
+    send: {
+      channel: 'PositionTetro',
+    },
+  },
 });
 
 
 export const playerLoginEnterGame = (infoUserGame) => ({
   type: PLAYER_LOGIN_ENTER_GAME,
   payload: {
-      username: infoUserGame.playerName,
-      roomActual: infoUserGame.playerRoom
+    username: infoUserGame.playerName,
+    roomActual: infoUserGame.playerRoom,
   },
   socket: {
-      send: {
-        channel: 'LoginUserGame',
-      }
-    }
+    send: {
+      channel: 'LoginUserGame',
+    },
+  },
 });
 
 export const playerStartGame = (infoUserGame) => ({
   type: PLAYER_START_GAME,
   payload: {
     username: infoUserGame.playerName,
-    room: infoUserGame.playerRoom
+    room: infoUserGame.playerRoom,
   },
   socket: {
-      send: {
-        channel: 'startGame',
-      }
-    }
+    send: {
+      channel: 'startGame',
+    },
+  },
 });
 
 /*

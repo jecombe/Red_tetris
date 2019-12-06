@@ -1,78 +1,76 @@
-import {createStage} from '../stage'
+import { createStage } from '../stage';
 
 export default class Player {
-    constructor(socketId, username) {
-        this.login = username,
-        this.idSocket = socketId,
-        this.owner = false,
-        this.stage = null,
-        this.losing = false,
-        this.roomAssociate = null,
-        this.pos = { x: 0, y: 0 },
-        this.collided = false,
-        this.piece = null
-        this.index = 0;
+  constructor(socketId, username) {
+    this.login = username,
+    this.idSocket = socketId,
+    this.owner = false,
+    this.stage = null,
+    this.losing = false,
+    this.roomAssociate = null,
+    this.pos = { x: 0, y: 0 },
+    this.collided = false,
+    this.piece = null;
+    this.index = 0;
+  }
 
-    }
+  getLogin() {
+    return this.login;
+  }
 
-    getLogin(){
-        return this.login
-    }
-    getIdSocket(){
-        return this.idSocket
-    }
+  getIdSocket() {
+    return this.idSocket;
+  }
 
-    getroomAssociate(){
-        return this.roomAssociate
-    }
-    isOwner(){
-        return this.owner
-    }
+  getroomAssociate() {
+    return this.roomAssociate;
+  }
 
-    setLogin(login){
-        this.login = login
+  isOwner() {
+    return this.owner;
+  }
 
-    }
-    setOwner(){
-        this.owner = true
-    }
+  setLogin(login) {
+    this.login = login;
+  }
 
-    setStage(stage){
-        this.stage = stage;
-    }
+  setOwner() {
+    this.owner = true;
+  }
 
-    setPosition(x, y){
-        this.pos.x = x + this.pos.x
-        this.pos.y = y + this.pos.y
-    }
-    setPositionNull(){
+  setStage(stage) {
+    this.stage = stage;
+  }
 
-        this.pos = { x: 0, y: 0 }
-    }
+  setPosition(x, y) {
+    this.pos.x = x + this.pos.x;
+    this.pos.y = y + this.pos.y;
+  }
 
-    setCollidedTrue(){
-        this.collided = true
-    }
+  setPositionNull() {
+    this.pos = { x: 0, y: 0 };
+  }
 
-    setCollidedFalse(){
-        this.collided = false
-    }
+  setCollidedTrue() {
+    this.collided = true;
+  }
 
-    setPiece(piece)
-    {
-        this.piece = piece
-    }
+  setCollidedFalse() {
+    this.collided = false;
+  }
 
-    setIndex(index)
-    {
-        this.index = index
-    }
+  setPiece(piece) {
+    this.piece = piece;
+  }
 
-    setPlayerNull(){
-        this.collided = false,
-        this.pos = { x: 0, y: 0 },
-        this.piece = null,
-        this.index = 0
-    }
+  setIndex(index) {
+    this.index = index;
+  }
 
+  setPlayerNull() {
+    this.collided = false,
+    this.pos = { x: 0, y: 0 },
+    this.piece = null,
+    this.index = 0;
+  }
 }

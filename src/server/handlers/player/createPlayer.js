@@ -1,13 +1,12 @@
 import Player from '../../models/Player';
-import {createStage} from '../../stage'
+import { createStage } from '../../stage';
 
 /* Create a new Player model and add it to userList */
 
 
- export const loginUser = (socket, username, userList) => {
-
-    let newPlayer = new Player(socket.id, username)
-    newPlayer.setStage(createStage());
-    userList.push(newPlayer)
-    return newPlayer
- }
+export const loginUser = (socket, username, userList) => {
+  const newPlayer = new Player(socket.id, username);
+  newPlayer.setStage(createStage());
+  userList.push(newPlayer);
+  return newPlayer;
+};

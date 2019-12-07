@@ -1,8 +1,7 @@
 # Red Tetris
 
-```sh
-$ npm run client-dev
-```
-```sh
-$ npm run srv-dev
-```
+`$ npm run client-dev` and `$ npm run srv-dev`
+
+or
+
+`docker-compose up`

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import FooterBar from '../components/footerBar';
+import FooterLayout from '../components/Footer/FooterLayout';
 
-const Footer = () => <FooterBar />;
+const Footer = () => <FooterLayout />;
 
 export default Footer;

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import socket from '../api';
-import { store } from '../store';
 import Stage from '../components/Game/Stage';
 import {
   playerStartGame, appGetStage, updateStage, sendPosition,
@@ -9,7 +8,7 @@ import {
 
 
 import GameStatus from '../components/Game/gameStatus';
-import { useInterval } from '../hooks/useInterval';
+import useInterval from '../hooks/useInterval';
 
 
 const Game = (props, test) => {

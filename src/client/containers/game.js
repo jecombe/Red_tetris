@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import socket from '../api';
 import { store } from '../store';
-import Stage from '../components/Stage';
+import Stage from '../components/Game/Stage';
 import {
   playerStartGame, appGetStage, updateStage, sendPosition,
 } from '../actions';
 
 
-import GameStatus from '../components/gameStatus';
+import GameStatus from '../components/Game/gameStatus';
 import { useInterval } from '../hooks/useInterval';
 
 

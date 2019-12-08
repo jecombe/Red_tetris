@@ -9,5 +9,4 @@ const FooterLayout = () => (
   </Grid>
 );
 
-
 export default FooterLayout;

@@ -1,49 +1,50 @@
 import React from 'react';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 
 import Header from './header';
 import Main from './main';
 import Footer from './footer';
 
-/* App container structure the app globally with flexbox */
+const useStyles = makeStyles((theme) => ({
+  root: {
+    minHeight: '100vh',
+    width: '100vw',
+    padding: theme.spacing(1),
+  },
+  header: {
+    minHeight: '3vh',
+    width: '100vw',
+    padding: theme.spacing(1),
+  },
+  main: {
+    minHeight: '84vh',
+    width: '100vw',
+    padding: theme.spacing(1),
+  },
+  footer: {
+    minHeight: '2vh',
+    width: '100vw',
+    padding: theme.spacing(1),
+  },
+}));
 
-const App = () => (
-  <div style={style.AppWrapper}>
-    <div style={style.HeaderWrapper}>
-      <Header />
-    </div>
-    <div style={style.MainWrapper}>
-      <Main />
-    </div>
-    <div style={style.FooterWrapper}>
-      <Footer />
-    </div>
-  </div>
-);
+const App = () => {
+  const classes = useStyles();
 
-const style = {
-  AppWrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  HeaderWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-    minHeight: '10vh',
-    border: '1px solid black',
-  },
-  MainWrapper: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '80vh',
-    border: '1px solid black',
-  },
-  FooterWrapper: {
-    height: '5vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  return (
+    <Grid container direction="column">
+      <Grid container className={classes.header}>
+        <Header />
+      </Grid>
+      <Grid container className={classes.main}>
+        <Main />
+      </Grid>
+      <Grid container className={classes.footer}>
+        <Footer />
+      </Grid>
+    </Grid>
+  );
 };
 
 export default App;

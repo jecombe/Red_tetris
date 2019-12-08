@@ -1,33 +1,44 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
-import ClipLoader from 'react-spinners/ClipLoader';
+import PropTypes from 'prop-types';
 
 import socket from '../api';
-import { appConnected, appDisconnected } from '../actions';
+import * as actions from '../actions';
 import Login from './login';
 import Game from './game';
+import Loader from '../components/Loader';
+import Error404 from '../components/Error404';
 
-const MainRender = (props) => {
-  if (!props.connexion) return <ClipLoader />;
+const Main = (props) => {
+  const {
+    appConnected,
+    appDisconnected,
+    connexion,
+  } = props;
+
+  socket.on('connect', appConnected);
+  socket.on('disconnect', appDisconnected);
+
+  if (!connexion) {
+    return (
+      <Loader />
+    );
+  }
 
   return (
     <Switch>
-      <Route exact path="/:room[:playerName]" component={Game} />
-      <Route path="/" component={Login} />
+      <Route exact path="/" component={Login} />
+      <Route path="/:room[:playerName]" component={Game} />
+      <Route component={Error404} />
     </Switch>
   );
 };
 
-const Main = (props) => {
-  socket.on('connect', props.appConnected);
-  socket.on('disconnect', props.appDisconnected);
-
-  return (
-    <div>
-      <MainRender connexion={props.connexion} />
-    </div>
-  );
+Main.propTypes = {
+  appConnected: PropTypes.func.isRequired,
+  appDisconnected: PropTypes.func.isRequired,
+  connexion: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -35,8 +46,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  appConnected,
-  appDisconnected,
+  appConnected: actions.appConnected,
+  appDisconnected: actions.appDisconnected,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

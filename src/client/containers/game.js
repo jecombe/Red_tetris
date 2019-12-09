@@ -1,72 +1,82 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
+
 import socket from '../api';
-import { store } from '../store';
-import Stage from '../components/Stage';
-import {
-  playerStartGame, appGetStage, updateStage, sendPosition,
-} from '../actions';
+import * as actions from '../actions';
+import Stage from '../components/Game/Stage';
+import GameStatus from '../components/Game/gameStatus';
 
-
-import GameStatus from '../components/gameStatus';
-import { useInterval } from '../hooks/useInterval';
-
-
-const Game = (props, test) => {
-  const [dropTime, setDropTime] = useState(null);
-
+const Game = (props) => {
+  const {
+    playerName,
+    playerRoom,
+    playerStage,
+    history,
+    appGetStage,
+    updateStage,
+    sendPosition,
+    playerStartGame,
+  } = props;
 
   function PrintStage(props) {
     const stage = props;
     if (stage.stage && stage.stage.length) {
-		  return <Stage stage={stage.stage} />;
+      return <Stage stage={stage.stage} />;
     }
 
     return 0;
-	  }
+  }
 
 
   console.log('GAME PROPS ', props);
 
   /* Redirect user if name or room is empty but url matches "/:room[:playerName]" */
-  if (!props.playerName || !props.playerRoom) props.history.push('/');
+  if (!playerName || !playerRoom) history.push('/');
 
   useEffect(() => {
     socket.on('objPlayer', (payload) => {
-      props.appGetStage(payload);
-	  });
+      appGetStage(payload);
+    });
 
-	  socket.on('stage', (payload) => {
+    socket.on('stage', (payload) => {
       // setDropTime(1000)
       // console.log('STAGE ', payload)
-      props.updateStage(payload);
+      updateStage(payload);
     });
   }, []);
 
-
-	 const move = ({ keyCode }) => {
-		 props.sendPosition(keyCode);
-	 };
-
-  const handleSubmitStatus = () => {
-    props.playerStartGame({
-      playerName: props.state.player.playerName,
-      playerRoom: props.state.player.playerRoom,
-		  });
+  const move = ({ keyCode }) => {
+    sendPosition(keyCode);
   };
 
-
-  /* useInterval(() => {
-		props.sendPosition(40)
-	  }, dropTime); */
+  const handleSubmitStatus = () => {
+    playerStartGame({
+      playerName,
+      playerRoom,
+    });
+  };
 
   return (
-    <div style={style.GameStyle} tabIndex="0" onKeyDown={(e) => move(e)}>
-      <PrintStage stage={props.state.player.playerStage} />
+    <div role="button" style={style.GameStyle} tabIndex="0" onKeyDown={(e) => move(e)}>
+      <PrintStage stage={playerStage} />
       <GameStatus handleSubmit={handleSubmitStatus} />
     </div>
   );
 };
+
+Game.propTypes = {
+  playerName: PropTypes.string.isRequired,
+  playerRoom: PropTypes.string.isRequired,
+  playerStage: PropTypes.arrayOf(PropTypes.string).isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
+  playerStartGame: PropTypes.func.isRequired,
+  sendPosition: PropTypes.func.isRequired,
+  updateStage: PropTypes.func.isRequired,
+  appGetStage: PropTypes.func.isRequired,
+};
+
 const style = {
   GameStyle: {
     display: 'flex',
@@ -79,16 +89,16 @@ const style = {
 
 
 const mapStateToProps = (state) => ({
-  state,
   playerName: state.player.playerName,
   playerRoom: state.player.playerRoom,
+  playerStage: state.player.playerStage,
 });
 
 const mapDispatchToProps = {
-  playerStartGame,
-  appGetStage,
-  updateStage,
-  sendPosition,
+  playerStartGame: actions.playerStartGame,
+  appGetStage: actions.appGetStage,
+  updateStage: actions.updateStage,
+  sendPosition: actions.sendPosition,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

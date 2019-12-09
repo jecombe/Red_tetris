@@ -1,48 +1,72 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
 
 import socket from '../api';
-import LoginForm from '../components/loginForm';
-
-import { appGetRooms, playerLoginEnterGame } from '../actions';
+import * as actions from '../actions';
+import LoginLayout from '../components/Login/LoginLayout';
 
 const Login = (props) => {
-  console.log('LOGIN PROPS', props);
+  const {
+    appGetRooms,
+    playerLoginEnterGame,
+    history,
+    rooms,
+  } = props;
+  const [errPlayerName, setErrPlayerName] = useState(false);
+  const [errPlayerRoom, setErrPlayerRoom] = useState(false);
+  const handlePlayerName = React.createRef();
+  const handlePlayerRoom = React.createRef();
 
-  /* Create a listener for rooms */
   socket.on('appGetRooms', (payload) => {
-    props.appGetRooms(payload);
+    appGetRooms(payload);
   });
 
-  /* Create ref for child login form component */
-  const inputName = React.createRef();
-  const inputRoom = React.createRef();
+  const handleRoomSubmit = (e) => {
+    // e.preventDefault(); // event.persist();
+    console.log(e);
+    if (!handlePlayerRoom.current.value) setErrPlayerRoom(false);
+    handlePlayerRoom.current.value = e;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault(); // event.persist();
 
-    const name = inputName.current.value.trim();
-    const room = inputRoom.current.value.trim();
+    const name = handlePlayerName.current.value.trim();
+    const room = handlePlayerRoom.current.value.trim();
 
-    /* Do nothing if name or room are null */
+    if (!name) setErrPlayerName(true); else setErrPlayerName(false);
+    if (!room) setErrPlayerRoom(true); else setErrPlayerRoom(false);
+
     if (!name || !room) return;
 
-    props.playerLoginEnterGame({
+    playerLoginEnterGame({
       playerName: name,
       playerRoom: room,
     });
 
-    props.history.push(`/#${room}[${name}]`);
+    history.push(`/#${room}[${name}]`);
   };
 
   return (
-    <LoginForm
+    <LoginLayout
       handleSubmit={handleSubmit}
-      inputName={inputName}
-      inputRoom={inputRoom}
-      rooms={props.rooms}
+      handlePlayerName={handlePlayerName}
+      errPlayerName={errPlayerName}
+      handlePlayerRoom={handlePlayerRoom}
+      errPlayerRoom={errPlayerRoom}
+      rooms={rooms}
+      handleRoomSubmit={handleRoomSubmit}
     />
   );
+};
+
+Login.propTypes = {
+  appGetRooms: PropTypes.func.isRequired,
+  playerLoginEnterGame: PropTypes.func.isRequired,
+  rooms: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -50,8 +74,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  appGetRooms,
-  playerLoginEnterGame,
+  appGetRooms: actions.appGetRooms,
+  playerLoginEnterGame: actions.playerLoginEnterGame,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

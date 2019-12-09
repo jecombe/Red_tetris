@@ -1,7 +1,7 @@
 import {
   PLAYER_LOGIN, PLAYER_LOGIN_ENTER_GAME, APP_GET_STAGE, APP_GET_PIECE_START, UPDATE_STAGE,
 } from '../actions';
-import { TETROMINOS } from '../components/tetrominos';
+import { TETROMINOS } from '../components/Game/tetrominos';
 import { createStage } from '../../server/stage';
 
 const initialState = {

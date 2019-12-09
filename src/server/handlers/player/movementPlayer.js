@@ -5,12 +5,12 @@ import {
 } from './stagePlayer';
 
 const moveTetro = (position, objUser, objGame) => {
-  if (!checkCollision(objUser.piece, objUser, { x: position, y: 0 })) objUser.setStage(updatePlayerPosition(position, 0, objUser, objGame));
+  if (!checkCollision(objUser, objUser.stage, { x: position, y: 0 })) objUser.setStage(updatePlayerPosition(position, 0, objUser, objGame));
   else objUser.setStage(updatePlayerPositionCollision(0, 0, objUser, objGame));
 };
 
 const dropTetro = (objPlayer, objGame) => {
-  if (!checkCollision(objPlayer.piece, objPlayer, { x: 0, y: 1 })) {
+  if (!checkCollision(objPlayer, objPlayer.stage, { x: 0, y: 1 })) {
     objPlayer.setStage(updatePlayerPosition(0, 1, objPlayer, objGame));
   } else {
     objPlayer.setIndex(objPlayer.index + 1);
@@ -30,18 +30,18 @@ const rotate = (matrix, dir) => {
   return rotatedTetro.reverse();
 };
 
+
+
 const playerRotate = (objPlayer, dir) => {
+
   const clonedPlayer = JSON.parse(JSON.stringify(objPlayer));
   clonedPlayer.piece.form.shape = rotate(clonedPlayer.piece.form.shape, dir);
   const pos = objPlayer.pos.x;
   let offset = 1;
-  const checkColl = false;
-
-  while (checkCollision(clonedPlayer.piece, objPlayer, { x: 0, y: 0 })) {
+  while (checkCollision(clonedPlayer, objPlayer.stage, { x: 0, y: 0 })) {
     clonedPlayer.pos.x += offset;
     offset = -(offset + (offset > 0 ? 1 : -1));
     if (offset > clonedPlayer.piece.form.shape[0].length) {
-      console.log('2222222222222');
       rotate(clonedPlayer.piece.form.shape, -dir);
       clonedPlayer.pos.x = pos;
       return;
@@ -51,6 +51,7 @@ const playerRotate = (objPlayer, dir) => {
   objPlayer.setPiece(clonedPlayer.piece);
   objPlayer.setPosition(clonedPlayer.pos.x, clonedPlayer.pos.y);
   objPlayer.setStage(flushUpdate(objPlayer.piece, objPlayer));
+
 };
 
 const moveTetroDown = (objPlayer, objGame) => {
@@ -58,8 +59,8 @@ const moveTetroDown = (objPlayer, objGame) => {
   let checkColl = false;
   while (checkColl != true) {
     i += 1;
-    checkColl = checkCollision(objPlayer.piece, objPlayer, { x: 0, y: i });
-    checkColl = checkCollision(objPlayer.piece, objPlayer, { x: 0, y: i + 1 });
+    checkColl = checkCollision(objPlayer, objPlayer.stage, { x: 0, y: i });
+    checkColl = checkCollision(objPlayer, objPlayer.stage, { x: 0, y: i + 1 });
   }
   objPlayer.setStage(updatePlayerPosition(0, i, objPlayer, objGame));
   objPlayer.setIndex(objPlayer.index + 1);

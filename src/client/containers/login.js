@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
@@ -14,19 +14,30 @@ const Login = (props) => {
     history,
     rooms,
   } = props;
+  const [errPlayerName, setErrPlayerName] = useState(false);
+  const [errPlayerRoom, setErrPlayerRoom] = useState(false);
+  const handlePlayerName = React.createRef();
+  const handlePlayerRoom = React.createRef();
 
   socket.on('appGetRooms', (payload) => {
     appGetRooms(payload);
   });
 
-  const handlePlayerName = React.createRef();
-  const handlePlayerRoom = React.createRef();
+  const handleRoomSubmit = (e) => {
+    // e.preventDefault(); // event.persist();
+    console.log(e);
+    if (!handlePlayerRoom.current.value) setErrPlayerRoom(false);
+    handlePlayerRoom.current.value = e;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault(); // event.persist();
 
     const name = handlePlayerName.current.value.trim();
     const room = handlePlayerRoom.current.value.trim();
+
+    if (!name) setErrPlayerName(true); else setErrPlayerName(false);
+    if (!room) setErrPlayerRoom(true); else setErrPlayerRoom(false);
 
     if (!name || !room) return;
 
@@ -42,8 +53,11 @@ const Login = (props) => {
     <LoginLayout
       handleSubmit={handleSubmit}
       handlePlayerName={handlePlayerName}
+      errPlayerName={errPlayerName}
       handlePlayerRoom={handlePlayerRoom}
+      errPlayerRoom={errPlayerRoom}
       rooms={rooms}
+      handleRoomSubmit={handleRoomSubmit}
     />
   );
 };
@@ -51,7 +65,7 @@ const Login = (props) => {
 Login.propTypes = {
   appGetRooms: PropTypes.func.isRequired,
   playerLoginEnterGame: PropTypes.func.isRequired,
-  rooms: PropTypes.arrayOf(PropTypes.string).isRequired,
+  rooms: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
   history: ReactRouterPropTypes.history.isRequired,
 };
 

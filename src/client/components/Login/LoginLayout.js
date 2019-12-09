@@ -20,8 +20,11 @@ const LoginLayout = (props) => {
   const {
     handleSubmit,
     handlePlayerName,
+    errPlayerName,
     handlePlayerRoom,
+    errPlayerRoom,
     rooms,
+    handleRoomSubmit,
   } = props;
 
   return (
@@ -31,12 +34,15 @@ const LoginLayout = (props) => {
           <Grid item xs={12}>
             <LoginForm
               handlePlayerName={handlePlayerName}
+              errPlayerName={errPlayerName}
               handlePlayerRoom={handlePlayerRoom}
+              errPlayerRoom={errPlayerRoom}
             />
           </Grid>
           <Grid item xs={12}>
             <LoginRooms
               rooms={rooms}
+              handleRoomSubmit={handleRoomSubmit}
             />
           </Grid>
           <Grid item xs={12}>
@@ -50,17 +56,28 @@ const LoginLayout = (props) => {
   );
 };
 
+LoginLayout.defaultProps = {
+  errPlayerName: false,
+  errPlayerRoom: false,
+};
+
 LoginLayout.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handlePlayerName: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   ]).isRequired,
+  errPlayerName: PropTypes.bool,
   handlePlayerRoom: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   ]).isRequired,
+  errPlayerRoom: PropTypes.bool,
   rooms: PropTypes.arrayOf(PropTypes.string).isRequired,
+  handleRoomSubmit: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ]).isRequired,
 };
 
 export default LoginLayout;

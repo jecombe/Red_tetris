@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+
+import LoginInput from './LoginInput';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -19,48 +19,37 @@ const useStyles = makeStyles((theme) => ({
 const LoginForm = (props) => {
   const {
     handlePlayerName,
+    errPlayerName,
     handlePlayerRoom,
+    errPlayerRoom,
   } = props;
   const classes = useStyles();
 
   return (
     <Grid container direction="row" spacing={1} className={classes.paper}>
       <Grid item xs={12} sm={6}>
-        <Typography component="h1" variant="h5">
-            Enter a username
-        </Typography>
-        <div className={classes.form}>
-          <TextField
-            margin="dense"
-            required
-            fullWidth
-            id="name"
-            label="Name"
-            name="name"
-            autoFocus
-            inputRef={handlePlayerName}
-          />
-        </div>
+        <LoginInput
+          title="Enter a username"
+          label="name"
+          refHandle={handlePlayerName}
+          err={errPlayerName}
+        />
       </Grid>
       <Grid item xs={12} sm={6}>
-        <Typography component="h1" variant="h5">
-            Enter a room
-        </Typography>
-        <div className={classes.form}>
-          <TextField
-            margin="dense"
-            required
-            fullWidth
-            id="room"
-            label="Room"
-            name="room"
-            autoFocus
-            inputRef={handlePlayerRoom}
-          />
-        </div>
+        <LoginInput
+          title="Enter a room"
+          label="room"
+          refHandle={handlePlayerRoom}
+          err={errPlayerRoom}
+        />
       </Grid>
     </Grid>
   );
+};
+
+LoginForm.defaultProps = {
+  errPlayerName: false,
+  errPlayerRoom: false,
 };
 
 LoginForm.propTypes = {
@@ -68,10 +57,12 @@ LoginForm.propTypes = {
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   ]).isRequired,
+  errPlayerName: PropTypes.bool,
   handlePlayerRoom: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   ]).isRequired,
+  errPlayerRoom: PropTypes.bool,
 };
 
 export default LoginForm;

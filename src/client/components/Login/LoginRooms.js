@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginRoomsMap = (rooms) => {
+const LoginRoomsMap = (rooms, handleRoomSubmit) => {
   if (rooms.length === 0) {
     return (
       <div>
@@ -30,7 +30,12 @@ const LoginRoomsMap = (rooms) => {
     );
   }
   return rooms.map((i) => (
-    <ListItem button value={i.roomName} key={i.roomName}>
+    <ListItem
+      button
+      value={i.roomName}
+      key={i.roomName}
+      onClick={() => handleRoomSubmit(i.roomName)}
+    >
       <ListItemText primary={`${i.roomName}`} secondary={`Owned by ${i.owner}`} />
       <ListItemText primary="Game not started." />
       <LaunchIcon color="primary" />
@@ -39,7 +44,7 @@ const LoginRoomsMap = (rooms) => {
 };
 
 const LoginRooms = (props) => {
-  const { rooms } = props;
+  const { rooms, handleRoomSubmit } = props;
   const classes = useStyles();
 
   return (
@@ -49,7 +54,7 @@ const LoginRooms = (props) => {
       </Typography>
       <Grid item xs={12} style={{ maxHeight: 150, overflow: 'auto' }}>
         <List style={{ maxHeight: '100%' }}>
-          {LoginRoomsMap(rooms)}
+          {LoginRoomsMap(rooms, handleRoomSubmit)}
         </List>
       </Grid>
     </Grid>
@@ -58,6 +63,10 @@ const LoginRooms = (props) => {
 
 LoginRooms.propTypes = {
   rooms: PropTypes.arrayOf(PropTypes.string).isRequired,
+  handleRoomSubmit: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ]).isRequired,
 };
 
 export default LoginRooms;

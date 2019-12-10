@@ -6,7 +6,7 @@ import { loginUser } from './handlers/player/createPlayer';
 const CLIENT_STATUS = 'client/status';
 const CLIENT_ROOMS = 'client/rooms';
 
-const io = server => {
+const ioHandler = (server) => {
   const connections = [];
   const userlist = [];
   const rooms = [];
@@ -18,25 +18,29 @@ const io = server => {
 
   io.use((socket, next) => {
     connections.push(socket.id);
-    console.log(socket.id);
-    // logger.info('[IO-MIDDLEWARE]: ', id);
+    const { id } = socket;
+    logger.info('io-middleware:', { id });
     socket.emit(CLIENT_STATUS, {
       type: CLIENT_STATUS,
-      connexion: true
+      connexion: true,
     });
     return next();
   });
 
   io.on('connection', (socket) => {
     const { id } = socket;
-    logger.info('Socket connected:', { id });
-    logger.info('Socket connected:', connections)
+
+    logger.info('io-connect:', { id });
+
+    socket.on('error', (err) => {
+      logger.err('Socket err:', err);
+    });
 
     socket.on('disconnect', (action) => {
-      logger.info('Socket disconnected:', socket.id)
+      logger.info('Socket disconnected:', socket.id);
     });
-  })
-}
+  });
+};
 
 const socketHandler = (io, userlist, rooms) => {
   io.on('connection', (socket) => {
@@ -48,4 +52,4 @@ const socketHandler = (io, userlist, rooms) => {
   });
 };
 
-export default io;
+export default ioHandler;

@@ -1,4 +1,4 @@
-import { APP_CONNECTED, APP_DISCONNECTED, APP_GET_ROOMS } from '../actions';
+import { APP_STATUS, APP_GET_ROOMS } from '../actions';
 
 const initialState = {
   connexion: false,
@@ -7,15 +7,10 @@ const initialState = {
 
 const appReducer = (state = initialState, action) => {
   switch (action.type) {
-    case APP_CONNECTED:
+    case APP_STATUS:
       return {
         ...state,
-        connexion: true,
-      };
-    case APP_DISCONNECTED:
-      return {
-        ...state,
-        connexion: false,
+        connexion: action.payload,
       };
     case APP_GET_ROOMS:
       return {

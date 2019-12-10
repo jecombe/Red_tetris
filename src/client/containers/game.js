@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
 
-import socket from '../api';
+import * as socket from '../api';
 import * as actions from '../actions';
 import Stage from '../components/Game/Stage';
 import GameStatus from '../components/Game/gameStatus';
@@ -36,11 +36,11 @@ const Game = (props) => {
   if (!playerName || !playerRoom) history.push('/');
 
   useEffect(() => {
-    socket.on('objPlayer', (payload) => {
+    socket.client.on('objPlayer', (payload) => {
       appGetStage(payload);
     });
 
-    socket.on('stage', (payload) => {
+    socket.client.on('stage', (payload) => {
       // setDropTime(1000)
       // console.log('STAGE ', payload)
       updateStage(payload);

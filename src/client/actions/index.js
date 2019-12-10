@@ -2,6 +2,8 @@
  * action types
  */
 
+
+export const APP_STATUS = 'APP_STATUS';
 export const APP_CONNECTED = 'APP_CONNECTED';
 export const APP_DISCONNECTED = 'APP_DISCONNECTED';
 export const APP_GET_ROOMS = 'APP_GET_ROOMS';
@@ -21,12 +23,9 @@ export const MOVE_TETRO = 'MOVE_TETRO';
  * action creators
  */
 
-export const appConnected = () => ({
-  type: APP_CONNECTED,
-});
-
-export const appDisconnected = () => ({
-  type: APP_DISCONNECTED,
+export const updateAppStatus = (payload) => ({
+  type: APP_STATUS,
+  payload: payload.connexion
 });
 
 export const appGetRooms = (payload) => ({

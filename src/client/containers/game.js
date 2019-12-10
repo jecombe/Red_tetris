@@ -29,9 +29,6 @@ const Game = (props) => {
     return 0;
   }
 
-
-  console.log('GAME PROPS ', props);
-
   /* Redirect user if name or room is empty but url matches "/:room[:playerName]" */
   if (!playerName || !playerRoom) history.push('/');
 

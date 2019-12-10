@@ -7,9 +7,10 @@ import { connect } from 'react-redux';
 import HeaderLayout from '../components/Header/HeaderLayout';
 
 const Header = (props) => {
-  console.log(props);
-
-  const { connexion, history } = props;
+  const {
+    connexion,
+    history,
+  } = props;
 
   const handleHomeButton = (e) => {
     e.preventDefault(); // event.persist();
@@ -31,8 +32,6 @@ Header.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  playerName: state.player.playerName,
-  playerRoom: state.player.playerRoom,
   connexion: state.app.connexion,
 });
 

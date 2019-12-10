@@ -15,6 +15,23 @@ const updateStage = (piece, newStage, obj) => {
     return newStage
 }
 
+
+const updateStage1 = (piece, newStage, obj) => {
+
+    piece.form.shape.forEach((row, y) => {
+        row.forEach((value, x) => {
+            if (value !== 0) {
+                newStage[y + obj.pos1.y][x + obj.pos1.x] = [
+                    value,
+                    `${obj.collided ? 'merged' : 'clear'}`,
+                ];
+            }
+        });
+    });
+    return newStage
+}
+
+
 export const flushUpdate = (piece, obj, objGame) => {
     const newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
     return updateStage(piece, newStage, obj)
@@ -35,6 +52,12 @@ export const updateStagingAfterCollision = (piece, obj) => {
     obj.setCollidedFalse();
     obj.setPosition(10 / 2 - 2, 0);
     return updateStage(piece, obj.stage, obj)
+};
+
+export const updateStagingAfterCollision1 = (piece, obj) => {
+    obj.setPositionNull1();
+    obj.setPosition1(10 / 2 - 2, 0);
+    return updateStage1(piece, obj.stage, obj)
 };
 
 export const updatePlayerPositionCollision = (x, y, obj, objGame) => {

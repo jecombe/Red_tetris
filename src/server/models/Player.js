@@ -9,9 +9,11 @@ export default class Player {
     this.losing = false,
     this.roomAssociate = null,
     this.pos = { x: 0, y: 0 },
+    this.pos1 = { x: 0, y: 0 },
     this.collided = false,
-    this.piece = null;
-    this.index = 0;
+    this.piece = null,
+    this.index = 0,
+    this.nextPiece = null
   }
 
   getLogin() {
@@ -26,6 +28,9 @@ export default class Player {
     return this.roomAssociate;
   }
 
+  getNextPiece(){
+    return this.nextPiece;
+  }
   isOwner() {
     return this.owner;
   }
@@ -47,10 +52,18 @@ export default class Player {
     this.pos.y = y + this.pos.y;
   }
 
+
+  setPosition1(x, y) {
+    this.pos.x = x
+    this.pos.y = y
+  }
+
   setPositionNull() {
     this.pos = { x: 0, y: 0 };
   }
-
+  setPositionNull1() {
+    this.pos = { x: 0, y: 0 };
+  }
   setCollidedTrue() {
     this.collided = true;
   }
@@ -62,6 +75,11 @@ export default class Player {
   setPiece(piece) {
     this.piece = piece;
   }
+
+  setNextPiece(piece) {
+    this.nextPiece = piece;
+  }
+
 
   setIndex(index) {
     this.index = index;

@@ -7,8 +7,10 @@ import socket from '../api';
 import * as actions from '../actions';
 import Stage from '../components/Game/Stage';
 import GameStatus from '../components/Game/gameStatus';
+import { createStagePiece } from '../../server/stage';
 
 const Game = (props) => {
+
   const {
     playerName,
     playerRoom,
@@ -18,7 +20,10 @@ const Game = (props) => {
     updateStage,
     sendPosition,
     playerStartGame,
+    playerNextPiece
   } = props;
+
+
 
   function PrintStage(props) {
     const stage = props;
@@ -29,7 +34,16 @@ const Game = (props) => {
     return 0;
   }
 
+  function PrintStagePiece(props) {
 
+    const stage = props;
+    if (stage.stage && stage.stage.length) {
+      return <Stage stage={stage.stage} />;
+    }
+
+    return 0;
+  
+  }
   console.log('GAME PROPS ', props);
 
   /* Redirect user if name or room is empty but url matches "/:room[:playerName]" */
@@ -61,6 +75,7 @@ const Game = (props) => {
   return (
     <div role="button" style={style.GameStyle} tabIndex="0" onKeyDown={(e) => move(e)}>
       <PrintStage stage={playerStage} />
+      <PrintStagePiece stage={playerNextPiece}/>
       <GameStatus handleSubmit={handleSubmitStatus} />
     </div>
   );
@@ -75,6 +90,8 @@ Game.propTypes = {
   sendPosition: PropTypes.func.isRequired,
   updateStage: PropTypes.func.isRequired,
   appGetStage: PropTypes.func.isRequired,
+  playerNextPiece: PropTypes.arrayOf(PropTypes.string).isRequired,
+
 };
 
 const style = {
@@ -92,6 +109,8 @@ const mapStateToProps = (state) => ({
   playerName: state.player.playerName,
   playerRoom: state.player.playerRoom,
   playerStage: state.player.playerStage,
+  playerNextPiece: state.player.playerNextPiece
+  
 });
 
 const mapDispatchToProps = {

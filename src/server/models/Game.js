@@ -1,6 +1,7 @@
 import { threadId } from 'worker_threads';
 import Room from './Room';
 import Piece from './Piece';
+import Player from './Player'
 
 export default class Game extends Room {
   constructor(nameGame) {
@@ -16,6 +17,10 @@ export default class Game extends Room {
 
   getOwnerGame() {
     return this.owner;
+  }
+
+  getNextPieceStart(){
+    return this.tetro[1]
   }
 
   setPlayerOwner(owner) {
@@ -39,4 +44,5 @@ export default class Game extends Room {
   setTetroNull() {
     this.tetro = [];
   }
+
 }

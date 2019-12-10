@@ -10,9 +10,12 @@ const initialState = {
   playerSocket: null,
   playerStage: [],
   tetromino: TETROMINOS[0].shape,
+  playerNextPiece: null
 };
 
 const playerReducer = (state = initialState, action) => {
+
+  console.log('LLALALLALALAA ', action.payload)
   switch (action.type) {
     case PLAYER_LOGIN_ENTER_GAME:
       return {
@@ -27,12 +30,15 @@ const playerReducer = (state = initialState, action) => {
       return {
         ...state,
         playerStage: action.payload.stage,
+        playerNextPiece: null
 
       };
     case UPDATE_STAGE:
+      
       return {
         ...state,
-        playerStage: action.payload,
+        playerStage: action.payload.stage,
+        playerNextPiece: action.payload.nextPiece
 
 
       };

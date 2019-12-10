@@ -45,7 +45,10 @@ export const appGetStage = (payload) => ({
 
 export const updateStage = (payload) => ({
   type: UPDATE_STAGE,
-  payload: payload.newStage,
+  payload: {
+    stage: payload.newStage,
+    nextPiece: payload.nextPiece
+  }
 });
 
 export const sendPosition = (pos) => ({

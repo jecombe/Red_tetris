@@ -6,7 +6,7 @@ import { searchRoomInUser } from '../handlers/game/utils';
 import { searchUserInList } from '../handlers/player/utils';
 import { shareAction } from '../handlers/shareActions';
 import { objPlayer, objGaming } from './utils';
-import { updateStage } from '../handlers/game/stageGame';
+import { updateStage, printTetroStage } from '../handlers/game/stageGame';
 
 export const actions = (socket, userlist, rooms, io) => {
 
@@ -43,9 +43,14 @@ const loginUserGame = (game, socket, userlist, rooms, io) => {
 
 const startGame = (game, socket, userlist, rooms, io) => {
   const [objPlayer, objGame] = startGaming(game, rooms, userlist);
+const stagePiece  = printTetroStage(objGame, userlist)
 
+console.log('PUTIN DE MERDE ', objPlayer.nextPiece)
   io.sockets.in(game.room).emit('stage', {
     newStage: updateStage(objGame.tetro[0], objGame, userlist),
+  
+    nextPiece: objPlayer.nextPiece
+    
   });
 };
 
@@ -53,9 +58,10 @@ const positionTetro = (keyCode, socket, userlist, rooms, io) => {
   const objUser = objPlayer(userlist, socket.id);
   const objGame = objGaming(rooms, objUser.roomAssociate);
   movementPlayer(keyCode.keyCode, objGame, objUser);
-
+  console.log('+_+_+_+_+_+_+_+_+_+_+_+> ', objUser.nextPiece)
   io.to(`${socket.id}`).emit('stage', {
     newStage: objUser.stage,
+    nextPiece: objUser.nextPiece
   });
 };
 

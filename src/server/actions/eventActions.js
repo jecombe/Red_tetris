@@ -24,7 +24,7 @@ const loginUserGame = (game, socket, userlist, rooms, io) => {
   const objPlayerBeforeGame = loginUser(socket, game.username, userlist);
 
   /* ----- Create a game if game is not created ----- */
-  const [objGame, objPlayerAfterGame] = createGame(rooms, userlist, game.username, game.roomActual);
+  const [objGame, objPlayerAfterGame] = createGame(rooms, userlist, game.username, game.roomActual, io);
 
   io.emit('appGetRooms', {
     rooms,
@@ -34,6 +34,7 @@ const loginUserGame = (game, socket, userlist, rooms, io) => {
 
   io.to(`${socket.id}`).emit('objPlayer', {
     stage: objPlayerAfterGame.stage,
+    otherStage: objPlayerAfterGame.otherStage
   });
   io.sockets.emit('joined', {
     success: true,

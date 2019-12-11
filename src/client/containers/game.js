@@ -20,13 +20,16 @@ const Game = (props) => {
     playerName,
     playerRoom,
     playerStage,
+    playerOtherStage,
     history,
     appGetStage,
     updateStage,
     sendPosition,
     playerStartGame,
     playerNextPiece,
-    updateStageMallus
+    updateStageMallus,
+    updateOtherStage
+
   } = props;
 
 
@@ -50,6 +53,13 @@ const Game = (props) => {
     return 0;
   
   }
+
+
+  function PrintOther(props) {
+
+    return <PrintStageOtherPlayer stage={props.stage} />;
+  }
+
   console.log('GAME PROPS ', props);
 
   /* Redirect user if name or room is empty but url matches "/:room[:playerName]" */
@@ -57,6 +67,8 @@ const Game = (props) => {
 
   useEffect(() => {
     socket.on('objPlayer', (payload) => {
+
+      console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++> ', payload)
       appGetStage(payload);
     });
 
@@ -72,6 +84,12 @@ const Game = (props) => {
       // console.log('STAGE ', payload)
       updateStageMallus(payload);
     });
+
+    socket.on('otherStage', (payload) => {
+      // setDropTime(1000)
+       console.log('STAGE OTHER', payload)
+      updateOtherStage(payload);
+    });
   }, []);
 
   const move = ({ keyCode }) => {
@@ -84,13 +102,13 @@ const Game = (props) => {
       playerRoom,
     });
   };
-
   return (
     <div role="button" style={style.GameStyle} tabIndex="0" onKeyDown={(e) => move(e)}>
       <PrintStage stage={playerStage} />
       <PrintStagePiece stage={playerNextPiece}/>
       <GameStatus handleSubmit={handleSubmitStatus} />
-      <PrintStageOtherPlayer/>
+      {console.log('--------------------___> ', playerOtherStage)}
+      <PrintOther stage={playerOtherStage}/>
     </div>
   );
 };
@@ -99,10 +117,12 @@ Game.propTypes = {
   playerName: PropTypes.string.isRequired,
   playerRoom: PropTypes.string.isRequired,
   playerStage: PropTypes.arrayOf(PropTypes.string).isRequired,
+  playerOtherStage:PropTypes.arrayOf(PropTypes.string).isRequired,
   history: ReactRouterPropTypes.history.isRequired,
   playerStartGame: PropTypes.func.isRequired,
   sendPosition: PropTypes.func.isRequired,
   updateStage: PropTypes.func.isRequired,
+  updateOtherStage: PropTypes.func.isRequired,
   updateStageMallus: PropTypes.func.isRequired,
   appGetStage: PropTypes.func.isRequired,
   playerNextPiece: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -124,6 +144,7 @@ const mapStateToProps = (state) => ({
   playerName: state.player.playerName,
   playerRoom: state.player.playerRoom,
   playerStage: state.player.playerStage,
+  playerOtherStage:state.player.playerOtherStage,
   playerNextPiece: state.player.playerNextPiece
   
 });
@@ -133,6 +154,7 @@ const mapDispatchToProps = {
   appGetStage: actions.appGetStage,
   updateStage: actions.updateStage,
   updateStageMallus: actions.updateStageMallus,
+  updateOtherStage:actions.updateOtherStage,
   sendPosition: actions.sendPosition
 };
 

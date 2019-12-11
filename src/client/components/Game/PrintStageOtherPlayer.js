@@ -6,19 +6,22 @@ import StyledOtherStage from './StyledOtherStage';
 
 import { createStage } from '../../../server/stage';
 
-let tab = [createStage() ]
+let tab = [createStage()]
 
- 
-const PrintStageOtherPlayer = () => (
 
-    tab.map(item => {
-        console.log('width', item[0].length, 'height ', item.length)
+const PrintStageOtherPlayer = ({ stage }) => (
 
-       return  <StyledOtherStage width={item[0].length} height={item.length}>
-        {item.map((row) => row.map((cell, x) => <CellOther key={x} type={cell[0]} />))}
-      </StyledOtherStage>
-    })
- 
-  );
+  
+  
+  stage.map(item => {
+    console.log('width', item)
+  
+
+    return <StyledOtherStage width={10} height={20}>
+  
+    </StyledOtherStage>
+  })
+
+);
 
 export default PrintStageOtherPlayer;

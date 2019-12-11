@@ -16,6 +16,7 @@ export default class Player {
     this.nextPiece = null,
     this.mallus = 0,
     this.lineFull = 0;
+    this.otherStage = []
   }
 
   getLogin() {
@@ -101,6 +102,7 @@ getLineFull(){
     this.index = 0,
     this.mallus = 0
     this.lineFull = 0;
+    this.otherStage = []
   }
   setMallus(){
     this.mallus = this.mallus + 1
@@ -108,4 +110,9 @@ getLineFull(){
   setLineFull(){
     this.lineFull = this.lineFull + 1
   }
+
+  setOtherStage(stage){
+    this.otherStage.push(stage)  
+  }
+  
 }

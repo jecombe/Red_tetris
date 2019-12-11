@@ -110,7 +110,7 @@ const setMallusToPlayers = (objGame, userActual, userList, io) => {
         objPlayer1(userList, tabUser[i], io)
     }
 }
-export const updateRows = (newStage, objPlayer, objGame, userList, io, socket) => {
+export const updateRows = (newStage, objPlayer, objGame, userList, io) => {
     // Pour la hauteur verifie si une ligne est pleine
     newStage.forEach((row) => {
         const full_line = row.every(is_full);

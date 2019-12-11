@@ -17,6 +17,7 @@ export const UPDATE_STAGE = 'UPDATE_STAGE';
 export const UPDATE_STAGE_MALLUS = 'UPDATE_STAGE_MALLUS';
 
 export const MOVE_TETRO = 'MOVE_TETRO';
+export const UPDATE_OTHER_STAGE = 'UPDATE_OTHER_STAGE'
 
 
 /*
@@ -41,6 +42,7 @@ export const appGetStage = (payload) => ({
   payload: {
     stage: payload.stage,
     collided: payload.collided,
+    otherStage: payload.otherStage,
   },
 });
 
@@ -57,6 +59,14 @@ export const updateStageMallus = (payload) => ({
   type: UPDATE_STAGE_MALLUS,
   payload: {
     stage: payload.newStage,
+  }
+});
+
+export const updateOtherStage = (payload) => ({
+  type: UPDATE_OTHER_STAGE,
+  payload: {
+    otherStage: payload.otherStage,
+    
   }
 });
 

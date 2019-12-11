@@ -22,6 +22,8 @@ export const PLAYER_LOGIN_ENTER_GAME = 'PLAYER_LOGIN_ENTER_GAME';
 export const PLAYER_START_GAME = 'PLAYER_START_GAME';
 
 export const UPDATE_STAGE = 'UPDATE_STAGE';
+export const UPDATE_STAGE_MALLUS = 'UPDATE_STAGE_MALLUS';
+
 export const MOVE_TETRO = 'MOVE_TETRO';
 
 /*
@@ -48,7 +50,17 @@ export const appGetStage = (payload) => ({
 
 export const updateStage = (payload) => ({
   type: UPDATE_STAGE,
-  payload: payload.newStage,
+  payload: {
+    stage: payload.newStage,
+    nextPiece: payload.nextPiece,
+  },
+});
+
+export const updateStageMallus = (payload) => ({
+  type: UPDATE_STAGE_MALLUS,
+  payload: {
+    stage: payload.newStage,
+  },
 });
 
 export const sendPosition = (pos) => ({

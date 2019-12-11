@@ -7,6 +7,8 @@ import Card from '@material-ui/core/Card';
 import * as socket from '../api';
 import * as actions from '../actions';
 import Stage from '../components/Game/Stage';
+import StageTetro from '../components/Game/StageTetro';
+
 import GameStatus from '../components/Game/gameStatus';
 
 const Game = (props) => {
@@ -19,12 +21,21 @@ const Game = (props) => {
     updateStage,
     sendPosition,
     playerStartGame,
+    playerNextPiece,
+    updateStageMallus,
   } = props;
 
-  function PrintStage(props) {
-    const stage = props;
+  function PrintStage({ stage }) {
     if (stage.stage && stage.stage.length) {
       return <Stage stage={stage.stage} />;
+    }
+
+    return 0;
+  }
+
+  function PrintStagePiece({ stage }) {
+    if (stage.stage && stage.stage.length) {
+      return <StageTetro stage={stage.stage} />;
     }
 
     return 0;
@@ -43,6 +54,13 @@ const Game = (props) => {
       // console.log('STAGE ', payload)
       updateStage(payload);
     });
+
+    socket.client.on('stageMallus', (payload) => {
+      console.log('OKOKOKOKOKOKOKOKOOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKO ', payload);
+      // setDropTime(1000)
+      // console.log('STAGE ', payload)
+      updateStageMallus(payload);
+    });
   }, []);
 
   const move = ({ keyCode }) => {
@@ -59,6 +77,7 @@ const Game = (props) => {
   return (
     <Card style={style.GameStyle} onKeyDown={(e) => move(e)}>
       <PrintStage tabIndex="0" stage={playerStage} />
+      <PrintStagePiece stage={playerNextPiece} />
       <GameStatus handleSubmit={handleSubmitStatus} />
     </Card>
   );
@@ -72,7 +91,9 @@ Game.propTypes = {
   playerStartGame: PropTypes.func.isRequired,
   sendPosition: PropTypes.func.isRequired,
   updateStage: PropTypes.func.isRequired,
+  updateStageMallus: PropTypes.func.isRequired,
   appGetStage: PropTypes.func.isRequired,
+  playerNextPiece: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 const style = {
@@ -85,17 +106,18 @@ const style = {
   },
 };
 
-
 const mapStateToProps = (state) => ({
   playerName: state.player.playerName,
   playerRoom: state.player.playerRoom,
   playerStage: state.player.playerStage,
+  playerNextPiece: state.player.playerNextPiece,
 });
 
 const mapDispatchToProps = {
   playerStartGame: actions.playerStartGame,
   appGetStage: actions.appGetStage,
   updateStage: actions.updateStage,
+  updateStageMallus: actions.updateStageMallus,
   sendPosition: actions.sendPosition,
 };
 

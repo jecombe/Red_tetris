@@ -1,4 +1,3 @@
-import { threadId } from 'worker_threads';
 import Room from './Room';
 import Piece from './Piece';
 
@@ -18,6 +17,14 @@ export default class Game extends Room {
     return this.owner;
   }
 
+  getNextPieceStart() {
+    return this.tetro[1];
+  }
+
+  getUserInGame() {
+    return this.users;
+  }
+
   setPlayerOwner(owner) {
     this.owner = owner;
   }
@@ -25,6 +32,7 @@ export default class Game extends Room {
   setUser(user) {
     this.users.push(user);
   }
+
 
   setGameStart() {
     this.gameStart = true;

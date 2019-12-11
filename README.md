@@ -2,7 +2,7 @@
 
 ## Network
 
-Set url in `params.js` to be accessible across network
+Set host in `params.js` to be accessible across network
 
 ## Dev
 
@@ -11,6 +11,12 @@ Set url in `params.js` to be accessible across network
 or
 
 `docker-compose up`
+
+In case of conflicts with dependencies in docker:
+
+`$ docker system prune`
+
+`$ docker-compose up --build`
 
 ## Test
 

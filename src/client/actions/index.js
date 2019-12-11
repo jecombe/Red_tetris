@@ -1,7 +1,15 @@
 /*
- * action types
+ * action event socket - same as src/server/utils/events
+ * need to be moved in config folder
  */
 
+const LOGIN = 'login';
+const START_GAME = 'startGame';
+const POSITION_TETRO = 'positionTetro';
+
+/*
+ * action types
+ */
 
 export const APP_STATUS = 'APP_STATUS';
 export const APP_CONNECTED = 'APP_CONNECTED';
@@ -9,15 +17,12 @@ export const APP_DISCONNECTED = 'APP_DISCONNECTED';
 export const APP_GET_ROOMS = 'APP_GET_ROOMS';
 export const APP_GET_STAGE = 'APP_GET_STAGE';
 
-
 export const PLAYER_LOGIN = 'PLAYER_LOGIN';
 export const PLAYER_LOGIN_ENTER_GAME = 'PLAYER_LOGIN_ENTER_GAME';
 export const PLAYER_START_GAME = 'PLAYER_START_GAME';
 
-
 export const UPDATE_STAGE = 'UPDATE_STAGE';
 export const MOVE_TETRO = 'MOVE_TETRO';
-
 
 /*
  * action creators
@@ -25,7 +30,7 @@ export const MOVE_TETRO = 'MOVE_TETRO';
 
 export const updateAppStatus = (payload) => ({
   type: APP_STATUS,
-  payload: payload.connexion
+  payload: payload.connexion,
 });
 
 export const appGetRooms = (payload) => ({
@@ -41,7 +46,6 @@ export const appGetStage = (payload) => ({
   },
 });
 
-
 export const updateStage = (payload) => ({
   type: UPDATE_STAGE,
   payload: payload.newStage,
@@ -54,11 +58,10 @@ export const sendPosition = (pos) => ({
   },
   socket: {
     send: {
-      channel: 'PositionTetro',
+      channel: POSITION_TETRO,
     },
   },
 });
-
 
 export const playerLoginEnterGame = (infoUserGame) => ({
   type: PLAYER_LOGIN_ENTER_GAME,
@@ -68,7 +71,7 @@ export const playerLoginEnterGame = (infoUserGame) => ({
   },
   socket: {
     send: {
-      channel: 'LoginUserGame',
+      channel: LOGIN,
     },
   },
 });
@@ -81,7 +84,7 @@ export const playerStartGame = (infoUserGame) => ({
   },
   socket: {
     send: {
-      channel: 'startGame',
+      channel: START_GAME,
     },
   },
 });

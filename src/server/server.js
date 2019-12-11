@@ -1,15 +1,13 @@
-import http from 'http';
-import socketIO from 'socket.io';
-import logger from './helpers/logger';
-
 import app from './app';
-import ioHandler from './socket';
-import params from '../../params';
+import io from './socket';
+import logger from './utils/logger';
 
-const { host, port, url } = params.server;
+const port = process.env.PORT || 3000;
 
-const server = http.createServer(app);
+const server = app.listen(port, () => {
+  logger.info('red-tetris_server');
+  logger.info(`Listening on port ${port}.`);
+});
 
-ioHandler(server);
-
-server.listen({ port, host }, () => logger.info(`Running on ${url}`));
+// Need to be move in app.listen callback ?
+io(server);

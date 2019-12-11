@@ -5,7 +5,7 @@ import Piece from './Piece';
 export default class Game extends Room {
   constructor(nameGame) {
     super(nameGame);
-    this.gameStart = false,
+    this.gameStart = false;
     this.userPiece = [];
     this.tetro = [];
   }

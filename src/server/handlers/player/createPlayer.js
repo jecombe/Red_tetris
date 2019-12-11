@@ -1,5 +1,5 @@
 import Player from '../../models/Player';
-import { createStage } from '../../stage';
+import { createStage } from '../../helpers/stage';
 
 /* Create a new Player model and add it to userList */
 

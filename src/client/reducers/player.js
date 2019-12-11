@@ -2,7 +2,7 @@ import {
   PLAYER_LOGIN, PLAYER_LOGIN_ENTER_GAME, APP_GET_STAGE, APP_GET_PIECE_START, UPDATE_STAGE,
 } from '../actions';
 import { TETROMINOS } from '../components/Game/tetrominos';
-import { createStage } from '../../server/stage';
+import { createStage } from '../../server/helpers/stage';
 
 const initialState = {
   playerName: null,
@@ -33,8 +33,6 @@ const playerReducer = (state = initialState, action) => {
       return {
         ...state,
         playerStage: action.payload,
-
-
       };
     default:
       return state;

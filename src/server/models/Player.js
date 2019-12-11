@@ -1,15 +1,15 @@
-import { createStage } from '../stage';
+import { createStage } from '../helpers/stage';
 
 export default class Player {
   constructor(socketId, username) {
-    this.login = username,
-    this.idSocket = socketId,
-    this.owner = false,
-    this.stage = null,
-    this.losing = false,
-    this.roomAssociate = null,
-    this.pos = { x: 0, y: 0 },
-    this.collided = false,
+    this.login = username;
+    this.idSocket = socketId;
+    this.owner = false;
+    this.stage = null;
+    this.losing = false;
+    this.roomAssociate = null;
+    this.pos = { x: 0, y: 0 };
+    this.collided = false;
     this.piece = null;
     this.index = 0;
   }
@@ -68,9 +68,9 @@ export default class Player {
   }
 
   setPlayerNull() {
-    this.collided = false,
-    this.pos = { x: 0, y: 0 },
-    this.piece = null,
+    this.collided = false;
+    this.pos = { x: 0, y: 0 };
+    this.piece = null;
     this.index = 0;
   }
 }

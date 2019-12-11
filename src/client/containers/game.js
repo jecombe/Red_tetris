@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
+import Card from '@material-ui/core/Card';
 
-import socket from '../api';
+import * as socket from '../api';
 import * as actions from '../actions';
 import Stage from '../components/Game/Stage';
 import GameStatus from '../components/Game/gameStatus';
@@ -29,18 +30,15 @@ const Game = (props) => {
     return 0;
   }
 
-
-  console.log('GAME PROPS ', props);
-
   /* Redirect user if name or room is empty but url matches "/:room[:playerName]" */
   if (!playerName || !playerRoom) history.push('/');
 
   useEffect(() => {
-    socket.on('objPlayer', (payload) => {
+    socket.client.on('objPlayer', (payload) => {
       appGetStage(payload);
     });
 
-    socket.on('stage', (payload) => {
+    socket.client.on('stage', (payload) => {
       // setDropTime(1000)
       // console.log('STAGE ', payload)
       updateStage(payload);
@@ -59,10 +57,10 @@ const Game = (props) => {
   };
 
   return (
-    <div role="button" style={style.GameStyle} tabIndex="0" onKeyDown={(e) => move(e)}>
-      <PrintStage stage={playerStage} />
+    <Card style={style.GameStyle} onKeyDown={(e) => move(e)}>
+      <PrintStage tabIndex="0" stage={playerStage} />
       <GameStatus handleSubmit={handleSubmitStatus} />
-    </div>
+    </Card>
   );
 };
 

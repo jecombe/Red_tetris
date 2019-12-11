@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
 
-import socket from '../api';
+import * as socket from '../api';
 import * as actions from '../actions';
 import LoginLayout from '../components/Login/LoginLayout';
 
@@ -19,7 +19,7 @@ const Login = (props) => {
   const handlePlayerName = React.createRef();
   const handlePlayerRoom = React.createRef();
 
-  socket.on('appGetRooms', (payload) => {
+  socket.client.on(socket.event.CLIENT_ROOMS, (payload) => {
     appGetRooms(payload);
   });
 

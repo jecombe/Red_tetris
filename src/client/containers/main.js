@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import socket from '../api';
+import * as socket from '../api';
 import * as actions from '../actions';
+
 import Login from './login';
 import Game from './game';
 import Loader from '../components/Loader';
@@ -12,13 +13,13 @@ import Error404 from '../components/Error404';
 
 const Main = (props) => {
   const {
-    appConnected,
-    appDisconnected,
+    updateAppStatus,
     connexion,
   } = props;
 
-  socket.on('connect', appConnected);
-  socket.on('disconnect', appDisconnected);
+  console.log(socket);
+  socket.client.on('connect', () => updateAppStatus({ connexion: true }));
+  socket.client.on('disconnect', () => updateAppStatus({ connexion: false }));
 
   if (!connexion) {
     return (
@@ -36,8 +37,7 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  appConnected: PropTypes.func.isRequired,
-  appDisconnected: PropTypes.func.isRequired,
+  updateAppStatus: PropTypes.func.isRequired,
   connexion: PropTypes.bool.isRequired,
 };
 
@@ -46,8 +46,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  appConnected: actions.appConnected,
-  appDisconnected: actions.appDisconnected,
+  updateAppStatus: actions.updateAppStatus,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

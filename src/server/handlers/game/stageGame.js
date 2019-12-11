@@ -1,4 +1,4 @@
-import { createStage } from '../../stage';
+import { createStage } from '../../helpers/stage';
 import { objUser } from '../../actions/utils';
 
 const searchAllUser = (game, userlist, piece) => {

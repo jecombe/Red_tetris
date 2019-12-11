@@ -1,34 +1,13 @@
-import express from 'express';
-import http from 'http';
-import socketIO from 'socket.io';
-import logger from './helpers/logger';
+import app from './app';
+import io from './socket';
+import logger from './utils/logger';
 
-import appRoutes from './routes/app';
-import socketHandler from './socket';
-import params from '../../params';
+const port = process.env.PORT || 3000;
 
-const { host, port, url } = params.server;
-
-const app = express();
-const server = http.createServer(app);
-const io = socketIO(server, {
-  pingInterval: 5000,
-  pingTimeout: 15000,
+const server = app.listen(port, () => {
+  logger.info('red-tetris_server');
+  logger.info(`Listening on port ${port}.`);
 });
 
-const connections = [];
-
-const userlist = [];
-const rooms = [];
-
-app.use(appRoutes);
-
-io.use((socket, next) => {
-  connections.push(socket.id);
-  logger.info('connections', connections);
-  return next();
-});
-
-socketHandler(io, userlist, rooms);
-
-server.listen({ port, host }, () => logger.info(`Running on ${url}`));
+// Need to be move in app.listen callback ?
+io(server);

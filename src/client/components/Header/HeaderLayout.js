@@ -15,14 +15,17 @@ const useStyles = makeStyles({
       color: 'red',
     },
   },
-  connectIcon: {
-    color: (props) => (props.connexion ? 'lime' : 'red'),
-  },
+  connectIcon: (props) => ({
+    color: props.connexion ? 'lime' : 'red',
+  }),
 });
 
 const HeaderLayout = (props) => {
-  const { connexion, handleHomeButton } = props;
-  const classes = useStyles(connexion);
+  const {
+    connexion,
+    handleHomeButton,
+  } = props;
+  const classes = useStyles({ connexion });
 
   return (
     <Grid container alignItems="center">
@@ -35,7 +38,7 @@ const HeaderLayout = (props) => {
         <HeaderLogo />
       </Grid>
       <Grid item xs={3} container justify="center">
-        <FiberManualRecordIcon className={classes.connectIcon} />
+        <FiberManualRecordIcon fontSize="small" className={classes.connectIcon} />
       </Grid>
     </Grid>
   );

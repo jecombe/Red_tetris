@@ -3,7 +3,7 @@ import {
   flushUpdate, updatePlayerPosition, updateStagingBeforeCollision,
   updateStagingAfterCollision, updatePlayerPositionCollision, updateRows, updateStagingAfterCollision1
 } from './stagePlayer';
-import { createStage, createStagePiece } from '../../stage';
+import { createStage, createStagePiece } from '../../helpers/stage';
 
 const moveTetro = (position, objUser, objGame) => {
   if (!checkCollision(objUser, objUser.stage, { x: position, y: 0 })) objUser.setStage(updatePlayerPosition(position, 0, objUser, objGame));
@@ -54,7 +54,7 @@ const dropTetro = (objPlayer, objGame, userList, io, socket) => {
   }
   //objPlayer.setNextPiece(printTetro(objPlayer, objGame.tetro[objPlayer.index + 1]))
 
-  
+
 
 };
 
@@ -103,7 +103,7 @@ const moveTetroDown = (objPlayer, objGame) => {
   objPlayer.setStage(updateStagingBeforeCollision(objPlayer.piece, objPlayer));
   objPlayer.setPiece(objGame.tetro[objPlayer.index]);
   if (!objGame.tetro[objPlayer.index + 1]) objGame.setTetro();
- 
+
   objPlayer.setStage(updateStagingAfterCollision(objPlayer.piece, objPlayer));
 };
 

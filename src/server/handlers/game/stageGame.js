@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-import { createStage } from '../../helpers/stage';
-import { objUser } from '../../actions/utils';
-=======
-import { createStage, createStagePiece } from '../../stage';
+import { createStage, createStagePiece } from '../../helpers/stage';
 import { objUser, objPlayer } from '../../actions/utils';
->>>>>>> feature/next_piece-client
 
 const searchAllUser = (game, userlist, piece) => {
   const stage = createStage();

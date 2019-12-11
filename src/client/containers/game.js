@@ -26,16 +26,16 @@ const Game = (props) => {
   } = props;
 
   function PrintStage({ stage }) {
-    if (stage.stage && stage.stage.length) {
-      return <Stage stage={stage.stage} />;
+    if (stage && stage.length) {
+      return <Stage stage={stage} />;
     }
 
     return 0;
   }
 
   function PrintStagePiece({ stage }) {
-    if (stage.stage && stage.stage.length) {
-      return <StageTetro stage={stage.stage} />;
+    if (stage && stage.length) {
+      return <StageTetro stage={stage} />;
     }
 
     return 0;

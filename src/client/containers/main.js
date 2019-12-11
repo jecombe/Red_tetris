@@ -17,15 +17,10 @@ const Main = (props) => {
     connexion,
   } = props;
 
-  console.log(socket);
   socket.client.on('connect', () => updateAppStatus({ connexion: true }));
   socket.client.on('disconnect', () => updateAppStatus({ connexion: false }));
 
-  if (!connexion) {
-    return (
-      <Loader />
-    );
-  }
+  if (!connexion) return <Loader />;
 
   return (
     <Switch>

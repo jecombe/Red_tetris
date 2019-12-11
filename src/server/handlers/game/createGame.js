@@ -1,6 +1,5 @@
 import Game from '../../models/Game';
 
-
 const create = (roomName, username, userList) => {
   const game = new Game(roomName);
   game.setPlayerOwner(username);

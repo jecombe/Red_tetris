@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
+import Card from '@material-ui/core/Card';
 
 import * as socket from '../api';
 import * as actions from '../actions';
@@ -56,10 +57,10 @@ const Game = (props) => {
   };
 
   return (
-    <div role="button" style={style.GameStyle} tabIndex="0" onKeyDown={(e) => move(e)}>
-      <PrintStage stage={playerStage} />
+    <Card style={style.GameStyle} onKeyDown={(e) => move(e)}>
+      <PrintStage tabIndex="0" stage={playerStage} />
       <GameStatus handleSubmit={handleSubmitStatus} />
-    </div>
+    </Card>
   );
 };
 

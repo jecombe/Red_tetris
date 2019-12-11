@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import socket from '../api';
 import * as actions from '../actions';
 import Stage from '../components/Game/Stage';
+import StageTetro from '../components/Game/StageTetro';
+
 import GameStatus from '../components/Game/gameStatus';
 import { createStagePiece } from '../../server/stage';
 
@@ -20,7 +22,8 @@ const Game = (props) => {
     updateStage,
     sendPosition,
     playerStartGame,
-    playerNextPiece
+    playerNextPiece,
+    updateStageMallus
   } = props;
 
 
@@ -38,7 +41,7 @@ const Game = (props) => {
 
     const stage = props;
     if (stage.stage && stage.stage.length) {
-      return <Stage stage={stage.stage} />;
+      return <StageTetro stage={stage.stage} />;
     }
 
     return 0;
@@ -55,9 +58,18 @@ const Game = (props) => {
     });
 
     socket.on('stage', (payload) => {
+
+      console.log('RECIEVE STAGE ', payload)
       // setDropTime(1000)
       // console.log('STAGE ', payload)
       updateStage(payload);
+    });
+    socket.on('stageMallus', (payload) => {
+
+      console.log('OKOKOKOKOKOKOKOKOOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKO ', payload)
+      // setDropTime(1000)
+      // console.log('STAGE ', payload)
+      updateStageMallus(payload);
     });
   }, []);
 
@@ -89,6 +101,7 @@ Game.propTypes = {
   playerStartGame: PropTypes.func.isRequired,
   sendPosition: PropTypes.func.isRequired,
   updateStage: PropTypes.func.isRequired,
+  updateStageMallus: PropTypes.func.isRequired,
   appGetStage: PropTypes.func.isRequired,
   playerNextPiece: PropTypes.arrayOf(PropTypes.string).isRequired,
 
@@ -117,7 +130,8 @@ const mapDispatchToProps = {
   playerStartGame: actions.playerStartGame,
   appGetStage: actions.appGetStage,
   updateStage: actions.updateStage,
-  sendPosition: actions.sendPosition,
+  updateStageMallus: actions.updateStageMallus,
+  sendPosition: actions.sendPosition
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

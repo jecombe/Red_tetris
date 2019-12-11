@@ -1,4 +1,5 @@
 import { is_full } from './utils';
+import { objUser } from '../../actions/utils';
 
 const updateStage = (piece, newStage, obj) => {
 
@@ -65,11 +66,56 @@ export const updatePlayerPositionCollision = (x, y, obj, objGame) => {
     return flushUpdate(obj.piece, obj, 0);
 };
 
-export const updateRows = (newStage) => {
+const userInGameExceptActual = (userTab, userActual) => {
+    var index = userTab.indexOf(userActual);
+    var copie = new Array();
+    for (var i = 0; i < userTab.length; i++) {
+        copie[i] = userTab[i];
+    }
+    copie.splice(index, 1);
+    return copie
+
+}
+
+const updateStageMallus = (objPlayer, io) => {
+    const calcRow = 20 - objPlayer.getMallus()
+
+    if (calcRow < 20) {
+        objPlayer.stage[calcRow] = new Array(10).fill([0, 'mallus']);
+
+        const socket = objPlayer.getIdSocket()
+
+        io.to(`${socket}`).emit('stageMallus', {
+            newStage: objPlayer.stage
+        });
+
+    }
+}
+const objPlayer1 = (userList, username, io) => {
+    let objPlayer;
+    userList.find((obj) => {
+        if (obj.login == username) {
+            obj.setMallus()
+            updateStageMallus(obj, io)
+
+        }
+    });
+};
+const setMallusToPlayers = (objGame, userActual, userList, io) => {
+
+    const tabUser = userInGameExceptActual(objGame.getUserInGame(), userActual)
+
+    for (var i = 0; i < tabUser.length; i++) {
+
+        objPlayer1(userList, tabUser[i], io)
+    }
+}
+export const updateRows = (newStage, objPlayer, objGame, userList, io, socket) => {
     // Pour la hauteur verifie si une ligne est pleine
     newStage.forEach((row) => {
         const full_line = row.every(is_full);
         if (full_line === true) {
+            objPlayer.setLineFull()
             // Check l'index de la ligne pleine;
             const index = newStage.indexOf(row);
             // Met la ligne a 0
@@ -78,6 +124,8 @@ export const updateRows = (newStage) => {
             newStage.splice(index, 1);
             // Ajoute au debut du tableau un nouveau tableau de 10 a 0
             newStage.unshift(new Array(10).fill([0, 'clear']));
+            setMallusToPlayers(objGame, objPlayer.getLogin(), userList, io)
+
         }
     });
     return (newStage);

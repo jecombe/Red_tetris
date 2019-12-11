@@ -45,7 +45,6 @@ const startGame = (game, socket, userlist, rooms, io) => {
   const [objPlayer, objGame] = startGaming(game, rooms, userlist);
 const stagePiece  = printTetroStage(objGame, userlist)
 
-console.log('PUTIN DE MERDE ', objPlayer.nextPiece)
   io.sockets.in(game.room).emit('stage', {
     newStage: updateStage(objGame.tetro[0], objGame, userlist),
   
@@ -57,12 +56,12 @@ console.log('PUTIN DE MERDE ', objPlayer.nextPiece)
 const positionTetro = (keyCode, socket, userlist, rooms, io) => {
   const objUser = objPlayer(userlist, socket.id);
   const objGame = objGaming(rooms, objUser.roomAssociate);
-  movementPlayer(keyCode.keyCode, objGame, objUser);
-  console.log('+_+_+_+_+_+_+_+_+_+_+_+> ', objUser.nextPiece)
+  movementPlayer(keyCode.keyCode, objGame, objUser, userlist, io, socket);
   io.to(`${socket.id}`).emit('stage', {
     newStage: objUser.stage,
     nextPiece: objUser.nextPiece
   });
+
 };
 
 const disconnect = (socket, userlist, rooms) => {

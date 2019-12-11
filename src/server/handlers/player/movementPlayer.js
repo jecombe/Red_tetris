@@ -34,19 +34,18 @@ const printTetro = (obj, piece) => {
     //obj.setStage(newStage);
 };
 
-const dropTetro = (objPlayer, objGame) => {
+const dropTetro = (objPlayer, objGame, userList, io, socket) => {
   if (!checkCollision(objPlayer, objPlayer.stage, { x: 0, y: 1 })) {
     objPlayer.setStage(updatePlayerPosition(0, 1, objPlayer, objGame));
 
   } else {
     objPlayer.setIndex(objPlayer.index + 1);
     objPlayer.setStage(updateStagingBeforeCollision(objPlayer.piece, objPlayer));
-    objPlayer.setStage(updateRows(objPlayer.stage));
+    objPlayer.setStage(updateRows(objPlayer.stage, objPlayer, objGame, userList, io, socket));
     objPlayer.setPiece(objGame.tetro[objPlayer.index]);
     if (!objGame.tetro[objPlayer.index + 1]) objGame.setTetro();
    // objPlayer.setNextPiece(updateStagingAfterCollision(objGame.tetro[objPlayer.index + 1], onjGame))
     objPlayer.setStage(updateStagingAfterCollision(objPlayer.piece, objPlayer));
-    console.log('PUTUTUTUTUTUTUTU AVANT  ', objPlayer.nextPiece)
     //console.log('piece actuel,', objPlayer.piece, '=========> ', objGame.tetro[objPlayer.index + 1])
 
       printTetro(objPlayer, objGame.tetro[objPlayer.index + 1])
@@ -108,7 +107,7 @@ const moveTetroDown = (objPlayer, objGame) => {
   objPlayer.setStage(updateStagingAfterCollision(objPlayer.piece, objPlayer));
 };
 
-export const movementPlayer = (keyCode, objGame, objUser) => {
+export const movementPlayer = (keyCode, objGame, objUser, userList, io, socket) => {
   if (keyCode === 32) {
     moveTetroDown(objUser, objGame);
   } else if (keyCode === 37) {
@@ -121,7 +120,7 @@ export const movementPlayer = (keyCode, objGame, objUser) => {
     console.log('RIGTH');
     moveTetro(1, objUser, objGame);
   } else if (keyCode === 40) {
-    dropTetro(objUser, objGame);
+    dropTetro(objUser, objGame, userList, io, socket);
     console.log('BAS');
   }
 };

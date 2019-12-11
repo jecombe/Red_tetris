@@ -67,7 +67,6 @@ export const updateStage = (piece, gameActual, userlist) => {
 
 export const printTetroStage = (gameActual, userlist) => {
 
-  console.log('=>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ', gameActual.getNextPieceStart())
   printTetro(gameActual, userlist,  gameActual.getNextPieceStart())
  // const newStagPiece = getPieceInStage(gameActual)
 }

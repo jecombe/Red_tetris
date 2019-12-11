@@ -13,7 +13,9 @@ export default class Player {
     this.collided = false,
     this.piece = null,
     this.index = 0,
-    this.nextPiece = null
+    this.nextPiece = null,
+    this.mallus = 0,
+    this.lineFull = 0;
   }
 
   getLogin() {
@@ -31,10 +33,17 @@ export default class Player {
   getNextPiece(){
     return this.nextPiece;
   }
+
+  getMallus(){
+    return this.mallus
+  }
+
   isOwner() {
     return this.owner;
   }
-
+getLineFull(){
+  return this.lineFull
+}
   setLogin(login) {
     this.login = login;
   }
@@ -89,6 +98,14 @@ export default class Player {
     this.collided = false,
     this.pos = { x: 0, y: 0 },
     this.piece = null,
-    this.index = 0;
+    this.index = 0,
+    this.mallus = 0
+    this.lineFull = 0;
+  }
+  setMallus(){
+    this.mallus = this.mallus + 1
+  }
+  setLineFull(){
+    this.lineFull = this.lineFull + 1
   }
 }

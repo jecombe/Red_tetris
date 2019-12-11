@@ -14,6 +14,8 @@ export const PLAYER_START_GAME = 'PLAYER_START_GAME';
 
 
 export const UPDATE_STAGE = 'UPDATE_STAGE';
+export const UPDATE_STAGE_MALLUS = 'UPDATE_STAGE_MALLUS';
+
 export const MOVE_TETRO = 'MOVE_TETRO';
 
 
@@ -48,6 +50,13 @@ export const updateStage = (payload) => ({
   payload: {
     stage: payload.newStage,
     nextPiece: payload.nextPiece
+  }
+});
+
+export const updateStageMallus = (payload) => ({
+  type: UPDATE_STAGE_MALLUS,
+  payload: {
+    stage: payload.newStage,
   }
 });
 

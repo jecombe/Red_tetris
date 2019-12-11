@@ -1,17 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
+
 
 import socket from '../api';
 import * as actions from '../actions';
 import Stage from '../components/Game/Stage';
 import StageTetro from '../components/Game/StageTetro';
+import PrintStageOtherPlayer from '../components/Game/PrintStageOtherPlayer';
 
 import GameStatus from '../components/Game/gameStatus';
 import { createStagePiece } from '../../server/stage';
 
 const Game = (props) => {
+
 
   const {
     playerName,
@@ -65,8 +68,6 @@ const Game = (props) => {
       updateStage(payload);
     });
     socket.on('stageMallus', (payload) => {
-
-      console.log('OKOKOKOKOKOKOKOKOOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKO ', payload)
       // setDropTime(1000)
       // console.log('STAGE ', payload)
       updateStageMallus(payload);
@@ -89,6 +90,7 @@ const Game = (props) => {
       <PrintStage stage={playerStage} />
       <PrintStagePiece stage={playerNextPiece}/>
       <GameStatus handleSubmit={handleSubmitStatus} />
+      <PrintStageOtherPlayer/>
     </div>
   );
 };

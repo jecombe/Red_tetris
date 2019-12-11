@@ -38,7 +38,7 @@ const HeaderLayout = (props) => {
         <HeaderLogo />
       </Grid>
       <Grid item xs={3} container justify="center">
-        <FiberManualRecordIcon className={classes.connectIcon} />
+        <FiberManualRecordIcon fontSize="small" className={classes.connectIcon} />
       </Grid>
     </Grid>
   );

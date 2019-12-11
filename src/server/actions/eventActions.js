@@ -31,7 +31,7 @@ export const loginUserGame = (io, socketClient, ioGame, data) => {
   io.to(`${socketClient.id}`).emit('objPlayer', {
     stage: objPlayerAfterGame.stage,
   });
-  io.socketClients.emit('joined', {
+  io.sockets.emit('joined', {
     success: true,
     rooms,
   });

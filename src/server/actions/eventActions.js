@@ -8,62 +8,70 @@ import { shareAction } from '../handlers/shareActions';
 import { objPlayer, objGaming } from './utils';
 import { updateStage } from '../handlers/game/stageGame';
 
-export const actions = (socket, userlist, rooms, io) => {
+/*
+ * actions login
+ */
 
-  socket.on('LoginUserGame', (data) => loginUserGame(data, socket, userlist, rooms, io));
+export const loginUserGame = (io, socketClient, ioGame, data) => {
+  const { rooms, userlist } = ioGame;
+  const { username, roomActual } = data;
 
-  socket.on('startGame', (data) => startGame(data, socket, userlist, rooms, io));
-
-  socket.on('PositionTetro', (data) => positionTetro(data, socket, userlist, rooms, io));
-
-  socket.on('disconnect', () => disconnect(socket, userlist, rooms));
-};
-
-
-const loginUserGame = (game, socket, userlist, rooms, io) => {
-  const objPlayerBeforeGame = loginUser(socket, game.username, userlist);
+  const objPlayerBeforeGame = loginUser(socketClient, username, userlist);
 
   /* ----- Create a game if game is not created ----- */
-  const [objGame, objPlayerAfterGame] = createGame(rooms, userlist, game.username, game.roomActual);
+  const [objGame, objPlayerAfterGame] = createGame(rooms, userlist, username, roomActual);
 
   io.emit('appGetRooms', {
     rooms,
   });
-  /* Join room */
-  socket.join(game.roomActual);
 
-  io.to(`${socket.id}`).emit('objPlayer', {
+  /* Join room */
+  socketClient.join(roomActual);
+
+  io.to(`${socketClient.id}`).emit('objPlayer', {
     stage: objPlayerAfterGame.stage,
   });
-  io.sockets.emit('joined', {
+  io.socketClients.emit('joined', {
     success: true,
     rooms,
   });
 };
 
-const startGame = (game, socket, userlist, rooms, io) => {
-  const [objPlayer, objGame] = startGaming(game, rooms, userlist);
+export const disconnect = (socketClient, ioGame) => {
+  const { rooms, userlist } = ioGame;
 
-  io.sockets.in(game.room).emit('stage', {
+  /* Search user login in userList */
+  const login = searchUserInList(socketClient.id, userlist);
+  /* Search room name of player */
+  const roomActual = searchRoomInUser(userlist, login);
+  socketClient.leave(roomActual);
+  shareAction(login, roomActual, rooms, userlist);
+};
+
+/*
+ * actions game
+ */
+
+export const startGame = (io, socketClient, ioGame, data) => {
+  const { rooms, userlist } = ioGame;
+  const { room } = data;
+
+  const [objPlayer, objGame] = startGaming(data, rooms, userlist);
+
+  io.sockets.in(room).emit('stage', {
     newStage: updateStage(objGame.tetro[0], objGame, userlist),
   });
 };
 
-const positionTetro = (keyCode, socket, userlist, rooms, io) => {
-  const objUser = objPlayer(userlist, socket.id);
-  const objGame = objGaming(rooms, objUser.roomAssociate);
-  movementPlayer(keyCode.keyCode, objGame, objUser);
+export const positionTetro = (io, socketClient, ioGame, data) => {
+  const { rooms, userlist } = ioGame;
+  const { keyCode } = data;
 
-  io.to(`${socket.id}`).emit('stage', {
+  const objUser = objPlayer(userlist, socketClient.id);
+  const objGame = objGaming(rooms, objUser.roomAssociate);
+  movementPlayer(keyCode, objGame, objUser);
+
+  io.to(`${socketClient.id}`).emit('stage', {
     newStage: objUser.stage,
   });
-};
-
-const disconnect = (socket, userlist, rooms) => {
-  /* Search user login in userList */
-  const login = searchUserInList(socket.id, userlist);
-  /* Search room name of player */
-  const roomActual = searchRoomInUser(userlist, login);
-  socket.leave(roomActual);
-  shareAction(login, roomActual, rooms, userlist);
 };

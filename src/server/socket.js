@@ -27,7 +27,7 @@ const io = (server) => {
       logger.error(`Client ${socketClient.id} error.`);
     });
 
-    ioEngine(io, socketClient);
+    ioEngine(socketServer, socketClient);
   });
 };
 

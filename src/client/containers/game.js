@@ -2,14 +2,11 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
-import Card from '@material-ui/core/Card';
 
 import * as socket from '../api';
 import * as actions from '../actions';
-import Stage from '../components/Game/Stage';
-import StageTetro from '../components/Game/StageTetro';
 
-import GameStatus from '../components/Game/gameStatus';
+import GameLayout from '../components/Game/GameLayout';
 
 const Game = (props) => {
   const {
@@ -24,22 +21,6 @@ const Game = (props) => {
     playerNextPiece,
     updateStageMallus,
   } = props;
-
-  function PrintStage({ stage }) {
-    if (stage && stage.length) {
-      return <Stage stage={stage} />;
-    }
-
-    return 0;
-  }
-
-  function PrintStagePiece({ stage }) {
-    if (stage && stage.length) {
-      return <StageTetro stage={stage} />;
-    }
-
-    return 0;
-  }
 
   /* Redirect user if name or room is empty but url matches "/:room[:playerName]" */
   if (!playerName || !playerRoom) history.push('/');
@@ -75,11 +56,12 @@ const Game = (props) => {
   };
 
   return (
-    <Card style={style.GameStyle} onKeyDown={(e) => move(e)}>
-      <PrintStage tabIndex="0" stage={playerStage} />
-      <PrintStagePiece stage={playerNextPiece} />
-      <GameStatus handleSubmit={handleSubmitStatus} />
-    </Card>
+    <GameLayout
+      move={move}
+      playerStage={playerStage}
+      playerNextPiece={playerNextPiece}
+      handleSubmitStatus={handleSubmitStatus}
+    />
   );
 };
 
@@ -94,16 +76,6 @@ Game.propTypes = {
   updateStageMallus: PropTypes.func.isRequired,
   appGetStage: PropTypes.func.isRequired,
   playerNextPiece: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
-
-const style = {
-  GameStyle: {
-    display: 'flex',
-    flexGrow: '1',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    width: '100vw',
-  },
 };
 
 const mapStateToProps = (state) => ({

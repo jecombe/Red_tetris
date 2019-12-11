@@ -26,22 +26,11 @@ const Game = (props) => {
   if (!playerName || !playerRoom) history.push('/');
 
   useEffect(() => {
-    socket.client.on('objPlayer', (payload) => {
-      appGetStage(payload);
-    });
+    socket.client.on('objPlayer', (payload) => appGetStage(payload));
 
-    socket.client.on('stage', (payload) => {
-      // setDropTime(1000)
-      // console.log('STAGE ', payload)
-      updateStage(payload);
-    });
+    socket.client.on('stage', (payload) => updateStage(payload));
 
-    socket.client.on('stageMallus', (payload) => {
-      console.log('OKOKOKOKOKOKOKOKOOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKO ', payload);
-      // setDropTime(1000)
-      // console.log('STAGE ', payload)
-      updateStageMallus(payload);
-    });
+    socket.client.on('stageMallus', (payload) => updateStageMallus(payload));
   }, []);
 
   const move = ({ keyCode }) => {

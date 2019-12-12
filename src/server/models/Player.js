@@ -102,7 +102,7 @@ getLineFull(){
     this.index = 0,
     this.mallus = 0
     this.lineFull = 0;
-    this.otherStage = []
+    //this.otherStage = []
   }
   setMallus(){
     this.mallus = this.mallus + 1

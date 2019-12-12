@@ -45,17 +45,7 @@ const userInGameExceptActua = (userTab, userActual) => {
 
 }
 
-/*const getAllStagePlayers = (objGame, userList, objPlayer, socket) => {
-  let tab = []
-  const tabUser = userInGameExceptActua(objGame.getUserInGame(), objPlayer.getLogin())
 
-  for (var i = 0; i < tabUser.length; i++) {
-    objPlayer.setOtherStage(objPlaye(userList, tabUser[i], i))
-}*/
-
-/*io.to(`${socket.id}`).emit('otherStage', {
-  otherStage: objPlayer.stage
-});*/
 
 const objPlaye = (userList, username, i, objPlayer, io) => {
   userList.find((obj) => {
@@ -74,8 +64,6 @@ const tabUser = userInGameExceptActua(objGame.getUserInGame(), objPlayer.getLogi
 for (var i = 0; i < tabUser.length; i++) {
   objPlaye(userList, tabUser[i], i, objPlayer, io)
 }
-
-  //console.log(objPlayer.getIdSocket())
 
 }
 

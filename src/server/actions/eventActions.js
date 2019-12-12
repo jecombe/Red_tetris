@@ -44,10 +44,12 @@ console.log('------------------------------------------------> ', objPlayerAfter
 
 const startGame = (game, socket, userlist, rooms, io) => {
   const [objPlayer, objGame] = startGaming(game, rooms, userlist);
+  console.log('+++++++++++++++++++> ', objPlayer.stage)
+
 const stagePiece  = printTetroStage(objGame, userlist)
 
   io.sockets.in(game.room).emit('stage', {
-    newStage: updateStage(objGame.tetro[0], objGame, userlist),
+    newStage: updateStage(objGame.tetro[0], objGame, userlist, objPlayer, io),
   
     nextPiece: objPlayer.nextPiece
     

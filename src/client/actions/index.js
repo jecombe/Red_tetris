@@ -5,10 +5,6 @@
 
 import ev from '../../shared/events';
 
-const LOGIN = 'login';
-const START_GAME = 'startGame';
-const POSITION_TETRO = 'positionTetro';
-
 /*
  * action types
  */
@@ -46,7 +42,6 @@ export const appGetStage = (payload) => ({
   type: APP_GET_STAGE,
   payload: {
     stage: payload.stage,
-    collided: payload.collided,
   },
 });
 
@@ -102,18 +97,3 @@ export const playerStartGame = (infoUserGame) => ({
     },
   },
 });
-
-/*
-export const playerLogin = login => ({
-    type: PLAYER_LOGIN,
-    payload: login,
-    socket: {
-        send: {
-          channel: 'joinOrCreateGame',
-          namespace: 'ns',
-          room: 'test'
-        }
-      }
-});
-
-*/

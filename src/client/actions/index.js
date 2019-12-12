@@ -3,6 +3,8 @@
  * need to be moved in config folder
  */
 
+import ev from '../../shared/events';
+
 const LOGIN = 'login';
 const START_GAME = 'startGame';
 const POSITION_TETRO = 'positionTetro';
@@ -70,7 +72,7 @@ export const sendPosition = (pos) => ({
   },
   socket: {
     send: {
-      channel: POSITION_TETRO,
+      channel: ev.POSITION_TETRO,
     },
   },
 });
@@ -83,7 +85,7 @@ export const playerLoginEnterGame = (infoUserGame) => ({
   },
   socket: {
     send: {
-      channel: LOGIN,
+      channel: ev.LOGIN,
     },
   },
 });
@@ -96,7 +98,7 @@ export const playerStartGame = (infoUserGame) => ({
   },
   socket: {
     send: {
-      channel: START_GAME,
+      channel: ev.START_GAME,
     },
   },
 });

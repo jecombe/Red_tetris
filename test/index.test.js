@@ -1,7 +1,7 @@
 import 'regenerator-runtime/runtime';
 
 const io = require('socket.io-client');
-const ev = require('../src/server/utils/events');
+const ev = require('../src/shared/events');
 const logger = require('../src/server/utils/logger');
 
 // initSocket returns a promise

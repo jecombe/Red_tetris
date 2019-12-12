@@ -1,4 +1,4 @@
-import ev from '../utils/events';
+import ev from '../../shared/events';
 import logger from '../utils/logger';
 
 const ioDispatchHello = (socketClient) => {

@@ -29,8 +29,6 @@ const playerReducer = (state = initialState, action) => {
       return {
         ...state,
         playerStage: action.payload.stage,
-        playerNextPiece: null,
-
       };
     case UPDATE_STAGE:
       return {

@@ -55,6 +55,8 @@ const objPlaye = (userList, username, i, objPlayer) => {
   userList.find((obj) => {
       if (obj.login == username) {
         objPlayer.setOtherStage(obj.stage)
+        console.log('FINAL create game +============+> ', objPlayer.otherStage)
+
       }
   });
   console.log('OTHER -*-*-*-*-*-*-*-*-*-*-*-*--*> ', allStage)

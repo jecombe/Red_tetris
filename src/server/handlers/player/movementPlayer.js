@@ -45,31 +45,40 @@ const userInGameExceptActua = (userTab, userActual) => {
 
 }
 
-const objPlaye = (userList, username, i) => {
-  let allStage = []
-  userList.find((obj) => {
-      if (obj.login == username) {
-          allStage[i] = obj.stage
-          return allStage
-      }
-  });
-  return allStage
-};
-
-const getAllStagePlayers = (objGame, userList, objPlayer, socket) => {
+/*const getAllStagePlayers = (objGame, userList, objPlayer, socket) => {
   let tab = []
   const tabUser = userInGameExceptActua(objGame.getUserInGame(), objPlayer.getLogin())
 
   for (var i = 0; i < tabUser.length; i++) {
     objPlayer.setOtherStage(objPlaye(userList, tabUser[i], i))
-}
+}*/
 
 /*io.to(`${socket.id}`).emit('otherStage', {
   otherStage: objPlayer.stage
 });*/
-console.log('==========+++> ', objPlayer.otherStage)
-  //return tab
+
+const objPlaye = (userList, username, i, objPlayer, io) => {
+  userList.find((obj) => {
+      if (obj.login == username) {
+        obj.setUpdateOtherStage(objPlayer.stage)
+        io.to(`${obj.getIdSocket()}`).emit('otherStage', {
+          otherStage: obj.otherStage
+        });
+      }
+  });
+};
+
+const dispatchStage = (objPlayer, userList, io, objGame) => {
+const tabUser = userInGameExceptActua(objGame.getUserInGame(), objPlayer.getLogin())
+
+for (var i = 0; i < tabUser.length; i++) {
+  objPlaye(userList, tabUser[i], i, objPlayer, io)
 }
+
+  //console.log(objPlayer.getIdSocket())
+
+}
+
 const dropTetro = (objPlayer, objGame, userList, io, socket) => {
   if (!checkCollision(objPlayer, objPlayer.stage, { x: 0, y: 1 })) {
     objPlayer.setStage(updatePlayerPosition(0, 1, objPlayer, objGame));
@@ -78,6 +87,8 @@ const dropTetro = (objPlayer, objGame, userList, io, socket) => {
     objPlayer.setIndex(objPlayer.index + 1);
     objPlayer.setStage(updateStagingBeforeCollision(objPlayer.piece, objPlayer));
     objPlayer.setStage(updateRows(objPlayer.stage, objPlayer, objGame, userList, io));
+    dispatchStage(objPlayer, userList, io, objGame)
+
     objPlayer.setPiece(objGame.tetro[objPlayer.index]);
     if (!objGame.tetro[objPlayer.index + 1]) objGame.setTetro();
    // objPlayer.setNextPiece(updateStagingAfterCollision(objGame.tetro[objPlayer.index + 1], onjGame))
@@ -85,7 +96,7 @@ const dropTetro = (objPlayer, objGame, userList, io, socket) => {
     //console.log('piece actuel,', objPlayer.piece, '=========> ', objGame.tetro[objPlayer.index + 1])
 
       printTetro(objPlayer, objGame.tetro[objPlayer.index + 1])
-      const otherStage = getAllStagePlayers(objGame, userList, objPlayer , socket)
+      //const otherStage = getAllStagePlayers(objGame, userList, objPlayer , socket)
    
   }
   //objPlayer.setNextPiece(printTetro(objPlayer, objGame.tetro[objPlayer.index + 1]))

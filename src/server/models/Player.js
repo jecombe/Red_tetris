@@ -110,7 +110,10 @@ getLineFull(){
   setLineFull(){
     this.lineFull = this.lineFull + 1
   }
-
+  setUpdateOtherStage(stage){
+    this.otherStage = []
+    this.otherStage.push(stage)
+  }
   setOtherStage(stage){
     this.otherStage.push(stage)  
   }

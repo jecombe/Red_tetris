@@ -27,8 +27,6 @@ const searchAllUser = (game, userlist, piece) => {
   return newStage;
 };
 
-
-
 const terrain = (piece, stage) => {
   const newStage = stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
   piece.form.shape.forEach((row, y) => {

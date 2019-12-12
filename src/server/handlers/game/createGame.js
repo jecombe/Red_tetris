@@ -50,15 +50,14 @@ const addGameInPlayer = (userList, username, roomName) => {
   return objPlayer;
 };
 
-const objPlaye = (userList, username, i) => {
+const objPlaye = (userList, username, i, objPlayer) => {
   let allStage = []
   userList.find((obj) => {
       if (obj.login == username) {
-          allStage[i] = obj.stage
-          return allStage
+        objPlayer.setOtherStage(obj.stage)
       }
   });
-  return allStage
+  console.log('OTHER -*-*-*-*-*-*-*-*-*-*-*-*--*> ', allStage)
 };
 
 const objj = (userList, username) => {
@@ -85,19 +84,22 @@ const getAllStagePlayers = (objGame, userList, objPlayer, io) => {
   let tab = []
   const tabUser = userInGameExceptActua(objGame.getUserInGame(), objPlayer.getLogin())
 
+  console.log('tab user ', tabUser)
+
   for (var i = 0; i < tabUser.length; i++) {
-    objPlayer.setOtherStage(objPlaye(userList, tabUser[i], i))
+    objPlaye(userList, tabUser[i], i, objPlayer)
   }
   let lenUser = objGame.getUserInGame()
   for (var i = 0; i < tabUser.length; i++) {
     const objOther = objj(userList, tabUser[i])
     objOther.setOtherStage(objPlayer.stage)
-    console.log('===============+> ', objOther)
     //console.log(objPlayer.getIdSocket())
     io.to(`${objOther.getIdSocket()}`).emit('otherStage', {
   otherStage: objOther.otherStage
 });
   }
+
+  console.log('222223232323232323232323232323232', objPlayer.otherStage)
 }
 
 
@@ -113,8 +115,6 @@ export const createGame = (onlineGame, userList, username, roomActual, io) => {
 
   getAllStagePlayers(objGame, userList, objPlayer, io)
 
-  console.log('YO ', objPlayer.otherStage)
-  console.log('YO 2', userList)
 
   return [objGame, objPlayer];
 };

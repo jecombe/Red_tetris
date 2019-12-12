@@ -12,6 +12,7 @@ import PrintStageOtherPlayer from '../components/Game/PrintStageOtherPlayer';
 
 import GameStatus from '../components/Game/gameStatus';
 import { createStagePiece } from '../../server/stage';
+import { createStage } from '../../server/stage';
 
 const Game = (props) => {
 
@@ -28,7 +29,7 @@ const Game = (props) => {
     playerStartGame,
     playerNextPiece,
     updateStageMallus,
-    updateOtherStage
+    updateOtherStage,
 
   } = props;
 
@@ -51,13 +52,13 @@ const Game = (props) => {
     }
 
     return 0;
-  
+
   }
 
 
   function PrintOther(props) {
 
-    return <PrintStageOtherPlayer stage={props.stage} />;
+      return <PrintStageOtherPlayer stage={props.stage} />;
   }
 
   console.log('GAME PROPS ', props);
@@ -67,14 +68,11 @@ const Game = (props) => {
 
   useEffect(() => {
     socket.on('objPlayer', (payload) => {
-
-      console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++> ', payload)
-      appGetStage(payload);
+        appGetStage(payload)
     });
 
     socket.on('stage', (payload) => {
 
-      console.log('RECIEVE STAGE ', payload)
       // setDropTime(1000)
       // console.log('STAGE ', payload)
       updateStage(payload);
@@ -86,8 +84,9 @@ const Game = (props) => {
     });
 
     socket.on('otherStage', (payload) => {
+
+      console.log('OTHER STAGE ', payload)
       // setDropTime(1000)
-       console.log('STAGE OTHER', payload)
       updateOtherStage(payload);
     });
   }, []);
@@ -105,10 +104,10 @@ const Game = (props) => {
   return (
     <div role="button" style={style.GameStyle} tabIndex="0" onKeyDown={(e) => move(e)}>
       <PrintStage stage={playerStage} />
-      <PrintStagePiece stage={playerNextPiece}/>
+      <PrintStagePiece stage={playerNextPiece} />
       <GameStatus handleSubmit={handleSubmitStatus} />
-      {console.log('--------------------___> ', playerOtherStage)}
-      <PrintOther stage={playerOtherStage}/>
+
+      <PrintOther stage={playerOtherStage} />
     </div>
   );
 };
@@ -117,7 +116,7 @@ Game.propTypes = {
   playerName: PropTypes.string.isRequired,
   playerRoom: PropTypes.string.isRequired,
   playerStage: PropTypes.arrayOf(PropTypes.string).isRequired,
-  playerOtherStage:PropTypes.arrayOf(PropTypes.string).isRequired,
+  playerOtherStage: PropTypes.arrayOf(PropTypes.string).isRequired,
   history: ReactRouterPropTypes.history.isRequired,
   playerStartGame: PropTypes.func.isRequired,
   sendPosition: PropTypes.func.isRequired,
@@ -144,9 +143,9 @@ const mapStateToProps = (state) => ({
   playerName: state.player.playerName,
   playerRoom: state.player.playerRoom,
   playerStage: state.player.playerStage,
-  playerOtherStage:state.player.playerOtherStage,
+  playerOtherStage: state.player.playerOtherStage,
   playerNextPiece: state.player.playerNextPiece
-  
+
 });
 
 const mapDispatchToProps = {
@@ -154,7 +153,7 @@ const mapDispatchToProps = {
   appGetStage: actions.appGetStage,
   updateStage: actions.updateStage,
   updateStageMallus: actions.updateStageMallus,
-  updateOtherStage:actions.updateOtherStage,
+  updateOtherStage: actions.updateOtherStage,
   sendPosition: actions.sendPosition
 };
 

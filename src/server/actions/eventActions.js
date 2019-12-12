@@ -31,7 +31,7 @@ const loginUserGame = (game, socket, userlist, rooms, io) => {
   });
   /* Join room */
   socket.join(game.roomActual);
-
+console.log('------------------------------------------------> ', objPlayerAfterGame.otherStage)
   io.to(`${socket.id}`).emit('objPlayer', {
     stage: objPlayerAfterGame.stage,
     otherStage: objPlayerAfterGame.otherStage

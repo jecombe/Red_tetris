@@ -1,5 +1,5 @@
 import {
-  PLAYER_LOGIN, PLAYER_LOGIN_ENTER_GAME, APP_GET_STAGE, APP_GET_PIECE_START, UPDATE_STAGE, UPDATE_STAGE_MALLUS, UPDATE_OTHER_STAGE
+  PLAYER_LOGIN, PLAYER_LOGIN_ENTER_GAME, APP_GET_STAGE, APP_GET_PIECE_START, UPDATE_STAGE, UPDATE_STAGE_MALLUS, UPDATE_OTHER_STAGE, DELETE_ARRAY
 } from '../actions';
 import { TETROMINOS } from '../components/Game/tetrominos';
 import { createStage } from '../../server/stage';
@@ -15,7 +15,7 @@ const initialState = {
 };
 
 const playerReducer = (state = initialState, action) => {
-
+  console.log('ACTION REDUCER ', state)
   switch (action.type) {
     case PLAYER_LOGIN_ENTER_GAME:
       return {
@@ -47,7 +47,7 @@ const playerReducer = (state = initialState, action) => {
       
         return {
           ...state,
-          playerOtherStage: [...state.playerOtherStage, action.payload.otherStage]
+          playerOtherStage: action.payload.otherStage
   
   
         };

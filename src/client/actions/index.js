@@ -19,7 +19,6 @@ export const UPDATE_STAGE_MALLUS = 'UPDATE_STAGE_MALLUS';
 export const MOVE_TETRO = 'MOVE_TETRO';
 export const UPDATE_OTHER_STAGE = 'UPDATE_OTHER_STAGE'
 
-
 /*
  * action creators
  */
@@ -66,7 +65,7 @@ export const updateOtherStage = (payload) => ({
   type: UPDATE_OTHER_STAGE,
   payload: {
     otherStage: payload.otherStage,
-    
+
   }
 });
 

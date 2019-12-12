@@ -15,4 +15,13 @@ module.exports = {
 
   com_ROOMS: '#rooms',
   res_ROOMS: '@rooms',
+
+  com_LOGIN: '#login',
+  res_LOGIN: '@login',
+
+  com_START_GAME: '#startGame',
+  res_START_GAME: '@startGame',
+
+  com_POSITION_TETRO: '#positionTetro',
+  res_POSITION_TETRO: '@positionTetro',
 };

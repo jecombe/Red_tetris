@@ -1,4 +1,4 @@
-import ev from '../utils/events';
+import ev from '../../shared/events';
 import logger from '../utils/logger';
 import { loginUserGame, disconnect } from '../actions/eventActions';
 

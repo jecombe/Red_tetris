@@ -1,4 +1,4 @@
-import ev from '../utils/events';
+import ev from '../../shared/events';
 import { startGame, positionTetro } from '../actions/eventActions';
 
 const ioDispatchGame = (io, socketClient, ioGame) => {

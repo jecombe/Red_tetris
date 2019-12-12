@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LoginLayout = (props) => {
-  const classes = useStyles();
   const {
     handleSubmit,
     handlePlayerName,
@@ -26,6 +25,7 @@ const LoginLayout = (props) => {
     rooms,
     handleRoomSubmit,
   } = props;
+  const classes = useStyles();
 
   return (
     <Grid container direction="row" justify="center" alignItems="center">

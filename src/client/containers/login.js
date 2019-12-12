@@ -14,14 +14,13 @@ const Login = (props) => {
     history,
     rooms,
   } = props;
+
   const [errPlayerName, setErrPlayerName] = useState(false);
   const [errPlayerRoom, setErrPlayerRoom] = useState(false);
   const handlePlayerName = React.createRef();
   const handlePlayerRoom = React.createRef();
 
-  socket.client.on(socket.event.CLIENT_ROOMS, (payload) => {
-    appGetRooms(payload);
-  });
+  socket.client.on(socket.event.CLIENT_ROOMS, (payload) => appGetRooms(payload));
 
   const handleRoomSubmit = (e) => {
     // e.preventDefault(); // event.persist();

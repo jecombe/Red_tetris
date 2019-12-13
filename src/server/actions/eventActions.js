@@ -8,6 +8,9 @@ import { shareAction } from '../handlers/shareActions';
 import { objPlayer, objGaming } from './utils';
 import { updateStage, printTetroStage } from '../handlers/game/stageGame';
 
+import ev from '../../shared/events';
+
+
 /*
  * actions login
  */
@@ -20,7 +23,7 @@ export const loginUserGame = (io, socketClient, ioGame, data) => {
   /* ----- Create a game if game is not created ----- */
   const [objGame, objPlayerAfterGame] = createGame(rooms, userlist, username, roomActual);
 
-  io.emit('appGetRooms', {
+  io.emit(ev.res_ROOMS, {
     rooms,
   });
 

@@ -14,7 +14,7 @@ const ioDispatchLogin = (io, socketClient, ioGame) => {
   });
 
   // LOGIN
-  socketClient.on(ev.LOGIN, (data) => {
+  socketClient.on('PLAYER_LOGIN_ENTER_GAME', (data) => {
     loginUserGame(io, socketClient, ioGame, data);
   });
 

@@ -17,8 +17,8 @@ const Main = (props) => {
     connexion,
   } = props;
 
-  socket.client.on('connect', () => updateAppStatus({ connexion: true }));
-  socket.client.on('disconnect', () => updateAppStatus({ connexion: false }));
+  // socket.client.on('connect', () => updateAppStatus({ connexion: true }));
+  // socket.client.on('disconnect', () => updateAppStatus({ connexion: false }));
 
   if (!connexion) return <Loader />;
 

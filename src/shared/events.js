@@ -1,4 +1,7 @@
 module.exports = {
+  CLIENT_CONNECT: 'CLIENT_CONNECT',
+  CLIENT_DISCONNECT: 'CLIENT_DISCONNECT',
+
   CONNECT: 'connect',
   DISCONNECT: 'disconnect',
   ERROR: 'error',
@@ -6,6 +9,9 @@ module.exports = {
   LOGIN: 'login',
   START_GAME: 'startGame',
   POSITION_TETRO: 'positionTetro',
+  OBJ_PLAYER: 'objPlayer',
+  STAGE: 'stage',
+  STAGE_MALLUS: 'stageMallus',
 
   com_ECHO: '#echo',
   res_ECHO: '@echo',

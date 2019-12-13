@@ -1,8 +1,3 @@
-/*
- * action event socket - same as src/server/utils/events
- * need to be moved in config folder
- */
-
 import ev from '../../shared/events';
 
 /*
@@ -86,14 +81,9 @@ export const playerLoginEnterGame = (infoUserGame) => ({
 });
 
 export const playerStartGame = (infoUserGame) => ({
-  type: PLAYER_START_GAME,
+  type: ev.START_GAME,
   payload: {
     username: infoUserGame.playerName,
     room: infoUserGame.playerRoom,
-  },
-  socket: {
-    send: {
-      channel: ev.START_GAME,
-    },
   },
 });

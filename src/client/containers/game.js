@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
 
-import * as socket from '../api';
+import ev from '../../shared/events';
+// import * as socket from '../api';
 import * as actions from '../actions';
 
 import GameLayout from '../components/Game/GameLayout';
@@ -26,11 +27,11 @@ const Game = (props) => {
   if (!playerName || !playerRoom) history.push('/');
 
   useEffect(() => {
-    socket.client.on('objPlayer', (payload) => appGetStage(payload));
+    // socket.client.on(ev.OBJ_PLAYER, (payload) => appGetStage(payload));
 
-    socket.client.on('stage', (payload) => updateStage(payload));
+    // socket.client.on(ev.STAGE, (payload) => updateStage(payload));
 
-    socket.client.on('stageMallus', (payload) => updateStageMallus(payload));
+    // socket.client.on(ev.STAGE_MALLUS, (payload) => updateStageMallus(payload));
   }, []);
 
   const move = ({ keyCode }) => {

@@ -13,6 +13,12 @@ const io = (server) => {
     },
   );
 
+  const ioGame = {
+    connections: [],
+    rooms: [],
+    userlist: [],
+  };
+
   // socket CONNECT
   socketServer.on(ev.CONNECT, (socketClient) => {
     logger.info(`Client ${socketClient.id} connected.`);
@@ -27,7 +33,7 @@ const io = (server) => {
       logger.error(`Client ${socketClient.id} error.`);
     });
 
-    ioEngine(socketServer, socketClient);
+    ioEngine({ socketServer, socketClient }, ioGame);
   });
 };
 

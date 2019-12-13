@@ -1,7 +1,7 @@
 import io from 'socket.io-client';
 import params from '../../../params';
 
-export const client = io.connect(`${params.server.url}`);
+// export const client = io.connect(`${params.server.url}`);
 
 const CLIENT_STATUS = 'client/status';
 const CLIENT_ROOMS = 'client/rooms';

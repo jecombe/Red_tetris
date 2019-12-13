@@ -31,7 +31,6 @@ const loginUserGame = (game, socket, userlist, rooms, io) => {
   });
   /* Join room */
   socket.join(game.roomActual);
-console.log('------------------------------------------------> ', objPlayerAfterGame.otherStage)
   io.to(`${socket.id}`).emit('objPlayer', {
     stage: objPlayerAfterGame.stage,
     otherStage: objPlayerAfterGame.otherStage
@@ -44,7 +43,8 @@ console.log('------------------------------------------------> ', objPlayerAfter
 
 const startGame = (game, socket, userlist, rooms, io) => {
   const [objPlayer, objGame] = startGaming(game, rooms, userlist);
-  console.log('+++++++++++++++++++> ', objPlayer.stage)
+
+  //console.log('START GAME ', objPlayer.otherStage)
 
 const stagePiece  = printTetroStage(objGame, userlist)
 

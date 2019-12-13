@@ -17,6 +17,7 @@ export default class Player {
     this.mallus = 0,
     this.lineFull = 0;
     this.otherStage = []
+    this.peopleSpectre = [];
   }
 
   getLogin() {
@@ -111,11 +112,19 @@ getLineFull(){
     this.lineFull = this.lineFull + 1
   }
   setUpdateOtherStage(stage){
+    this.otherStage = null
+    this.otherStage  = stage
+  }
+
+  setNullOtherStage(){
     this.otherStage = []
-    this.otherStage.push(stage)
   }
   setOtherStage(stage){
     this.otherStage.push(stage)  
   }
   
+  setPeopleSpectre(people){
+    this.peopleSpectre.push(people)
+
+  }
 }

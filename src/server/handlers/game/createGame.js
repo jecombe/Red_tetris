@@ -53,22 +53,20 @@ const addGameInPlayer = (userList, username, roomName) => {
 const objPlaye = (userList, username, i, objPlayer) => {
   let allStage = []
   userList.find((obj) => {
-      if (obj.login == username) {
-        objPlayer.setOtherStage(obj.stage)
-        console.log('FINAL create game +============+> ', objPlayer.otherStage)
-
-      }
+    if (obj.login == username) {
+      objPlayer.setOtherStage(obj.stage)
+      objPlayer.setPeopleSpectre(obj.getLogin())
+    }
   });
-  console.log('OTHER -*-*-*-*-*-*-*-*-*-*-*-*--*> ', allStage)
 };
 
 const objj = (userList, username) => {
   let objOther;
   userList.find((obj) => {
-      if (obj.login == username) {
-        objOther = obj
-          return objOther
-      }
+    if (obj.login == username) {
+      objOther = obj
+      return objOther
+    }
   });
   return objOther
 };
@@ -76,17 +74,16 @@ const userInGameExceptActua = (userTab, userActual) => {
   var index = userTab.indexOf(userActual);
   var copie = new Array();
   for (var i = 0; i < userTab.length; i++) {
-      copie[i] = userTab[i];
+    copie[i] = userTab[i];
   }
   copie.splice(index, 1);
   return copie
 
 }
 const getAllStagePlayers = (objGame, userList, objPlayer, io) => {
-  let tab = []
+
   const tabUser = userInGameExceptActua(objGame.getUserInGame(), objPlayer.getLogin())
 
-  console.log('tab user ', tabUser)
 
   for (var i = 0; i < tabUser.length; i++) {
     objPlaye(userList, tabUser[i], i, objPlayer)
@@ -95,13 +92,13 @@ const getAllStagePlayers = (objGame, userList, objPlayer, io) => {
   for (var i = 0; i < tabUser.length; i++) {
     const objOther = objj(userList, tabUser[i])
     objOther.setOtherStage(objPlayer.stage)
+    objOther.setPeopleSpectre(objPlayer.getLogin())
     //console.log(objPlayer.getIdSocket())
     io.to(`${objOther.getIdSocket()}`).emit('otherStage', {
-  otherStage: objOther.otherStage
-});
+      otherStage: objOther.otherStage
+    });
   }
 
-  console.log('222223232323232323232323232323232', objPlayer.otherStage)
 }
 
 
@@ -116,7 +113,6 @@ export const createGame = (onlineGame, userList, username, roomActual, io) => {
   const objPlayer = addGameInPlayer(userList, username, roomActual);
 
   getAllStagePlayers(objGame, userList, objPlayer, io)
-
-
+  
   return [objGame, objPlayer];
 };

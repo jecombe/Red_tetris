@@ -46,11 +46,23 @@ const userInGameExceptActua = (userTab, userActual) => {
 }
 
 
+const replaceOtherStage = (objPlayer, usernameOther, obj) => {
 
-const objPlaye = (userList, username, i, objPlayer, io) => {
+  console.log('=================================================++> ', objPlayer.peopleSpectre)
+  let index = objPlayer.peopleSpectre.indexOf(usernameOther)
+
+  obj.otherStage[index] = objPlayer.stage
+
+
+}
+const objPlaye = (userList, usernameOther, i, objPlayer, io) => {
+
+  let len = objPlayer.otherStage.length;
+  
   userList.find((obj) => {
-      if (obj.login == username) {
-        obj.setUpdateOtherStage(objPlayer.stage)
+      if (obj.login == usernameOther) {
+        //obj.setUpdateOtherStage(objPlayer.stage)
+        replaceOtherStage(objPlayer, usernameOther, obj)
         io.to(`${obj.getIdSocket()}`).emit('otherStage', {
           otherStage: obj.otherStage
         });

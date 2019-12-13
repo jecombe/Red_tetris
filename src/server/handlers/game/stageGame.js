@@ -15,9 +15,23 @@ const userInGameExceptActua = (userTab, userActual) => {
 
 
 const objPlaye = (userList, username, i, objPlayer, io, stage) => {
+
+  console.log('--------------------------________> ', objPlayer.otherStage)
+
+
   userList.find((obj) => {
+    let len = objPlayer.otherStage.length;
+
     if (obj.login == username) {
-      obj.setUpdateOtherStage(stage)
+      obj.setNullOtherStage()
+
+
+      if (len !== 0) {
+        while (len != 0) {
+          obj.setOtherStage(createStage())
+          len--;
+        }
+      }
       io.to(`${obj.getIdSocket()}`).emit('otherStage', {
         otherStage: obj.otherStage
       });
@@ -26,7 +40,7 @@ const objPlaye = (userList, username, i, objPlayer, io, stage) => {
 };
 
 const dispatchStage = (userList, objGame, objPlayer, io, stage) => {
-  const tabUser = userInGameExceptActua(objGame.getUserInGame(), objPlayer.getLogin())
+  const tabUser = objGame.getUserInGame()
 
   for (var i = 0; i < tabUser.length; i++) {
     objPlaye(userList, tabUser[i], i, objPlayer, io, stage)
@@ -39,6 +53,7 @@ const dispatchStage = (userList, objGame, objPlayer, io, stage) => {
 const searchAllUser = (game, userlist, piece, objPlayer, io) => {
   const stage = createStage();
   const newStage = stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
+
   dispatchStage(userlist, game, objPlayer, io, newStage)
   piece.form.shape.forEach((row, y) => {
     row.forEach((value, x) => {
@@ -98,6 +113,8 @@ const printTetro = (game, userlist, piece) => {
 export const updateStage = (piece, gameActual, userlist, objPlayer, io) => {
 
   const newStage = searchAllUser(gameActual, userlist, piece, objPlayer, io);
+
+  console.log('===============================++++++++++++++++++++++++++++> ', objPlayer.otherStage.length)
   return newStage;
 };
 

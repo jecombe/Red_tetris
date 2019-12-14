@@ -3,15 +3,12 @@ import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
 
-import ev from '../../shared/events';
-import * as socket from '../api';
 import * as actions from '../actions';
 import LoginLayout from '../components/Login/LoginLayout';
 
 const Login = (props) => {
   const {
-    appGetRooms,
-    playerLoginEnterGame,
+    reqLogin,
     history,
     rooms,
   } = props;
@@ -41,7 +38,7 @@ const Login = (props) => {
 
     if (!name || !room) return;
 
-    playerLoginEnterGame({
+    reqLogin({
       playerName: name,
       playerRoom: room,
     });
@@ -63,8 +60,7 @@ const Login = (props) => {
 };
 
 Login.propTypes = {
-  appGetRooms: PropTypes.func.isRequired,
-  playerLoginEnterGame: PropTypes.func.isRequired,
+  reqLogin: PropTypes.func.isRequired,
   rooms: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
   history: ReactRouterPropTypes.history.isRequired,
 };
@@ -74,8 +70,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  appGetRooms: actions.appGetRooms,
-  playerLoginEnterGame: actions.playerLoginEnterGame,
+  reqLogin: actions.reqLogin,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

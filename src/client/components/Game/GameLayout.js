@@ -13,7 +13,7 @@ import infos from './infosHelper';
 const useStyles = makeStyles((theme) => ({
   gameLayout: {
     width: '100vw',
-    height: '80vh',
+    height: '85vh',
     margin: theme.spacing(1),
     padding: theme.spacing(1),
   },
@@ -21,9 +21,9 @@ const useStyles = makeStyles((theme) => ({
 
 const GameLayout = (props) => {
   const {
-    move,
     playerStage,
     playerNextPiece,
+    move,
     handleSubmitStatus,
   } = props;
   const classes = useStyles();
@@ -51,9 +51,9 @@ const GameLayout = (props) => {
 };
 
 GameLayout.propTypes = {
-  move: PropTypes.func.isRequired,
   playerStage: PropTypes.arrayOf(PropTypes.string).isRequired,
   playerNextPiece: PropTypes.arrayOf(PropTypes.string).isRequired,
+  move: PropTypes.func.isRequired,
   handleSubmitStatus: PropTypes.func.isRequired,
 };
 

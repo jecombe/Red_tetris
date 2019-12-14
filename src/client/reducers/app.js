@@ -11,8 +11,6 @@ const appReducer = (state = initialState, action) => {
     case actions.APP_STATUS: {
       const { connexion } = action.payload;
 
-      console.log(action);
-
       return {
         ...state,
         connexion,

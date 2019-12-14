@@ -30,12 +30,8 @@ export const loginUserGame = (io, socketClient, ioGame, data) => {
   /* Join room */
   socketClient.join(roomActual);
 
-  io.to(`${socketClient.id}`).emit('objPlayer', {
+  io.to(`${socketClient.id}`).emit(ev.OBJ_PLAYER, {
     stage: objPlayerAfterGame.stage,
-  });
-  io.sockets.emit('joined', {
-    success: true,
-    rooms,
   });
 };
 
@@ -60,7 +56,7 @@ export const startGame = (io, socketClient, ioGame, data) => {
 
   const [objPlayer, objGame] = startGaming(data, rooms, userlist);
   const stagePiece  = printTetroStage(objGame, userlist);
-  io.sockets.in(room).emit('stage', {
+  io.sockets.in(room).emit(ev.STAGE, {
     newStage: updateStage(objGame.tetro[0], objGame, userlist),
     nextPiece: objPlayer.nextPiece,
   });
@@ -73,7 +69,7 @@ export const positionTetro = (io, socketClient, ioGame, data) => {
   const objUser = objPlayer(userlist, socketClient.id);
   const objGame = objGaming(rooms, objUser.roomAssociate);
   movementPlayer(keyCode, objGame, objUser, userlist, io, socketClient);
-  io.to(`${socketClient.id}`).emit('stage', {
+  io.to(`${socketClient.id}`).emit(ev.STAGE, {
     newStage: objUser.stage,
     nextPiece: objUser.nextPiece,
   });

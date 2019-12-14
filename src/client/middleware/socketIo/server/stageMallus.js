@@ -1,12 +1,12 @@
 import ev from '../../../../shared/events';
-import * as actions from '../../../actions';
 
 // eslint-disable-next-line no-shadow
 export const dispatch = (action, data, dispatch) => {
-  console.log(data);
   dispatch({
-    type: actions.UPDATE_STAGE_MALLUS,
-    payload: { stage: data.newStage },
+    type: ev.STAGE_MALLUS,
+    payload: {
+      playerStage: data.stage,
+    },
   });
 };
 

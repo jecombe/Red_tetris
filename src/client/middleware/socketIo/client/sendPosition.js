@@ -2,14 +2,10 @@ import ev from '../../../../shared/events';
 
 export const dispatch = (socket, store, action) => {
   // dispatch an action with the store to the server
-  const payload = {
-    username: action.payload.playerName,
-    roomActual: action.payload.playerRoom,
-  };
-  socket.emit(action.type, payload);
+  socket.emit(action.type, action.payload);
 };
 
 export default {
-  action: ev.req_LOGIN,
+  action: ev.POSITION_TETRO,
   dispatch,
 };

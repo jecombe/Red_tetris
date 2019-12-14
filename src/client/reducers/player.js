@@ -1,9 +1,5 @@
-import {
-  PLAYER_LOGIN_ENTER_GAME,
-  APP_GET_STAGE,
-  UPDATE_STAGE,
-  UPDATE_STAGE_MALLUS,
-} from '../actions';
+
+import ev from '../../shared/events';
 import { TETROMINOS } from '../components/Game/tetrominos';
 
 const initialState = {
@@ -17,31 +13,44 @@ const initialState = {
 
 const playerReducer = (state = initialState, action) => {
   switch (action.type) {
-    case PLAYER_LOGIN_ENTER_GAME:
+    case ev.req_LOGIN: {
+      const { playerName, playerRoom } = action.payload;
+
       return {
         ...state,
-        playerName: action.payload.username,
-        playerRoom: action.payload.roomActual,
-        playerSocket: action.payload.playerSocket,
-        // playerStage: action.payload.palyerStage
+        playerName,
+        playerRoom,
       };
-    case APP_GET_STAGE:
+    }
+
+    case ev.OBJ_PLAYER: {
+      const { playerStage } = action.payload;
+
       return {
         ...state,
-        playerStage: action.payload.stage,
+        playerStage,
       };
-    case UPDATE_STAGE:
+    }
+
+    case ev.STAGE: {
+      const { playerStage, playerNextPiece } = action.payload;
+
       return {
         ...state,
-        playerStage: action.payload.stage,
-        playerNextPiece: action.payload.nextPiece,
+        playerStage,
+        playerNextPiece,
       };
-    case UPDATE_STAGE_MALLUS:
+    }
+
+    case ev.STAGE_MALLUS: {
+      const { playerStage } = action.payload;
       return {
         ...state,
-        playerStage: action.payload.stage,
+        playerStage,
         tetromino: TETROMINOS.L.shape,
       };
+    }
+
     default:
       return state;
   }

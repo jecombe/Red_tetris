@@ -1,4 +1,5 @@
-import { APP_STATUS, APP_GET_ROOMS } from '../actions';
+import * as actions from '../actions';
+import ev from '../../shared/events';
 
 const initialState = {
   connexion: false,
@@ -7,16 +8,26 @@ const initialState = {
 
 const appReducer = (state = initialState, action) => {
   switch (action.type) {
-    case APP_STATUS:
+    case actions.APP_STATUS: {
+      const { connexion } = action.payload;
+
+      console.log(action);
+
       return {
         ...state,
-        connexion: action.payload,
+        connexion,
       };
-    case APP_GET_ROOMS:
+    }
+
+    case ev.res_ROOMS: {
+      const { rooms } = action.payload;
+
       return {
         ...state,
-        rooms: action.payload,
+        rooms,
       };
+    }
+
     default:
       return state;
   }

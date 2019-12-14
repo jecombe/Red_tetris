@@ -1,3 +1,4 @@
+import ev from '../src/shared/events';
 import * as actions from '../src/client/actions';
 import reducer from '../src/client/reducers/app';
 
@@ -7,15 +8,15 @@ describe('# Redux App Tests', () => {
       const payload = { connexion: true };
       const expectedAction = {
         type: actions.APP_STATUS,
-        payload: payload.connexion,
+        payload,
       };
-      expect(actions.updateAppStatus(payload)).toEqual(expectedAction);
+      expect(actions.appStatus(payload)).toEqual(expectedAction);
     });
     it('should update rooms array - APP_GET_ROOMS', () => {
       const payload = { rooms: [] };
       const expectedAction = {
-        type: actions.APP_GET_ROOMS,
-        payload: payload.rooms,
+        type: ev.res_ROOMS,
+        payload,
       };
       expect(actions.appGetRooms(payload)).toEqual(expectedAction);
     });
@@ -33,7 +34,9 @@ describe('# Redux App Tests', () => {
     it('should handle APP_STATUS', () => {
       const action = {
         type: actions.APP_STATUS,
-        payload: true,
+        payload: {
+          connexion: true,
+        },
       };
       const expectedState = {
         connexion: true,
@@ -45,8 +48,10 @@ describe('# Redux App Tests', () => {
     });
     it('should handle APP_GET_ROOMS', () => {
       const action = {
-        type: actions.APP_GET_ROOMS,
-        payload: [{ roomName: 'zboub' }],
+        type: ev.res_ROOMS,
+        payload: {
+          rooms: [{ roomName: 'zboub' }],
+        },
       };
       const expectedState = {
         connexion: false,

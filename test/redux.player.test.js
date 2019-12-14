@@ -1,3 +1,4 @@
+import ev from '../src/shared/events';
 import * as actions from '../src/client/actions';
 import reducer from '../src/client/reducers/player';
 import { createStage, createStagePiece } from '../src/server/helpers/stage';
@@ -8,9 +9,9 @@ describe('# Redux Player Tests', () => {
     it('should create action for get stages - APP_GET_STAGE', () => {
       const payload = { stage: createStage() };
       const expectedAction = {
-        type: actions.APP_GET_STAGE,
+        type: ev.OBJ_PLAYER,
         payload: {
-          stage: payload.stage,
+          playerStage: payload.stage,
         },
       };
       expect(actions.appGetStage(payload)).toEqual(expectedAction);
@@ -21,10 +22,10 @@ describe('# Redux Player Tests', () => {
         nextPiece: createStagePiece(),
       };
       const expectedAction = {
-        type: actions.UPDATE_STAGE,
+        type: ev.STAGE,
         payload: {
-          stage: payload.newStage,
-          nextPiece: payload.nextPiece,
+          playerStage: payload.newStage,
+          playerNextPiece: payload.nextPiece,
         },
       };
       expect(actions.updateStage(payload)).toEqual(expectedAction);
@@ -34,9 +35,9 @@ describe('# Redux Player Tests', () => {
         newStage: createStage(),
       };
       const expectedAction = {
-        type: actions.UPDATE_STAGE_MALLUS,
+        type: ev.STAGE_MALLUS,
         payload: {
-          stage: payload.newStage,
+          playerStage: payload.newStage,
         },
       };
       expect(actions.updateStageMallus(payload)).toEqual(expectedAction);
@@ -57,16 +58,17 @@ describe('# Redux Player Tests', () => {
       expect(reducer(undefined, {})).toEqual(initialState);
     });
     it('should handle APP_GET_STAGE', () => {
-      const stage = createStage();
       const action = {
-        type: actions.APP_GET_STAGE,
-        payload: { stage },
+        type: ev.OBJ_PLAYER,
+        payload: {
+          playerStage: createStage(),
+        },
       };
       const expectedState = {
         playerName: null,
         playerRoom: null,
         playerSocket: null,
-        playerStage: stage,
+        playerStage: action.payload.playerStage,
         tetromino: TETROMINOS[0].shape,
         playerNextPiece: null,
       };
@@ -75,35 +77,35 @@ describe('# Redux Player Tests', () => {
     });
     it('should handle UPDATE_STAGE', () => {
       const action = {
-        type: actions.UPDATE_STAGE,
+        type: ev.STAGE,
         payload: {
-          stage: createStage(),
-          nextPiece: createStagePiece(),
+          playerStage: createStage(),
+          playerNextPiece: createStagePiece(),
         },
       };
       const expectedState = {
         playerName: null,
         playerRoom: null,
         playerSocket: null,
-        playerStage: action.payload.stage,
+        playerStage: action.payload.playerStage,
         tetromino: TETROMINOS[0].shape,
-        playerNextPiece: action.payload.nextPiece,
+        playerNextPiece: action.payload.playerNextPiece,
       };
 
       expect(reducer(initialState, action)).toEqual(expectedState);
     });
     it('should handle UPDATE_STAGE_MALLUS', () => {
       const action = {
-        type: actions.UPDATE_STAGE_MALLUS,
+        type: ev.STAGE_MALLUS,
         payload: {
-          stage: createStage(),
+          playerStage: createStage(),
         },
       };
       const expectedState = {
         playerName: null,
         playerRoom: null,
         playerSocket: null,
-        playerStage: action.payload.stage,
+        playerStage: action.payload.playerStage,
         tetromino: TETROMINOS.L.shape,
         playerNextPiece: null,
       };

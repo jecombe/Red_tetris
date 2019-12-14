@@ -13,21 +13,21 @@ module.exports = {
   STAGE: 'stage',
   STAGE_MALLUS: 'stageMallus',
 
-  com_ECHO: '#echo',
+  req_ECHO: '#echo',
   res_ECHO: '@echo',
 
-  com_BELLO: '#bello',
+  req_BELLO: '#bello',
   res_BELLO: '@bello',
 
-  com_ROOMS: '#rooms',
+  req_ROOMS: '#rooms',
   res_ROOMS: '@rooms',
 
-  com_LOGIN: '#login',
+  req_LOGIN: '#login',
   res_LOGIN: '@login',
 
-  com_START_GAME: '#startGame',
+  req_START_GAME: '#startGame',
   res_START_GAME: '@startGame',
 
-  com_POSITION_TETRO: '#positionTetro',
+  req_POSITION_TETRO: '#positionTetro',
   res_POSITION_TETRO: '@positionTetro',
 };

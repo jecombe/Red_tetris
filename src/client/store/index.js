@@ -4,7 +4,6 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import socketIOEmitterMiddleware from 'socket.io-emitter-middleware';
 
-import * as socket from '../api';
 import rootReducer from '../reducers';
 import { storeStateMiddleWare } from '../middleware/storeStateMiddleWare';
 import socketIoMiddleware from '../middleware/socketIoMiddleware';

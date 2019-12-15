@@ -1,26 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
-import PropTypes from 'prop-types';
-
-import * as socket from '../api';
-import * as actions from '../actions';
 
 import Login from './login';
 import Game from './game';
 import Loader from '../components/Loader';
 import Error404 from '../components/Error404';
+import { appStatePropTypes } from '../reducers/app';
 
 const Main = (props) => {
-  const {
-    updateAppStatus,
-    connexion,
-  } = props;
+  const { app } = props;
+  const { connected } = app;
 
-  socket.client.on('connect', () => updateAppStatus({ connexion: true }));
-  socket.client.on('disconnect', () => updateAppStatus({ connexion: false }));
-
-  if (!connexion) return <Loader />;
+  if (!connected) {
+    return <Loader />;
+  }
 
   return (
     <Switch>
@@ -32,16 +26,11 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  updateAppStatus: PropTypes.func.isRequired,
-  connexion: PropTypes.bool.isRequired,
+  app: appStatePropTypes.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  connexion: state.app.connexion,
+  app: state.app,
 });
 
-const mapDispatchToProps = {
-  updateAppStatus: actions.updateAppStatus,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(mapStateToProps)(Main);

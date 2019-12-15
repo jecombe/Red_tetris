@@ -6,7 +6,7 @@ const ioDispatchLogin = (io, socketClient, ioGame) => {
   const { rooms } = ioGame;
 
   // ROOMS
-  socketClient.on(ev.com_ROOMS, (data4Server) => {
+  socketClient.on(ev.req_ROOMS, (data4Server) => {
     const { message } = data4Server;
     logger.info(`client says: ${message}`);
     const data4Client = { status: 200, message: 'SERVER ROOMS', rooms };
@@ -14,7 +14,7 @@ const ioDispatchLogin = (io, socketClient, ioGame) => {
   });
 
   // LOGIN
-  socketClient.on(ev.LOGIN, (data) => {
+  socketClient.on(ev.req_LOGIN, (data) => {
     loginUserGame(io, socketClient, ioGame, data);
   });
 

@@ -1,85 +1,57 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
 
-import * as socket from '../api';
 import * as actions from '../actions';
-
 import GameLayout from '../components/Game/GameLayout';
+import { playerStatePropTypes } from '../reducers/player';
 
 const Game = (props) => {
+  const {
+    player,
+    reqStartGame,
+    reqSendPosition,
+    history,
+  } = props;
   const {
     playerName,
     playerRoom,
     playerStage,
-    history,
-    appGetStage,
-    updateStage,
-    sendPosition,
-    playerStartGame,
     playerNextPiece,
-    updateStageMallus,
-  } = props;
+  } = player;
 
-  /* Redirect user if name or room is empty but url matches "/:room[:playerName]" */
-  if (!playerName || !playerRoom) history.push('/');
+  if (!playerName || !playerRoom) {
+    history.push('/');
+  }
 
-  useEffect(() => {
-    socket.client.on('objPlayer', (payload) => appGetStage(payload));
-
-    socket.client.on('stage', (payload) => updateStage(payload));
-
-    socket.client.on('stageMallus', (payload) => updateStageMallus(payload));
-  }, []);
-
-  const move = ({ keyCode }) => {
-    sendPosition(keyCode);
-  };
-
-  const handleSubmitStatus = () => {
-    playerStartGame({
-      playerName,
-      playerRoom,
-    });
-  };
+  const move = ({ keyCode }) => reqSendPosition(keyCode);
+  const handleSubmitStatus = () => reqStartGame({ playerName, playerRoom });
 
   return (
     <GameLayout
-      move={move}
       playerStage={playerStage}
       playerNextPiece={playerNextPiece}
+      move={move}
       handleSubmitStatus={handleSubmitStatus}
     />
   );
 };
 
 Game.propTypes = {
-  playerName: PropTypes.string.isRequired,
-  playerRoom: PropTypes.string.isRequired,
-  playerStage: PropTypes.arrayOf(PropTypes.string).isRequired,
+  player: playerStatePropTypes.isRequired,
+  reqStartGame: PropTypes.func.isRequired,
+  reqSendPosition: PropTypes.func.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
-  playerStartGame: PropTypes.func.isRequired,
-  sendPosition: PropTypes.func.isRequired,
-  updateStage: PropTypes.func.isRequired,
-  updateStageMallus: PropTypes.func.isRequired,
-  appGetStage: PropTypes.func.isRequired,
-  playerNextPiece: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  playerName: state.player.playerName,
-  playerRoom: state.player.playerRoom,
-  playerStage: state.player.playerStage,
-  playerNextPiece: state.player.playerNextPiece,
+  player: state.player,
 });
 
 const mapDispatchToProps = {
-  playerStartGame: actions.playerStartGame,
-  appGetStage: actions.appGetStage,
-  updateStage: actions.updateStage,
-  updateStageMallus: actions.updateStageMallus,
-  sendPosition: actions.sendPosition,
+  reqStartGame: actions.reqStartGame,
+  reqSendPosition: actions.reqSendPosition,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

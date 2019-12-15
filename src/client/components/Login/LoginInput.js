@@ -53,7 +53,7 @@ const LoginInput = (props) => {
         />
         {err && (
           <FormHelperText className={classes.formHelper}>
-              Error with input field
+            Error with input field
           </FormHelperText>
         )}
       </div>

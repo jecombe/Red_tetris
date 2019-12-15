@@ -76,7 +76,7 @@ describe('test suit: Echo & Bello', () => {
 
     // emit event with data to server
     // logger.info('Emitting ECHO event');
-    socketClient.emit(ev.com_ECHO, data4Server);
+    socketClient.emit(ev.req_ECHO, data4Server);
 
     // wait for server to respond
     const { status, message } = await serverResponse;
@@ -103,7 +103,7 @@ describe('test suit: Echo & Bello', () => {
 
     const data4Server = { message: 'CLIENT BELLO' };
     // logger.info('Emitting BELLO event');
-    socketClient.emit(ev.com_BELLO, data4Server);
+    socketClient.emit(ev.req_BELLO, data4Server);
 
     const { status, message } = await serverResponse;
     expect(status).toBe(200);
@@ -127,7 +127,7 @@ describe('test suit: Echo & Bello', () => {
 
     const data4Server = { message: 'CLIENT ROOMS' };
     // logger.info('Emitting ROOMS event');
-    socketClient.emit(ev.com_ROOMS, data4Server);
+    socketClient.emit(ev.req_ROOMS, data4Server);
 
     const { status, message, rooms } = await serverResponse;
     expect(status).toBe(200);

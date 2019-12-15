@@ -3,24 +3,22 @@ import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
 
-import * as socket from '../api';
 import * as actions from '../actions';
 import LoginLayout from '../components/Login/LoginLayout';
+import { appStatePropTypes } from '../reducers/app';
 
 const Login = (props) => {
   const {
-    appGetRooms,
-    playerLoginEnterGame,
+    app,
+    reqLogin,
     history,
-    rooms,
   } = props;
+  const { rooms } = app;
 
   const [errPlayerName, setErrPlayerName] = useState(false);
   const [errPlayerRoom, setErrPlayerRoom] = useState(false);
   const handlePlayerName = React.createRef();
   const handlePlayerRoom = React.createRef();
-
-  socket.client.on(socket.event.CLIENT_ROOMS, (payload) => appGetRooms(payload));
 
   const handleRoomSubmit = (e) => {
     // e.preventDefault(); // event.persist();
@@ -40,7 +38,7 @@ const Login = (props) => {
 
     if (!name || !room) return;
 
-    playerLoginEnterGame({
+    reqLogin({
       playerName: name,
       playerRoom: room,
     });
@@ -62,19 +60,17 @@ const Login = (props) => {
 };
 
 Login.propTypes = {
-  appGetRooms: PropTypes.func.isRequired,
-  playerLoginEnterGame: PropTypes.func.isRequired,
-  rooms: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+  app: appStatePropTypes.isRequired,
+  reqLogin: PropTypes.func.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  rooms: state.app.rooms,
+  app: state.app,
 });
 
 const mapDispatchToProps = {
-  appGetRooms: actions.appGetRooms,
-  playerLoginEnterGame: actions.playerLoginEnterGame,
+  reqLogin: actions.reqLogin,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

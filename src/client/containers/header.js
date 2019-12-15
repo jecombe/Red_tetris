@@ -1,38 +1,40 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import HeaderLayout from '../components/Header/HeaderLayout';
+import { appStatePropTypes } from '../reducers/app';
 
 const Header = (props) => {
   const {
-    connexion,
+    app,
     history,
   } = props;
 
   const handleHomeButton = (e) => {
     e.preventDefault(); // event.persist();
     // Need to dispatch action for disconnect user
-    if (history) history.push('/');
+    if (history) {
+      history.push('/');
+    }
   };
 
   return (
     <HeaderLayout
-      connexion={connexion}
+      app={app}
       handleHomeButton={handleHomeButton}
     />
   );
 };
 
 Header.propTypes = {
-  connexion: PropTypes.bool.isRequired,
+  app: appStatePropTypes.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  connexion: state.app.connexion,
+  app: state.app,
 });
 
 export default withRouter(connect(mapStateToProps)(Header));

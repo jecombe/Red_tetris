@@ -1,12 +1,8 @@
-import {
-  PLAYER_LOGIN_ENTER_GAME,
-  APP_GET_STAGE,
-  UPDATE_STAGE,
-  UPDATE_STAGE_MALLUS,
-} from '../actions';
+import PropTypes from 'prop-types';
+import ev from '../../shared/events';
 import { TETROMINOS } from '../components/Game/tetrominos';
 
-const initialState = {
+const playerState = {
   playerName: null,
   playerRoom: null,
   playerSocket: null,
@@ -15,33 +11,53 @@ const initialState = {
   playerNextPiece: null,
 };
 
-const playerReducer = (state = initialState, action) => {
+export const playerStatePropTypes = PropTypes.shape({
+  playerName: PropTypes.string.isRequired,
+  playerRoom: PropTypes.string.isRequired,
+  playerStage: PropTypes.arrayOf(PropTypes.string).isRequired,
+  playerNextPiece: PropTypes.arrayOf(PropTypes.string).isRequired,
+});
+
+const playerReducer = (state = playerState, action) => {
   switch (action.type) {
-    case PLAYER_LOGIN_ENTER_GAME:
+    case ev.req_LOGIN: {
+      const { playerName, playerRoom } = action.payload;
+
       return {
         ...state,
-        playerName: action.payload.username,
-        playerRoom: action.payload.roomActual,
-        playerSocket: action.payload.playerSocket,
-        // playerStage: action.payload.palyerStage
+        playerName,
+        playerRoom,
       };
-    case APP_GET_STAGE:
+    }
+
+    case ev.OBJ_PLAYER: {
+      const { playerStage } = action.payload;
+
       return {
         ...state,
-        playerStage: action.payload.stage,
+        playerStage,
       };
-    case UPDATE_STAGE:
+    }
+
+    case ev.STAGE: {
+      const { playerStage, playerNextPiece } = action.payload;
+
       return {
         ...state,
-        playerStage: action.payload.stage,
-        playerNextPiece: action.payload.nextPiece,
+        playerStage,
+        playerNextPiece,
       };
-    case UPDATE_STAGE_MALLUS:
+    }
+
+    case ev.STAGE_MALLUS: {
+      const { playerStage } = action.payload;
       return {
         ...state,
-        playerStage: action.payload.stage,
+        playerStage,
         tetromino: TETROMINOS.L.shape,
       };
+    }
+
     default:
       return state;
   }

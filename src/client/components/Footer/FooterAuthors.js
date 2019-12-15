@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-curly-brace-presence */
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
@@ -16,6 +17,5 @@ const FooterAuthors = () => (
     {new Date().getFullYear()}
   </Typography>
 );
-
 
 export default FooterAuthors;

@@ -3,7 +3,7 @@ import logger from '../utils/logger';
 
 const ioDispatchHello = (socketClient) => {
   // ECHO
-  socketClient.on(ev.com_ECHO, (data4Server) => {
+  socketClient.on(ev.req_ECHO, (data4Server) => {
     const { message } = data4Server;
     logger.info(`client says: ${message}`);
     const data4Client = { status: 200, message: 'SERVER ECHO' };
@@ -11,7 +11,7 @@ const ioDispatchHello = (socketClient) => {
   });
 
   // BELLO
-  socketClient.on(ev.com_BELLO, (data4Server) => {
+  socketClient.on(ev.req_BELLO, (data4Server) => {
     const { message } = data4Server;
     logger.info(`client says: ${message}`);
     const data4Client = { status: 200, message: 'SERVER BELLO' };

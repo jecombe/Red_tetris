@@ -2,11 +2,9 @@ import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
-import socketIOEmitterMiddleware from 'socket.io-emitter-middleware';
 
-import * as socket from '../api';
 import rootReducer from '../reducers';
-import { storeStateMiddleWare } from '../middleware/storeStateMiddleWare';
+import socketIoMiddleware from '../middleware/socketIoMiddleware';
 
 const logger = createLogger();
 
@@ -15,7 +13,7 @@ const store = createStore(
   composeWithDevTools(
     applyMiddleware(
       thunk,
-      socketIOEmitterMiddleware(socket.client),
+      socketIoMiddleware,
       logger,
     ),
   ),

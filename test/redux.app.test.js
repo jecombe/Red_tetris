@@ -5,12 +5,12 @@ import reducer from '../src/client/reducers/app';
 describe('# Redux App Tests', () => {
   describe('## App Actions', () => {
     it('should update connexion to true - APP_STATUS', () => {
-      const payload = { connexion: true };
+      const payload = { connected: true };
       const expectedAction = {
-        type: actions.APP_STATUS,
+        type: actions.APP_STATE,
         payload,
       };
-      expect(actions.appStatus(payload)).toEqual(expectedAction);
+      expect(actions.CLIENT_STATE(payload)).toEqual(expectedAction);
     });
     it('should update rooms array - APP_GET_ROOMS', () => {
       const payload = { rooms: [] };
@@ -24,7 +24,7 @@ describe('# Redux App Tests', () => {
 
   describe('## App Reducers', () => {
     const initialState = {
-      connexion: false,
+      connected: false,
       rooms: [],
     };
 
@@ -33,13 +33,13 @@ describe('# Redux App Tests', () => {
     });
     it('should handle APP_STATUS', () => {
       const action = {
-        type: actions.APP_STATUS,
+        type: actions.APP_STATE,
         payload: {
-          connexion: true,
+          connected: true,
         },
       };
       const expectedState = {
-        connexion: true,
+        connected: true,
         rooms: [],
       };
 
@@ -54,7 +54,7 @@ describe('# Redux App Tests', () => {
         },
       };
       const expectedState = {
-        connexion: false,
+        connected: false,
         rooms: [{ roomName: 'zboub' }],
       };
 

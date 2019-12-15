@@ -11,12 +11,12 @@ import GamePlayers from './GamePlayers';
 import infos from './infosHelper';
 
 const useStyles = makeStyles((theme) => ({
-  gameLayout: {
-    width: '100vw',
-    height: '85vh',
-    margin: theme.spacing(1),
-    padding: theme.spacing(1),
-  },
+  // gameLayout: {
+  //   width: '100vw',
+  //   height: '85vh',
+  //   margin: theme.spacing(1),
+  //   padding: theme.spacing(1),
+  // },
 }));
 
 const GameLayout = (props) => {

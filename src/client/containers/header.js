@@ -8,7 +8,7 @@ import HeaderLayout from '../components/Header/HeaderLayout';
 
 const Header = (props) => {
   const {
-    connexion,
+    connected,
     history,
   } = props;
 
@@ -20,19 +20,19 @@ const Header = (props) => {
 
   return (
     <HeaderLayout
-      connexion={connexion}
+      connected={connected}
       handleHomeButton={handleHomeButton}
     />
   );
 };
 
 Header.propTypes = {
-  connexion: PropTypes.bool.isRequired,
+  connected: PropTypes.bool.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  connexion: state.app.connexion,
+  connected: state.app.connected,
 });
 
 export default withRouter(connect(mapStateToProps)(Header));

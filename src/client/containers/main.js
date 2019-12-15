@@ -10,10 +10,12 @@ import Error404 from '../components/Error404';
 
 const Main = (props) => {
   const {
-    connexion,
+    connected,
   } = props;
 
-  if (!connexion) return <Loader />;
+  if (!connected) {
+    return <Loader />;
+  }
 
   return (
     <Switch>
@@ -25,11 +27,11 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  connexion: PropTypes.bool.isRequired,
+  connected: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  connexion: state.app.connexion,
+  connected: state.app.connected,
 });
 
 export default connect(mapStateToProps)(Main);

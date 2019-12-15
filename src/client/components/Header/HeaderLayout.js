@@ -16,19 +16,19 @@ const useStyles = makeStyles({
     },
   },
   connectIcon: (props) => ({
-    color: props.connexion ? 'lime' : 'red',
+    color: props.connected ? 'lime' : 'red',
   }),
 });
 
 const HeaderLayout = (props) => {
   const {
-    connexion,
+    connected,
     handleHomeButton,
   } = props;
-  const classes = useStyles({ connexion });
+  const classes = useStyles({ connected });
 
   return (
-    <Grid container alignItems="center">
+    <Grid container alignItems="center" className={classes.root}>
       <Grid item xs={3} container justify="center">
         <IconButton aria-label="Home" component="span" onClick={handleHomeButton} className={classes.homeIcon}>
           <HomeIcon />
@@ -45,7 +45,7 @@ const HeaderLayout = (props) => {
 };
 
 HeaderLayout.propTypes = {
-  connexion: PropTypes.bool.isRequired,
+  connected: PropTypes.bool.isRequired,
   handleHomeButton: PropTypes.func.isRequired,
 };
 

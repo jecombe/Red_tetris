@@ -18,12 +18,12 @@ const useStyles = makeStyles((theme) => ({
 const LoginLayout = (props) => {
   const {
     handleSubmit,
+    handleRoomSubmit,
     handlePlayerName,
-    errPlayerName,
     handlePlayerRoom,
+    errPlayerName,
     errPlayerRoom,
     rooms,
-    handleRoomSubmit,
   } = props;
   const classes = useStyles();
 
@@ -61,23 +61,19 @@ LoginLayout.defaultProps = {
   errPlayerRoom: false,
 };
 
+const refPropTypes = PropTypes.oneOfType([
+  PropTypes.func,
+  PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+]);
+
 LoginLayout.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  handlePlayerName: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-  ]).isRequired,
-  errPlayerName: PropTypes.bool,
-  handlePlayerRoom: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-  ]).isRequired,
+  handleRoomSubmit: refPropTypes.isRequired,
+  handlePlayerName: refPropTypes.isRequired,
+  handlePlayerRoom: refPropTypes.isRequired,
   errPlayerRoom: PropTypes.bool,
+  errPlayerName: PropTypes.bool,
   rooms: PropTypes.arrayOf(PropTypes.string).isRequired,
-  handleRoomSubmit: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-  ]).isRequired,
 };
 
 export default LoginLayout;

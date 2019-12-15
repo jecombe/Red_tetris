@@ -7,6 +7,7 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { makeStyles } from '@material-ui/core/styles';
 
 import HeaderLogo from './HeaderLogo';
+import { appStatePropTypes } from '../../reducers/app';
 
 const useStyles = makeStyles({
   homeIcon: {
@@ -22,10 +23,11 @@ const useStyles = makeStyles({
 
 const HeaderLayout = (props) => {
   const {
-    connected,
+    app,
     handleHomeButton,
   } = props;
-  const classes = useStyles({ connected });
+  const { connected } = app;
+  const classes = useStyles(connected);
 
   return (
     <Grid container alignItems="center" className={classes.root}>
@@ -45,7 +47,7 @@ const HeaderLayout = (props) => {
 };
 
 HeaderLayout.propTypes = {
-  connected: PropTypes.bool.isRequired,
+  app: appStatePropTypes.isRequired,
   handleHomeButton: PropTypes.func.isRequired,
 };
 

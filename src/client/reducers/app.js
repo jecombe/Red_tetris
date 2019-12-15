@@ -1,12 +1,18 @@
+import PropTypes from 'prop-types';
 import * as actions from '../actions';
 import ev from '../../shared/events';
 
-const initialState = {
+const appState = {
   connected: false,
   rooms: [],
 };
 
-const appReducer = (state = initialState, action) => {
+export const appStatePropTypes = PropTypes.shape({
+  connected: PropTypes.bool.isRequired,
+  rooms: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+});
+
+const appReducer = (state = appState, action) => {
   switch (action.type) {
     case actions.APP_STATE: {
       const { connected } = action.payload;

@@ -1,8 +1,8 @@
-
+import PropTypes from 'prop-types';
 import ev from '../../shared/events';
 import { TETROMINOS } from '../components/Game/tetrominos';
 
-const initialState = {
+const playerState = {
   playerName: null,
   playerRoom: null,
   playerSocket: null,
@@ -11,7 +11,14 @@ const initialState = {
   playerNextPiece: null,
 };
 
-const playerReducer = (state = initialState, action) => {
+export const playerStatePropTypes = PropTypes.shape({
+  playerName: PropTypes.string.isRequired,
+  playerRoom: PropTypes.string.isRequired,
+  playerStage: PropTypes.arrayOf(PropTypes.string).isRequired,
+  playerNextPiece: PropTypes.arrayOf(PropTypes.string).isRequired,
+});
+
+const playerReducer = (state = playerState, action) => {
   switch (action.type) {
     case ev.req_LOGIN: {
       const { playerName, playerRoom } = action.payload;

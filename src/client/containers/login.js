@@ -5,20 +5,20 @@ import { connect } from 'react-redux';
 
 import * as actions from '../actions';
 import LoginLayout from '../components/Login/LoginLayout';
+import { appStatePropTypes } from '../reducers/app';
 
 const Login = (props) => {
   const {
+    app,
     reqLogin,
     history,
-    rooms,
   } = props;
+  const { rooms } = app;
 
   const [errPlayerName, setErrPlayerName] = useState(false);
   const [errPlayerRoom, setErrPlayerRoom] = useState(false);
   const handlePlayerName = React.createRef();
   const handlePlayerRoom = React.createRef();
-
-  // socket.client.on(ev.res_ROOMS, (payload) => appGetRooms(payload));
 
   const handleRoomSubmit = (e) => {
     // e.preventDefault(); // event.persist();
@@ -60,13 +60,13 @@ const Login = (props) => {
 };
 
 Login.propTypes = {
+  app: appStatePropTypes.isRequired,
   reqLogin: PropTypes.func.isRequired,
-  rooms: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
   history: ReactRouterPropTypes.history.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  rooms: state.app.rooms,
+  app: state.app,
 });
 
 const mapDispatchToProps = {

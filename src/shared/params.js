@@ -1,4 +1,7 @@
 module.exports = {
+  socket: {
+    id: 'CLIENT',
+  },
   server: {
     host: '0.0.0.0',
     port: 3000,

@@ -16,22 +16,18 @@ const appReducer = (state = appState, action) => {
   switch (action.type) {
     case actions.APP_STATE: {
       const { connected } = action.payload;
-
       return {
         ...state,
         connected,
       };
     }
-
     case ev.res_ROOMS: {
       const { rooms } = action.payload;
-
       return {
         ...state,
         rooms,
       };
     }
-
     default:
       return state;
   }

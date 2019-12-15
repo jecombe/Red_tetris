@@ -1,7 +1,5 @@
-import sinon from 'sinon';
 
 import ev from '../src/shared/events';
-import { exportAllDeclaration } from '@babel/types';
 
 describe('Counter Middleware', () => {
   let id;
@@ -31,6 +29,7 @@ describe('Counter Middleware', () => {
   beforeEach(() => {
     mockSocket = {
       emit: jest.fn(),
+      on: jest.fn(),
     };
   });
 
@@ -48,9 +47,12 @@ describe('Counter Middleware', () => {
             playerRoom: 'Bite',
           },
         };
+        const actionExpected = {
+          username: 'Grosse',
+          roomActual: 'Bite',
+        };
         mockMiddleware(store)(() => true)(action);
-        // expect(mockSocket.emit).to.have.been.calledWith(action);
-        expect(mockSocket.emit).toHaveBeenCalledWith(action);
+        expect(mockSocket.emit).toHaveBeenCalledWith(action.type, actionExpected);
       });
     });
   });

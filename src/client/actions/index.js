@@ -1,20 +1,35 @@
 import ev from '../../shared/events';
+import params from '../../shared/params';
 
 /*
  * action types
  */
 
-export const APP_STATUS = 'APP_STATUS';
-export const APP_GET_ROOMS = 'APP_GET_ROOMS';
+export const APP_STATE = 'APP_STATE';
 
 /*
  * action creators
  */
 
-export const appStatus = (payload) => ({
-  type: APP_STATUS,
+export const CLIENT_CONNECT = (payload) => ({
+  type: `${params.socket.id}_CONNECT`,
   payload: {
-    connexion: payload.connexion,
+    host: payload.host,
+    port: payload.port,
+  },
+});
+
+export const CLIENT_DISCONNECT = () => ({
+  type: `${params.socket.id}_DISCONNECT`,
+  payload: {
+    connected: false,
+  },
+});
+
+export const CLIENT_STATE = (payload) => ({
+  type: APP_STATE,
+  payload: {
+    connected: payload.connected,
   },
 });
 

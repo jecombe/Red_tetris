@@ -3,5 +3,5 @@ import disconnect from './disconnect';
 
 export default [
   connect,
-  disconnect
+  disconnect,
 ];

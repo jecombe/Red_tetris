@@ -4,10 +4,13 @@ import * as actions from '../../../actions';
 const action = 'disconnect';
 // eslint-disable-next-line no-shadow
 const dispatch = (socket, store, next, action) => () => {
+  const type = actions.APP_STATE;
   const payload = {
-    connexion: false,
+    connected: false,
   };
-  store.dispatch(actions.appStatus(payload));
+
+  console.warn('Disconnecting...');
+  store.dispatch({ type, payload });
 };
 
 export default {

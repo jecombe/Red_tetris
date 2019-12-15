@@ -2,18 +2,18 @@ import * as actions from '../actions';
 import ev from '../../shared/events';
 
 const initialState = {
-  connexion: false,
+  connected: false,
   rooms: [],
 };
 
 const appReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actions.APP_STATUS: {
-      const { connexion } = action.payload;
+    case actions.APP_STATE: {
+      const { connected } = action.payload;
 
       return {
         ...state,
-        connexion,
+        connected,
       };
     }
 

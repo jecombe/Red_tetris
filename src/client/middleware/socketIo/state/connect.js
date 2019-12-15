@@ -4,10 +4,13 @@ import * as actions from '../../../actions';
 const action = 'connect';
 // eslint-disable-next-line no-shadow
 const dispatch = (socket, store, next, action) => () => {
+  const type = actions.APP_STATE;
   const payload = {
-    connexion: true,
+    connected: true,
   };
-  store.dispatch(actions.appStatus(payload));
+
+  console.log('Connecting...');
+  store.dispatch({ type, payload });
 };
 
 export default {

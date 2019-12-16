@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import * as actions from '../actions';
 import ev from '../../shared/events';
 
-const appState = {
+export const appState = {
   connected: false,
   rooms: [],
 };

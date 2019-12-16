@@ -72,3 +72,25 @@ export const appGetStage = (payload) => ({
     playerStage: payload.stage,
   },
 });
+
+export const updateStage = (payload) => ({
+  type: ev.STAGE,
+  payload: {
+    playerStage: payload.newStage,
+    playerNextPiece: payload.nextPiece,
+  },
+});
+
+export const updateStageMallus = (payload) => ({
+  type: ev.STAGE_MALLUS,
+  payload: {
+    stage: payload.newStage,
+  },
+});
+
+export const updateOtherStage = (payload) => ({
+  type: ev.STAGE_OTHER,
+  payload: {
+    playerOtherStage: payload.otherStage,
+  },
+});

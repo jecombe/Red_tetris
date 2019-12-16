@@ -2,13 +2,14 @@ import PropTypes from 'prop-types';
 import ev from '../../shared/events';
 import { TETROMINOS } from '../components/Game/tetrominos';
 
-const playerState = {
+export const playerState = {
   playerName: null,
   playerRoom: null,
   playerSocket: null,
   playerStage: [],
+  playerOtherStage: [],
   tetromino: TETROMINOS[0].shape,
-  playerNextPiece: null,
+  playerNextPiece: [],
 };
 
 export const playerStatePropTypes = PropTypes.shape({
@@ -55,6 +56,14 @@ const playerReducer = (state = playerState, action) => {
         ...state,
         playerStage,
         tetromino: TETROMINOS.L.shape,
+      };
+    }
+
+    case ev.STAGE_OTHER: {
+      const { playerOtherStage } = action.payload;
+      return {
+        ...state,
+        playerOtherStage,
       };
     }
 

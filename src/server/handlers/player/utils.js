@@ -9,6 +9,4 @@ export const searchUserInList = (idSocket, userList) => {
   return login;
 };
 
-export const is_full = (currentValue) => {
-  return (currentValue[1] === 'merged');
-}
+export const is_full = (currentValue) => (currentValue[1] === 'merged');

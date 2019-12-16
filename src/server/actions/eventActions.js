@@ -55,7 +55,7 @@ export const startGame = (io, socketClient, ioGame, data) => {
   const { room } = data;
 
   const [objPlayer, objGame] = startGaming(data, rooms, userlist);
-  const stagePiece  = printTetroStage(objGame, userlist);
+  const stagePiece = printTetroStage(objGame, userlist);
   io.sockets.in(room).emit(ev.STAGE, {
     newStage: updateStage(objGame.tetro[0], objGame, userlist),
     nextPiece: objPlayer.nextPiece,

@@ -39,9 +39,8 @@ const terrain = (piece, stage) => {
       }
     });
   });
-  return newStage
-
-}
+  return newStage;
+};
 const printTetro = (game, userlist, piece) => {
   const stage = createStagePiece();
 
@@ -52,7 +51,7 @@ const printTetro = (game, userlist, piece) => {
     obj.setPosition1(10 / 2 - 2, 0);
     obj.setNextPiece(terrain(piece, stage));
 
-    //obj.setStage(newStage);
+    // obj.setStage(newStage);
   }
 };
 
@@ -64,7 +63,6 @@ export const updateStage = (piece, gameActual, userlist) => {
 };
 
 export const printTetroStage = (gameActual, userlist) => {
-
-  printTetro(gameActual, userlist,  gameActual.getNextPieceStart())
- // const newStagPiece = getPieceInStage(gameActual)
-}
+  printTetro(gameActual, userlist, gameActual.getNextPieceStart());
+  // const newStagPiece = getPieceInStage(gameActual)
+};

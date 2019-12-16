@@ -10,7 +10,7 @@
     "dev": "concurrently --kill-others \"npm run client-dev\" \"npm run srv-dev\"",
     "lint": "eslint src",
     "lint-fix": "eslint --fix src",
-    "test": "jest test/socket.middleware.test.js --verbose --coverage",
+    "test": "jest --verbose --coverage",
     "test:watch": "npm test -- --watch-All"
   },
   "keywords": [],

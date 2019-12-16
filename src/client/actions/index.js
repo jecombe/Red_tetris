@@ -70,14 +70,15 @@ export const appGetStage = (payload) => ({
   type: ev.OBJ_PLAYER,
   payload: {
     playerStage: payload.stage,
+    playerOtherStage: payload.otherStage,
   },
 });
 
 export const updateStage = (payload) => ({
   type: ev.STAGE,
   payload: {
-    stage: payload.newStage,
-    nextPiece: payload.nextPiece,
+    playerStage: payload.newStage,
+    playerNextPiece: payload.nextPiece,
   },
 });
 

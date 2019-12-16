@@ -1,4 +1,4 @@
-import { loginUser } from '../handlers/player/createPlayer';
+import loginUser from '../handlers/player/createPlayer';
 import { startGaming } from '../handlers/game/startGame';
 import { createGame } from '../handlers/game/createGame';
 import { movementPlayer } from '../handlers/player/movementPlayer';
@@ -21,7 +21,7 @@ export const loginUserGame = (io, socketClient, ioGame, data) => {
 
   const objPlayerBeforeGame = loginUser(socketClient, username, userlist);
   /* ----- Create a game if game is not created ----- */
-  const [objGame, objPlayerAfterGame] = createGame(rooms, userlist, username, roomActual);
+  const [objGame, objPlayerAfterGame] = createGame(rooms, userlist, username, roomActual, io);
 
   io.emit(ev.res_ROOMS, {
     rooms,
@@ -32,6 +32,7 @@ export const loginUserGame = (io, socketClient, ioGame, data) => {
 
   io.to(`${socketClient.id}`).emit(ev.OBJ_PLAYER, {
     stage: objPlayerAfterGame.stage,
+    otherStage: objPlayerAfterGame.otherStage,
   });
 };
 
@@ -57,7 +58,7 @@ export const startGame = (io, socketClient, ioGame, data) => {
   const [objPlayer, objGame] = startGaming(data, rooms, userlist);
   const stagePiece = printTetroStage(objGame, userlist);
   io.sockets.in(room).emit(ev.STAGE, {
-    newStage: updateStage(objGame.tetro[0], objGame, userlist),
+    newStage: updateStage(objGame.tetro[0], objGame, userlist, objPlayer, io),
     nextPiece: objPlayer.nextPiece,
   });
 };

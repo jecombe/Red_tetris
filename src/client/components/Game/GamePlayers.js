@@ -33,7 +33,7 @@ const GamePlayers = (props) => {
       <Typography component="h1" variant="h5">
             Users in room
       </Typography>
-      <Grid item xs={12} style={{ maxHeight: '50vh', overflow: 'auto' }}>
+      <Grid item xs={12} container style={{ maxHeight: '50vh', overflow: 'auto' }}>
         <List style={{ maxHeight: '100%' }}>
           {GameInfoMap(infos, playerOtherStage)}
         </List>

@@ -6,6 +6,7 @@ export const dispatch = (action, data, dispatch) => {
     type: ev.OBJ_PLAYER,
     payload: {
       playerStage: data.stage,
+      playerOtherStage: data.otherStage,
     },
   });
 };

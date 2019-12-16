@@ -14,6 +14,8 @@ export default class Player {
     this.nextPiece = null;
     this.mallus = 0;
     this.lineFull = 0;
+    this.otherStage = [];
+    this.peopleSpectre = [];
   }
 
   getLogin() {
@@ -61,17 +63,12 @@ export default class Player {
     this.pos.y = y + this.pos.y;
   }
 
-
   setPosition1(x, y) {
     this.pos.x = x;
     this.pos.y = y;
   }
 
   setPositionNull() {
-    this.pos = { x: 0, y: 0 };
-  }
-
-  setPositionNull1() {
     this.pos = { x: 0, y: 0 };
   }
 
@@ -110,5 +107,17 @@ export default class Player {
 
   setLineFull() {
     this.lineFull += 1;
+  }
+
+  setNullOtherStage() {
+    this.otherStage = [];
+  }
+
+  setOtherStage(stage) {
+    this.otherStage.push(stage);
+  }
+
+  setPeopleSpectre(people) {
+    this.peopleSpectre.push(people);
   }
 }

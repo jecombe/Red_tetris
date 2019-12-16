@@ -1,15 +1,14 @@
 import { checkCollision } from '../../helpers/gameHelpers';
 import {
   flushUpdate, updatePlayerPosition, updateStagingBeforeCollision,
-  updateStagingAfterCollision, updatePlayerPositionCollision, updateRows, updateStagingAfterCollision1,
+  updateStagingAfterCollision, updatePlayerPositionCollision, updateRows, updateStagingAfterCollision1
 } from './stagePlayer';
-import { createStage, createStagePiece } from '../../helpers/stage';
+import { createStagePiece } from '../../helpers/stage';
 
 const moveTetro = (position, objUser, objGame) => {
   if (!checkCollision(objUser, objUser.stage, { x: position, y: 0 })) objUser.setStage(updatePlayerPosition(position, 0, objUser, objGame));
   else objUser.setStage(updatePlayerPositionCollision(0, 0, objUser, objGame));
 };
-
 
 const terrain = (piece, stage) => {
   const newStage = stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
@@ -27,11 +26,44 @@ const terrain = (piece, stage) => {
 };
 const printTetro = (obj, piece) => {
   const stage = createStagePiece();
-  obj.setPositionNull1();
+  obj.setPositionNull();
   obj.setPosition1(10 / 2 - 2, 0);
   obj.setNextPiece(terrain(piece, stage));
-  // obj.setStage(newStage);
 };
+
+const userInGameExceptActua = (userTab, userActual) => {
+  var index = userTab.indexOf(userActual);
+  var copie = new Array();
+  for (var i = 0; i < userTab.length; i++) {
+    copie[i] = userTab[i];
+  }
+  copie.splice(index, 1);
+  return copie
+
+}
+
+const replaceOtherStage = (objPlayer, usernameOther, obj) => {
+  let index = objPlayer.peopleSpectre.indexOf(usernameOther)
+  obj.otherStage[index] = objPlayer.stage
+}
+
+const sendSpectreToOther = (userList, usernameOther, i, objPlayer, io) => {
+  userList.find((obj) => {
+    if (obj.login == usernameOther) {
+      replaceOtherStage(objPlayer, usernameOther, obj)
+      io.to(`${obj.getIdSocket()}`).emit('otherStage', {
+        otherStage: obj.otherStage
+      });
+    }
+  });
+};
+
+const dispatchStage = (objPlayer, userList, io, objGame) => {
+  const tabUser = userInGameExceptActua(objGame.getUserInGame(), objPlayer.getLogin())
+  for (var i = 0; i < tabUser.length; i++) {
+    sendSpectreToOther(userList, tabUser[i], i, objPlayer, io)
+  }
+}
 
 const dropTetro = (objPlayer, objGame, userList, io, socket) => {
   if (!checkCollision(objPlayer, objPlayer.stage, { x: 0, y: 1 })) {
@@ -39,16 +71,14 @@ const dropTetro = (objPlayer, objGame, userList, io, socket) => {
   } else {
     objPlayer.setIndex(objPlayer.index + 1);
     objPlayer.setStage(updateStagingBeforeCollision(objPlayer.piece, objPlayer));
-    objPlayer.setStage(updateRows(objPlayer.stage, objPlayer, objGame, userList, io, socket));
+    objPlayer.setStage(updateRows(objPlayer.stage, objPlayer, objGame, userList, io));
+    dispatchStage(objPlayer, userList, io, objGame)
+
     objPlayer.setPiece(objGame.tetro[objPlayer.index]);
     if (!objGame.tetro[objPlayer.index + 1]) objGame.setTetro();
-    // objPlayer.setNextPiece(updateStagingAfterCollision(objGame.tetro[objPlayer.index + 1], onjGame))
     objPlayer.setStage(updateStagingAfterCollision(objPlayer.piece, objPlayer));
-    // console.log('piece actuel,', objPlayer.piece, '=========> ', objGame.tetro[objPlayer.index + 1])
-
-    printTetro(objPlayer, objGame.tetro[objPlayer.index + 1]);
+    printTetro(objPlayer, objGame.tetro[objPlayer.index + 1])
   }
-  // objPlayer.setNextPiece(printTetro(objPlayer, objGame.tetro[objPlayer.index + 1]))
 };
 
 const rotate = (matrix, dir) => {
@@ -58,7 +88,6 @@ const rotate = (matrix, dir) => {
   if (dir > 0) return rotatedTetro.map((row) => row.reverse());
   return rotatedTetro.reverse();
 };
-
 
 const playerRotate = (objPlayer, dir) => {
   const clonedPlayer = JSON.parse(JSON.stringify(objPlayer));
@@ -80,6 +109,7 @@ const playerRotate = (objPlayer, dir) => {
   objPlayer.setStage(flushUpdate(objPlayer.piece, objPlayer));
 };
 
+/* TO DO => renvoyer la prochaine piece et diffuser les spectre comme la fonction drop */
 const moveTetroDown = (objPlayer, objGame) => {
   let i = 0;
   let checkColl = false;
@@ -93,10 +123,11 @@ const moveTetroDown = (objPlayer, objGame) => {
   objPlayer.setStage(updateStagingBeforeCollision(objPlayer.piece, objPlayer));
   objPlayer.setPiece(objGame.tetro[objPlayer.index]);
   if (!objGame.tetro[objPlayer.index + 1]) objGame.setTetro();
-
   objPlayer.setStage(updateStagingAfterCollision(objPlayer.piece, objPlayer));
 };
 
+
+/* --- check heycode of keyBoard --- */
 export const movementPlayer = (keyCode, objGame, objUser, userList, io, socket) => {
   if (keyCode === 32) {
     moveTetroDown(objUser, objGame);

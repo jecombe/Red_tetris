@@ -7,6 +7,7 @@ export default class Game extends Room {
     this.gameStart = false;
     this.userPiece = [];
     this.tetro = [];
+    this.indexSpectre = -1;
   }
 
   getgameName() {
@@ -46,5 +47,9 @@ export default class Game extends Room {
 
   setTetroNull() {
     this.tetro = [];
+  }
+
+  setIndexSpectre() {
+    this.indexSpectre += 1;
   }
 }

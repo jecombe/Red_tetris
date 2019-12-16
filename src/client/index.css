@@ -51,28 +51,3 @@
   font-weight: lighter;
   font-style: italic;
 }
-
-@font-face {
-  font-family: 'Pixel';
-  src: url('font/Pixel-LCD-7.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Karmatic';
-  src: url('font/ka1.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Game';
-  src: url('font/game_over.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Squared';
-  src: url('font/Squared_Display.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Forced';
-  src: url('font/FORCED_SQUARE.ttf') format('truetype');
-}

@@ -43,9 +43,10 @@ export const updatePlayerPosition = (x, y, obj) => {
     return flushUpdate(obj.piece, obj);
 };
 
-export const updateStagingBeforeCollision = (piece, obj) => {
-    obj.setCollidedTrue();
-    return updateStage(piece, obj.stage, obj)
+export const updateStagingBeforeCollision = (objPlayer, objGame, userList, io) => {
+    objPlayer.setCollidedTrue();
+    const newStage = updateStage(objPlayer.piece, objPlayer.stage, objPlayer)
+    return (updateRows(newStage, objPlayer, objGame, userList, io))
 };
 
 export const updateStagingAfterCollision = (piece, obj) => {

@@ -12,6 +12,7 @@ module.exports = {
   OBJ_PLAYER: 'objPlayer',
   STAGE: 'stage',
   STAGE_MALLUS: 'stageMallus',
+  STAGE_OTHER: 'stageOther',
 
   req_ECHO: '#echo',
   res_ECHO: '@echo',

@@ -12,6 +12,7 @@ import infos from './infosHelper';
 const GameLayout = (props) => {
   const {
     playerStage,
+    playerOtherStage,
     playerNextPiece,
     move,
     handleSubmitStatus,
@@ -32,7 +33,7 @@ const GameLayout = (props) => {
           </Grid>
         </Grid>
         <Grid item xs={12} lg={5} container alignItems="center" justify="center">
-          <GamePlayers infos={infos} />
+          <GamePlayers infos={infos} playerOtherStage={playerOtherStage} />
         </Grid>
       </Grid>
     </Card>
@@ -40,8 +41,9 @@ const GameLayout = (props) => {
 };
 
 GameLayout.propTypes = {
-  playerStage: PropTypes.arrayOf(PropTypes.string).isRequired,
-  playerNextPiece: PropTypes.arrayOf(PropTypes.string).isRequired,
+  playerStage: PropTypes.array.isRequired,
+  playerNextPiece: PropTypes.array.isRequired,
+  playerOtherStage: PropTypes.array.isRequired,
   move: PropTypes.func.isRequired,
   handleSubmitStatus: PropTypes.func.isRequired,
 };

@@ -7,15 +7,17 @@ const playerState = {
   playerRoom: null,
   playerSocket: null,
   playerStage: [],
+  playerOtherStage: [],
   tetromino: TETROMINOS[0].shape,
-  playerNextPiece: null,
+  playerNextPiece: [],
 };
 
 export const playerStatePropTypes = PropTypes.shape({
   playerName: PropTypes.string.isRequired,
   playerRoom: PropTypes.string.isRequired,
-  playerStage: PropTypes.arrayOf(PropTypes.string).isRequired,
-  playerNextPiece: PropTypes.arrayOf(PropTypes.string).isRequired,
+  playerStage: PropTypes.array.isRequired,
+  playerOtherStage: PropTypes.array.isRequired,
+  playerNextPiece: PropTypes.array.isRequired,
 });
 
 const playerReducer = (state = playerState, action) => {
@@ -55,6 +57,14 @@ const playerReducer = (state = playerState, action) => {
         ...state,
         playerStage,
         tetromino: TETROMINOS.L.shape,
+      };
+    }
+
+    case ev.STAGE_OTHER: {
+      const { playerOtherStage } = action.payload;
+      return {
+        ...state,
+        playerOtherStage,
       };
     }
 

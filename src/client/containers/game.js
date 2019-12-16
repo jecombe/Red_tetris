@@ -18,6 +18,7 @@ const Game = (props) => {
     playerName,
     playerRoom,
     playerStage,
+    playerOtherStage,
     playerNextPiece,
   } = player;
 
@@ -31,6 +32,7 @@ const Game = (props) => {
   return (
     <GameLayout
       playerStage={playerStage}
+      playerOtherStage={playerOtherStage}
       playerNextPiece={playerNextPiece}
       move={move}
       handleSubmitStatus={handleSubmitStatus}

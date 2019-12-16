@@ -6,23 +6,27 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 
-const GameInfoMap = (infos) => {
-  if (infos.length === 0) {
+import Stage from './Stage';
+
+const GameInfoMap = (infos, playerOtherStage) => {
+  if (playerOtherStage.length === 0) {
     return (
       <div>
         No users in room
       </div>
     );
   }
-  return infos.map((i) => (
-    <ListItem key={i.name}>
-      <ListItemText primary={`${i.name}`} secondary={`Score ${i.score} - Rank #${i.rank}`} />
+  return playerOtherStage.map((i) => (
+    <ListItem>
+      <Stage stage={i} />
     </ListItem>
   ));
 };
 
+// <ListItemText primary={`${i.name}`} secondary={`Score ${i.score} - Rank #${i.rank}`} />
+
 const GamePlayers = (props) => {
-  const { infos } = props;
+  const { infos, playerOtherStage } = props;
 
   return (
     <Grid container justify="center">
@@ -31,7 +35,7 @@ const GamePlayers = (props) => {
       </Typography>
       <Grid item xs={12} style={{ maxHeight: '50vh', overflow: 'auto' }}>
         <List style={{ maxHeight: '100%' }}>
-          {GameInfoMap(infos)}
+          {GameInfoMap(infos, playerOtherStage)}
         </List>
       </Grid>
     </Grid>
@@ -44,6 +48,7 @@ GamePlayers.propTypes = {
     score: PropTypes.string.isRequired,
     rank: PropTypes.string.isRequired,
   })).isRequired,
+  playerOtherStage: PropTypes.array.isRequired,
 };
 
 export default GamePlayers;

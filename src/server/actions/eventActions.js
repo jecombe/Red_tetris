@@ -16,7 +16,7 @@ export const actions = (socket, userlist, rooms, io) => {
 
   socket.on('PositionTetro', (data) => positionTetro(data, socket, userlist, rooms, io));
 
-  socket.on('disconnect', () => disconnect(socket, userlist, rooms));
+  socket.on('disconnect', () => disconnect(socket, userlist, rooms, io));
 };
 
 
@@ -67,11 +67,14 @@ const positionTetro = (keyCode, socket, userlist, rooms, io) => {
 
 };
 
-const disconnect = (socket, userlist, rooms) => {
+const disconnect = (socket, userlist, rooms, io) => {
   /* Search user login in userList */
   const login = searchUserInList(socket.id, userlist);
+  const objUser = objPlayer(userlist, socket.id);
+  const objGame = objGaming(rooms, objUser.roomAssociate);
   /* Search room name of player */
   const roomActual = searchRoomInUser(userlist, login);
+  shareAction(login, roomActual, rooms, userlist, objUser, objGame, io);
+
   socket.leave(roomActual);
-  shareAction(login, roomActual, rooms, userlist);
 };

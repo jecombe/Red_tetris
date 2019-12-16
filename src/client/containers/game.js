@@ -85,7 +85,7 @@ const Game = (props) => {
 
     socket.on('otherStage', (payload) => {
 
-      console.log('OTHER STAGE ', payload)
+      console.log('OTHER STAGE ---------------------------------------------------->  ', payload)
       // setDropTime(1000)
       updateOtherStage(payload);
     });

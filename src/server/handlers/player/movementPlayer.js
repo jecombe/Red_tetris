@@ -34,9 +34,7 @@ const printTetro = (obj, piece) => {
 };
 
 const replaceOtherStage = (objPlayer, objOther) => {
-
   let index = objOther.peopleSpectre.indexOf(objPlayer.login)
-
   let id = 0;
   objOther.otherStage[index] = objPlayer.stage
 
@@ -124,7 +122,6 @@ const moveTetroDown = (objPlayer, objGame, userList, io) => {
   }
   objPlayer.setStage(updatePlayerPosition(0, i, objPlayer, objGame));
   objPlayer.setIndex(objPlayer.index + 1);
-
   objPlayer.setStage(updateStagingBeforeCollision(objPlayer, objGame, userList, io));
   dispatchStage(objPlayer, userList, io, objGame)
   objPlayer.setPiece(objGame.tetro[objPlayer.index]);

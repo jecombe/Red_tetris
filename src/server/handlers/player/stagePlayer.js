@@ -83,8 +83,7 @@ const updateStageMallus = (objPlayer, io) => {
 
     if (calcRow < 20) {
         objPlayer.stage.shift()
-        objPlayer.stage.push(new Array(10).fill([0, 'mallus']));
-
+        objPlayer.stage.push(new Array(10).fill(['M', 'mallus']));
         const socket = objPlayer.getIdSocket()
 
         io.to(`${socket}`).emit('stageMallus', {

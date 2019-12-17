@@ -4,6 +4,7 @@ import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 
 import Stage from './Stage';
+
 import GameStatus from './GameStatus';
 import GamePlayers from './GamePlayers';
 
@@ -19,7 +20,7 @@ const GameLayout = (props) => {
   } = props;
 
   return (
-    <Card onKeyDown={(e) => move(e)}>
+    <Card>
       <Grid container justify="center" alignItems="center">
         <Grid item xs={12} lg={7} container>
           <Grid item xs={5} lg={10} container justify="center" alignItems="center">

@@ -27,16 +27,19 @@ const Game = (props) => {
   }
 
   const move = ({ keyCode }) => reqSendPosition(keyCode);
-  const handleSubmitStatus = () => reqStartGame({ playerName, playerRoom });
 
+  const handleSubmitStatus = () => reqStartGame({ playerName, playerRoom });
+//console.log('===============>> ', playerNextPiece)
   return (
-    <GameLayout
+    <div tabIndex="0" onKeyDown={(e) => move(e)}>
+    <GameLayout 
       playerStage={playerStage}
       playerOtherStage={playerOtherStage}
       playerNextPiece={playerNextPiece}
-      move={move}
+     // move={move}
       handleSubmitStatus={handleSubmitStatus}
     />
+    </div>
   );
 };
 

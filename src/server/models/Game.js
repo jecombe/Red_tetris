@@ -4,10 +4,9 @@ import Piece from './Piece';
 export default class Game extends Room {
   constructor(nameGame) {
     super(nameGame);
-    this.gameStart = false;
+    this.gameStart = false,
     this.userPiece = [];
     this.tetro = [];
-    this.indexSpectre = -1;
   }
 
   getgameName() {
@@ -18,12 +17,13 @@ export default class Game extends Room {
     return this.owner;
   }
 
-  getNextPieceStart() {
-    return this.tetro[1];
+  getNextPieceStart(){
+    return this.tetro[1]
   }
 
-  getUserInGame() {
-    return this.users;
+  getUserInGame(){
+
+    return this.users
   }
 
   setPlayerOwner(owner) {
@@ -47,9 +47,5 @@ export default class Game extends Room {
 
   setTetroNull() {
     this.tetro = [];
-  }
-
-  setIndexSpectre() {
-    this.indexSpectre += 1;
   }
 }

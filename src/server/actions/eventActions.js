@@ -36,15 +36,22 @@ export const loginUserGame = (io, socketClient, ioGame, data) => {
   });
 };
 
-export const disconnect = (socketClient, ioGame) => {
+export const disconnect = (socketClient, ioGame, io) => {
   const { rooms, userlist } = ioGame;
 
   /* Search user login in userList */
   const login = searchUserInList(socketClient.id, userlist);
+
+  const objUser = objPlayer(userlist, socketClient.id);
+  const objGame = objGaming(rooms, objUser.roomAssociate);
+
   /* Search room name of player */
   const roomActual = searchRoomInUser(userlist, login);
-  socketClient.leave(roomActual);
+  shareAction(login, roomActual, rooms, userlist, objUser, objGame, io);
+
   shareAction(login, roomActual, rooms, userlist);
+  socketClient.leave(roomActual);
+
 };
 
 /*

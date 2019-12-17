@@ -20,7 +20,7 @@ const ioDispatchLogin = (io, socketClient, ioGame) => {
 
   // LOGOUT
   socketClient.on(ev.DISCONNECT, () => {
-    disconnect(socketClient, ioGame);
+    disconnect(socketClient, ioGame, io);
   });
 };
 

@@ -22,6 +22,7 @@ const isEmpty = (onlineGame) => {
 };
 
 /* Free user in game */
+// eslint-disable-next-line import/prefer-default-export
 export const shareAction = (login, roomActual, onlineGame, userList) => {
   /* Calcule index of Player in userList */
   const index = calcIndex(userList, login);

@@ -24,6 +24,7 @@ const LoginLayout = (props) => {
     errPlayerName,
     errPlayerRoom,
     rooms,
+    games,
   } = props;
   const classes = useStyles();
 
@@ -42,6 +43,7 @@ const LoginLayout = (props) => {
           <Grid item xs={12}>
             <LoginRooms
               rooms={rooms}
+              games={games}
               handleRoomSubmit={handleRoomSubmit}
             />
           </Grid>
@@ -74,6 +76,7 @@ LoginLayout.propTypes = {
   errPlayerRoom: PropTypes.bool,
   errPlayerName: PropTypes.bool,
   rooms: PropTypes.arrayOf(PropTypes.string).isRequired,
+  games: PropTypes.object.isRequired,
 };
 
 export default LoginLayout;

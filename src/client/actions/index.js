@@ -59,10 +59,11 @@ export const reqStartGame = (infoUserGame) => ({
  * action creators for server socket events
  */
 
-export const appGetRooms = (payload) => ({
+export const resRooms = (payload) => ({
   type: ev.res_ROOMS,
   payload: {
     rooms: payload.rooms,
+    games: payload.games,
   },
 });
 

@@ -5,11 +5,13 @@ import ev from '../../shared/events';
 export const appState = {
   connected: false,
   rooms: [],
+  games: {},
 };
 
 export const appStatePropTypes = PropTypes.shape({
   connected: PropTypes.bool.isRequired,
   rooms: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+  games: PropTypes.object.isRequired,
 });
 
 const appReducer = (state = appState, action) => {
@@ -22,10 +24,11 @@ const appReducer = (state = appState, action) => {
       };
     }
     case ev.res_ROOMS: {
-      const { rooms } = action.payload;
+      const { rooms, games } = action.payload;
       return {
         ...state,
         rooms,
+        games,
       };
     }
     default:

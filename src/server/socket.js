@@ -4,6 +4,8 @@ import ev from '../shared/events';
 import logger from './utils/logger';
 import ioEngine from './socket/';
 
+import IoGame from './models/IoGame';
+
 const io = (server) => {
   const socketServer = socketIO(
     server,
@@ -13,15 +15,13 @@ const io = (server) => {
     },
   );
 
-  const ioGame = {
-    connections: [],
-    rooms: [],
-    userlist: [],
-  };
+  const redGame = new IoGame();
 
   // socket CONNECT
   socketServer.on(ev.CONNECT, (socketClient) => {
     logger.info(`Client ${socketClient.id} connected.`);
+
+    redGame.setSockets(socketServer, socketClient);
 
     // socket DISCONNECT
     socketClient.on(ev.DISCONNECT, () => {
@@ -33,7 +33,7 @@ const io = (server) => {
       logger.error(`Client ${socketClient.id} error.`);
     });
 
-    ioEngine({ socketServer, socketClient }, ioGame);
+    ioEngine(redGame);
   });
 };
 
@@ -85,7 +85,7 @@ module.exports = io;
 
 // const socketHandler = (io, userlist, rooms) => {
 //   io.on('connection', (socket) => {
-//     io.emit('appGetRooms', {
+//     io.emit('resRooms', {
 //       rooms,
 //     });
 //     /* --- Go to action dispatcher --- */

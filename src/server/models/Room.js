@@ -4,4 +4,9 @@ export default class Room {
     this.users = [];
     this.owner = null;
   }
+
+  setUser(user) {
+    this.users.push(user);
+  }
+
 }

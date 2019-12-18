@@ -21,22 +21,47 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginRoomsMap = (rooms, handleRoomSubmit) => {
-  if (rooms.length === 0) {
+// const LoginRoomsMap = (rooms, handleRoomSubmit) => {
+//   if (rooms.length === 0) {
+//     return (
+//       <div>
+//         No rooms available
+//       </div>
+//     );
+//   }
+
+//   return rooms.map((i) => (
+//     <ListItem
+//       button
+//       value={i.roomName}
+//       key={i.roomName}
+//       onClick={() => handleRoomSubmit(i.roomName)}
+//     >
+//       <ListItemText primary={`${i.roomName}`} secondary={`Owned by ${i.owner}`} />
+//       <ListItemText primary="Game not started." />
+//       <LaunchIcon color="primary" />
+//     </ListItem>
+//   ));
+// };
+
+const LoginGamesMap = (games, handleRoomSubmit) => {
+  if (Object.entries(games).length === 0
+      && games.constructor === Object) {
     return (
       <div>
         No rooms available
       </div>
     );
   }
-  return rooms.map((i) => (
+
+  return Object.keys(games).map((key) => (
     <ListItem
       button
-      value={i.roomName}
-      key={i.roomName}
-      onClick={() => handleRoomSubmit(i.roomName)}
+      value={key}
+      key={key}
+      onClick={() => handleRoomSubmit(key)}
     >
-      <ListItemText primary={`${i.roomName}`} secondary={`Owned by ${i.owner}`} />
+      <ListItemText primary={`${games[key].roomName}`} secondary={`Owned by ${games[key].owner}`} />
       <ListItemText primary="Game not started." />
       <LaunchIcon color="primary" />
     </ListItem>
@@ -44,7 +69,7 @@ const LoginRoomsMap = (rooms, handleRoomSubmit) => {
 };
 
 const LoginRooms = (props) => {
-  const { rooms, handleRoomSubmit } = props;
+  const { rooms, games, handleRoomSubmit } = props;
   const classes = useStyles();
 
   return (
@@ -54,7 +79,7 @@ const LoginRooms = (props) => {
       </Typography>
       <Grid item xs={12} style={{ maxHeight: 150, overflow: 'auto' }}>
         <List style={{ maxHeight: '100%' }}>
-          {LoginRoomsMap(rooms, handleRoomSubmit)}
+          {LoginGamesMap(games, handleRoomSubmit)}
         </List>
       </Grid>
     </Grid>
@@ -63,6 +88,7 @@ const LoginRooms = (props) => {
 
 LoginRooms.propTypes = {
   rooms: PropTypes.arrayOf(PropTypes.string).isRequired,
+  games: PropTypes.object.isRequired,
   handleRoomSubmit: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) }),

@@ -1,11 +1,13 @@
+import { createStage } from '../helpers/stage';
+
 export default class Player {
-  constructor(socketId, username) {
-    this.login = username;
+  constructor(socketId, username, room) {
     this.idSocket = socketId;
+    this.login = username;
+    this.roomAssociate = room;
     this.owner = false;
-    this.stage = null;
+    this.stage = createStage();
     this.losing = false;
-    this.roomAssociate = null;
     this.pos = { x: 0, y: 0 };
     this.pos1 = { x: 0, y: 0 };
     this.collided = false;
@@ -24,7 +26,7 @@ export default class Player {
     return this.idSocket;
   }
 
-  getroomAssociate() {
+  getRoomAssociate() {
     return this.roomAssociate;
   }
 
@@ -48,6 +50,10 @@ export default class Player {
     this.login = login;
   }
 
+  setRoomAssociate(roomName) {
+    this.roomAssociate = roomName;
+  }
+
   setOwner() {
     this.owner = true;
   }
@@ -60,7 +66,6 @@ export default class Player {
     this.pos.x = x + this.pos.x;
     this.pos.y = y + this.pos.y;
   }
-
 
   setPosition1(x, y) {
     this.pos.x = x;

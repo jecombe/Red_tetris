@@ -2,9 +2,7 @@ import loginUser from '../handlers/player/createPlayer';
 import { startGaming } from '../handlers/game/startGame';
 import { createGame } from '../handlers/game/createGame';
 import { movementPlayer } from '../handlers/player/movementPlayer';
-import { searchRoomInUser } from '../handlers/game/utils';
-import { searchUserInList } from '../handlers/player/utils';
-import { shareAction } from '../handlers/shareActions';
+
 import { objPlayer, objGaming } from './utils';
 import { updateStage, printTetroStage } from '../handlers/game/stageGame';
 
@@ -36,30 +34,13 @@ export const loginUserGame = (io, socketClient, ioGame, data) => {
   });
 };
 
-export const disconnect = (socketClient, ioGame, io) => {
-  const { rooms, userlist } = ioGame;
-
-  /* Search user login in userList */
-  const login = searchUserInList(socketClient.id, userlist);
-
-  const objUser = objPlayer(userlist, socketClient.id);
-  const objGame = objGaming(rooms, objUser.roomAssociate);
-
-  /* Search room name of player */
-  const roomActual = searchRoomInUser(userlist, login);
-  shareAction(login, roomActual, rooms, userlist, objUser, objGame, io);
-
-  shareAction(login, roomActual, rooms, userlist);
-  socketClient.leave(roomActual);
-
-};
 
 /*
  * actions game
  */
 
-export const startGame = (io, socketClient, ioGame, data) => {
-  const { rooms, userlist } = ioGame;
+export const startGame = (ioGame, data) => {
+  const { rooms, userlist, io } = ioGame;
   const { room } = data;
 
   const [objPlayer, objGame] = startGaming(data, rooms, userlist);

@@ -1,15 +1,15 @@
-import Room from './Room';
 import Piece from './Piece';
 
-export default class Game extends Room {
-  constructor(nameGame) {
-    super(nameGame);
-    this.gameStart = false,
-    this.userPiece = [];
+export default class Game {
+  constructor(username, roomName) {
+    this.owner = username;
+    this.roomName = roomName;
+    this.users = [];
+    this.gameStart = false;
     this.tetro = [];
   }
 
-  getgameName() {
+  getGameName() {
     return this.roomName;
   }
 
@@ -17,23 +17,21 @@ export default class Game extends Room {
     return this.owner;
   }
 
-  getNextPieceStart(){
-    return this.tetro[1]
+  getNextPieceStart() {
+    return this.tetro[1];
   }
 
-  getUserInGame(){
-
-    return this.users
+  getUserInGame() {
+    return this.users;
   }
 
   setPlayerOwner(owner) {
     this.owner = owner;
   }
 
-  setUser(user) {
+  setPlayer(user) {
     this.users.push(user);
   }
-
 
   setGameStart() {
     this.gameStart = true;
@@ -47,5 +45,10 @@ export default class Game extends Room {
 
   setTetroNull() {
     this.tetro = [];
+  }
+
+  unsetPlayer(id) {
+    const index = this.users.findIndex((user) => user.idSocket === id);
+    this.users.splice(index, 1);
   }
 }

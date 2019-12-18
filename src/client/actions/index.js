@@ -59,10 +59,11 @@ export const reqStartGame = (infoUserGame) => ({
  * action creators for server socket events
  */
 
-export const appGetRooms = (payload) => ({
+export const resRooms = (payload) => ({
   type: ev.res_ROOMS,
   payload: {
     rooms: payload.rooms,
+    games: payload.games,
   },
 });
 
@@ -70,28 +71,6 @@ export const appGetStage = (payload) => ({
   type: ev.OBJ_PLAYER,
   payload: {
     playerStage: payload.stage,
-    playerOtherStage: payload.otherStage,
-  },
-});
-
-export const updateStage = (payload) => ({
-  type: ev.STAGE,
-  payload: {
-    playerStage: payload.newStage,
-    playerNextPiece: payload.nextPiece,
-  },
-});
-
-export const updateStageMallus = (payload) => ({
-  type: ev.STAGE_MALLUS,
-  payload: {
-    stage: payload.newStage,
-  },
-});
-
-export const updateOtherStage = (payload) => ({
-  type: ev.STAGE_OTHER,
-  payload: {
     playerOtherStage: payload.otherStage,
   },
 });

@@ -13,7 +13,7 @@ const Login = (props) => {
     reqLogin,
     history,
   } = props;
-  const { rooms } = app;
+  const { rooms, games } = app;
 
   const [errPlayerName, setErrPlayerName] = useState(false);
   const [errPlayerRoom, setErrPlayerRoom] = useState(false);
@@ -54,6 +54,7 @@ const Login = (props) => {
       handlePlayerRoom={handlePlayerRoom}
       errPlayerRoom={errPlayerRoom}
       rooms={rooms}
+      games={games}
       handleRoomSubmit={handleRoomSubmit}
     />
   );

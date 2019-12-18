@@ -44,7 +44,8 @@ const dispatchStage = (objPlayer, userList, io, objGame) => {
   }
 }
 /* Free user in game */
-export const shareAction = (login, roomActual, onlineGame, userList, objUser, objGame, io) => {
+// eslint-disable-next-line import/prefer-default-export
+export const shareAction = (login, roomActual, onlineGame, userList) => {
   /* Calcule index of Player in userList */
   const index = calcIndex(userList, login);
   /* Search login of new owner */

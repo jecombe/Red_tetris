@@ -18,7 +18,7 @@ describe('# Redux App Tests', () => {
         type: ev.res_ROOMS,
         payload,
       };
-      expect(actions.appGetRooms(payload)).toEqual(expectedAction);
+      expect(actions.resRooms(payload)).toEqual(expectedAction);
     });
   });
 

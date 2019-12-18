@@ -5,16 +5,19 @@ import ioDispatchHello from './echo';
 import ioDispatchLogin from './login';
 import ioDispatchGame from './game';
 
-const ioEngine = (socket, ioGame) => {
-  const { socketServer: io, socketClient } = socket;
+const ioEngine = (redGame) => {
 
-  logger.info(`Sending rooms to ${socketClient.id}.`);
-  const data4Client = { status: 200, message: 'SERVER ROOMS', rooms: ioGame.rooms };
-  socketClient.emit(ev.res_ROOMS, data4Client);
+  logger.info(`Sending rooms to ${redGame.socketClient.id}.`);
+  const data4Client = {
+    status: 200,
+    message: 'SERVER ROOMS',
+    games: redGame.getGames(),
+  };
+  redGame.socketClient.emit(ev.res_ROOMS, data4Client);
 
-  ioDispatchHello(socketClient);
-  ioDispatchLogin(io, socketClient, ioGame);
-  ioDispatchGame(io, socketClient, ioGame);
+  ioDispatchHello(redGame.socketClient);
+  ioDispatchLogin(redGame, redGame.socketClient);
+  ioDispatchGame(redGame, redGame.socketClient);
 };
 
 module.exports = ioEngine;

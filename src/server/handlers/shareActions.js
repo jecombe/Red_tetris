@@ -20,9 +20,31 @@ const isEmpty = (onlineGame) => {
   });
   return empty;
 };
+const replaceOtherStage = (objPlayer, objOther) => {
+  let index = objOther.peopleSpectre.indexOf(objPlayer.login)
+  objOther.peopleSpectre.splice(index, 1)
+  objOther.otherStage.splice(index, 1)
+}
 
+
+const sendSpectreToOther = (userList, usernameOther, objPlayer, io) => {
+  userList.find((obj) => {
+    if (obj.login == usernameOther) {
+      replaceOtherStage(objPlayer, obj)
+      io.to(`${obj.getIdSocket()}`).emit('otherStage', {
+        otherStage: obj.otherStage
+      });
+    }
+  });
+};
+
+const dispatchStage = (objPlayer, userList, io, objGame) => {
+  for (var i = 0; i < objPlayer.peopleSpectre.length; i++) {
+    sendSpectreToOther(userList, objPlayer.peopleSpectre[i], objPlayer, io)
+  }
+}
 /* Free user in game */
-export const shareAction = (login, roomActual, onlineGame, userList) => {
+export const shareAction = (login, roomActual, onlineGame, userList, objUser, objGame, io) => {
   /* Calcule index of Player in userList */
   const index = calcIndex(userList, login);
   /* Search login of new owner */
@@ -30,6 +52,9 @@ export const shareAction = (login, roomActual, onlineGame, userList) => {
   /* Switch owner false to true for new owner */
   switchOwnerToPlayer(userList, roomActual, loginNewOwner);
   /* Free old user in userList */
+  dispatchStage(objUser, userList, io , objGame)
+
+
   freeUserList(userList, index);
   /* Check if there are users in current game, if there is no user, we can delete game actual */
   const empty = isEmpty(onlineGame, roomActual);

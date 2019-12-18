@@ -15,8 +15,9 @@ export const playerState = {
 export const playerStatePropTypes = PropTypes.shape({
   playerName: PropTypes.string.isRequired,
   playerRoom: PropTypes.string.isRequired,
-  playerStage: PropTypes.arrayOf(PropTypes.string).isRequired,
-  playerNextPiece: PropTypes.arrayOf(PropTypes.string).isRequired,
+  playerStage: PropTypes.array.isRequired,
+  playerOtherStage: PropTypes.array.isRequired,
+  playerNextPiece: PropTypes.array.isRequired,
 });
 
 const playerReducer = (state = playerState, action) => {
@@ -32,11 +33,12 @@ const playerReducer = (state = playerState, action) => {
     }
 
     case ev.OBJ_PLAYER: {
-      const { playerStage } = action.payload;
+      const { playerStage, playerOtherStage } = action.payload;
 
       return {
         ...state,
         playerStage,
+        playerOtherStage,
       };
     }
 

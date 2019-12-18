@@ -1,4 +1,4 @@
-import { loginUser } from '../handlers/player/createPlayer';
+import loginUser from '../handlers/player/createPlayer';
 import { startGaming } from '../handlers/game/startGame';
 import { createGame } from '../handlers/game/createGame';
 import { movementPlayer } from '../handlers/player/movementPlayer';
@@ -21,7 +21,7 @@ export const loginUserGame = (io, socketClient, ioGame, data) => {
 
   const objPlayerBeforeGame = loginUser(socketClient, username, userlist);
   /* ----- Create a game if game is not created ----- */
-  const [objGame, objPlayerAfterGame] = createGame(rooms, userlist, username, roomActual);
+  const [objGame, objPlayerAfterGame] = createGame(rooms, userlist, username, roomActual, io);
 
   io.emit(ev.res_ROOMS, {
     rooms,
@@ -32,18 +32,26 @@ export const loginUserGame = (io, socketClient, ioGame, data) => {
 
   io.to(`${socketClient.id}`).emit(ev.OBJ_PLAYER, {
     stage: objPlayerAfterGame.stage,
+    otherStage: objPlayerAfterGame.otherStage,
   });
 };
 
-export const disconnect = (socketClient, ioGame) => {
+export const disconnect = (socketClient, ioGame, io) => {
   const { rooms, userlist } = ioGame;
 
   /* Search user login in userList */
   const login = searchUserInList(socketClient.id, userlist);
+
+  const objUser = objPlayer(userlist, socketClient.id);
+  const objGame = objGaming(rooms, objUser.roomAssociate);
+
   /* Search room name of player */
   const roomActual = searchRoomInUser(userlist, login);
-  socketClient.leave(roomActual);
+  shareAction(login, roomActual, rooms, userlist, objUser, objGame, io);
+
   shareAction(login, roomActual, rooms, userlist);
+  socketClient.leave(roomActual);
+
 };
 
 /*
@@ -57,7 +65,7 @@ export const startGame = (io, socketClient, ioGame, data) => {
   const [objPlayer, objGame] = startGaming(data, rooms, userlist);
   const stagePiece = printTetroStage(objGame, userlist);
   io.sockets.in(room).emit(ev.STAGE, {
-    newStage: updateStage(objGame.tetro[0], objGame, userlist),
+    newStage: updateStage(objGame.tetro[0], objGame, userlist, objPlayer, io),
     nextPiece: objPlayer.nextPiece,
   });
 };

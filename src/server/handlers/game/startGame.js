@@ -1,6 +1,7 @@
 
 import { searchGameRoom, searchObjPlayer } from './utils';
 
+
 export const startGaming = (game, rooms, userlist) => {
   /* Return object Game, check with name of room */
   const objGame = searchGameRoom(rooms, game.room);

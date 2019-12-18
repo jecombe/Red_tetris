@@ -4,6 +4,7 @@ import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 
 import Stage from './Stage';
+
 import GameStatus from './GameStatus';
 import GamePlayers from './GamePlayers';
 
@@ -12,13 +13,14 @@ import infos from './infosHelper';
 const GameLayout = (props) => {
   const {
     playerStage,
+    playerOtherStage,
     playerNextPiece,
     move,
     handleSubmitStatus,
   } = props;
 
   return (
-    <Card onKeyDown={(e) => move(e)}>
+    <Card>
       <Grid container justify="center" alignItems="center">
         <Grid item xs={12} lg={7} container>
           <Grid item xs={5} lg={10} container justify="center" alignItems="center">
@@ -32,7 +34,7 @@ const GameLayout = (props) => {
           </Grid>
         </Grid>
         <Grid item xs={12} lg={5} container alignItems="center" justify="center">
-          <GamePlayers infos={infos} />
+          <GamePlayers infos={infos} playerOtherStage={playerOtherStage} />
         </Grid>
       </Grid>
     </Card>
@@ -40,8 +42,9 @@ const GameLayout = (props) => {
 };
 
 GameLayout.propTypes = {
-  playerStage: PropTypes.arrayOf(PropTypes.string).isRequired,
-  playerNextPiece: PropTypes.arrayOf(PropTypes.string).isRequired,
+  playerStage: PropTypes.array.isRequired,
+  playerNextPiece: PropTypes.array.isRequired,
+  playerOtherStage: PropTypes.array.isRequired,
   move: PropTypes.func.isRequired,
   handleSubmitStatus: PropTypes.func.isRequired,
 };

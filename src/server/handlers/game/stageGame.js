@@ -1,10 +1,46 @@
 import { createStage, createStagePiece } from '../../helpers/stage';
-import { objUser, objPlayer } from '../../actions/utils';
+import { objUser } from '../../actions/utils';
 
-const searchAllUser = (game, userlist, piece) => {
+/* --- clean tableau contenant les spectres des autres joueurs a tous les joueurs de la --- */
+const setStageToOther = (userList, username, i, objPlayer, io, objGame) => {
+
+  const tabUser = objGame.getUserInGame()
+
+  let len = tabUser.length - 1
+
+  userList.find((objOther) => {
+
+    if (objOther.login == username) {
+      objOther.setNullOtherStage()
+      if (len !== 0) {
+        while (len != 0) {
+          objOther.setOtherStage(createStage())
+          len--;
+        }
+      }
+      io.to(`${objOther.getIdSocket()}`).emit('otherStage', {
+        otherStage: objOther.otherStage
+      });
+    }
+  });
+};
+
+const dispatchStage = (userList, objGame, objPlayer, io) => {
+  const tabUser = objGame.getUserInGame()
+
+  for (var i = 0; i < tabUser.length; i++) {
+    setStageToOther(userList, tabUser[i], i, objPlayer, io, objGame)
+  }
+}
+
+
+
+
+const searchAllUser = (game, userlist, piece, objPlayer, io) => {
   const stage = createStage();
-
   const newStage = stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
+
+  dispatchStage(userlist, game, objPlayer, io)
   piece.form.shape.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== 0) {
@@ -27,6 +63,8 @@ const searchAllUser = (game, userlist, piece) => {
   return newStage;
 };
 
+
+
 const terrain = (piece, stage) => {
   const newStage = stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
   piece.form.shape.forEach((row, y) => {
@@ -39,30 +77,33 @@ const terrain = (piece, stage) => {
       }
     });
   });
-  return newStage;
-};
+  return newStage
+
+}
+
+
 const printTetro = (game, userlist, piece) => {
   const stage = createStagePiece();
 
 
   for (let i = 0; i < game.users.length; i++) {
     const obj = objUser(userlist, game.users[i]);
-    obj.setPositionNull1();
+    obj.setPositionNull();
     obj.setPosition1(10 / 2 - 2, 0);
     obj.setNextPiece(terrain(piece, stage));
 
-    // obj.setStage(newStage);
+    //obj.setStage(newStage);
   }
 };
 
-export const updateStage = (piece, gameActual, userlist) => {
-  const newStage = searchAllUser(gameActual, userlist, piece);
+export const updateStage = (piece, gameActual, userlist, objPlayer, io) => {
 
+  const newStage = searchAllUser(gameActual, userlist, piece, objPlayer, io);
 
   return newStage;
 };
 
 export const printTetroStage = (gameActual, userlist) => {
-  printTetro(gameActual, userlist, gameActual.getNextPieceStart());
-  // const newStagPiece = getPieceInStage(gameActual)
-};
+
+  printTetro(gameActual, userlist, gameActual.getNextPieceStart())
+}

@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
     gridGap: '1px',
     border: '4px solid red',
     width: '100%',
-    maxWidth: '25vw',
+    maxWidth: '20vw',
     background: '#111',
   }),
   cell: (props) => ({

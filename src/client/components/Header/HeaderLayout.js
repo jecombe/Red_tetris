@@ -27,7 +27,7 @@ const HeaderLayout = (props) => {
     handleHomeButton,
   } = props;
   const { connected } = app;
-  const classes = useStyles(connected);
+  const classes = useStyles({ connected });
 
   return (
     <Grid container alignItems="center" className={classes.root}>

@@ -18,6 +18,7 @@ const ioDispatchGame = (redGame, socketClient) => {
     const payload = positionTetro(redGame, data, socketClient.id);
     const { newStage, nextPiece } = payload;
 
+
     redGame.io.to(`${socketClient.id}`).emit(ev.STAGE, {
       newStage,
       nextPiece,

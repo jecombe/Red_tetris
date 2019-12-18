@@ -29,12 +29,14 @@ const Game = (props) => {
   const handleSubmitStatus = () => reqStartGame({ playerName, playerRoom });
 
   return (
+    <div tabIndex="0" onKeyDown={(e) => move(e)}>
     <GameLayout
       playerStage={playerStage}
       playerNextPiece={playerNextPiece}
       move={move}
       handleSubmitStatus={handleSubmitStatus}
     />
+    </div>
   );
 };
 

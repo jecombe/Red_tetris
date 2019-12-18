@@ -2,6 +2,33 @@ import Player from '../models/Player';
 import Game from '../models/Game';
 import { createStage } from '../helpers/stage';
 
+const userInGameExceptActua = (userTab, userActual) => {
+  var index = userTab.indexOf(userActual);
+  var copie = new Array();
+  for (var i = 0; i < userTab.length; i++) {
+    copie[i] = userTab[i];
+  }
+  copie.splice(index, 1);
+  return copie
+
+}
+
+const getAllStagePlayers = (objGame, redGame, objPlayer) => {
+
+  const tabUser = userInGameExceptActua(objGame.getUserInGame(), objPlayer.getLogin())
+
+  for (var i = 0; i < tabUser.length; i++) {
+    objPlayer.setOtherStage(tabUser[i].stage)
+    objPlayer.setPeopleSpectre(tabUser[i].getLogin())
+    tabUser[i].setOtherStage(objPlayer.stage)
+    tabUser[i].setPeopleSpectre(objPlayer.getLogin())
+    redGame.io.to(`${tabUser[i].getIdSocket()}`).emit('otherStage', {
+      otherStage: tabUser[i].otherStage
+    });
+  }
+
+}
+
 export const login = (redGame, data, id) => {
   const { username, roomActual } = data;
   const player = new Player(id, username, roomActual);
@@ -15,6 +42,9 @@ export const login = (redGame, data, id) => {
   }
   game.setPlayer(player);
   redGame.setPlayer(player);
+
+  getAllStagePlayers(game, redGame, player)
+
 
   return player;
 };

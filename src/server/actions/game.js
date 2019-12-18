@@ -3,7 +3,7 @@ import {
   moveDownTetro,
   moveTetro,
   moveUpTetro,
-  moveSpaceTetro,
+  dropTetro,
   terrain,
 } from './move';
 
@@ -36,7 +36,8 @@ export const startGame = (redGame, data, id) => {
   game.users.map((user) => {
     // const player = redGame.getPlayer(user.idSocket);
     user.setPositionNull();
-    user.setPositionNull1();
+
+    user.setPlayerNull();
     user.setPiece(piece);
     user.setPosition(10 / 2 - 2, 0);
     user.setPosition1(10 / 2 - 2, 0);
@@ -59,13 +60,26 @@ export const positionTetro = (redGame, data, id) => {
   const player = redGame.getPlayer(id);
   const game = redGame.getGame(player.roomAssociate);
 
-  // if (keyCode === 32) moveSpaceTetro(game, player);
-  // else if (keyCode === 37) moveTetro(game, player, -1);
-  // else if (keyCode === 38) moveUpTetro(player, 1);
-  // else if (keyCode === 39) moveTetro(game, 1);
+  //console.log('game ', game)
+ // moveTetro(-1, objUser, objGame);
+   if (keyCode === 40) {
+     dropTetro(player, game, redGame);
+   }
+     if (keyCode === 37){
+      moveTetro(game, player, -1);
+    }
+    else if (keyCode === 38) {
+      moveUpTetro(player, 1);
+    }
+   else if (keyCode === 39) {
+     moveTetro(game, player, 1);
+    }
 
   // Probleme avec moveDownTetro car userlist doit etre remplace par players de redGame
-  // else if (keyCode === 40) moveDownTetro(redGame, game, player);
+   else if (keyCode === 32) 
+   {
+     moveDownTetro(redGame, game, player);
+   }
 
   const payload = {
     newStage: player.stage,

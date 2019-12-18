@@ -6,7 +6,6 @@ export default class Game {
     this.roomName = roomName;
     this.users = [];
     this.gameStart = false;
-    this.userPiece = [];
     this.tetro = [];
   }
 

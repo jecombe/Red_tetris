@@ -41,11 +41,19 @@ export const updatePlayerPosition = (x, y, obj) => {
   return flushUpdate(obj.piece, obj);
 };
 
+
+export const updateStagingBeforeCollision = (objPlayer, objGame, redGame, io) => {
+  objPlayer.setCollidedTrue();
+  const newStage = updateStage(objPlayer.piece, objPlayer.stage, objPlayer)
+
+  return (updateRows(newStage, objPlayer, objGame, redGame, io))
+};
+/*
 export const updateStagingBeforeCollision = (piece, obj) => {
   obj.setCollidedTrue();
   return updateStage(piece, obj.stage, obj);
 };
-
+*/
 export const updateStagingAfterCollision = (piece, obj) => {
   obj.setPositionNull();
   obj.setCollidedFalse();
@@ -103,7 +111,7 @@ const setMallusToPlayers = (objGame, userActual, userList, io) => {
     objPlayer1(userList, tabUser[i], io);
   }
 };
-export const updateRows = (newStage, objPlayer, objGame, userList, io, socket) => {
+export const updateRows = (newStage, objPlayer, objGame, redGame, io) => {
   // Pour la hauteur verifie si une ligne est pleine
   newStage.forEach((row) => {
     const full_line = row.every(is_full);
@@ -117,7 +125,7 @@ export const updateRows = (newStage, objPlayer, objGame, userList, io, socket) =
       newStage.splice(index, 1);
       // Ajoute au debut du tableau un nouveau tableau de 10 a 0
       newStage.unshift(new Array(10).fill([0, 'clear']));
-      setMallusToPlayers(objGame, objPlayer.getLogin(), userList, io);
+      //setMallusToPlayers(objGame, objPlayer.getLogin(), userList, io);
     }
   });
   return (newStage);

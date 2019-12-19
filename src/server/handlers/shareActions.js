@@ -21,28 +21,28 @@ const isEmpty = (onlineGame) => {
   return empty;
 };
 const replaceOtherStage = (objPlayer, objOther) => {
-  let index = objOther.peopleSpectre.indexOf(objPlayer.login)
-  objOther.peopleSpectre.splice(index, 1)
-  objOther.otherStage.splice(index, 1)
-}
+  const index = objOther.peopleSpectre.indexOf(objPlayer.login);
+  objOther.peopleSpectre.splice(index, 1);
+  objOther.otherStage.splice(index, 1);
+};
 
 
 const sendSpectreToOther = (userList, usernameOther, objPlayer, io) => {
   userList.find((obj) => {
     if (obj.login == usernameOther) {
-      replaceOtherStage(objPlayer, obj)
+      replaceOtherStage(objPlayer, obj);
       io.to(`${obj.getIdSocket()}`).emit('otherStage', {
-        otherStage: obj.otherStage
+        otherStage: obj.otherStage,
       });
     }
   });
 };
 
 const dispatchStage = (objPlayer, userList, io, objGame) => {
-  for (var i = 0; i < objPlayer.peopleSpectre.length; i++) {
-    sendSpectreToOther(userList, objPlayer.peopleSpectre[i], objPlayer, io)
+  for (let i = 0; i < objPlayer.peopleSpectre.length; i++) {
+    sendSpectreToOther(userList, objPlayer.peopleSpectre[i], objPlayer, io);
   }
-}
+};
 /* Free user in game */
 // eslint-disable-next-line import/prefer-default-export
 export const shareAction = (login, roomActual, onlineGame, userList) => {
@@ -53,7 +53,7 @@ export const shareAction = (login, roomActual, onlineGame, userList) => {
   /* Switch owner false to true for new owner */
   switchOwnerToPlayer(userList, roomActual, loginNewOwner);
   /* Free old user in userList */
-  dispatchStage(objUser, userList, io , objGame)
+  dispatchStage(objUser, userList, io, objGame);
 
 
   freeUserList(userList, index);

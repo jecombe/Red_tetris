@@ -51,11 +51,11 @@ const addGameInPlayer = (userList, username, roomName) => {
 };
 
 const objPlaye = (userList, username, i, objPlayer) => {
-  let allStage = []
+  const allStage = [];
   userList.find((obj) => {
     if (obj.login == username) {
-      objPlayer.setOtherStage(obj.stage)
-      objPlayer.setPeopleSpectre(obj.getLogin())
+      objPlayer.setOtherStage(obj.stage);
+      objPlayer.setPeopleSpectre(obj.getLogin());
     }
   });
 };
@@ -64,42 +64,39 @@ const objj = (userList, username) => {
   let objOther;
   userList.find((obj) => {
     if (obj.login == username) {
-      objOther = obj
-      return objOther
+      objOther = obj;
+      return objOther;
     }
   });
-  return objOther
+  return objOther;
 };
 const userInGameExceptActua = (userTab, userActual) => {
-  var index = userTab.indexOf(userActual);
-  var copie = new Array();
-  for (var i = 0; i < userTab.length; i++) {
+  const index = userTab.indexOf(userActual);
+  const copie = new Array();
+  for (let i = 0; i < userTab.length; i++) {
     copie[i] = userTab[i];
   }
   copie.splice(index, 1);
-  return copie
-
-}
+  return copie;
+};
 const getAllStagePlayers = (objGame, userList, objPlayer, io) => {
-
-  const tabUser = userInGameExceptActua(objGame.getUserInGame(), objPlayer.getLogin())
+  const tabUser = userInGameExceptActua(objGame.getUserInGame(), objPlayer.getLogin());
 
 
   for (var i = 0; i < tabUser.length; i++) {
-    objPlaye(userList, tabUser[i], i, objPlayer)
+    objPlaye(userList, tabUser[i], i, objPlayer);
   }
-  let lenUser = objGame.getUserInGame()
+  const lenUser = objGame.getUserInGame();
   for (var i = 0; i < tabUser.length; i++) {
-    const objOther = objj(userList, tabUser[i])
-    objOther.setOtherStage(objPlayer.stage)
-    objOther.setPeopleSpectre(objPlayer.getLogin())
-    //console.log(objPlayer.getIdSocket())
+    const objOther = objj(userList, tabUser[i]);
+    objOther.setOtherStage(objPlayer.stage);
+    objOther.setPeopleSpectre(objPlayer.getLogin());
+    // console.log(objPlayer.getIdSocket())
     io.to(`${objOther.getIdSocket()}`).emit('otherStage', {
-      otherStage: objOther.otherStage
+      otherStage: objOther.otherStage,
     });
   }
-
-}
+};
 
 
 export const createGame = (onlineGame, userList, username, roomActual, io) => {
@@ -112,7 +109,7 @@ export const createGame = (onlineGame, userList, username, roomActual, io) => {
   const objGame = addPlayerInGame(onlineGame, username, roomActual);
   const objPlayer = addGameInPlayer(userList, username, roomActual);
 
-  getAllStagePlayers(objGame, userList, objPlayer, io)
-  
+  getAllStagePlayers(objGame, userList, objPlayer, io);
+
   return [objGame, objPlayer];
 };

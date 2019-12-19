@@ -18,7 +18,7 @@ const GameInfoMap = (infos, playerOtherStage) => {
   }
   return playerOtherStage.map((i) => (
     <ListItem>
-      <Stage stage={i} />
+      <Stage stage={i} type="other" />
     </ListItem>
   ));
 };

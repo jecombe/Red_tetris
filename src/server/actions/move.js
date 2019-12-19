@@ -41,7 +41,7 @@ export const moveDownTetro = (redGame, objGame, objPlayer) => {
     i += 1;
     checkColl = checkCollision(objPlayer, objPlayer.stage, { x: 0, y: i });
     if (checkColl === true) {
-      i = i - 1;
+      i -= 1;
       break;
     }
     checkColl = checkCollision(objPlayer, objPlayer.stage, { x: 0, y: i + 1 });
@@ -49,26 +49,25 @@ export const moveDownTetro = (redGame, objGame, objPlayer) => {
   objPlayer.setStage(updatePlayerPosition(0, i, objPlayer, objGame));
   objPlayer.setIndex(objPlayer.index + 1);
   objPlayer.setStage(updateStagingBeforeCollision(objPlayer, objGame, redGame, io));
-  //dispatchStage(objPlayer, userList, io, objGame)
+  // dispatchStage(objPlayer, userList, io, objGame)
   objPlayer.setPiece(objGame.tetro[objPlayer.index]);
   if (!objGame.tetro[objPlayer.index + 1]) objGame.setTetro();
   objPlayer.setStage(updateStagingAfterCollision(objPlayer.piece, objPlayer));
-  printTetro(objPlayer, objGame.tetro[objPlayer.index + 1])
+  printTetro(objPlayer, objGame.tetro[objPlayer.index + 1]);
 };
 
 export const dropTetro = (objPlayer, objGame, redGame) => {
   const { io, socketClient, userlist } = redGame;
   if (!checkCollision(objPlayer, objPlayer.stage, { x: 0, y: 1 })) {
     objPlayer.setStage(updatePlayerPosition(0, 1, objPlayer, objGame));
-
   } else {
     objPlayer.setIndex(objPlayer.index + 1);
     objPlayer.setStage(updateStagingBeforeCollision(objPlayer, objGame, redGame, io));
-    //dispatchStage(objPlayer, userList, io, objGame)
+    // dispatchStage(objPlayer, userList, io, objGame)
     objPlayer.setPiece(objGame.tetro[objPlayer.index]);
     if (!objGame.tetro[objPlayer.index + 1]) objGame.setTetro();
     objPlayer.setStage(updateStagingAfterCollision(objPlayer.piece, objPlayer));
-    printTetro(objPlayer, objGame.tetro[objPlayer.index + 1])
+    printTetro(objPlayer, objGame.tetro[objPlayer.index + 1]);
   }
 };
 

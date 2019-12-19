@@ -6,7 +6,6 @@ import ioDispatchLogin from './login';
 import ioDispatchGame from './game';
 
 const ioEngine = (redGame) => {
-
   logger.info(`Sending rooms to ${redGame.socketClient.id}.`);
   const data4Client = {
     status: 200,

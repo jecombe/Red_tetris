@@ -11,10 +11,10 @@ const useStyles = makeStyles(() => ({
     display: 'grid',
     gridTemplateRows: `repeat(
       ${props.height},
-      calc(20vw / ${props.width}))`,
+      calc(${props.size}vw / ${props.width}))`,
     gridTemplateColumns: `repeat(${props.width}, 1fr)`,
     gridGap: '1px',
-    border: '4px solid red',
+    border: '2px solid black',
     width: '100%',
     maxWidth: '20vw',
     background: '#111',
@@ -48,10 +48,14 @@ Cell.propTypes = {
 };
 
 const Stage = (props) => {
-  const { stage } = props;
+  const { stage, type } = props;
+
+  let size = 20;
+  if (type === 'other') size = '3';
   const style = {
     width: stage[0].length,
     height: stage.length,
+    size,
   };
   const classes = useStyles(style);
 

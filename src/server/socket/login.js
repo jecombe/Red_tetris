@@ -9,7 +9,9 @@ const ioDispatchLogin = (redGame, socketClient) => {
   socketClient.on(ev.req_ROOMS, (data4Server) => {
     const { message } = data4Server;
     logger.info(`client says: ${message}`);
-    const data4Client = { status: 200, message: 'SERVER ROOMS', rooms, games };
+    const data4Client = {
+      status: 200, message: 'SERVER ROOMS', rooms, games,
+    };
     socketClient.emit(ev.res_ROOMS, data4Client);
   });
 
@@ -31,7 +33,7 @@ const ioDispatchLogin = (redGame, socketClient) => {
   // LOGOUT
   socketClient.on(ev.DISCONNECT, () => {
     redGame.unsetPlayer(socketClient.id);
-    //logout(redGame);
+    // logout(redGame);
   });
 };
 

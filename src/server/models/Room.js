@@ -8,5 +8,4 @@ export default class Room {
   setUser(user) {
     this.users.push(user);
   }
-
 }

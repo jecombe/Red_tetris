@@ -2,7 +2,7 @@ import ev from '../../../../shared/events';
 
 // eslint-disable-next-line no-shadow
 export const dispatch = (action, data, dispatch) => {
-  console.log('okokokokokokokokokokokokokoko')
+  console.log('okokokokokokokokokokokokokoko');
   dispatch({
     type: ev.STAGE_OTHER,
     payload: {

@@ -12,7 +12,7 @@ const GameBoard = (props) => {
   } = props;
 
   return (
-    <Grid >
+    <Grid>
       <Grid item xs={10} container direction="column" justify="center" alignItems="center">
         {playerStage && playerStage.length
           && <Stage tabIndex="0" stage={playerStage} /> }

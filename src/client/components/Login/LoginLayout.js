@@ -9,9 +9,8 @@ import LoginRooms from './LoginRooms';
 import LoginButton from './LoginButton';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  rootLogin: {
     padding: theme.spacing(3, 3),
-    margin: theme.spacing(3, 3),
   },
 }));
 
@@ -29,9 +28,9 @@ const LoginLayout = (props) => {
   const classes = useStyles();
 
   return (
-    <Grid container direction="row" justify="center" alignItems="center">
-      <Card className={classes.root}>
-        <Grid container direction="row" justify="center">
+    <Grid container justify="center" alignItems="center">
+      <Card className={classes.rootLogin}>
+        <Grid container justify="center">
           <Grid item xs={12}>
             <LoginForm
               handlePlayerName={handlePlayerName}

@@ -7,11 +7,13 @@ import Game from './game';
 import Loader from '../components/Loader';
 import Error404 from '../components/Error404';
 import { appStatePropTypes } from '../reducers/app';
+import Grid from '@material-ui/core/Grid';
 
 const Main = (props) => {
   const { app } = props;
   const { connected } = app;
 
+  // eslint-disable-next-line no-shadow
   if (!connected) {
     return <Loader />;
   }

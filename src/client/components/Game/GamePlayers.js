@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
+import Card from '@material-ui/core/Card';
+
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
@@ -17,11 +19,13 @@ const GameInfoMap = (infos, playerOtherStage) => {
     );
   }
   return playerOtherStage.map((stage) => (
-    <ListItem>
-      {console.log(stage)}
-      <ListItemText primary="Name" secondary="Score  - Rank #" />
-      <Stage stage={stage} type="other" />
-    </ListItem>
+    <Card style={{ padding: '2px' }}>
+      <ListItem>
+        <ListItemText primary="Name" />
+        <ListItemText primary="Score - Rank #" />
+        <Stage stage={stage} type="other" />
+      </ListItem>
+    </Card>
   ));
 };
 
@@ -31,11 +35,11 @@ const GamePlayers = (props) => {
   const { infos, playerOtherStage } = props;
 
   return (
-    <Grid container justify="center">
+    <Grid container justify="center" style={{ width: '100%', border: '1px solid black' }}>
       <Typography component="h1" variant="h5">
             Users in room
       </Typography>
-      <Grid item xs={12} container style={{ maxHeight: '50vh', overflow: 'auto' }}>
+      <Grid item xs={12} style={{ maxHeight: '50vh', overflow: 'auto', width: '100%' }}>
         <List style={{ maxHeight: '100%' }}>
           {GameInfoMap(infos, playerOtherStage)}
         </List>

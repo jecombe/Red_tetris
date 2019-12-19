@@ -6,10 +6,13 @@ import HomeIcon from '@material-ui/icons/Home';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import { makeStyles } from '@material-ui/core/styles';
 
-import HeaderLogo from './HeaderLogo';
+import logo from '../../img/header1.png';
 import { appStatePropTypes } from '../../reducers/app';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
+  rootHeader: {
+    padding: theme.spacing(1),
+  },
   homeIcon: {
     color: 'grey',
     '&:hover': {
@@ -19,7 +22,7 @@ const useStyles = makeStyles({
   connectIcon: (props) => ({
     color: props.connected ? 'lime' : 'red',
   }),
-});
+}));
 
 const HeaderLayout = (props) => {
   const {
@@ -30,14 +33,14 @@ const HeaderLayout = (props) => {
   const classes = useStyles({ connected });
 
   return (
-    <Grid container alignItems="center" className={classes.root}>
+    <Grid container alignItems="center" className={classes.rootHeader}>
       <Grid item xs={3} container justify="center">
         <IconButton aria-label="Home" component="span" onClick={handleHomeButton} className={classes.homeIcon}>
           <HomeIcon />
         </IconButton>
       </Grid>
       <Grid item xs={6} container justify="center">
-        <HeaderLogo />
+        <img src={logo} width="70%" alt="Logo" />
       </Grid>
       <Grid item xs={3} container justify="center">
         <FiberManualRecordIcon fontSize="small" className={classes.connectIcon} />

@@ -1,9 +1,9 @@
-import { createStage } from '../helpers/stage';
+import { createStage, createStagePiece } from '../helpers/stage';
 
 export default class Player {
   constructor(socketId, username, room) {
-    this.login = username;
     this.idSocket = socketId;
+    this.login = username;
     this.owner = false;
     this.stage = createStage();
     this.losing = false;
@@ -13,7 +13,7 @@ export default class Player {
     this.collided = false;
     this.piece = null;
     this.index = 0;
-    this.nextPiece = null;
+    this.nextPiece = createStagePiece();
     this.mallus = 0;
     this.lineFull = 0;
     this.otherStage = [];

@@ -36,7 +36,6 @@ export const startGame = (redGame, data, id) => {
   game.users.map((user) => {
     // const player = redGame.getPlayer(user.idSocket);
     user.setPositionNull();
-
     user.setPlayerNull();
     user.setPiece(piece);
     user.setPosition(10 / 2 - 2, 0);

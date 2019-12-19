@@ -23,12 +23,13 @@ export const playerStatePropTypes = PropTypes.shape({
 const playerReducer = (state = playerState, action) => {
   switch (action.type) {
     case ev.req_LOGIN: {
-      const { playerName, playerRoom } = action.payload;
+      const { playerName, playerRoom, playerNextPiece } = action.payload;
 
       return {
         ...state,
         playerName,
         playerRoom,
+        playerNextPiece,
       };
     }
 

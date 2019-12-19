@@ -27,7 +27,7 @@ const GameLayout = (props) => {
             {playerStage && playerStage.length
               && <Stage tabIndex="0" stage={playerStage} /> }
           </Grid>
-          <Grid item xs={5} lg={2}>
+          <Grid item xs={5} lg={2} style={{ height: '30vh' }}>
             {playerNextPiece && playerNextPiece.length
               && <Stage stage={playerNextPiece} /> }
             <GameStatus handleSubmit={handleSubmitStatus} />

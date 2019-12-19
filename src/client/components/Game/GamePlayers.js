@@ -16,9 +16,11 @@ const GameInfoMap = (infos, playerOtherStage) => {
       </div>
     );
   }
-  return playerOtherStage.map((i) => (
+  return playerOtherStage.map((stage) => (
     <ListItem>
-      <Stage stage={i} type="other" />
+      {console.log(stage)}
+      <ListItemText primary="Name" secondary="Score  - Rank #" />
+      <Stage stage={stage} type="other" />
     </ListItem>
   ));
 };

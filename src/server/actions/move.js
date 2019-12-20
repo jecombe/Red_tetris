@@ -2,34 +2,46 @@ import { createStagePiece } from '../helpers/stage';
 import { checkCollision } from '../helpers/gameHelpers';
 import {
   flushUpdate,
-  updatePlayerPosition,
   updateStagingBeforeCollision,
   updateStagingAfterCollision,
-  updatePlayerPositionCollision,
+} from '../stage/stage';
 
-} from '../stage/stagePlayer';
 
-export const terrain = (piece, stage) => {
-  const newStage = stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
-  piece.form.shape.forEach((row, y) => {
-    row.forEach((value, x) => {
-      if (value !== 0) {
-        newStage[y + 0][x + 3] = [
-          value,
-          `${'clear'}`,
-        ];
-      }
-    });
+
+/*
+============================== DISPATCH SPECTRE ==============================
+const replaceOtherStage = (objPlayer, objOther) => {
+  let index = objOther.peopleSpectre.indexOf(objPlayer.login)
+  let id = 0;
+  objOther.otherStage[index] = objPlayer.stage
+
+  objOther.otherStage.map(newStage => {
+
+    const nouv = newStage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
+    objOther.otherStage[id] = nouv
+    id = id + 1
   });
-  return newStage;
+}
+
+
+const sendSpectreToOther = (userList, usernameOther, objPlayer, io) => {
+  userList.find((obj) => {
+    if (obj.login == usernameOther) {
+      replaceOtherStage(objPlayer, obj)
+      io.to(`${obj.getIdSocket()}`).emit('otherStage', {
+        otherStage: obj.otherStage
+      });
+    }
+  });
 };
 
-const printTetro = (obj, piece) => {
-  const stage = createStagePiece();
-  obj.setPositionNull();
-  obj.setPosition1(10 / 2 - 2, 0);
-  obj.setNextPiece(terrain(piece, stage));
-};
+const dispatchStage = (objPlayer, userList, io, objGame) => {
+  for (var i = 0; i < objPlayer.peopleSpectre.length; i++) {
+    sendSpectreToOther(userList, objPlayer.peopleSpectre[i], objPlayer, io)
+  }
+}
+============================== DISPATCH SPECTRE ==============================
+*/
 
 
 export const moveDownTetro = (redGame, objGame, objPlayer) => {
@@ -45,29 +57,34 @@ export const moveDownTetro = (redGame, objGame, objPlayer) => {
     }
     checkColl = checkCollision(objPlayer, objPlayer.stage, { x: 0, y: i + 1 });
   }
-  objPlayer.setStage(updatePlayerPosition(0, i, objPlayer, objGame));
+  objPlayer.setPosition(0, i)
+  objPlayer.setStage(flushUpdate(objPlayer.piece, objPlayer, objPlayer.stage));
   objPlayer.setIndex(objPlayer.index + 1);
   objPlayer.setStage(updateStagingBeforeCollision(objPlayer, objGame, redGame, io));
+    /* --- DISPATCH STAGE TO OTHER USER --- */
   //dispatchStage(objPlayer, userList, io, objGame)
   objPlayer.setPiece(objGame.tetro[objPlayer.index]);
   if (!objGame.tetro[objPlayer.index + 1]) objGame.setTetro();
   objPlayer.setStage(updateStagingAfterCollision(objPlayer.piece, objPlayer));
-  printTetro(objPlayer, objGame.tetro[objPlayer.index + 1])
+
+  objPlayer.setNextPiece(flushUpdate(objGame.tetro[objPlayer.index + 1], objPlayer, createStagePiece()));
 };
 
 export const dropTetro = (objPlayer, objGame, redGame) => {
   const { io, socketClient, userlist } = redGame;
   if (!checkCollision(objPlayer, objPlayer.stage, { x: 0, y: 1 })) {
-    objPlayer.setStage(updatePlayerPosition(0, 1, objPlayer, objGame));
+    objPlayer.setPosition(0, 1)
+    objPlayer.setStage(flushUpdate(objPlayer.piece, objPlayer, objPlayer.stage));
 
   } else {
     objPlayer.setIndex(objPlayer.index + 1);
     objPlayer.setStage(updateStagingBeforeCollision(objPlayer, objGame, redGame, io));
+    /* --- DISPATCH STAGE TO OTHER USER --- */
     //dispatchStage(objPlayer, userList, io, objGame)
     objPlayer.setPiece(objGame.tetro[objPlayer.index]);
     if (!objGame.tetro[objPlayer.index + 1]) objGame.setTetro();
     objPlayer.setStage(updateStagingAfterCollision(objPlayer.piece, objPlayer));
-    printTetro(objPlayer, objGame.tetro[objPlayer.index + 1])
+    objPlayer.setNextPiece(flushUpdate(objGame.tetro[objPlayer.index + 1], objPlayer, createStagePiece()));
   }
 };
 
@@ -96,13 +113,15 @@ export const moveUpTetro = (player, dir) => {
   player.setPositionNull();
   player.setPiece(clonedPlayer.piece);
   player.setPosition(clonedPlayer.pos.x, clonedPlayer.pos.y);
-  player.setStage(flushUpdate(player.piece, player));
+  player.setStage(flushUpdate(player.piece, player, player.stage));
 };
 
 export const moveTetro = (game, player, pos) => {
   if (!checkCollision(player, player.stage, { x: pos, y: 0 })) {
-    player.setStage(updatePlayerPosition(pos, 0, player, game));
+    player.setPosition(pos, 0)
+    player.setStage(flushUpdate(player.piece, player, player.stage));
   } else {
-    player.setStage(updatePlayerPositionCollision(0, 0, player, game));
+    player.setPosition(0, 0)
+    player.setStage(flushUpdate(player.piece, player, player.stage));
   }
 };

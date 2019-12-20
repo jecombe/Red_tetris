@@ -55,9 +55,9 @@ export default class Player {
     this.pos.x = x + this.pos.x;
     this.pos.y = y + this.pos.y;
   }
-  setPosition1(x, y) {
-    this.pos.x = x
-    this.pos.y = y
+  setPositionNextTetro(x, y) {
+    this.pos1.x = x
+    this.pos1.y = y
   }
   setPositionNull() {
     this.pos = { x: 0, y: 0 };

@@ -1,46 +1,11 @@
-import { is_full } from './utils';
-import { objUser } from '../actions/utils';
-
-const updateStage = (piece, newStage, obj) => {
-  piece.form.shape.forEach((row, y) => {
-    row.forEach((value, x) => {
-      if (value !== 0) {
-        newStage[y + obj.pos.y][x + obj.pos.x] = [
-          value,
-          `${obj.collided ? 'merged' : 'clear'}`,
-        ];
-      }
-    });
-  });
-  return newStage;
-};
+import { is_full, updateStage, userInGameExceptActual } from './utils';
+import { objUser } from '../actions/utils'
 
 
-const updateStage1 = (piece, newStage, obj) => {
-  piece.form.shape.forEach((row, y) => {
-    row.forEach((value, x) => {
-      if (value !== 0) {
-        newStage[y + obj.pos1.y][x + obj.pos1.x] = [
-          value,
-          `${obj.collided ? 'merged' : 'clear'}`,
-        ];
-      }
-    });
-  });
-  return newStage;
-};
-
-
-export const flushUpdate = (piece, obj, objGame) => {
-  const newStage = obj.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
+export const flushUpdate = (piece, obj, stage) => {
+  const newStage = stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
   return updateStage(piece, newStage, obj);
 };
-
-export const updatePlayerPosition = (x, y, obj) => {
-  obj.setPosition(x, y);
-  return flushUpdate(obj.piece, obj);
-};
-
 
 export const updateStagingBeforeCollision = (objPlayer, objGame, redGame, io) => {
   objPlayer.setCollidedTrue();
@@ -48,38 +13,12 @@ export const updateStagingBeforeCollision = (objPlayer, objGame, redGame, io) =>
 
   return (updateRows(newStage, objPlayer, objGame, redGame, io))
 };
-/*
-export const updateStagingBeforeCollision = (piece, obj) => {
-  obj.setCollidedTrue();
-  return updateStage(piece, obj.stage, obj);
-};
-*/
+
 export const updateStagingAfterCollision = (piece, obj) => {
   obj.setPositionNull();
   obj.setCollidedFalse();
   obj.setPosition(10 / 2 - 2, 0);
   return updateStage(piece, obj.stage, obj);
-};
-
-export const updateStagingAfterCollision1 = (piece, obj) => {
-  obj.setPositionNull1();
-  obj.setPosition1(10 / 2 - 2, 0);
-  return updateStage1(piece, obj.stage, obj);
-};
-
-export const updatePlayerPositionCollision = (x, y, obj, objGame) => {
-  obj.setPosition(x, y);
-  return flushUpdate(obj.piece, obj, 0);
-};
-
-const userInGameExceptActual = (userTab, userActual) => {
-  const index = userTab.indexOf(userActual);
-  const copie = new Array();
-  for (let i = 0; i < userTab.length; i++) {
-    copie[i] = userTab[i];
-  }
-  copie.splice(index, 1);
-  return copie;
 };
 
 const updateStageMallus = (objPlayer, io) => {
@@ -95,20 +34,24 @@ const updateStageMallus = (objPlayer, io) => {
     });
   }
 };
-const objPlayer1 = (userList, username, io) => {
-  let objPlayer;
+/*
+const OtherPlayer = (userList, username, io) => {
   userList.find((obj) => {
     if (obj.login == username) {
       obj.setMallus();
       updateStageMallus(obj, io);
     }
   });
-};
+};*/
+
 const setMallusToPlayers = (objGame, userActual, userList, io) => {
   const tabUser = userInGameExceptActual(objGame.getUserInGame(), userActual);
 
   for (let i = 0; i < tabUser.length; i++) {
-    objPlayer1(userList, tabUser[i], io);
+   const otherPlayer =  objUser(userList, tabUser[i]);
+   otherPlayer.setMallus();
+   updateStageMallus(otherPlayer, io);
+
   }
 };
 export const updateRows = (newStage, objPlayer, objGame, redGame, io) => {

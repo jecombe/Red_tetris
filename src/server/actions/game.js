@@ -4,10 +4,10 @@ import {
   moveTetro,
   moveUpTetro,
   dropTetro,
-  terrain,
+  
 } from './move';
-
 import ev from '../../shared/events';
+import { flushUpdate } from '../stage/stage';
 
 // eslint-disable-next-line import/prefer-default-export
 export const startGame = (redGame, data, id) => {
@@ -40,8 +40,8 @@ export const startGame = (redGame, data, id) => {
     user.setPlayerNull();
     user.setPiece(piece);
     user.setPosition(10 / 2 - 2, 0);
-    user.setPosition1(10 / 2 - 2, 0);
-    user.setNextPiece(terrain(piece, stage));
+    user.setPositionNextTetro(10 / 2 - 2, 0);
+    user.setNextPiece(flushUpdate(piece, user, stage));
     user.setStage(newStage);
     return user;
   });

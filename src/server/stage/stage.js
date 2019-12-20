@@ -18,15 +18,7 @@ export const updateStagingAfterCollision = (piece, obj) => {
   return updateStage(piece, obj.stage, obj);
 };
 
-const updateStageMallus = (objPlayer, io) => {
-  const calcRow = 20 - objPlayer.getMallus();
-  if (calcRow < 20) {
-    objPlayer.stage[calcRow] = new Array(10).fill([0, 'mallus']);
-    io.to(`${ objPlayer.getIdSocket()}`).emit('stageMallus', {
-      newStage: objPlayer.stage,
-    });
-  }
-};
+
 /*
 const OtherPlayer = (userList, username, io) => {
   userList.find((obj) => {
@@ -38,15 +30,16 @@ const OtherPlayer = (userList, username, io) => {
 };*/
 
 const setMallusToPlayers = (objGame, userActual, io) => {
-  const tabUser = userInGameExceptActual(objGame.getUserInGame(), userActual);
+userInGameExceptActual(objGame.getUserInGame(), userActual, io, objGame);
 
-  console.log(tabUser)
+  //console.log('USER TAB', tabUser, ' FIN')
 
-  for (let i = 0; i < tabUser.length; i++) {
+
+  /*for (let i = 0; i < tabUser.length; i++) {
    tabUser[i].setMallus();
    updateStageMallus(tabUser[i], io);
 
-  }
+  }*/
 };
 export const updateRows = (newStage, objPlayer, objGame, redGame) => {
 

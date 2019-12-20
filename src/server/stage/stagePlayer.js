@@ -1,5 +1,5 @@
 import { is_full } from './utils';
-import { objUser } from '../../actions/utils';
+import { objUser } from '../actions/utils';
 
 const updateStage = (piece, newStage, obj) => {
   piece.form.shape.forEach((row, y) => {

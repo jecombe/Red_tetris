@@ -1,5 +1,4 @@
-import { createStage, createStagePiece } from '../helpers/stage';
-import { updateStage, printTetroStage } from '../handlers/game/stageGame';
+import { createStagePiece } from '../helpers/stage';
 import { checkCollision } from '../helpers/gameHelpers';
 import {
   flushUpdate,
@@ -8,7 +7,7 @@ import {
   updateStagingAfterCollision,
   updatePlayerPositionCollision,
 
-} from '../handlers/player/stagePlayer';
+} from '../stage/stagePlayer';
 
 export const terrain = (piece, stage) => {
   const newStage = stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));

@@ -37,7 +37,7 @@ export const userInGameExceptActual = (userTab, userActual, io) => {
             if (calcRow < 20) {
                 console.log('BEFORE ', userTab[i].stage)
                 userTab[i].stage.shift()
-                userTab[i].stage[calcRow] = new Array(10).fill([0, 'mallus']);
+                userTab[i].stage[calcRow] = new Array(10).fill(['M', 'mallus']);
                 //userTab[i].setStage(userTab[i].stage)
                 console.log('AFTER ', userTab[i].stage)
                 //console.log(userTab[i].stage)

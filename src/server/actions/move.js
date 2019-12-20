@@ -60,7 +60,8 @@ export const moveDownTetro = (redGame, objGame, objPlayer) => {
   objPlayer.setPosition(0, i)
   objPlayer.setStage(flushUpdate(objPlayer.piece, objPlayer, objPlayer.stage));
   objPlayer.setIndex(objPlayer.index + 1);
-  objPlayer.setStage(updateStagingBeforeCollision(objPlayer, objGame, redGame, io));
+  console.log('111111111111111', userlist)
+  objPlayer.setStage(updateStagingBeforeCollision(objPlayer, objGame, redGame));
     /* --- DISPATCH STAGE TO OTHER USER --- */
   //dispatchStage(objPlayer, userList, io, objGame)
   objPlayer.setPiece(objGame.tetro[objPlayer.index]);
@@ -78,11 +79,13 @@ export const dropTetro = (objPlayer, objGame, redGame) => {
 
   } else {
     objPlayer.setIndex(objPlayer.index + 1);
-    objPlayer.setStage(updateStagingBeforeCollision(objPlayer, objGame, redGame, io));
+    objPlayer.setStage(updateStagingBeforeCollision(objPlayer, objGame, redGame));
     /* --- DISPATCH STAGE TO OTHER USER --- */
     //dispatchStage(objPlayer, userList, io, objGame)
     objPlayer.setPiece(objGame.tetro[objPlayer.index]);
     if (!objGame.tetro[objPlayer.index + 1]) objGame.setTetro();
+    console.log('111111111111111', userlist)
+
     objPlayer.setStage(updateStagingAfterCollision(objPlayer.piece, objPlayer));
     objPlayer.setNextPiece(flushUpdate(objGame.tetro[objPlayer.index + 1], objPlayer, createStagePiece()));
   }

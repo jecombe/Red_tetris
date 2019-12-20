@@ -3,15 +3,12 @@ import { objUser } from '../actions/utils'
 
 
 export const flushUpdate = (piece, obj, stage) => {
-  const newStage = stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
-  return updateStage(piece, newStage, obj);
+  return updateStage(piece, stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell))), obj);
 };
 
-export const updateStagingBeforeCollision = (objPlayer, objGame, redGame, io) => {
+export const updateStagingBeforeCollision = (objPlayer, objGame, redGame) => {
   objPlayer.setCollidedTrue();
-  const newStage = updateStage(objPlayer.piece, objPlayer.stage, objPlayer)
-
-  return (updateRows(newStage, objPlayer, objGame, redGame, io))
+  return (updateRows(updateStage(objPlayer.piece, objPlayer.stage, objPlayer), objPlayer, objGame, redGame))
 };
 
 export const updateStagingAfterCollision = (piece, obj) => {
@@ -23,13 +20,9 @@ export const updateStagingAfterCollision = (piece, obj) => {
 
 const updateStageMallus = (objPlayer, io) => {
   const calcRow = 20 - objPlayer.getMallus();
-
   if (calcRow < 20) {
     objPlayer.stage[calcRow] = new Array(10).fill([0, 'mallus']);
-
-    const socket = objPlayer.getIdSocket();
-
-    io.to(`${socket}`).emit('stageMallus', {
+    io.to(`${ objPlayer.getIdSocket()}`).emit('stageMallus', {
       newStage: objPlayer.stage,
     });
   }
@@ -44,17 +37,20 @@ const OtherPlayer = (userList, username, io) => {
   });
 };*/
 
-const setMallusToPlayers = (objGame, userActual, userList, io) => {
+const setMallusToPlayers = (objGame, userActual, io) => {
   const tabUser = userInGameExceptActual(objGame.getUserInGame(), userActual);
 
+  console.log(tabUser)
+
   for (let i = 0; i < tabUser.length; i++) {
-   const otherPlayer =  objUser(userList, tabUser[i]);
-   otherPlayer.setMallus();
-   updateStageMallus(otherPlayer, io);
+   tabUser[i].setMallus();
+   updateStageMallus(tabUser[i], io);
 
   }
 };
-export const updateRows = (newStage, objPlayer, objGame, redGame, io) => {
+export const updateRows = (newStage, objPlayer, objGame, redGame) => {
+
+  
   // Pour la hauteur verifie si une ligne est pleine
   newStage.forEach((row) => {
     const full_line = row.every(is_full);
@@ -68,7 +64,8 @@ export const updateRows = (newStage, objPlayer, objGame, redGame, io) => {
       newStage.splice(index, 1);
       // Ajoute au debut du tableau un nouveau tableau de 10 a 0
       newStage.unshift(new Array(10).fill([0, 'clear']));
-      //setMallusToPlayers(objGame, objPlayer.getLogin(), userList, io);
+      console.log('-------> us')
+      setMallusToPlayers(objGame, objPlayer.getLogin(), redGame.io);
     }
   });
   return (newStage);

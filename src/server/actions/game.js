@@ -63,7 +63,6 @@ export const positionTetro = (redGame, data, id) => {
   //console.log('game ', game)
  // moveTetro(-1, objUser, objGame);
    if (keyCode === 40) {
-     console.log('......>>>>>>>>>>>>>>>>>>>>>>> ', redGame.userlist)
      dropTetro(player, game, redGame);
    }
      if (keyCode === 37){

@@ -1,4 +1,4 @@
-import { createStage } from '../helpers/stage';
+import { createStage } from '../stage/utils';
 
 export default class Player {
   constructor(socketId, username, room) {

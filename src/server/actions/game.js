@@ -1,4 +1,4 @@
-import { createStage, createStagePiece } from '../helpers/stage';
+import { createStage, createStagePiece } from '../stage/utils';
 import {
   moveDownTetro,
   moveTetro,

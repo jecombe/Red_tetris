@@ -1,4 +1,4 @@
-import { createStagePiece } from '../helpers/stage';
+import { createStagePiece } from '../stage/utils';
 import { checkCollision } from '../helpers/gameHelpers';
 import {
   flushUpdate,

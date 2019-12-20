@@ -86,6 +86,8 @@ export default class Player {
     this.lineFull = 0;
   }
   setMallus() {
+
+    console.log('DANS LA CLASSE ', this.mallus)
     this.mallus = this.mallus + 1
   }
   setLineFull() {

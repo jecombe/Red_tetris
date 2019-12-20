@@ -33,28 +33,14 @@ export const userInGameExceptActual = (userTab, userActual, io) => {
         if (userTab[i].login !== userActual) {
             userTab[i].setMallus();
             const calcRow = 20 - userTab[i].getMallus();
-            console.log('CALCULE ', calcRow)
             if (calcRow < 20) {
-                console.log('BEFORE ', userTab[i].stage)
                 userTab[i].stage.shift()
-                userTab[i].stage[calcRow] = new Array(10).fill(['M', 'mallus']);
-                //userTab[i].setStage(userTab[i].stage)
-                console.log('AFTER ', userTab[i].stage)
-                //console.log(userTab[i].stage)
+                userTab[i].stage.push(new Array(10).fill(['M', 'mallus']));
                 io.to(`${userTab[i].getIdSocket()}`).emit('stageMallus', {
                     newStage: userTab[i].stage,
                 });
             }
         }
     }
-
-    // return copie
-    /*const index = userTab.indexOf(userActual);
-    const copie = new Array();
-    for (let i = 0; i < userTab.length; i++) {
-      copie[i] = userTab[i];
-    }
-    copie.splice(index, 1);
-    return copie;*/
 };
 

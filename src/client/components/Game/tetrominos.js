@@ -56,9 +56,9 @@ export const TETROMINOS = {
     ],
     color: '227, 78, 78',
   },
-  M:{
+  M: {
     color: '84, 84, 84',
-  }
+  },
 };
 
 export const randomTetromino = () => {

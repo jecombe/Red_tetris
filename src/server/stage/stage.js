@@ -1,13 +1,11 @@
 import { is_full, updateStage, userInGameExceptActual } from './utils';
 
 
-export const flushUpdate = (piece, obj, stage) => {
-  return updateStage(piece, stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell))), obj);
-};
+export const flushUpdate = (piece, obj, stage) => updateStage(piece, stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell))), obj);
 
 export const updateStagingBeforeCollision = (objPlayer, objGame, redGame) => {
   objPlayer.setCollidedTrue();
-  return (updateRows(updateStage(objPlayer.piece, objPlayer.stage, objPlayer), objPlayer, objGame, redGame))
+  return (updateRows(updateStage(objPlayer.piece, objPlayer.stage, objPlayer), objPlayer, objGame, redGame));
 };
 
 export const updateStagingAfterCollision = (piece, obj) => {
@@ -18,11 +16,9 @@ export const updateStagingAfterCollision = (piece, obj) => {
 };
 
 const setMallusToPlayers = (objGame, userActual, io) => {
-userInGameExceptActual(objGame.getUserInGame(), userActual, io, objGame);
+  userInGameExceptActual(objGame.getUserInGame(), userActual, io, objGame);
 };
 export const updateRows = (newStage, objPlayer, objGame, redGame) => {
-
-  
   // Pour la hauteur verifie si une ligne est pleine
   newStage.forEach((row) => {
     const full_line = row.every(is_full);

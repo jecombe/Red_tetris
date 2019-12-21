@@ -16,50 +16,45 @@ const userInGameExceptActua = (userTab, userActual) => {
   return copie;
 };
 
-/*============================== DISPATCH SPECTRE ==============================*/
+/*= ============================= DISPATCH SPECTRE ============================== */
 const replaceOtherStage = (objPlayer, objOther) => {
-  let index = objOther.peopleSpectre.indexOf(objPlayer.login)
-  console.log('INDEX ', index)
+  const index = objOther.peopleSpectre.indexOf(objPlayer.login);
+  console.log('INDEX ', index);
   let id = 0;
-  objOther.otherStage[index] = objPlayer.stage
+  objOther.otherStage[index] = objPlayer.stage;
 
-  objOther.otherStage.map(newStage => {
-
+  objOther.otherStage.map((newStage) => {
     const nouv = newStage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
-    objOther.otherStage[id] = nouv
-    id = id + 1
+    objOther.otherStage[id] = nouv;
+    id += 1;
   });
-}
+};
 
 
 const sendSpectreToOther = (userList, usernameOther, objPlayer, io) => {
   userList.find((obj) => {
     if (obj.login == usernameOther) {
-      replaceOtherStage(objPlayer, obj)
+      replaceOtherStage(objPlayer, obj);
       io.to(`${obj.getIdSocket()}`).emit('stageOther', {
-        otherStage: obj.otherStage
+        otherStage: obj.otherStage,
       });
     }
   });
 };
 
 const dispatchStage = (objPlayer, userList, io, objGame) => {
+  const tabUser = objPlayer.getPeopleSpectre();
 
-  const tabUser = objPlayer.getPeopleSpectre()
 
-
-  for (var i = 0; i < tabUser.length; i++) {
-    sendSpectreToOther(objGame.getUserInGame(), tabUser[i], objPlayer, io)
-    //replaceOtherStage(objPlayer, tabUser[i])
-    //io.to(`${tabUser[i].getIdSocket()}`).emit('stageOther', {
-     // otherStage: tabUser[i].otherStage
-   // });
-
-    
+  for (let i = 0; i < tabUser.length; i++) {
+    sendSpectreToOther(objGame.getUserInGame(), tabUser[i], objPlayer, io);
+    // replaceOtherStage(objPlayer, tabUser[i])
+    // io.to(`${tabUser[i].getIdSocket()}`).emit('stageOther', {
+    // otherStage: tabUser[i].otherStage
+    // });
   }
-}
-/*============================== DISPATCH SPECTRE ==============================*/
-
+};
+/*= ============================= DISPATCH SPECTRE ============================== */
 
 
 export const moveDownTetro = (redGame, objGame, objPlayer) => {
@@ -88,7 +83,6 @@ export const moveDownTetro = (redGame, objGame, objPlayer) => {
 };
 
 export const dropTetro = (objPlayer, objGame, redGame) => {
-
   const { io, socketClient, userlist } = redGame;
   if (!checkCollision(objPlayer, objPlayer.stage, { x: 0, y: 1 })) {
     objPlayer.setPosition(0, 1);
@@ -97,7 +91,7 @@ export const dropTetro = (objPlayer, objGame, redGame) => {
     objPlayer.setIndex(objPlayer.index + 1);
     objPlayer.setStage(updateStagingBeforeCollision(objPlayer, objGame, redGame));
     /* --- DISPATCH STAGE TO OTHER USER --- */
-  dispatchStage(objPlayer, objGame.getUserInGame(), redGame.io, objGame)
+    dispatchStage(objPlayer, objGame.getUserInGame(), redGame.io, objGame);
     objPlayer.setPiece(objGame.tetro[objPlayer.index]);
     if (!objGame.tetro[objPlayer.index + 1]) objGame.setTetro();
     objPlayer.setStage(updateStagingAfterCollision(objPlayer.piece, objPlayer));

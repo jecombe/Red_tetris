@@ -4,7 +4,7 @@ import {
   moveTetro,
   moveUpTetro,
   dropTetro,
-  
+
 } from './move';
 import ev from '../../shared/events';
 import { flushUpdate } from '../stage/stage';

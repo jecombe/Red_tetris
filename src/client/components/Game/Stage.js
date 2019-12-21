@@ -47,7 +47,6 @@ Cell.propTypes = {
 };
 
 const Stage = (props) => {
-
   const { stage, type } = props;
 
   let size = 35;

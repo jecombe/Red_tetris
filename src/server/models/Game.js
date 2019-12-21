@@ -24,9 +24,11 @@ export default class Game {
   getUserInGame() {
     return this.users;
   }
-getPieceStart(){
-  return this.tetro[0]
-}
+
+  getPieceStart() {
+    return this.tetro[0];
+  }
+
   setPlayerOwner(owner) {
     this.owner = owner;
   }

@@ -14,7 +14,7 @@ const userInGameExceptActua = (userTab, userActual) => {
 const getAllStagePlayers = (objGame, redGame, objPlayer) => {
   const tabUser = userInGameExceptActua(objGame.getUserInGame(), objPlayer.getLogin());
 
-  //console.log('------------------_> ', objPlayer)
+  // console.log('------------------_> ', objPlayer)
 
   for (let i = 0; i < tabUser.length; i++) {
     objPlayer.setOtherStage(tabUser[i].stage);
@@ -48,38 +48,35 @@ export const login = (redGame, data, id) => {
   return player;
 };
 const replaceOtherStage = (objPlayer, objOther) => {
-  let index = objOther.peopleSpectre.indexOf(objPlayer.login)
-  objOther.peopleSpectre.splice(index, 1)
-  objOther.otherStage.splice(index, 1)
-}
+  const index = objOther.peopleSpectre.indexOf(objPlayer.login);
+  objOther.peopleSpectre.splice(index, 1);
+  objOther.otherStage.splice(index, 1);
+};
 
 const sendSpectreToOther = (userList, usernameOther, objPlayer, io) => {
   userList.find((obj) => {
     if (obj.login === usernameOther) {
-      replaceOtherStage(objPlayer, obj)
-      console.log('AFTER ', obj.otherStage)
+      replaceOtherStage(objPlayer, obj);
+      console.log('AFTER ', obj.otherStage);
       io.to(`${obj.getIdSocket()}`).emit('stageOther', {
-        otherStage: obj.otherStage
+        otherStage: obj.otherStage,
       });
     }
   });
 };
 
 const dispatchStage = (objPlayer, userList, io, objGame) => {
+  const tabUser = objPlayer.getPeopleSpectre();
 
-  const tabUser = objPlayer.getPeopleSpectre()
 
-
-  for (var i = 0; i < tabUser.length; i++) {
-    sendSpectreToOther(objGame.getUserInGame(), tabUser[i], objPlayer, io)
-    //replaceOtherStage(objPlayer, tabUser[i])
-    //io.to(`${tabUser[i].getIdSocket()}`).emit('stageOther', {
-     // otherStage: tabUser[i].otherStage
-   // });
-
-    
+  for (let i = 0; i < tabUser.length; i++) {
+    sendSpectreToOther(objGame.getUserInGame(), tabUser[i], objPlayer, io);
+    // replaceOtherStage(objPlayer, tabUser[i])
+    // io.to(`${tabUser[i].getIdSocket()}`).emit('stageOther', {
+    // otherStage: tabUser[i].otherStage
+    // });
   }
-}
+};
 // export const logout = (redGame) => {
 //   const {
 //     rooms, userlist, games, players, socketClient,

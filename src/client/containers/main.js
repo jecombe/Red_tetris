@@ -2,12 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
+import Grid from '@material-ui/core/Grid';
 import Login from './login';
 import Game from './game';
 import Loader from '../components/Loader';
 import Error404 from '../components/Error404';
 import { appStatePropTypes } from '../reducers/app';
-import Grid from '@material-ui/core/Grid';
 
 const Main = (props) => {
   const { app } = props;

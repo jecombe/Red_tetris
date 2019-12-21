@@ -21,7 +21,6 @@ const getAllStagePlayers = (objGame, redGame, objPlayer) => {
     objPlayer.setPeopleSpectre(tabUser[i].getLogin());
     tabUser[i].setOtherStage(objPlayer.stage);
     tabUser[i].setPeopleSpectre(objPlayer.getLogin());
-    console.log('================= =============', tabUser[i])
 
     redGame.io.to(`${tabUser[i].getIdSocket()}`).emit('stageOther', {
       otherStage: tabUser[i].otherStage,
@@ -48,31 +47,65 @@ export const login = (redGame, data, id) => {
 
   return player;
 };
+const replaceOtherStage = (objPlayer, objOther) => {
+  let index = objOther.peopleSpectre.indexOf(objPlayer.login)
+  objOther.peopleSpectre.splice(index, 1)
+  objOther.otherStage.splice(index, 1)
+}
 
-export const logout = (redGame, ioGame, id) => {
-  const {
-    rooms, userlist, games, players, socketClient,
-  } = ioGame;
-
-  const player = redGame.getPlayer(id);
-  const game = redGame.getGame(player.roomAssociate);
-  game.unsetPlayer(id);
-  // const index = game.users.findIndex((user) => user.idSocket === player.idSocket);
-  // game.users.splice(index, 1);
-  if (game.users.length !== 0) {
-    game.setPlayerOwner(game.users[0]);
-    game.users[0].setOwner();
-  } else {
-    redGame.unsetGame(player.roomAssociate); // delete games[player.roomAssociate];
-  }
-  delete players[player.idSocket];
-  socketClient.leave(player.roomAssociate);
-
-  // const b = items.find((item) => item.name === 'b')
-
-  /* Search user login in userList */
-  // const player = searchUserInList(socketClient.id, userlist);
-  /* Search room name of player */
-  // const roomActual = searchRoomInUser(userlist, player);
-  // shareAction(player, roomActual, rooms, userlist);
+const sendSpectreToOther = (userList, usernameOther, objPlayer, io) => {
+  userList.find((obj) => {
+    if (obj.login === usernameOther) {
+      replaceOtherStage(objPlayer, obj)
+      console.log('AFTER ', obj.otherStage)
+      io.to(`${obj.getIdSocket()}`).emit('stageOther', {
+        otherStage: obj.otherStage
+      });
+    }
+  });
 };
+
+const dispatchStage = (objPlayer, userList, io, objGame) => {
+
+  const tabUser = objPlayer.getPeopleSpectre()
+
+
+  for (var i = 0; i < tabUser.length; i++) {
+    sendSpectreToOther(objGame.getUserInGame(), tabUser[i], objPlayer, io)
+    //replaceOtherStage(objPlayer, tabUser[i])
+    //io.to(`${tabUser[i].getIdSocket()}`).emit('stageOther', {
+     // otherStage: tabUser[i].otherStage
+   // });
+
+    
+  }
+}
+// export const logout = (redGame) => {
+//   const {
+//     rooms, userlist, games, players, socketClient,
+//   } = ioGame;
+
+//   const player = redGame.getPlayer(id);
+//   const game = redGame.getGame(player.roomAssociate);
+//   console.log('FUCKING SHIT')
+//   dispatchStage(player, redGame.getUserInGame(), ioGame.io, redGame)
+
+//   game.unsetPlayer(id);
+//   const index = game.users.findIndex((user) => user.idSocket === player.idSocket);
+//   game.users.splice(index, 1);
+//   if (game.users.length !== 0) {
+//     game.setPlayerOwner(game.users[0]);
+//     game.users[0].setOwner();
+//   } else {
+//     redGame.unsetGame(player.roomAssociate); // delete games[player.roomAssociate];
+//   }
+//   delete players[player.idSocket];
+//   socketClient.leave(player.roomAssociate);
+//   const b = items.find((item) => item.name === 'b')
+
+//   /* Search user login in userList */
+//   const player = searchUserInList(socketClient.id, userlist);
+//   /* Search room name of player */
+//   const roomActual = searchRoomInUser(userlist, player);
+//   shareAction(player, roomActual, rooms, userlist);
+// };

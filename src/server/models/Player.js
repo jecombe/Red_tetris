@@ -48,6 +48,10 @@ export default class Player {
     return this.lineFull;
   }
 
+  getPeopleSpectre(){
+    return this.peopleSpectre
+  }
+
   setLogin(login) {
     this.login = login;
   }

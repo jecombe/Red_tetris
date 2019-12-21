@@ -21,8 +21,8 @@ export const startGame = (redGame, data, id) => {
   const stage = createStagePiece();
   const newStage = createStage().map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
 
-  const piece = game.getNextPieceStart();
-  piece.form.shape.forEach((row, y) => {
+  const pieceStart = game.getPieceStart();
+  pieceStart.form.shape.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== 0) {
         newStage[y + 0][x + 3] = [
@@ -34,13 +34,12 @@ export const startGame = (redGame, data, id) => {
   });
 
   game.users.map((user) => {
-    // const player = redGame.getPlayer(user.idSocket);
     user.setPositionNull();
     user.setPlayerNull();
-    user.setPiece(piece);
+    user.setPiece(pieceStart);
     user.setPosition(10 / 2 - 2, 0);
     user.setPositionNextTetro(10 / 2 - 2, 0);
-    user.setNextPiece(flushUpdate(piece, user, stage));
+    user.setNextPiece(flushUpdate(game.getNextPieceStart(), user, stage));
     user.setStage(newStage);
     return user;
   });
@@ -59,8 +58,6 @@ export const positionTetro = (redGame, data, id) => {
   const player = redGame.getPlayer(id);
   const game = redGame.getGame(player.roomAssociate);
 
-  // console.log('game ', game)
-  // moveTetro(-1, objUser, objGame);
   if (keyCode === 40) {
     dropTetro(player, game, redGame);
   }

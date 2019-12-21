@@ -34,11 +34,12 @@ const playerReducer = (state = playerState, action) => {
     }
 
     case ev.OBJ_PLAYER: {
-      const { playerStage, playerOtherStage } = action.payload;
+      const { playerStage, playerNextPiece, playerOtherStage } = action.payload;
 
       return {
         ...state,
         playerStage,
+        playerNextPiece,
         playerOtherStage,
       };
     }

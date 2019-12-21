@@ -1,5 +1,4 @@
 import { is_full, updateStage, userInGameExceptActual } from './utils';
-import { objUser } from '../actions/utils'
 
 
 export const flushUpdate = (piece, obj, stage) => {
@@ -18,28 +17,8 @@ export const updateStagingAfterCollision = (piece, obj) => {
   return updateStage(piece, obj.stage, obj);
 };
 
-
-/*
-const OtherPlayer = (userList, username, io) => {
-  userList.find((obj) => {
-    if (obj.login == username) {
-      obj.setMallus();
-      updateStageMallus(obj, io);
-    }
-  });
-};*/
-
 const setMallusToPlayers = (objGame, userActual, io) => {
 userInGameExceptActual(objGame.getUserInGame(), userActual, io, objGame);
-
-  //console.log('USER TAB', tabUser, ' FIN')
-
-
-  /*for (let i = 0; i < tabUser.length; i++) {
-   tabUser[i].setMallus();
-   updateStageMallus(tabUser[i], io);
-
-  }*/
 };
 export const updateRows = (newStage, objPlayer, objGame, redGame) => {
 
@@ -57,7 +36,6 @@ export const updateRows = (newStage, objPlayer, objGame, redGame) => {
       newStage.splice(index, 1);
       // Ajoute au debut du tableau un nouveau tableau de 10 a 0
       newStage.unshift(new Array(10).fill([0, 'clear']));
-      console.log('-------> us')
       setMallusToPlayers(objGame, objPlayer.getLogin(), redGame.io);
     }
   });

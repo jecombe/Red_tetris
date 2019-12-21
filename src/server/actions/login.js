@@ -14,12 +14,16 @@ const userInGameExceptActua = (userTab, userActual) => {
 const getAllStagePlayers = (objGame, redGame, objPlayer) => {
   const tabUser = userInGameExceptActua(objGame.getUserInGame(), objPlayer.getLogin());
 
+  //console.log('------------------_> ', objPlayer)
+
   for (let i = 0; i < tabUser.length; i++) {
     objPlayer.setOtherStage(tabUser[i].stage);
     objPlayer.setPeopleSpectre(tabUser[i].getLogin());
     tabUser[i].setOtherStage(objPlayer.stage);
     tabUser[i].setPeopleSpectre(objPlayer.getLogin());
-    redGame.io.to(`${tabUser[i].getIdSocket()}`).emit('otherStage', {
+    console.log('================= =============', tabUser[i])
+
+    redGame.io.to(`${tabUser[i].getIdSocket()}`).emit('stageOther', {
       otherStage: tabUser[i].otherStage,
     });
   }

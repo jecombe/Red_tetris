@@ -1,4 +1,4 @@
-import { createStage, createStagePiece } from '../helpers/stage';
+import { createStage, createStagePiece } from '../stage/utils';
 
 export default class Player {
   constructor(socketId, username, room) {
@@ -65,9 +65,9 @@ export default class Player {
     this.pos.y = y + this.pos.y;
   }
 
-  setPosition1(x, y) {
-    this.pos.x = x;
-    this.pos.y = y;
+  setPositionNextTetro(x, y) {
+    this.pos1.x = x;
+    this.pos1.y = y;
   }
 
   setPositionNull() {
@@ -104,11 +104,11 @@ export default class Player {
   }
 
   setMallus() {
-    this.mallus = this.mallus + 1;
+    this.mallus += 1;
   }
 
   setLineFull() {
-    this.lineFull = this.lineFull + 1;
+    this.lineFull += 1;
   }
 
   setNullOtherStage() {

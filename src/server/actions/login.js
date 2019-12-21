@@ -1,6 +1,5 @@
 import Player from '../models/Player';
 import Game from '../models/Game';
-import { createStage } from '../helpers/stage';
 
 const userInGameExceptActua = (userTab, userActual) => {
   const index = userTab.indexOf(userActual);

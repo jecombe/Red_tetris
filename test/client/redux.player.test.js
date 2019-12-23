@@ -1,8 +1,8 @@
-import ev from '../src/shared/events';
-import * as actions from '../src/client/actions';
-import reducer from '../src/client/reducers/player';
-import { createStage, createStagePiece } from '../src/server/helpers/stage';
-import { TETROMINOS } from '../src/client/components/Game/tetrominos';
+import ev from '../../src/shared/events';
+import * as actions from '../../src/client/actions';
+import reducer from '../../src/client/reducers/player';
+import { createStage, createStagePiece } from '../../src/server/stage/utils';
+import { TETROMINOS } from '../../src/client/components/Game/tetrominos';
 
 describe('# Redux Player Tests', () => {
   describe('## Player Actions', () => {

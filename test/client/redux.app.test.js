@@ -1,6 +1,6 @@
-import ev from '../src/shared/events';
-import * as actions from '../src/client/actions';
-import reducer from '../src/client/reducers/app';
+import ev from '../../src/shared/events';
+import * as actions from '../../src/client/actions';
+import reducer from '../../src/client/reducers/app';
 
 describe('# Redux App Tests', () => {
   describe('## App Actions', () => {

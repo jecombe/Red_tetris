@@ -4,13 +4,13 @@ import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
 
-import store from '../src/client/store';
-import theme from '../src/client/theme';
+import store from '../../src/client/store';
+import theme from '../../src/client/theme';
 
-import App from '../src/client/containers/app';
-import FooterLayout from '../src/client/components/Footer/FooterLayout';
-import HeaderLayout from '../src/client/components/Header/HeaderLayout';
-import Header from '../src/client/containers/header';
+import App from '../../src/client/containers/app';
+import FooterLayout from '../../src/client/components/Footer/FooterLayout';
+import HeaderLayout from '../../src/client/components/Header/HeaderLayout';
+import Header from '../../src/client/containers/header';
 
 
 describe('Footer', () => {

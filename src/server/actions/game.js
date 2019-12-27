@@ -5,9 +5,25 @@ import {
   moveUpTetro,
   dropTetro,
 
+
 } from './move';
-import ev from '../../shared/events';
 import { flushUpdate } from '../stage/stage';
+import { emitterStageOther } from '../emitter/emitter';
+
+
+const setStageToOther = (objGame, io) => {
+  const tabUser = objGame.getUserInGame();
+
+  tabUser.forEach((element) => {
+    element.setNullOtherStage();
+    let i = 0;
+    for (i = 0; i !== tabUser.length - 1; i++) {
+      element.setOtherStage(createStage());
+    }
+    emitterStageOther(io, element);
+  });
+};
+
 
 // eslint-disable-next-line import/prefer-default-export
 export const startGame = (redGame, data, id) => {
@@ -15,12 +31,14 @@ export const startGame = (redGame, data, id) => {
 
   const game = redGame.getGame(room);
   const player = redGame.getPlayer(id);
+
   game.setTetroNull();
   game.setGameStart();
 
   const stage = createStagePiece();
   const newStage = createStage().map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
 
+  setStageToOther(game, redGame.io);
   const pieceStart = game.getPieceStart();
   pieceStart.form.shape.forEach((row, y) => {
     row.forEach((value, x) => {
@@ -32,7 +50,6 @@ export const startGame = (redGame, data, id) => {
       }
     });
   });
-
   game.users.map((user) => {
     user.setPositionNull();
     user.setPlayerNull();
@@ -68,7 +85,6 @@ export const positionTetro = (redGame, data, id) => {
   } else if (keyCode === 39) {
     moveTetro(game, player, 1);
   }
-
   // Probleme avec moveDownTetro car userlist doit etre remplace par players de redGame
   else if (keyCode === 32) {
     moveDownTetro(redGame, game, player);

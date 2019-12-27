@@ -5,16 +5,8 @@ import {
   updateStagingBeforeCollision,
   updateStagingAfterCollision,
 } from '../stage/stage';
+import {emitterStageOther} from '../emitter/emitter'
 
-const userInGameExceptActua = (userTab, userActual) => {
-  const index = userTab.indexOf(userActual);
-  const copie = new Array();
-  for (let i = 0; i < userTab.length; i++) {
-    copie[i] = userTab[i];
-  }
-  copie.splice(index, 1);
-  return copie;
-};
 
 /*= ============================= DISPATCH SPECTRE ============================== */
 const replaceOtherStage = (objPlayer, objOther) => {
@@ -33,25 +25,18 @@ const replaceOtherStage = (objPlayer, objOther) => {
 
 const sendSpectreToOther = (userList, usernameOther, objPlayer, io) => {
   userList.find((obj) => {
-    if (obj.login == usernameOther) {
+    if (obj.login === usernameOther) {
       replaceOtherStage(objPlayer, obj);
-      io.to(`${obj.getIdSocket()}`).emit('stageOther', {
-        otherStage: obj.otherStage,
-      });
+      emitterStageOther(io, obj)
     }
   });
 };
 
-const dispatchStage = (objPlayer, userList, io, objGame) => {
+export const dispatchStage = (objPlayer, io, objGame) => {
   const tabUser = objPlayer.getPeopleSpectre();
-
 
   for (let i = 0; i < tabUser.length; i++) {
     sendSpectreToOther(objGame.getUserInGame(), tabUser[i], objPlayer, io);
-    // replaceOtherStage(objPlayer, tabUser[i])
-    // io.to(`${tabUser[i].getIdSocket()}`).emit('stageOther', {
-    // otherStage: tabUser[i].otherStage
-    // });
   }
 };
 /*= ============================= DISPATCH SPECTRE ============================== */
@@ -75,7 +60,7 @@ export const moveDownTetro = (redGame, objGame, objPlayer) => {
   objPlayer.setIndex(objPlayer.index + 1);
   objPlayer.setStage(updateStagingBeforeCollision(objPlayer, objGame, redGame));
   /* --- DISPATCH STAGE TO OTHER USER --- */
-  // dispatchStage(objPlayer, userList, io, objGame)
+  dispatchStage(objPlayer, redGame.io, objGame);
   objPlayer.setPiece(objGame.tetro[objPlayer.index]);
   if (!objGame.tetro[objPlayer.index + 1]) objGame.setTetro();
   objPlayer.setStage(updateStagingAfterCollision(objPlayer.piece, objPlayer));
@@ -91,7 +76,7 @@ export const dropTetro = (objPlayer, objGame, redGame) => {
     objPlayer.setIndex(objPlayer.index + 1);
     objPlayer.setStage(updateStagingBeforeCollision(objPlayer, objGame, redGame));
     /* --- DISPATCH STAGE TO OTHER USER --- */
-    dispatchStage(objPlayer, objGame.getUserInGame(), redGame.io, objGame);
+    dispatchStage(objPlayer, redGame.io, objGame);
     objPlayer.setPiece(objGame.tetro[objPlayer.index]);
     if (!objGame.tetro[objPlayer.index + 1]) objGame.setTetro();
     objPlayer.setStage(updateStagingAfterCollision(objPlayer.piece, objPlayer));

@@ -1,10 +1,39 @@
-import { is_full, updateStage, userInGameExceptActual } from './utils';
-import { emitterMallus } from '../emitter/emitter';
+import { is_full, updateStage } from './utils';
+import { emitterMallus, emitterStageOther } from '../emitter/emitter';
 
 
 export const flushUpdate = (piece, obj, stage) => updateStage(piece, stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell))), obj);
 
-const setMallusToPlayers = (userTab, userActual, io) => {
+const replaceOtherStage = (objPlayer, objOther) => {
+  const index = objPlayer.peopleSpectre.indexOf(objOther.login);
+  console.log('INDEX ', index);
+  let id = 0;
+  objPlayer.otherStage[index] = objOther.stage;
+
+  objPlayer.otherStage.map((newStage) => {
+    const nouv = newStage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
+    objPlayer.otherStage[id] = nouv;
+    id += 1;
+  });
+};
+
+
+const sendSpectreToOther = (tabUser, objPlayer, io, objOther) => {
+  objOther.forEach((element) => {
+    if (element.login !== objPlayer.login) {
+      replaceOtherStage(objPlayer, element)
+    }
+  });
+  emitterStageOther(io, objPlayer);
+
+
+};
+export const dispatchStage = (objPlayer, io, objGame) => {
+  const tabUser = objPlayer.getPeopleSpectre();
+  sendSpectreToOther(tabUser, objPlayer, io, objGame.getUserInGame());
+};
+
+const setMallusToPlayers = (userTab, userActual, io, objGame, objPlayer) => {
   for (let i = 0; i < userTab.length; i++) {
     if (userTab[i].login !== userActual) {
       userTab[i].setMallus();
@@ -16,6 +45,7 @@ const setMallusToPlayers = (userTab, userActual, io) => {
       }
     }
   }
+  dispatchStage(objPlayer, io, objGame);
 };
 
 export const updateRows = (newStage, objPlayer, objGame, redGame) => {
@@ -32,7 +62,7 @@ export const updateRows = (newStage, objPlayer, objGame, redGame) => {
       newStage.splice(index, 1);
       // Ajoute au debut du tableau un nouveau tableau de 10 a 0
       newStage.unshift(new Array(10).fill([0, 'clear']));
-      setMallusToPlayers(objGame.getUserInGame(), objPlayer.getLogin(), redGame.io);
+      setMallusToPlayers(objGame.getUserInGame(), objPlayer.getLogin(), redGame.io, objGame, objPlayer);
     }
   });
   return (newStage);

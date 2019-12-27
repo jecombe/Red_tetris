@@ -24,4 +24,3 @@ export const updateStage = (piece, newStage, obj) => {
   });
   return newStage;
 };
-

@@ -11,3 +11,9 @@ export const emitterMallus = (io, player) => {
         newStage: player.stage,
     });
 };
+
+export const emitterStageOtherMallus = (io, player, other) => {
+    io.to(`${player.getIdSocket()}`).emit(ev.STAGE_OTHER, {
+        otherStage: other.stage,
+    });
+};

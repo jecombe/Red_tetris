@@ -2,9 +2,9 @@ import ev from '../../src/shared/events';
 import * as actions from '../../src/client/actions';
 import reducer from '../../src/client/reducers/app';
 
-describe('# Redux App Tests', () => {
-  describe('## App Actions', () => {
-    it('should update connexion to true - APP_STATUS', () => {
+describe('# Redux Tests - App', () => {
+  describe('## Actions Creators - App', () => {
+    it('should create action - APP_STATUS', () => {
       const payload = { connected: true };
       const expectedAction = {
         type: actions.APP_STATE,
@@ -12,7 +12,8 @@ describe('# Redux App Tests', () => {
       };
       expect(actions.CLIENT_STATE(payload)).toEqual(expectedAction);
     });
-    it('should update rooms array - APP_GET_ROOMS', () => {
+
+    it('should create action - res_ROOMS', () => {
       const payload = { rooms: [] };
       const expectedAction = {
         type: ev.res_ROOMS,
@@ -22,7 +23,7 @@ describe('# Redux App Tests', () => {
     });
   });
 
-  describe('## App Reducers', () => {
+  describe('## App Actions Reducers - App', () => {
     const initialState = {
       connected: false,
       rooms: [],

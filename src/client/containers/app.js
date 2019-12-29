@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box';
 
 import params from '../../shared/params';
 import * as actions from '../actions';
+import ev from '../../shared/events';
 
 import Header from './header';
 import Main from './main';

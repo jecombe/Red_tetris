@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 import * as actions from '../../../actions';
+import ev from '../../../../shared/events';
 
 const action = 'disconnect';
 // eslint-disable-next-line no-shadow
 const dispatch = (socket, store, next, action) => () => {
-  const type = actions.APP_STATE;
+  const type = ev.DISCONNECT;
   const payload = {
     connected: false,
   };

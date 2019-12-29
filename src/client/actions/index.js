@@ -1,12 +1,11 @@
 import ev from '../../shared/events';
-import params from '../../shared/params';
 
 /*
  * action creators for socket middleware
  */
 
 export const CLIENT_CONNECT = (payload) => ({
-  type: `${params.socket.id}_CONNECT`,
+  type: ev.CONNECT,
   payload: {
     host: payload.host,
     port: payload.port,
@@ -14,17 +13,9 @@ export const CLIENT_CONNECT = (payload) => ({
 });
 
 export const CLIENT_DISCONNECT = () => ({
-  type: `${params.socket.id}_DISCONNECT`,
+  type: ev.DISCONNECT,
   payload: {
     connected: false,
-  },
-});
-
-export const APP_STATE = 'APP_STATE';
-export const CLIENT_STATE = (payload) => ({
-  type: APP_STATE,
-  payload: {
-    connected: payload.connected,
   },
 });
 

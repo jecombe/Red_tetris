@@ -1,16 +1,13 @@
 /* eslint-disable no-unused-vars */
-import * as actions from '../../../actions';
+import ev from '../../../../shared/events';
 
 const action = 'connect';
 // eslint-disable-next-line no-shadow
 const dispatch = (socket, store, next, action) => () => {
-  const type = actions.APP_STATE;
-  const payload = {
-    connected: true,
-  };
+  const type = ev.CONNECT;
 
-  console.log('Connecting...');
-  store.dispatch({ type, payload });
+  console.info('Connecting...');
+  store.dispatch({ type });
 };
 
 export default {

@@ -24,19 +24,3 @@ export const updateStage = (piece, newStage, obj) => {
   });
   return newStage;
 };
-
-export const userInGameExceptActual = (userTab, userActual, io) => {
-  for (let i = 0; i < userTab.length; i++) {
-    if (userTab[i].login !== userActual) {
-      userTab[i].setMallus();
-      const calcRow = 20 - userTab[i].getMallus();
-      if (calcRow < 20) {
-        userTab[i].stage.shift();
-        userTab[i].stage.push(new Array(10).fill(['M', 'mallus']));
-        io.to(`${userTab[i].getIdSocket()}`).emit('stageMallus', {
-          newStage: userTab[i].stage,
-        });
-      }
-    }
-  }
-};

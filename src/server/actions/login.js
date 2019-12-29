@@ -1,5 +1,7 @@
 import Player from '../models/Player';
 import Game from '../models/Game';
+import { emitterStageOther } from '../emitter/emitter';
+
 
 const userInGameExceptActua = (userTab, userActual) => {
   const index = userTab.indexOf(userActual);
@@ -21,14 +23,12 @@ const getAllStagePlayers = (objGame, redGame, objPlayer) => {
     objPlayer.setPeopleSpectre(tabUser[i].getLogin());
     tabUser[i].setOtherStage(objPlayer.stage);
     tabUser[i].setPeopleSpectre(objPlayer.getLogin());
-
-    redGame.io.to(`${tabUser[i].getIdSocket()}`).emit('stageOther', {
-      otherStage: tabUser[i].otherStage,
-    });
+    emitterStageOther(redGame.io, tabUser[i]);
   }
 };
 
 export const login = (redGame, data, id) => {
+
   const { username, roomActual } = data;
   const player = new Player(id, username, roomActual);
   let game;
@@ -57,10 +57,7 @@ const sendSpectreToOther = (userList, usernameOther, objPlayer, io) => {
   userList.find((obj) => {
     if (obj.login === usernameOther) {
       replaceOtherStage(objPlayer, obj);
-      console.log('AFTER ', obj.otherStage);
-      io.to(`${obj.getIdSocket()}`).emit('stageOther', {
-        otherStage: obj.otherStage,
-      });
+      emitterStageOther(io, obj);
     }
   });
 };
@@ -71,10 +68,6 @@ const dispatchStage = (objPlayer, userList, io, objGame) => {
 
   for (let i = 0; i < tabUser.length; i++) {
     sendSpectreToOther(objGame.getUserInGame(), tabUser[i], objPlayer, io);
-    // replaceOtherStage(objPlayer, tabUser[i])
-    // io.to(`${tabUser[i].getIdSocket()}`).emit('stageOther', {
-    // otherStage: tabUser[i].otherStage
-    // });
   }
 };
 // export const logout = (redGame) => {

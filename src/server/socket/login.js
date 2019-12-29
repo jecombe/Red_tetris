@@ -10,7 +10,7 @@ const ioDispatchLogin = (redGame, socketClient) => {
     const { message } = data4Server;
     logger.info(`client says: ${message}`);
     const data4Client = {
-      status: 200, message: 'SERVER ROOMS', rooms, games,
+      status: 200, message: 'SERVER ROOMS', games,
     };
     socketClient.emit(ev.res_ROOMS, data4Client);
   });
@@ -26,16 +26,16 @@ const ioDispatchLogin = (redGame, socketClient) => {
     socketClient.join(player.roomAssociate);
     console.log('PLYER => ', player);
     redGame.io.to(`${socketClient.id}`).emit(ev.OBJ_PLAYER, {
-      stage: player.stage,
-      nextPiece: player.nextPiece,
-      otherStage: player.otherStage,
+      playerStage: player.stage,
+      playerNextPiece: player.nextPiece,
+      playerOtherStage: player.otherStage,
     });
   });
 
   // LOGOUT
   socketClient.on(ev.DISCONNECT, () => {
     redGame.unsetPlayer(socketClient.id);
-    logout(redGame);
+    // logout(redGame);
   });
 };
 

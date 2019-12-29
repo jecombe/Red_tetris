@@ -28,7 +28,6 @@ const getAllStagePlayers = (objGame, redGame, objPlayer) => {
 };
 
 export const login = (redGame, data, id) => {
-
   const { username, roomActual } = data;
   const player = new Player(id, username, roomActual);
   let game;
@@ -47,6 +46,7 @@ export const login = (redGame, data, id) => {
 
   return player;
 };
+
 const replaceOtherStage = (objPlayer, objOther) => {
   const index = objOther.peopleSpectre.indexOf(objPlayer.login);
   objOther.peopleSpectre.splice(index, 1);
@@ -70,6 +70,7 @@ const dispatchStage = (objPlayer, userList, io, objGame) => {
     sendSpectreToOther(objGame.getUserInGame(), tabUser[i], objPlayer, io);
   }
 };
+
 // export const logout = (redGame) => {
 //   const {
 //     rooms, userlist, games, players, socketClient,

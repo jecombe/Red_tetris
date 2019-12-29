@@ -40,18 +40,18 @@ export const reqLogin = (payload) => ({
   },
 });
 
-export const reqSendPosition = (pos) => ({
+export const reqSendPosition = (payload) => ({
   type: ev.POSITION_TETRO,
   payload: {
-    keyCode: pos,
+    keyCode: payload.keyCode,
   },
 });
 
-export const reqStartGame = (infoUserGame) => ({
+export const reqStartGame = (payload) => ({
   type: ev.START_GAME,
   payload: {
-    username: infoUserGame.playerName,
-    room: infoUserGame.playerRoom,
+    playerName: payload.playerName,
+    playerRoom: payload.playerRoom,
   },
 });
 
@@ -67,11 +67,12 @@ export const resRooms = (payload) => ({
   },
 });
 
-export const appGetStage = (payload) => ({
+export const resObjPlayer = (payload) => ({
   type: ev.OBJ_PLAYER,
   payload: {
-    playerStage: payload.stage,
-    playerOtherStage: payload.otherStage,
+    playerStage: payload.playerStage,
+    playerNextPiece: payload.playerNextPiece,
+    playerOtherStage: payload.playerOtherStage,
   },
 });
 

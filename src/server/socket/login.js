@@ -33,15 +33,9 @@ const ioDispatchLogin = (redGame, socketClient) => {
   });
 
   // LOGOUT
-<<<<<<< HEAD
-  socketClient.on(ev.DISCONNECT, () => {
-    redGame.unsetPlayer(socketClient.id);
-    // logout(redGame);
-=======
   socketClient.on(ev.DISCONNECT, (data) => {
     // redGame.unsetPlayer(socketClient.id);
     logout(redGame, data);
->>>>>>> dev
   });
 };
 

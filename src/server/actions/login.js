@@ -71,37 +71,6 @@ const dispatchStage = (objPlayer, userList, io, objGame) => {
   }
 };
 
-<<<<<<< HEAD
-// export const logout = (redGame) => {
-//   const {
-//     rooms, userlist, games, players, socketClient,
-//   } = ioGame;
-
-//   const player = redGame.getPlayer(id);
-//   const game = redGame.getGame(player.roomAssociate);
-//   console.log('FUCKING SHIT')
-//   dispatchStage(player, redGame.getUserInGame(), ioGame.io, redGame)
-
-//   game.unsetPlayer(id);
-//   const index = game.users.findIndex((user) => user.idSocket === player.idSocket);
-//   game.users.splice(index, 1);
-//   if (game.users.length !== 0) {
-//     game.setPlayerOwner(game.users[0]);
-//     game.users[0].setOwner();
-//   } else {
-//     redGame.unsetGame(player.roomAssociate); // delete games[player.roomAssociate];
-//   }
-//   delete players[player.idSocket];
-//   socketClient.leave(player.roomAssociate);
-//   const b = items.find((item) => item.name === 'b')
-
-//   /* Search user login in userList */
-//   const player = searchUserInList(socketClient.id, userlist);
-//   /* Search room name of player */
-//   const roomActual = searchRoomInUser(userlist, player);
-//   shareAction(player, roomActual, rooms, userlist);
-// };
-=======
 export const logout = (redGame, data) => {
   // const {
   //   rooms, userlist, games, players, socketClient,
@@ -137,4 +106,3 @@ export const logout = (redGame, data) => {
   // const roomActual = searchRoomInUser(userlist, player);
   // shareAction(player, roomActual, rooms, userlist);
 };
->>>>>>> dev

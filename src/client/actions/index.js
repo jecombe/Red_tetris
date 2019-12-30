@@ -5,7 +5,7 @@ import ev from '../../shared/events';
  */
 
 export const CLIENT_CONNECT = (payload) => ({
-  type: ev.CONNECT,
+  type: ev.CLIENT_CONNECT,
   payload: {
     host: payload.host,
     port: payload.port,
@@ -13,7 +13,7 @@ export const CLIENT_CONNECT = (payload) => ({
 });
 
 export const CLIENT_DISCONNECT = () => ({
-  type: ev.DISCONNECT,
+  type: ev.CLIENT_DISCONNECT,
   payload: {
     connected: false,
   },

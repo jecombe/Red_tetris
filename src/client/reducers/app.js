@@ -21,7 +21,7 @@ const appReducer = (state = appState, action) => {
     //     connected,
     //   };
     // }
-    case ev.CONNECT: {
+    case ev.CLIENT_CONNECT: {
       return {
         ...state,
         connected: true,

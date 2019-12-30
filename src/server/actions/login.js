@@ -46,6 +46,7 @@ export const login = (redGame, data, id) => {
 
   return player;
 };
+
 const replaceOtherStage = (objPlayer, objOther) => {
   const index = objOther.peopleSpectre.indexOf(objPlayer.login);
   objOther.peopleSpectre.splice(index, 1);

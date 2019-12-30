@@ -1,28 +1,34 @@
-import ev from '../src/shared/events';
-import * as actions from '../src/client/actions';
-import reducer from '../src/client/reducers/app';
+import ev from '../../src/shared/events';
+import * as actions from '../../src/client/actions';
+import reducer from '../../src/client/reducers/app';
 
-describe('# Redux App Tests', () => {
-  describe('## App Actions', () => {
-    it('should update connexion to true - APP_STATUS', () => {
-      const payload = { connected: true };
+describe('# Redux Tests - State', () => {
+  describe('## Actions Creators - App', () => {
+    it('should create action - CONNECT', () => {
+      const payload = {
+        host: 'host',
+        port: 'port',
+      };
       const expectedAction = {
-        type: actions.APP_STATE,
+        type: ev.CONNECT,
         payload,
       };
-      expect(actions.CLIENT_STATE(payload)).toEqual(expectedAction);
+
+      expect(actions.CLIENT_CONNECT(payload)).toEqual(expectedAction);
     });
-    it('should update rooms array - APP_GET_ROOMS', () => {
-      const payload = { rooms: [] };
+
+    it('should create action - DISCONNECT', () => {
       const expectedAction = {
-        type: ev.res_ROOMS,
-        payload,
+        type: ev.DISCONNECT,
+        payload: {
+          connected: false,
+        },
       };
-      expect(actions.resRooms(payload)).toEqual(expectedAction);
+      expect(actions.CLIENT_DISCONNECT()).toEqual(expectedAction);
     });
   });
 
-  describe('## App Reducers', () => {
+  describe('## App Actions Reducers - State', () => {
     const initialState = {
       connected: false,
       rooms: [],

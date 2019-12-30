@@ -1,8 +1,8 @@
-import ev from '../src/shared/events';
-import * as actions from '../src/client/actions';
-import reducer from '../src/client/reducers/player';
-import { createStage, createStagePiece } from '../src/server/helpers/stage';
-import { TETROMINOS } from '../src/client/components/Game/tetrominos';
+import ev from '../../src/shared/events';
+import * as actions from '../../src/client/actions';
+import reducer from '../../src/client/reducers/player';
+import { createStage, createStagePiece } from '../../src/server/stage/utils';
+import { TETROMINOS } from '../../src/client/components/Game/tetrominos';
 
 describe('# Redux Player Tests', () => {
   describe('## Player Actions', () => {
@@ -14,7 +14,7 @@ describe('# Redux Player Tests', () => {
           playerStage: payload.stage,
         },
       };
-      expect(actions.appGetStage(payload)).toEqual(expectedAction);
+      expect(actions.resObjPlayer(payload)).toEqual(expectedAction);
     });
     it('should create action for update stage - UPDATE_STAGE', () => {
       const payload = {
@@ -41,6 +41,53 @@ describe('# Redux Player Tests', () => {
         },
       };
       expect(actions.updateStageMallus(payload)).toEqual(expectedAction);
+    });
+    it('should create action - req_LOGIN', () => {
+      const payload = {
+        playerName: 'playerName',
+        playerRoom: 'playerRoom',
+      };
+      const expectedAction = {
+        type: ev.req_LOGIN,
+        payload,
+      };
+      expect(actions.reqLogin(payload)).toEqual(expectedAction);
+    });
+
+    it('should create action - POSITION_TETRO', () => {
+      const payload = {
+        keyCode: 'keyCode',
+      };
+      const expectedAction = {
+        type: ev.POSITION_TETRO,
+        payload,
+      };
+      expect(actions.reqSendPosition(payload)).toEqual(expectedAction);
+    });
+
+    it('should create action - START_GAME', () => {
+      const payload = {
+        playerName: 'playerName',
+        playerRoom: 'playerRoom',
+      };
+      const expectedAction = {
+        type: ev.START_GAME,
+        payload,
+      };
+      expect(actions.reqStartGame(payload)).toEqual(expectedAction);
+    });
+
+    it('should create action - OBJ_PLAYER', () => {
+      const payload = {
+        playerStage: 'playerStage',
+        playerNextPiece: 'playerNextPiece',
+        playerOtherStage: 'playerOtherStage',
+      };
+      const expectedAction = {
+        type: ev.OBJ_PLAYER,
+        payload,
+      };
+      expect(actions.resObjPlayer(payload)).toEqual(expectedAction);
     });
   });
 

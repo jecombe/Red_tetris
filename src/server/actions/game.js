@@ -27,9 +27,9 @@ const setStageToOther = (objGame, io) => {
 
 // eslint-disable-next-line import/prefer-default-export
 export const startGame = (redGame, data, id) => {
-  const { room } = data;
+  const { playerRoom } = data;
 
-  const game = redGame.getGame(room);
+  const game = redGame.getGame(playerRoom);
   const player = redGame.getPlayer(id);
 
   game.setTetroNull();

@@ -2,14 +2,14 @@ import 'regenerator-runtime/runtime';
 
 import td from 'testdouble';
 
-import ev from '../src/shared/events';
-import store from '../src/client/store';
+import ev from '../../src/shared/events';
+import store from '../../src/client/store';
 
-const appModule = require('../src/client/middleware/socketIoMiddleware');
+const appModule = require('../../src/client/middleware/socketIoMiddleware');
 
 const socketModule = appModule.middleware;
 const mockMiddleware = appModule.default;
-const id = appModule.id;
+const { id } = appModule;
 const mockSocket = { emit: jest.fn() };
 
 socketModule.SOCKETS[id] = mockSocket;

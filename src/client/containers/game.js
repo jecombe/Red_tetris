@@ -26,7 +26,7 @@ const Game = (props) => {
     history.push('/');
   }
 
-  const move = ({ keyCode }) => reqSendPosition(keyCode);
+  const move = ({ keyCode }) => reqSendPosition({ keyCode });
 
   const handleSubmitStatus = () => reqStartGame({ playerName, playerRoom });
   // console.log('===============>> ', playerNextPiece)

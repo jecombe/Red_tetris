@@ -1,12 +1,11 @@
 import ev from '../../shared/events';
-import params from '../../shared/params';
 
 /*
  * action creators for socket middleware
  */
 
 export const CLIENT_CONNECT = (payload) => ({
-  type: `${params.socket.id}_CONNECT`,
+  type: ev.CONNECT,
   payload: {
     host: payload.host,
     port: payload.port,
@@ -14,17 +13,9 @@ export const CLIENT_CONNECT = (payload) => ({
 });
 
 export const CLIENT_DISCONNECT = () => ({
-  type: `${params.socket.id}_DISCONNECT`,
+  type: ev.DISCONNECT,
   payload: {
     connected: false,
-  },
-});
-
-export const APP_STATE = 'APP_STATE';
-export const CLIENT_STATE = (payload) => ({
-  type: APP_STATE,
-  payload: {
-    connected: payload.connected,
   },
 });
 
@@ -40,18 +31,18 @@ export const reqLogin = (payload) => ({
   },
 });
 
-export const reqSendPosition = (pos) => ({
+export const reqSendPosition = (payload) => ({
   type: ev.POSITION_TETRO,
   payload: {
-    keyCode: pos,
+    keyCode: payload.keyCode,
   },
 });
 
-export const reqStartGame = (infoUserGame) => ({
+export const reqStartGame = (payload) => ({
   type: ev.START_GAME,
   payload: {
-    username: infoUserGame.playerName,
-    room: infoUserGame.playerRoom,
+    playerName: payload.playerName,
+    playerRoom: payload.playerRoom,
   },
 });
 
@@ -67,11 +58,12 @@ export const resRooms = (payload) => ({
   },
 });
 
-export const appGetStage = (payload) => ({
+export const resObjPlayer = (payload) => ({
   type: ev.OBJ_PLAYER,
   payload: {
-    playerStage: payload.stage,
-    playerOtherStage: payload.otherStage,
+    playerStage: payload.playerStage,
+    playerNextPiece: payload.playerNextPiece,
+    playerOtherStage: payload.playerOtherStage,
   },
 });
 

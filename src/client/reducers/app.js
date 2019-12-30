@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
-import * as actions from '../actions';
 import ev from '../../shared/events';
 
 export const appState = {
   connected: false,
-  rooms: [],
   games: {},
 };
 
@@ -16,18 +14,29 @@ export const appStatePropTypes = PropTypes.shape({
 
 const appReducer = (state = appState, action) => {
   switch (action.type) {
-    case actions.APP_STATE: {
-      const { connected } = action.payload;
+    // case actions.APP_STATE: {
+    //   const { connected } = action.payload;
+    //   return {
+    //     ...state,
+    //     connected,
+    //   };
+    // }
+    case ev.CONNECT: {
       return {
         ...state,
-        connected,
+        connected: true,
+      };
+    }
+    case ev.DISCONNECT: {
+      return {
+        ...state,
+        connected: false,
       };
     }
     case ev.res_ROOMS: {
-      const { rooms, games } = action.payload;
+      const { games } = action.payload;
       return {
         ...state,
-        rooms,
         games,
       };
     }

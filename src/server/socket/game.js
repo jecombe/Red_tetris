@@ -4,11 +4,11 @@ import { startGame, positionTetro } from '../actions/game';
 
 const ioDispatchGame = (redGame, socketClient) => {
   socketClient.on(ev.START_GAME, (data) => {
-    const { room } = data;
+    const { playerRoom } = data;
     const payload = startGame(redGame, data, socketClient.id);
     const { newStage, nextPiece } = payload;
 
-    redGame.io.sockets.in(room).emit(ev.STAGE, {
+    redGame.io.sockets.in(playerRoom).emit(ev.STAGE, {
       newStage,
       nextPiece,
     });

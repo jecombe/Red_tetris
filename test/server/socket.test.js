@@ -1,8 +1,12 @@
 import 'regenerator-runtime/runtime';
 
 const io = require('socket.io-client');
-const ev = require('../src/shared/events');
-const logger = require('../src/server/utils/logger');
+const server = require('../../src/server/server');
+const ev = require('../../src/shared/events');
+const logger = require('../../src/server/utils/logger');
+// const socketServer = require('../../src/server/socket');
+
+// socketServer(server);
 
 // initSocket returns a promise
 // success: resolve a new socket object
@@ -15,11 +19,11 @@ const initSocket = () => new Promise((resolve, reject) => {
     'force new connection': true,
   });
 
-  // logger.info('connecting...');
+  logger.info('connecting...');
 
   // define event handler for sucessfull connection
-  socket.on(ev.CONNECT, () => {
-    // logger.info('connected');
+  socket.on('connect', () => {
+    logger.info('connected');
     resolve(socket);
   });
 
@@ -129,9 +133,9 @@ describe('test suit: Echo & Bello', () => {
     // logger.info('Emitting ROOMS event');
     socketClient.emit(ev.req_ROOMS, data4Server);
 
-    const { status, message, rooms } = await serverResponse;
+    const { status, message, games } = await serverResponse;
     expect(status).toBe(200);
     expect(message).toBe('SERVER ROOMS');
-    expect(rooms).toEqual([]);
+    expect(games).toEqual({});
   });
 });

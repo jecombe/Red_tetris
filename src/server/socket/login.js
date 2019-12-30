@@ -24,7 +24,7 @@ const ioDispatchLogin = (redGame, socketClient) => {
     });
     /* Join room */
     socketClient.join(player.roomAssociate);
-    console.log('PLYER => ', player);
+    console.log('SOCKET => ', socketClient);
     redGame.io.to(`${socketClient.id}`).emit(ev.OBJ_PLAYER, {
       playerStage: player.stage,
       playerNextPiece: player.nextPiece,
@@ -33,9 +33,15 @@ const ioDispatchLogin = (redGame, socketClient) => {
   });
 
   // LOGOUT
+<<<<<<< HEAD
   socketClient.on(ev.DISCONNECT, () => {
     redGame.unsetPlayer(socketClient.id);
     // logout(redGame);
+=======
+  socketClient.on(ev.DISCONNECT, (data) => {
+    // redGame.unsetPlayer(socketClient.id);
+    logout(redGame, data);
+>>>>>>> dev
   });
 };
 

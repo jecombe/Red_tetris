@@ -1,10 +1,10 @@
 module.exports = {
-  CLIENT_CONNECT: 'CLIENT_CONNECT',
-  CLIENT_DISCONNECT: 'CLIENT_DISCONNECT',
-
   CONNECT: 'connect',
   DISCONNECT: 'disconnect',
   ERROR: 'error',
+
+  CLIENT_CONNECT: 'CLIENT_CONNECT',
+  CLIENT_DISCONNECT: 'CLIENT_DISCONNECT',
 
   LOGIN: 'login',
   START_GAME: 'startGame',

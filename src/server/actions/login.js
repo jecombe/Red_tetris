@@ -53,56 +53,33 @@ const replaceOtherStage = (objPlayer, objOther) => {
   objOther.otherStage.splice(index, 1);
 };
 
-const sendSpectreToOther = (userList, usernameOther, objPlayer, io) => {
-  userList.find((obj) => {
-    if (obj.login === usernameOther) {
-      replaceOtherStage(objPlayer, obj);
-      emitterStageOther(io, obj);
-    }
-  });
-};
 
-const dispatchStage = (objPlayer, userList, io, objGame) => {
-  const tabUser = objPlayer.getPeopleSpectre();
-
+const dispatchStage = (objPlayer, redGame, game) => {
+  const tabUser = game.getUserInGame()
 
   for (let i = 0; i < tabUser.length; i++) {
-    sendSpectreToOther(objGame.getUserInGame(), tabUser[i], objPlayer, io);
+    if (tabUser[i].login !== objPlayer.login)
+    {
+    replaceOtherStage(objPlayer, tabUser[i]);
+    emitterStageOther(redGame.io, tabUser[i]);
+    }
   }
 };
 
-export const logout = (redGame, data) => {
-  // const {
-  //   rooms, userlist, games, players, socketClient,
-  // } = ioGame;
-
-  const player = redGame.getPlayer(redGame.socketClient.id);
+export const logout = (redGame, id) => {
+  const player = redGame.getPlayer(id);
   if (!player) return;
 
   const game = redGame.getGame(player.roomAssociate);
 
-  console.log(data, player, game);
-  // console.log('FUCKING SHIT')
+  dispatchStage(player, redGame, game);
+  game.unsetPlayer(player.getIdSocket());
+  if (game.users.length !== 0) {
+    game.setPlayerOwner(game.users[0]);
+    game.users[0].setOwner();
+  } else {
+    redGame.unsetGame(player.roomAssociate);
+  }
+  redGame.unsetPlayer(player.idSocket);
 
-
-  // dispatchStage(player, redGame.getUserInGame(), ioGame.io, redGame)
-
-  // game.unsetPlayer(id);
-  // const index = game.users.findIndex((user) => user.idSocket === player.idSocket);
-  // game.users.splice(index, 1);
-  // if (game.users.length !== 0) {
-  //   game.setPlayerOwner(game.users[0]);
-  //   game.users[0].setOwner();
-  // } else {
-  //   redGame.unsetGame(player.roomAssociate); // delete games[player.roomAssociate];
-  // }
-  // delete players[player.idSocket];
-  // socketClient.leave(player.roomAssociate);
-  // const b = items.find((item) => item.name === 'b')
-
-  /* Search user login in userList */
-  // const player = searchUserInList(socketClient.id, userlist);
-  /* Search room name of player */
-  // const roomActual = searchRoomInUser(userlist, player);
-  // shareAction(player, roomActual, rooms, userlist);
 };

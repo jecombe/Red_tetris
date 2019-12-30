@@ -39,8 +39,9 @@ const setMallusToPlayers = (userTab, userActual, io, objGame, objPlayer) => {
       userTab[i].setMallus();
       const calcRow = 20 - userTab[i].getMallus();
       if (calcRow < 20) {
-        userTab[i].stage.shift();
-        userTab[i].stage.push(new Array(10).fill(['M', 'mallus']));
+    let newStage  = userTab[i].stage.slice(1, 20);
+        newStage.push(new Array(10).fill(['M', 'mallus']));
+        userTab[i].setStage(newStage);
         emitterMallus(io, userTab[i]);
       }
     }

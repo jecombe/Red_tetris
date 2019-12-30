@@ -1,15 +1,19 @@
+// import http from 'http';
+
+import params from '../shared/params';
 import app from './app';
 import io from './socket';
 import logger from './utils/logger';
 
-const port = process.env.PORT || 3000;
+// const port = process.env.PORT || 3000;
+const { host, port } = params.server;
 
-export const server = app.listen(port, () => {
+const server = app.listen({ host, port }, () => {
   logger.info('red-tetris_server');
-  logger.info(`Listening on port ${port}.`);
+  logger.info(`Listening on ${host} port ${port}.`);
   io(server);
 });
 
 // Need to be move in app.listen callback ?
 
-// module.expor
+module.exports = server;

@@ -22,8 +22,8 @@ const GameLayout = (props) => {
     playerStage,
     playerOtherStage,
     playerNextPiece,
-    move,
     handleSubmitStatus,
+    playerOwner,
   } = props;
   const classes = useStyles();
 
@@ -34,6 +34,7 @@ const GameLayout = (props) => {
           playerStage={playerStage}
           playerNextPiece={playerNextPiece}
           handleSubmitStatus={handleSubmitStatus}
+          playerOwner={playerOwner}
         />
       </Grid>
       <Grid item xs={12} lg={5} container alignItems="center" justify="center">

@@ -15,10 +15,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GameBoard = (props) => {
+
   const {
     playerStage,
     playerNextPiece,
     handleSubmitStatus,
+    playerOwner,
   } = props;
   const classes = useStyles();
 
@@ -31,7 +33,9 @@ const GameBoard = (props) => {
       <Grid item xs={6} lg={3} container justify="center" style={{ height: '30vh', border: '1px solid black' }}>
         {playerNextPiece && playerNextPiece.length
         && <Stage stage={playerNextPiece} /> }
-        <GameStatus handleSubmit={handleSubmitStatus} />
+        {playerOwner ? (
+          <GameStatus handleSubmit={handleSubmitStatus} />
+        ) : (0)}
       </Grid>
     </Grid>
   );

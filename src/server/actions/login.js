@@ -55,13 +55,12 @@ const replaceOtherStage = (objPlayer, objOther) => {
 
 
 const dispatchStage = (objPlayer, redGame, game) => {
-  const tabUser = game.getUserInGame()
+  const tabUser = game.getUserInGame();
 
   for (let i = 0; i < tabUser.length; i++) {
-    if (tabUser[i].login !== objPlayer.login)
-    {
-    replaceOtherStage(objPlayer, tabUser[i]);
-    emitterStageOther(redGame.io, tabUser[i]);
+    if (tabUser[i].login !== objPlayer.login) {
+      replaceOtherStage(objPlayer, tabUser[i]);
+      emitterStageOther(redGame.io, tabUser[i]);
     }
   }
 };
@@ -72,7 +71,7 @@ export const logout = (redGame, id) => {
 
   const game = redGame.getGame(player.roomAssociate);
 
-  dispatchStage(player, redGame, game);
+
   game.unsetPlayer(player.getIdSocket());
   if (game.users.length !== 0) {
     game.setPlayerOwner(game.users[0]);
@@ -80,6 +79,7 @@ export const logout = (redGame, id) => {
   } else {
     redGame.unsetGame(player.roomAssociate);
   }
+  dispatchStage(player, redGame, game);
   redGame.unsetPlayer(player.idSocket);
 
 };

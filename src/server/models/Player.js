@@ -18,10 +18,20 @@ export default class Player {
     this.lineFull = 0;
     this.otherStage = [];
     this.peopleSpectre = [];
+    this.notLosing = -1;
+    this.win = false;
+  }
+
+  getLosing() {
+    return this.losing;
   }
 
   getLogin() {
     return this.login;
+  }
+
+  setWin() {
+    this.win = true;
   }
 
   getIdSocket() {
@@ -105,6 +115,8 @@ export default class Player {
     this.index = 0;
     this.mallus = 0;
     this.lineFull = 0;
+    this.losing = false;
+    this.win = false;
   }
 
   setMallus() {
@@ -125,5 +137,15 @@ export default class Player {
 
   setPeopleSpectre(people) {
     this.peopleSpectre.push(people);
+  }
+
+  setLosing(trueOfalse) {
+    this.losing = trueOfalse;
+  }
+  setNoLosing(number) {
+    this.notLosing = number
+  }
+  setNoLosing2() {
+    this.notLosing -= 1
   }
 }

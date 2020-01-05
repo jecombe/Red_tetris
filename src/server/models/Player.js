@@ -30,10 +30,6 @@ export default class Player {
     return this.login;
   }
 
-  setWin() {
-    this.win = true;
-  }
-
   getIdSocket() {
     return this.idSocket;
   }
@@ -142,10 +138,16 @@ export default class Player {
   setLosing(trueOfalse) {
     this.losing = trueOfalse;
   }
+
   setNoLosing(number) {
-    this.notLosing = number
+    this.notLosing = number;
   }
+
   setNoLosing2() {
-    this.notLosing -= 1
+    this.notLosing -= 1;
+  }
+
+  setWin() {
+    this.win = true;
   }
 }

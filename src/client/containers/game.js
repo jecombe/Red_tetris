@@ -24,6 +24,7 @@ const Game = (props) => {
     otherNotLosing,
     playerWin,
     playerOwner,
+    playerLineFull,
   } = player;
 
   if (!playerName || !playerRoom) {
@@ -37,10 +38,10 @@ const Game = (props) => {
   };
 
   const handleSubmitStatus = () => reqStartGame({ playerName, playerRoom });
-  if (otherNotLosing === 0)
-  {
-    console.log('END GAME', otherNotLosing, '========+> win ?', playerWin);
+  if (otherNotLosing === 0) {
+    console.log('END GAME', otherNotLosing, 'IS WINNER ?', playerWin);
   }
+  console.log('LINE FULL:', playerLineFull);
   return (
     <div tabIndex="0" onKeyDown={(e) => move(e)}>
       <GameLayout

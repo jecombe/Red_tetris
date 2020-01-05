@@ -59,6 +59,7 @@ export const updateRows = (newStage, objPlayer, objGame, redGame) => {
     const fullLine = row.every(isFull);
     if (fullLine === true) {
       objPlayer.setLineFull();
+
       // Check l'index de la ligne pleine;
       const index = newStage.indexOf(row);
       // Met la ligne a 0

@@ -76,6 +76,7 @@ export const updateStage = (payload) => ({
     playerNextPiece: payload.nextPiece,
     playerGameOver: payload.gameOver,
     otherNotLosing: payload.otherNotLosing,
+    playerLineFull: payload.playerLineFull,
   },
 });
 

@@ -10,6 +10,7 @@ export const dispatch = (action, data, dispatch) => {
       playerNextPiece: data.nextPiece,
       playerGameOver: data.gameOver,
       otherNotLosing: data.otherNotLosing,
+      playerLineFull: data.playerLineFull,
     },
   });
 };

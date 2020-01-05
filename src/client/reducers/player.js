@@ -14,6 +14,7 @@ export const playerState = {
   otherNotLosing: -1,
   playerWin: false,
   playerOwner: false,
+  playerLineFull: 0,
 };
 
 export const playerStatePropTypes = PropTypes.shape({
@@ -51,7 +52,7 @@ const playerReducer = (state = playerState, action) => {
     }
 
     case ev.STAGE: {
-      const { playerStage, playerNextPiece, playerGameOver, otherNotLosing, } = action.payload;
+      const { playerStage, playerNextPiece, playerGameOver, otherNotLosing, playerLineFull } = action.payload;
 
       return {
         ...state,
@@ -59,6 +60,7 @@ const playerReducer = (state = playerState, action) => {
         playerNextPiece,
         playerGameOver,
         otherNotLosing,
+        playerLineFull,
       };
     }
 
@@ -67,7 +69,7 @@ const playerReducer = (state = playerState, action) => {
       return {
         ...state,
         playerStage,
-        tetromino: TETROMINOS.L.shape,
+        tetromino: TETROMINOS.I.shape,
       };
     }
 

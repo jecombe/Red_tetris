@@ -106,6 +106,7 @@ export const positionTetro = (redGame, data, id) => {
     gameOver: player.getLosing(),
     otherNotLosing: player.notLosing,
     win: player.win,
+    playerLineFull: player.getLineFull(),
   };
 
   return payload;

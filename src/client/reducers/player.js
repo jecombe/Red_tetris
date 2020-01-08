@@ -10,6 +10,11 @@ export const playerState = {
   playerOtherStage: [],
   tetromino: TETROMINOS[0].shape,
   playerNextPiece: [],
+  playerGameOver: false,
+  otherNotLosing: -1,
+  playerWin: false,
+  playerOwner: false,
+  playerLineFull: 0,
 };
 
 export const playerStatePropTypes = PropTypes.shape({
@@ -34,23 +39,28 @@ const playerReducer = (state = playerState, action) => {
     }
 
     case ev.OBJ_PLAYER: {
-      const { playerStage, playerNextPiece, playerOtherStage } = action.payload;
+      const { playerStage, playerNextPiece, playerOtherStage, playerOwner } = action.payload;
 
       return {
         ...state,
         playerStage,
         playerNextPiece,
         playerOtherStage,
+        playerGameOver: false,
+        playerOwner,
       };
     }
 
     case ev.STAGE: {
-      const { playerStage, playerNextPiece } = action.payload;
+      const { playerStage, playerNextPiece, playerGameOver, otherNotLosing, playerLineFull } = action.payload;
 
       return {
         ...state,
         playerStage,
         playerNextPiece,
+        playerGameOver,
+        otherNotLosing,
+        playerLineFull,
       };
     }
 
@@ -59,15 +69,18 @@ const playerReducer = (state = playerState, action) => {
       return {
         ...state,
         playerStage,
-        tetromino: TETROMINOS.L.shape,
+        tetromino: TETROMINOS.I.shape,
       };
     }
 
     case ev.STAGE_OTHER: {
-      const { playerOtherStage } = action.payload;
+      const { playerOtherStage, otherNotLosing, playerWin, playerOwner } = action.payload;
       return {
         ...state,
         playerOtherStage,
+        otherNotLosing,
+        playerWin,
+        playerOwner,
       };
     }
 

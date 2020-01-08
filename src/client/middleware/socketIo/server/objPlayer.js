@@ -8,6 +8,7 @@ export const dispatch = (action, data, dispatch) => {
       playerStage: data.playerStage,
       playerNextPiece: data.playerNextPiece,
       playerOtherStage: data.playerOtherStage,
+      playerOwner: data.playerOwner,
     },
   });
 };

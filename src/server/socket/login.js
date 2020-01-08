@@ -29,6 +29,7 @@ const ioDispatchLogin = (redGame, socketClient) => {
       playerStage: player.stage,
       playerNextPiece: player.nextPiece,
       playerOtherStage: player.otherStage,
+      playerOwner: player.owner,
     });
   });
 

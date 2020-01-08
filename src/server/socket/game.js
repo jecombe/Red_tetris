@@ -5,23 +5,26 @@ import { startGame, positionTetro } from '../actions/game';
 const ioDispatchGame = (redGame, socketClient) => {
   socketClient.on(ev.START_GAME, (data) => {
     const { playerRoom } = data;
-    const payload = startGame(redGame, data, socketClient.id);
-    const { newStage, nextPiece } = payload;
+    const { newStage, nextPiece, otherNotLosing } = startGame(redGame, data, socketClient.id);
 
     redGame.io.sockets.in(playerRoom).emit(ev.STAGE, {
       newStage,
       nextPiece,
+      gameOver: false,
+      otherNotLosing,
     });
   });
 
   socketClient.on(ev.POSITION_TETRO, (data) => {
-    const payload = positionTetro(redGame, data, socketClient.id);
-    const { newStage, nextPiece } = payload;
+    const { newStage, nextPiece, gameOver, otherNotLosing, playerLineFull } = positionTetro(redGame, data, socketClient.id);
 
 
     redGame.io.to(`${socketClient.id}`).emit(ev.STAGE, {
       newStage,
       nextPiece,
+      gameOver,
+      otherNotLosing,
+      playerLineFull,
     });
   });
 };

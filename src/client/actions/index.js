@@ -64,14 +64,19 @@ export const resObjPlayer = (payload) => ({
     playerStage: payload.playerStage,
     playerNextPiece: payload.playerNextPiece,
     playerOtherStage: payload.playerOtherStage,
+    playerOwner: payload.playerOwner,
   },
 });
 
 export const updateStage = (payload) => ({
+
   type: ev.STAGE,
   payload: {
     playerStage: payload.newStage,
     playerNextPiece: payload.nextPiece,
+    playerGameOver: payload.gameOver,
+    otherNotLosing: payload.otherNotLosing,
+    playerLineFull: payload.playerLineFull,
   },
 });
 
@@ -86,5 +91,9 @@ export const updateOtherStage = (payload) => ({
   type: ev.STAGE_OTHER,
   payload: {
     playerOtherStage: payload.otherStage,
+    otherNotLosing: payload.otherNotLosing,
+    playerWin: payload.playerWin,
+    playerOwner: payload.playerOwner,
+
   },
 });

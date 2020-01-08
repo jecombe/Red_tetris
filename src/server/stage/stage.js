@@ -1,4 +1,4 @@
-import { is_full, updateStage } from './utils';
+import { isFull, updateStage } from './utils';
 import { emitterMallus, emitterStageOther } from '../emitter/emitter';
 
 
@@ -21,13 +21,12 @@ const replaceOtherStage = (objPlayer, objOther) => {
 const sendSpectreToOther = (tabUser, objPlayer, io, objOther) => {
   objOther.forEach((element) => {
     if (element.login !== objPlayer.login) {
-      replaceOtherStage(objPlayer, element)
+      replaceOtherStage(objPlayer, element);
     }
   });
   emitterStageOther(io, objPlayer);
-
-
 };
+
 export const dispatchStage = (objPlayer, io, objGame) => {
   const tabUser = objPlayer.getPeopleSpectre();
   sendSpectreToOther(tabUser, objPlayer, io, objGame.getUserInGame());
@@ -38,8 +37,13 @@ const setMallusToPlayers = (userTab, userActual, io, objGame, objPlayer) => {
     if (userTab[i].login !== userActual) {
       userTab[i].setMallus();
       const calcRow = 20 - userTab[i].getMallus();
+      /* --- Check Game Over with mallus --- */
+      if (calcRow === 0) {
+        console.log('GAME OVER MALLUS');
+        userTab[i].setLosing(true);
+      }
       if (calcRow < 20) {
-    let newStage  = userTab[i].stage.slice(1, 20);
+        const newStage = userTab[i].stage.slice(1, 20);
         newStage.push(new Array(10).fill(['M', 'mallus']));
         userTab[i].setStage(newStage);
         emitterMallus(io, userTab[i]);
@@ -52,9 +56,10 @@ const setMallusToPlayers = (userTab, userActual, io, objGame, objPlayer) => {
 export const updateRows = (newStage, objPlayer, objGame, redGame) => {
   // Pour la hauteur verifie si une ligne est pleine
   newStage.forEach((row) => {
-    const full_line = row.every(is_full);
-    if (full_line === true) {
+    const fullLine = row.every(isFull);
+    if (fullLine === true) {
       objPlayer.setLineFull();
+
       // Check l'index de la ligne pleine;
       const index = newStage.indexOf(row);
       // Met la ligne a 0

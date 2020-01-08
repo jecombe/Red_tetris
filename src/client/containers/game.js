@@ -20,24 +20,37 @@ const Game = (props) => {
     playerStage,
     playerOtherStage,
     playerNextPiece,
+    playerGameOver,
+    otherNotLosing,
+    playerWin,
+    playerOwner,
+    playerLineFull,
   } = player;
 
   if (!playerName || !playerRoom) {
     history.push('/');
   }
 
-  const move = ({ keyCode }) => reqSendPosition({ keyCode });
+  const move = ({ keyCode }) => {
+    if (playerGameOver === false) {
+      reqSendPosition({ keyCode });
+    }
+  };
 
   const handleSubmitStatus = () => reqStartGame({ playerName, playerRoom });
-  // console.log('===============>> ', playerNextPiece)
+  if (otherNotLosing === 0) {
+    console.log('END GAME', otherNotLosing, 'IS WINNER ?', playerWin);
+  }
+  console.log('LINE FULL:', playerLineFull);
   return (
     <div tabIndex="0" onKeyDown={(e) => move(e)}>
       <GameLayout
         playerStage={playerStage}
         playerOtherStage={playerOtherStage}
         playerNextPiece={playerNextPiece}
-     // move={move}
         handleSubmitStatus={handleSubmitStatus}
+        playerOwner={playerOwner}
+    
       />
     </div>
   );

@@ -1,22 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import Grid from '@material-ui/core/Grid';
 import Login from './login';
 import Game from './game';
 import Loader from '../components/Loader';
 import Error404 from '../components/Error404';
-import { appStatePropTypes } from '../reducers/app';
 
 const Main = (props) => {
-  const { app } = props;
-  const { connected } = app;
+  const { connected } = props;
 
-  // eslint-disable-next-line no-shadow
-  if (!connected) {
-    return <Loader />;
-  }
+  if (!connected) return <Loader />;
 
   return (
     <Switch>
@@ -28,11 +23,11 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  app: appStatePropTypes.isRequired,
+  connected: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  app: state.app,
+  connected: state.app.connected,
 });
 
 export default connect(mapStateToProps)(Main);

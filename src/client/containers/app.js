@@ -4,12 +4,9 @@ import { connect } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 
 import params from '../../shared/params';
 import * as actions from '../actions';
-import ev from '../../shared/events';
-
 import Header from './header';
 import Main from './main';
 import Footer from './footer';

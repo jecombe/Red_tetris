@@ -1,56 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import LaunchIcon from '@material-ui/icons/Launch';
-import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    height: 400,
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-  },
-  paper: {
+  roomRow: {
     margin: theme.spacing(1),
     padding: theme.spacing(1),
   },
 }));
 
-// const LoginRoomsMap = (rooms, handleRoomSubmit) => {
-//   if (rooms.length === 0) {
-//     return (
-//       <div>
-//         No rooms available
-//       </div>
-//     );
-//   }
-
-//   return rooms.map((i) => (
-//     <ListItem
-//       button
-//       value={i.roomName}
-//       key={i.roomName}
-//       onClick={() => handleRoomSubmit(i.roomName)}
-//     >
-//       <ListItemText primary={`${i.roomName}`} secondary={`Owned by ${i.owner}`} />
-//       <ListItemText primary="Game not started." />
-//       <LaunchIcon color="primary" />
-//     </ListItem>
-//   ));
-// };
-
-const LoginGamesMap = (games, handleRoomSubmit) => {
+const LoginGamesMap = (games, onClickRoom) => {
   if (Object.entries(games).length === 0
       && games.constructor === Object) {
     return (
-      <div>
+      <Grid container item justify="center">
         No rooms available
-      </div>
+      </Grid>
     );
   }
 
@@ -59,7 +31,7 @@ const LoginGamesMap = (games, handleRoomSubmit) => {
       button
       value={key}
       key={key}
-      onClick={() => handleRoomSubmit(key)}
+      onClick={() => onClickRoom(key)}
     >
       <ListItemText primary={`${games[key].roomName}`} secondary={`Owned by ${games[key].owner}`} />
       <ListItemText primary="Game not started." />
@@ -69,17 +41,17 @@ const LoginGamesMap = (games, handleRoomSubmit) => {
 };
 
 const LoginRooms = (props) => {
-  const { rooms, games, handleRoomSubmit } = props;
+  const { games, onClickRoom } = props;
   const classes = useStyles();
 
   return (
-    <Grid container direction="row" justify="center" className={classes.paper}>
+    <Grid container direction="row" justify="center" className={classes.roomRow}>
       <Typography component="h1" variant="h5">
         Available rooms
       </Typography>
-      <Grid item xs={12} style={{ maxHeight: 150, overflow: 'auto' }}>
+      <Grid item xs={12} style={{ maxHeight: 250, overflow: 'auto' }}>
         <List style={{ maxHeight: '100%' }}>
-          {LoginGamesMap(games, handleRoomSubmit)}
+          {LoginGamesMap(games, onClickRoom)}
         </List>
       </Grid>
     </Grid>
@@ -87,12 +59,12 @@ const LoginRooms = (props) => {
 };
 
 LoginRooms.propTypes = {
-  rooms: PropTypes.arrayOf(PropTypes.string).isRequired,
   games: PropTypes.object.isRequired,
-  handleRoomSubmit: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-  ]).isRequired,
+  onClickRoom: PropTypes.func.isRequired,
 };
 
-export default LoginRooms;
+const mapStateToProps = (state) => ({
+  games: state.app.games,
+});
+
+export default connect(mapStateToProps, null)(LoginRooms);

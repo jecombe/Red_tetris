@@ -1,16 +1,24 @@
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
 
-import HeaderLayout from '../components/Header/HeaderLayout';
-import { appStatePropTypes } from '../reducers/app';
+import HeaderHome from '../components/Header/HeaderHome';
+import HeaderLogo from '../components/Header/HeaderLogo';
+import HeaderConnectIcon from '../components/Header/HeaderConnectIcon';
+
+const useStyles = makeStyles((theme) => ({
+  rootHeader: {
+    padding: theme.spacing(1),
+  },
+}));
 
 const Header = (props) => {
   const {
-    app,
     history,
   } = props;
+  const classes = useStyles();
 
   const handleHomeButton = (e) => {
     e.preventDefault(); // event.persist();
@@ -21,20 +29,22 @@ const Header = (props) => {
   };
 
   return (
-    <HeaderLayout
-      app={app}
-      handleHomeButton={handleHomeButton}
-    />
+    <Grid container alignItems="center" className={classes.rootHeader}>
+      <Grid item xs={3} container justify="center">
+        <HeaderHome handleOnClick={handleHomeButton} />
+      </Grid>
+      <Grid item xs={6} container justify="center">
+        <HeaderLogo />
+      </Grid>
+      <Grid item xs={3} container justify="center">
+        <HeaderConnectIcon />
+      </Grid>
+    </Grid>
   );
 };
 
 Header.propTypes = {
-  app: appStatePropTypes.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  app: state.app,
-});
-
-export default withRouter(connect(mapStateToProps)(Header));
+export default withRouter(Header);

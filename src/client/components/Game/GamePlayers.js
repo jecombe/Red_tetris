@@ -3,45 +3,54 @@ import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import Card from '@material-ui/core/Card';
+import { connect } from 'react-redux';
 
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 
 import Stage from './Stage';
 
-const GameInfoMap = (infos, playerOtherStage) => {
+const GameInfoMap = (playerOtherStage) => {
   if (playerOtherStage.length === 0) {
     return (
-      <div>
+      <Grid container item justify="center">
         No users in room
-      </div>
+      </Grid>
     );
   }
   return playerOtherStage.map((stage) => (
-    <Card style={{ padding: '2px' }}>
+    <Card style={{ margin: '2px' }}>
       <ListItem>
-        <ListItemText primary="Name" />
-        <ListItemText primary="Score - Rank #" />
-        <Stage stage={stage} type="other" />
+        <Grid container justify="center" alignItems="center" width="100%">
+          <Grid item xs={3}>
+            Name
+          </Grid>
+          <Grid item xs={3}>
+            Score
+          </Grid>
+          <Grid item xs={3}>
+            Rank
+          </Grid>
+          <Grid item xs={3}>
+            <Stage stage={stage} type="other" />
+          </Grid>
+        </Grid>
       </ListItem>
     </Card>
   ));
 };
 
-// <ListItemText primary={`${i.name}`} secondary={`Score ${i.score} - Rank #${i.rank}`} />
-
 const GamePlayers = (props) => {
-  const { infos, playerOtherStage } = props;
+  const { playerOtherStage } = props;
 
   return (
-    <Grid container justify="center" style={{ width: '100%', border: '1px solid black' }}>
+    <Grid container justify="center">
       <Typography component="h1" variant="h5">
             Users in room
       </Typography>
       <Grid item xs={12} style={{ maxHeight: '50vh', overflow: 'auto', width: '100%' }}>
         <List style={{ maxHeight: '100%' }}>
-          {GameInfoMap(infos, playerOtherStage)}
+          {GameInfoMap(playerOtherStage)}
         </List>
       </Grid>
     </Grid>
@@ -49,12 +58,11 @@ const GamePlayers = (props) => {
 };
 
 GamePlayers.propTypes = {
-  infos: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    score: PropTypes.string.isRequired,
-    rank: PropTypes.string.isRequired,
-  })).isRequired,
   playerOtherStage: PropTypes.array.isRequired,
 };
 
-export default GamePlayers;
+const mapStateToProps = (state) => ({
+  playerOtherStage: state.player.playerOtherStage,
+});
+
+export default connect(mapStateToProps, null)(GamePlayers);

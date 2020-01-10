@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
     gridTemplateColumns: `repeat(${props.width}, 1fr)`,
     gridGap: '1px',
     border: '2px solid black',
-    width: '25vw',
+    width: '100%',
     background: '#111',
   }),
 }));

@@ -6,8 +6,10 @@ import { connect } from 'react-redux';
 
 import GameBoard from '../components/Game/GameBoard';
 import GamePlayers from '../components/Game/GamePlayers';
+  
 
 const Game = (props) => {
+
   const {
     playerName,
     playerRoom,

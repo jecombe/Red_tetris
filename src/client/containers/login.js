@@ -1,77 +1,43 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import ReactRouterPropTypes from 'react-router-prop-types';
-import { connect } from 'react-redux';
+import React from 'react';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import { makeStyles } from '@material-ui/core/styles';
 
-import * as actions from '../actions';
-import LoginLayout from '../components/Login/LoginLayout';
-import { appStatePropTypes } from '../reducers/app';
+import LoginForm from '../components/Login/LoginForm';
+import LoginRooms from '../components/Login/LoginRooms';
 
-const Login = (props) => {
-  const {
-    app,
-    reqLogin,
-    history,
-  } = props;
-  const { rooms, games } = app;
+const useStyles = makeStyles((theme) => ({
+  rootLogin: {
+    padding: theme.spacing(3, 3),
+  },
+}));
 
-  const [errPlayerName, setErrPlayerName] = useState(false);
-  const [errPlayerRoom, setErrPlayerRoom] = useState(false);
-  const handlePlayerName = React.createRef();
-  const handlePlayerRoom = React.createRef();
+const Login = () => {
+  const classes = useStyles();
+  const refPlayerName = React.createRef();
+  const refPlayerRoom = React.createRef();
 
-  const handleRoomSubmit = (e) => {
-    // e.preventDefault(); // event.persist();
-    console.log(e);
-    if (!handlePlayerRoom.current.value) setErrPlayerRoom(false);
-    handlePlayerRoom.current.value = e;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault(); // event.persist();
-
-    const name = handlePlayerName.current.value.trim();
-    const room = handlePlayerRoom.current.value.trim();
-
-    if (!name) setErrPlayerName(true); else setErrPlayerName(false);
-    if (!room) setErrPlayerRoom(true); else setErrPlayerRoom(false);
-
-    if (!name || !room) return;
-
-    reqLogin({
-      playerName: name,
-      playerRoom: room,
-    });
-
-    history.push(`/#${room}[${name}]`);
+  const handleOnClickRoom = (e) => {
+    refPlayerRoom.current.value = e;
   };
 
   return (
-    <LoginLayout
-      handleSubmit={handleSubmit}
-      handlePlayerName={handlePlayerName}
-      errPlayerName={errPlayerName}
-      handlePlayerRoom={handlePlayerRoom}
-      errPlayerRoom={errPlayerRoom}
-      rooms={rooms}
-      games={games}
-      handleRoomSubmit={handleRoomSubmit}
-    />
+    <Grid container justify="center" alignItems="center">
+      <Card className={classes.rootLogin}>
+        <Grid container justify="center">
+          <Grid item xs={12}>
+            <LoginForm
+              refPlayerName={refPlayerName}
+              refPlayerRoom={refPlayerRoom}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <LoginRooms onClickRoom={handleOnClickRoom} />
+          </Grid>
+        </Grid>
+      </Card>
+    </Grid>
   );
 };
 
-Login.propTypes = {
-  app: appStatePropTypes.isRequired,
-  reqLogin: PropTypes.func.isRequired,
-  history: ReactRouterPropTypes.history.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  app: state.app,
-});
-
-const mapDispatchToProps = {
-  reqLogin: actions.reqLogin,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;

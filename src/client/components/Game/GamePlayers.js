@@ -6,7 +6,6 @@ import Card from '@material-ui/core/Card';
 import { connect } from 'react-redux';
 
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 
 import Stage from './Stage';
@@ -14,17 +13,28 @@ import Stage from './Stage';
 const GameInfoMap = (playerOtherStage) => {
   if (playerOtherStage.length === 0) {
     return (
-      <div>
+      <Grid container item justify="center">
         No users in room
-      </div>
+      </Grid>
     );
   }
   return playerOtherStage.map((stage) => (
-    <Card style={{ padding: '2px' }}>
+    <Card style={{ margin: '2px' }}>
       <ListItem>
-        <ListItemText primary="Name" />
-        <ListItemText primary="Score - Rank #" />
-        <Stage stage={stage} type="other" />
+        <Grid container justify="center" alignItems="center" width="100%">
+          <Grid item xs={3}>
+            Name
+          </Grid>
+          <Grid item xs={3}>
+            Score
+          </Grid>
+          <Grid item xs={3}>
+            Rank
+          </Grid>
+          <Grid item xs={3}>
+            <Stage stage={stage} type="other" />
+          </Grid>
+        </Grid>
       </ListItem>
     </Card>
   ));
@@ -34,7 +44,7 @@ const GamePlayers = (props) => {
   const { playerOtherStage } = props;
 
   return (
-    <Grid container justify="center" style={{ width: '100%', border: '1px solid black' }}>
+    <Grid container justify="center">
       <Typography component="h1" variant="h5">
             Users in room
       </Typography>

@@ -25,11 +25,11 @@ const Game = (props) => {
   console.log('LINE FULL:', playerLineFull);
 
   return (
-    <Grid container justify="center" alignItems="center">
+    <Grid container justify="center">
       <Grid item xs={12} lg={7}>
         <GameBoard />
       </Grid>
-      <Grid item xs={12} lg={5} container alignItems="center" justify="center">
+      <Grid item xs={12} lg={5} container justify="center">
         <GamePlayers />
       </Grid>
     </Grid>

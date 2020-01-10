@@ -28,12 +28,12 @@ const GameBoard = (props) => {
   const handleSubmitStatus = () => reqStartGame({ playerName, playerRoom });
 
   return (
-    <Grid container justify="center" style={{ border: '1px solid black' }} onKeyDown={(e) => move(e)} tabIndex="0">
-      <Grid item xs={6} lg={9} container justify="center" alignItems="center" style={{ border: '1px solid black' }}>
+    <Grid container justify="center" onKeyDown={(e) => move(e)} tabIndex="0">
+      <Grid item xs={6} lg={9} container justify="center" alignItems="center">
         {playerStage && playerStage.length
         && <Stage tabIndex="0" stage={playerStage} />}
       </Grid>
-      <Grid item xs={6} lg={3} container justify="center" style={{ height: '30vh', border: '1px solid black' }}>
+      <Grid item xs={6} lg={3} container justify="center" style={{ height: '30vh' }}>
         {playerNextPiece && playerNextPiece.length
         && <Stage stage={playerNextPiece} /> }
         {playerOwner ? (

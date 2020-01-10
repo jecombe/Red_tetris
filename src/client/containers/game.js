@@ -1,75 +1,56 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
+import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 
-import * as actions from '../actions';
-import GameLayout from '../components/Game/GameLayout';
-import { playerStatePropTypes } from '../reducers/player';
+import GameBoard from '../components/Game/GameBoard';
+import GamePlayers from '../components/Game/GamePlayers';
 
 const Game = (props) => {
   const {
-    player,
-    reqStartGame,
-    reqSendPosition,
-    history,
-  } = props;
-  const {
     playerName,
     playerRoom,
-    playerStage,
-    playerOtherStage,
-    playerNextPiece,
-    playerGameOver,
     otherNotLosing,
     playerWin,
-    playerOwner,
     playerLineFull,
-  } = player;
+    history,
+  } = props;
 
-  if (!playerName || !playerRoom) {
-    history.push('/');
-  }
+  if (!playerName || !playerRoom) history.push('/');
 
-  const move = ({ keyCode }) => {
-    if (playerGameOver === false) {
-      reqSendPosition({ keyCode });
-    }
-  };
-
-  const handleSubmitStatus = () => reqStartGame({ playerName, playerRoom });
   if (otherNotLosing === 0) {
     console.log('END GAME', otherNotLosing, 'IS WINNER ?', playerWin);
   }
   console.log('LINE FULL:', playerLineFull);
+
   return (
-    <div tabIndex="0" onKeyDown={(e) => move(e)}>
-      <GameLayout
-        playerStage={playerStage}
-        playerOtherStage={playerOtherStage}
-        playerNextPiece={playerNextPiece}
-        handleSubmitStatus={handleSubmitStatus}
-        playerOwner={playerOwner}
-    
-      />
-    </div>
+    <Grid container justify="center" alignItems="center">
+      <Grid item xs={12} lg={7}>
+        <GameBoard />
+      </Grid>
+      <Grid item xs={12} lg={5} container alignItems="center" justify="center">
+        <GamePlayers />
+      </Grid>
+    </Grid>
   );
 };
 
 Game.propTypes = {
-  player: playerStatePropTypes.isRequired,
-  reqStartGame: PropTypes.func.isRequired,
-  reqSendPosition: PropTypes.func.isRequired,
+  playerName: PropTypes.string.isRequired,
+  playerRoom: PropTypes.string.isRequired,
+  otherNotLosing: PropTypes.number.isRequired,
+  playerWin: PropTypes.bool.isRequired,
+  playerLineFull: PropTypes.number.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  player: state.player,
+  playerName: state.player.playerName,
+  playerRoom: state.player.playerRoom,
+  otherNotLosing: state.player.otherNotLosing,
+  playerWin: state.player.playerWin,
+  playerLineFull: state.player.playerLineFull,
 });
 
-const mapDispatchToProps = {
-  reqStartGame: actions.reqStartGame,
-  reqSendPosition: actions.reqSendPosition,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Game);
+export default connect(mapStateToProps, null)(Game);

@@ -3,8 +3,8 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core/styles';
 
-import LoginForm from '../components/Login/LoginForm';
-import LoginRooms from '../components/Login/LoginRooms';
+import LoginForm from '../../components/Login/LoginForm';
+import LoginRooms from '../../components/Login/LoginRooms';
 
 const useStyles = makeStyles((theme) => ({
   rootLogin: {

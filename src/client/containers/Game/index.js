@@ -4,9 +4,10 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 
-import GameBoard from '../components/Game/GameBoard';
-import GamePlayers from '../components/Game/GamePlayers';
-  
+import GameSettings from './GameSettings';
+import GameChat from '../../components/Game/GameChat';
+import GameBoard from '../../components/Game/GameBoard';
+import GamePlayers from '../../components/Game/GamePlayers';
 
 const Game = (props) => {
 
@@ -28,10 +29,16 @@ const Game = (props) => {
 
   return (
     <Grid container justify="center">
-      <Grid item xs={12} lg={7}>
+      <Grid item xs={12} style={{ border: '1px solid black' }}>
+        <GameSettings />
+      </Grid>
+      <Grid item xs={12} lg={4}>
+        <GameChat />
+      </Grid>
+      <Grid item xs={12} lg={4}>
         <GameBoard />
       </Grid>
-      <Grid item xs={12} lg={5} container justify="center">
+      <Grid item xs={12} lg={4} container justify="center">
         <GamePlayers />
       </Grid>
     </Grid>

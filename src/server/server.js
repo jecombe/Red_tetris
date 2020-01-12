@@ -14,6 +14,4 @@ const server = app.listen({ host, port }, () => {
   io(server);
 });
 
-// Need to be move in app.listen callback ?
-
 module.exports = server;

@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 
 import params from '../../shared/params';
-import * as actions from '../actions';
+import actions from '../actions';
 
 import Header from './Header';
 import Login from './Login';
@@ -25,7 +25,7 @@ const App = (props) => {
   });
 
   return (
-    <Grid container direction="column" justify="space-between" style={{ height: '100vh' }}>
+    <Grid container direction="column" justify="space-between" style={{ height: '100vh', width: '100vw', backgroundColor: '#dcdde1'  }}>
       <Grid item>
         <Header />
       </Grid>
@@ -59,7 +59,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  clientConnect: actions.CLIENT_CONNECT,
+  clientConnect: actions.app.CLIENT_CONNECT,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

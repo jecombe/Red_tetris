@@ -2,12 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
+import Paper from '@material-ui/core/Paper';
 
-import * as actions from '../../actions';
+import actions from '../../actions';
 import Stage from './Stage';
 import GameStatus from './GameStatus';
-
-
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -61,19 +60,22 @@ const GameBoard = (props) => {
   const handleSubmitStatus = () => reqStartGame({ playerName, playerRoom });
 
   return (
+    <Paper style={{ padding: '10px', border: '1px solid black'}}>
     <Grid container justify="center" onKeyDown={(e) => move(e)} tabIndex="0">
-      <Grid item xs={6} lg={9} container justify="center" alignItems="center">
-        {playerStage && playerStage.length
-        && <Stage tabIndex="0" stage={playerStage} />}
-      </Grid>
-      <Grid item xs={6} lg={3} container justify="center" style={{ height: '30vh' }}>
-        {playerNextPiece && playerNextPiece.length
-        && <Stage stage={playerNextPiece} /> }
-        {playerOwner ? (
-          <GameStatus handleSubmit={handleSubmitStatus} />
-        ) : (0)}
-      </Grid>
+    <Grid item xs={6} lg={9} container justify="center" alignItems="center">
+      {playerStage && playerStage.length
+      && <Stage tabIndex="0" stage={playerStage} />}
     </Grid>
+    <Grid item xs={6} lg={3} container justify="center" style={{ height: '30vh' }}>
+      {playerNextPiece && playerNextPiece.length
+      && <Stage stage={playerNextPiece} /> }
+      {playerOwner ? (
+        <GameStatus handleSubmit={handleSubmitStatus} />
+      ) : (0)}
+    </Grid>
+  </Grid>
+    </Paper>
+
   );
 };
 
@@ -102,8 +104,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  reqStartGame: actions.reqStartGame,
-  reqSendPosition: actions.reqSendPosition,
+  reqStartGame: actions.player.reqStartGame,
+  reqSendPosition: actions.player.reqSendPosition,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameBoard);

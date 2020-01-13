@@ -4,7 +4,10 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 
-import GameSettings from './GameSettings';
+import GameSettingsConnect from './GameSettingsConnect';
+import GameBoardConnect from './GameBoardConnect';
+import GamePlayersConnect from './GamePlayersConnect';
+
 import GameChat from '../../components/Game/GameChat';
 import GameBoard from '../../components/Game/GameBoard';
 import GamePlayers from '../../components/Game/GamePlayers';
@@ -28,18 +31,15 @@ const Game = (props) => {
   console.log('LINE FULL:', playerLineFull);
 
   return (
-    <Grid container justify="center">
-      <Grid item xs={12} style={{ border: '1px solid black' }}>
-        <GameSettings />
+    <Grid container justify="center" spacing={2}>
+      <Grid item xs={12} lg={4}>
+        <GameSettingsConnect />
       </Grid>
       <Grid item xs={12} lg={4}>
-        <GameChat />
+        <GameBoardConnect />
       </Grid>
       <Grid item xs={12} lg={4}>
-        <GameBoard />
-      </Grid>
-      <Grid item xs={12} lg={4} container justify="center">
-        <GamePlayers />
+        <GamePlayersConnect />
       </Grid>
     </Grid>
   );

@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
+import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
-import { connect } from 'react-redux';
-
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 
@@ -44,16 +43,18 @@ const GamePlayers = (props) => {
   const { playerOtherStage } = props;
 
   return (
-    <Grid container justify="center">
-      <Typography component="h1" variant="h5">
-            Users in room
-      </Typography>
-      <Grid item xs={12} style={{ maxHeight: '50vh', overflow: 'auto', width: '100%' }}>
-        <List style={{ maxHeight: '100%' }}>
-          {GameInfoMap(playerOtherStage)}
-        </List>
+    <Paper>
+      <Grid container justify="center">
+        <Typography component="h1" variant="h5">
+              Users in room
+        </Typography>
+        <Grid item xs={12} style={{ maxHeight: '50vh', overflow: 'auto', width: '100%' }}>
+          <List style={{ maxHeight: '100%' }}>
+            {GameInfoMap(playerOtherStage)}
+          </List>
+        </Grid>
       </Grid>
-    </Grid>
+    </Paper>
   );
 };
 
@@ -61,8 +62,4 @@ GamePlayers.propTypes = {
   playerOtherStage: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  playerOtherStage: state.player.playerOtherStage,
-});
-
-export default connect(mapStateToProps, null)(GamePlayers);
+export default GamePlayers;

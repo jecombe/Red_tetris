@@ -8,12 +8,10 @@ import GameSettingsConnect from './GameSettingsConnect';
 import GameBoardConnect from './GameBoardConnect';
 import GamePlayersConnect from './GamePlayersConnect';
 
-import GameChat from '../../components/Game/GameChat';
 import GameBoard from '../../components/Game/GameBoard';
 import GamePlayers from '../../components/Game/GamePlayers';
 
 const Game = (props) => {
-
   const {
     playerName,
     playerRoom,

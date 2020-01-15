@@ -29,22 +29,20 @@ const GameSettingsBar = (props) => {
           Game Settings
         </Typography>
       </Grid>
-      <Paper>
-        <Grid item xs={8} container direction="column" justify="center" spacing>
-          <Grid item xs={6}>
-            <InputLabel htmlFor="my-input">Email address</InputLabel>
-            <GameInput
-              label="gravity"
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <InputLabel htmlFor="my-input">Gravity</InputLabel>
-            <GameInput
-              label={playerDropTime}
-            />
-          </Grid>
+      <Grid item xs={8} container direction="column" justify="center" spacing>
+        <Grid item xs={6}>
+          <InputLabel htmlFor="my-input">Email address</InputLabel>
+          <GameInput
+            label="gravity"
+          />
         </Grid>
-      </Paper>
+        <Grid item xs={6}>
+          <InputLabel htmlFor="my-input">Gravity</InputLabel>
+          <GameInput
+            label={playerDropTime}
+          />
+        </Grid>
+      </Grid>
       <Grid item xs={4}>
         <GameButton
           handleSubmit={handleStart}

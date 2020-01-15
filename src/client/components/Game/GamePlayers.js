@@ -43,18 +43,16 @@ const GamePlayers = (props) => {
   const { playerOtherStage } = props;
 
   return (
-    <Paper>
-      <Grid container justify="center">
-        <Typography component="h1" variant="h5">
-              Users in room
-        </Typography>
-        <Grid item xs={12} style={{ maxHeight: '50vh', overflow: 'auto', width: '100%' }}>
-          <List style={{ maxHeight: '100%' }}>
-            {GameInfoMap(playerOtherStage)}
-          </List>
-        </Grid>
+    <Grid container justify="center">
+      <Typography component="h2" variant="h5">
+            Users in room
+      </Typography>
+      <Grid item xs={12} style={{ maxHeight: '50vh', overflow: 'auto', width: '100%' }}>
+        <List style={{ maxHeight: '100%' }}>
+          {GameInfoMap(playerOtherStage)}
+        </List>
       </Grid>
-    </Paper>
+    </Grid>
   );
 };
 

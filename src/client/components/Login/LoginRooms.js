@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginGamesMap = (games, onClickRoom) => {
+const LoginGamesMap = (games, handleSubmitRoom) => {
   if (Object.entries(games).length === 0
       && games.constructor === Object) {
     return (
@@ -31,7 +31,7 @@ const LoginGamesMap = (games, onClickRoom) => {
       button
       value={key}
       key={key}
-      onClick={() => onClickRoom(key)}
+      onClick={() => handleSubmitRoom(key)}
     >
       <ListItemText primary={`${games[key].roomName}`} secondary={`Owned by ${games[key].owner}`} />
       <ListItemText primary="Game not started." />
@@ -41,17 +41,17 @@ const LoginGamesMap = (games, onClickRoom) => {
 };
 
 const LoginRooms = (props) => {
-  const { games, onClickRoom } = props;
+  const { games, handleSubmitRoom } = props;
   const classes = useStyles();
 
   return (
     <Grid container direction="row" justify="center" className={classes.roomRow}>
       <Typography component="h1" variant="h5">
-        Available rooms
+        Rooms
       </Typography>
       <Grid item xs={12} style={{ maxHeight: 250, overflow: 'auto' }}>
         <List style={{ maxHeight: '100%' }}>
-          {LoginGamesMap(games, onClickRoom)}
+          {LoginGamesMap(games, handleSubmitRoom)}
         </List>
       </Grid>
     </Grid>
@@ -60,7 +60,7 @@ const LoginRooms = (props) => {
 
 LoginRooms.propTypes = {
   games: PropTypes.object.isRequired,
-  onClickRoom: PropTypes.func.isRequired,
+  handleSubmitRoom: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -68,3 +68,44 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, null)(LoginRooms);
+
+// import React from 'react';
+
+// const people = [
+//   'Siri',
+//   'Alexa',
+//   'Google',
+//   'Facebook',
+//   'Twitter',
+//   'Linkedin',
+//   'Sinkedin',
+// ];
+
+// const FilteredList = () => {
+//   const [searchTerm, setSearchTerm] = React.useState('');
+//   const [searchResults, setSearchResults] = React.useState([]);
+//   const handleChange = (e) => {
+//     setSearchTerm(e.target.value);
+//   };
+//   React.useEffect(() => {
+//     const results = people.filter((person) => person.toLowerCase().includes(searchTerm));
+//     setSearchResults(results);
+//   }, [searchTerm]);
+//   return (
+//     <div className="App">
+//       <input
+//         type="text"
+//         placeholder="Search"
+//         value={searchTerm}
+//         onChange={handleChange}
+//       />
+//       <ul>
+//         {searchResults.map((item) => (
+//           <li>{item}</li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// };
+
+// export default FilteredList;

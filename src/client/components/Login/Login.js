@@ -6,8 +6,6 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,11 +23,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginForm = (props) => {
+const Login = (props) => {
   const { refPlayerName, refPlayerRoom, handleSubmit } = props;
   const classes = useStyles();
-
-  const roomValue = (refPlayerRoom.value ? refPlayerRoom.value : ' ');
 
   return (
     <Container component="main" maxWidth="xs">
@@ -39,35 +35,24 @@ const LoginForm = (props) => {
           Login
         </Typography>
         <form className={classes.form}>
-          <FormControl className={classes.form}>
-            <InputLabel shrink htmlFor="bootstrap-input">
-              Enter a username
-            </InputLabel>
-            <TextField
-              autoFocus
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              id="username"
-              name="username"
-              inputRef={refPlayerName}
-            />
-          </FormControl>
-
-          <FormControl className={classes.form}>
-            <InputLabel shrink htmlFor="bootstrap-input">
-              Enter a room
-            </InputLabel>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              fullWidth
-              id="room"
-              name="room"
-              inputRef={refPlayerRoom}
-            />
-          </FormControl>
-
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="username"
+            name="username"
+            label="Enter a username"
+            inputRef={refPlayerName}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="room"
+            name="room"
+            label="Enter a room"
+            inputRef={refPlayerRoom}
+          />
           <Button
             type="submit"
             fullWidth
@@ -84,7 +69,7 @@ const LoginForm = (props) => {
   );
 };
 
-LoginForm.propTypes = {
+Login.propTypes = {
   refPlayerName: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
@@ -97,4 +82,4 @@ LoginForm.propTypes = {
 };
 
 
-export default LoginForm;
+export default Login;

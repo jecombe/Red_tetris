@@ -30,7 +30,6 @@ export const resObjPlayer = (payload) => ({
 });
 
 export const updateStage = (payload) => ({
-
   type: ev.STAGE,
   payload: {
     playerStage: payload.newStage,

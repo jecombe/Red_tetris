@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import { makeStyles } from '@material-ui/core/styles';
@@ -31,6 +30,8 @@ const Login = (props) => {
   const refPlayerName = React.createRef();
   const refPlayerRoom = React.createRef();
 
+  console.log(history);
+
   const [errPlayerName, setErrPlayerName] = useState(false);
   const [errPlayerRoom, setErrPlayerRoom] = useState(false);
 
@@ -42,6 +43,7 @@ const Login = (props) => {
     e.preventDefault();
     const name = refPlayerName.current.value.trim();
     const room = refPlayerRoom.current.value.trim();
+    console.log(name, room);
 
     if (!name) setErrPlayerName(true); else setErrPlayerName(false);
     if (!room) setErrPlayerRoom(true); else setErrPlayerRoom(false);
@@ -58,7 +60,6 @@ const Login = (props) => {
 
   return (
     <Container component="main" maxWidth="md">
-      <CssBaseline />
       <Card className={classes.rootLogin}>
         <Grid container justify="center" alignItems="center">
           <Grid container justify="center">

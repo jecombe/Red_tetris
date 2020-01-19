@@ -2,9 +2,9 @@ import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { withRouter } from 'react-router-dom';
 
-import HeaderHomeButton from '../../components/Header/HeaderHomeButton';
+import HeaderHome from '../../components/Header/HeaderHome';
 
-const HeaderHome = (props) => {
+const HeaderHomeConnect = (props) => {
   const {
     history,
   } = props;
@@ -18,12 +18,12 @@ const HeaderHome = (props) => {
   };
 
   return (
-    <HeaderHomeButton handleOnClick={handleHomeButton} />
+    <HeaderHome handleOnClick={handleHomeButton} />
   );
 };
 
-HeaderHome.propTypes = {
+HeaderHomeConnect.propTypes = {
   history: ReactRouterPropTypes.history.isRequired,
 };
 
-export default withRouter(HeaderHome);
+export default withRouter(HeaderHomeConnect);

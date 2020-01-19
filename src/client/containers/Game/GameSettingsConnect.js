@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import actions from '../../actions';
-import GameSettingsBar from '../../components/Game/GameSettingsBar';
+import GameSettings from '../../components/Game/GameSettings';
 
 const GameSettingsConnect = (props) => {
   const {
@@ -16,11 +16,15 @@ const GameSettingsConnect = (props) => {
 
   // if game settings need playerName / playerRoom should be moved
   const handleStart = () => reqStartGame({ playerName, playerRoom });
+  const handleSettings = () => {
+    console.log('Settings handle');
+  };
 
   return (
-    <GameSettingsBar
+    <GameSettings
       playerOwner={playerOwner}
       playerDropTime={playerDropTime}
+      handleSettings={handleSettings}
       handleStart={handleStart}
     />
   );

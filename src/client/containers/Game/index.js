@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
+import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
+
+import actions from '../../actions';
 
 import GameSettingsConnect from './GameSettingsConnect';
 import GameBoardConnect from './GameBoardConnect';
 import GamePlayersConnect from './GamePlayersConnect';
-
-import GameBoard from '../../components/Game/GameBoard';
-import GamePlayers from '../../components/Game/GamePlayers';
+import GameChatConnect from './GameChatConnect';
 
 const Game = (props) => {
   const {
@@ -18,10 +19,21 @@ const Game = (props) => {
     otherNotLosing,
     playerWin,
     playerLineFull,
+    reqLogin,
     history,
   } = props;
 
-  if (!playerName || !playerRoom) history.push('/');
+  if (!playerName || !playerRoom) {
+    const room = history.location.pathname.split('/')[1].split('[')[0].trim();
+    const name = history.location.pathname.split('/')[1].split('[')[1].split(']')[0].trim();
+
+    if (!room || !name) history.push('/');
+
+    reqLogin({
+      playerName: name,
+      playerRoom: room,
+    });
+  }
 
   if (otherNotLosing === 0) {
     console.log('END GAME', otherNotLosing, 'IS WINNER ?', playerWin);
@@ -29,17 +41,24 @@ const Game = (props) => {
   console.log('LINE FULL:', playerLineFull);
 
   return (
-    <Grid container justify="center" spacing={2}>
-      <Grid item xs={12} lg={4}>
-        <GameSettingsConnect />
+    <Paper>
+      <Grid container justify="center" spacing={2}>
+        <Grid item xs={12} lg={4} container>
+          <Grid item xs={12}>
+            <GameSettingsConnect />
+          </Grid>
+          <Grid item xs={12}>
+            <GameChatConnect />
+          </Grid>
+        </Grid>
+        <Grid item xs={12} lg={4}>
+          <GameBoardConnect />
+        </Grid>
+        <Grid item xs={12} lg={4}>
+          <GamePlayersConnect />
+        </Grid>
       </Grid>
-      <Grid item xs={12} lg={4}>
-        <GameBoardConnect />
-      </Grid>
-      <Grid item xs={12} lg={4}>
-        <GamePlayersConnect />
-      </Grid>
-    </Grid>
+    </Paper>
   );
 };
 
@@ -49,6 +68,7 @@ Game.propTypes = {
   otherNotLosing: PropTypes.number.isRequired,
   playerWin: PropTypes.bool.isRequired,
   playerLineFull: PropTypes.number.isRequired,
+  reqLogin: PropTypes.func.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
 };
 
@@ -60,4 +80,8 @@ const mapStateToProps = (state) => ({
   playerLineFull: state.player.playerLineFull,
 });
 
-export default connect(mapStateToProps, null)(Game);
+const mapDispatchToProps = {
+  reqLogin: actions.app.reqLogin,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);

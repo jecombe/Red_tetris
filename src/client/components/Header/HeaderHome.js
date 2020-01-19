@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
 });
 
-const HeaderHomeButton = (props) => {
+const HeaderHome = (props) => {
   const { handleOnClick } = props;
   const classes = useStyles();
 
@@ -32,8 +32,8 @@ const HeaderHomeButton = (props) => {
   );
 };
 
-HeaderHomeButton.propTypes = {
+HeaderHome.propTypes = {
   handleOnClick: PropTypes.func.isRequired,
 };
 
-export default HeaderHomeButton;
+export default HeaderHome;

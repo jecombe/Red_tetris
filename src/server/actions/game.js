@@ -71,7 +71,6 @@ export const startGame = (redGame, data, id) => {
     newStage,
     nextPiece: player.nextPiece,
     otherNotLosing: player.notLosing,
- 
   };
 
   return payload;
@@ -81,7 +80,7 @@ export const positionTetro = (redGame, data, id) => {
   const { keyCode } = data;
 
   const player = redGame.getPlayer(id);
-  const game = redGame.getGame(player.roomAssociate);
+  const game = redGame.getGame(player.room);
   /* --- Check Game Over --- */
   if (player.getLosing() === false) {
     if (keyCode === 40) {

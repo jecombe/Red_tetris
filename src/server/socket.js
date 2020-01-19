@@ -19,22 +19,30 @@ const io = (server) => {
 
   // socket CONNECT
   socketServer.on(ev.CONNECT, (socketClient) => {
-    logger.info(`Client ${socketClient.id} connected.`);
-
-    redGame.setSockets(socketServer, socketClient);
-
-    // socket DISCONNECT
-    socketClient.on(ev.DISCONNECT, () => {
-      logger.info(`Client ${socketClient.id} disconnected.`);
-    });
-
-    // socket ERROR
-    socketClient.on(ev.ERROR, () => {
-      logger.error(`Client ${socketClient.id} error.`);
-    });
-
-    ioEngine(redGame);
+    ioEngine(
+      {
+        server: socketServer,
+        client: socketClient,
+      },
+      redGame,
+    );
   });
+  //   logger.info(`Client ${socketClient.id} connected.`);
+
+  //   redGame.setSockets(socketServer, socketClient);
+
+  //   // socket DISCONNECT
+  //   socketClient.on(ev.DISCONNECT, () => {
+  //     logger.info(`Client ${socketClient.id} disconnected.`);
+  //   });
+
+  //   // socket ERROR
+  //   socketClient.on(ev.ERROR, () => {
+  //     logger.error(`Client ${socketClient.id} error.`);
+  //   });
+
+  //   ioEngine(redGame);
+  // });
 };
 
 module.exports = io;

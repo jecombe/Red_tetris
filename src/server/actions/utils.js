@@ -25,7 +25,7 @@ export const objGaming = (onlineGame, roomActual) => {
 export const objUser = (userList, id) => {
   let objPlayer;
   userList.find((obj) => {
-    if (obj.login === id) {
+    if (obj.username === id) {
       objPlayer = obj;
       return objPlayer;
     }

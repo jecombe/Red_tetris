@@ -1,21 +1,25 @@
 import { createStage, createStagePiece } from '../stage/utils';
 
 export default class Player {
-  constructor(socketId, username, room) {
-    this.idSocket = socketId;
-    this.login = username;
+  constructor(idSocket) {
+    this.idSocket = idSocket;
+    this.username = '';
+    this.room = '';
     this.owner = false;
-    this.stage = createStage();
     this.losing = false;
-    this.roomAssociate = room;
+    this.rank = 0;
+    this.score = 0;
+
+    this.stage = createStage();
+    this.nextPiece = createStagePiece();
     this.pos = { x: 0, y: 0 };
     this.pos1 = { x: 0, y: 0 };
     this.collided = false;
+    this.lineFull = 0;
+    this.mallus = 0;
     this.piece = null;
     this.index = 0;
-    this.nextPiece = createStagePiece();
-    this.mallus = 0;
-    this.lineFull = 0;
+
     this.otherStage = [];
     this.peopleSpectre = [];
     this.notLosing = -1;
@@ -27,15 +31,23 @@ export default class Player {
   }
 
   getLogin() {
-    return this.login;
+    return this.username;
   }
 
   getIdSocket() {
     return this.idSocket;
   }
 
-  getroomAssociate() {
-    return this.roomAssociate;
+  getroom() {
+    return this.room;
+  }
+
+  getStage() {
+    return this.stage;
+  }
+
+  getPlayerOtherStage() {
+    return this.otherStage;
   }
 
   getNextPiece() {
@@ -58,8 +70,12 @@ export default class Player {
     return this.peopleSpectre;
   }
 
-  setLogin(login) {
-    this.login = login;
+  setPlayerName(playerName) {
+    this.username = playerName;
+  }
+
+  setRoomName(roomName) {
+    this.room = roomName;
   }
 
   setOwner() {

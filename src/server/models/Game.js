@@ -1,8 +1,8 @@
 import Piece from './Piece';
 
 export default class Game {
-  constructor(username, roomName) {
-    this.owner = username;
+  constructor(playerName, roomName) {
+    this.owner = playerName;
     this.roomName = roomName;
     this.users = [];
     this.gameStart = false;
@@ -23,6 +23,10 @@ export default class Game {
 
   getUserInGame() {
     return this.users;
+  }
+
+  getPlayerByPlayerName(playerName) {
+    return this.users.find((x) => x.username === playerName);
   }
 
   getPieceStart() {

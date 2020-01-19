@@ -2,7 +2,7 @@
 export const STAGE_WIDTH = 10;
 export const STAGE_HEIGHT = 20;
 
-export const STAGE_WIDTH_PIECE = 10;
+export const STAGE_WIDTH_PIECE = 7;
 export const STAGE_HEIGHT_PIECE = 4;
 
 export const createStage = () => Array.from(Array(STAGE_HEIGHT), () => new Array(STAGE_WIDTH).fill([0, 'clear']));

@@ -28,6 +28,7 @@ function useInterval(callback, delay) {
 
 const GameBoardConnect = (props) => {
   const {
+    playerRoom,
     playerStage,
     playerNextPiece,
     otherNotLosing,
@@ -39,13 +40,13 @@ const GameBoardConnect = (props) => {
   useInterval(() => {
     if (otherNotLosing > -1) {
       const keyCode = 40;
-      reqSendPosition({ keyCode });
+      reqSendPosition({ keyCode, playerRoom });
     }
   }, playerDropTime);
 
   const move = ({ keyCode }) => {
     if (playerGameOver === false) {
-      reqSendPosition({ keyCode });
+      reqSendPosition({ keyCode, playerRoom });
     }
   };
 
@@ -59,6 +60,7 @@ const GameBoardConnect = (props) => {
 };
 
 GameBoardConnect.propTypes = {
+  playerRoom: PropTypes.string.isRequired,
   playerStage: PropTypes.arrayOf(PropTypes.string).isRequired,
   playerNextPiece: PropTypes.arrayOf(PropTypes.string).isRequired,
   playerGameOver: PropTypes.bool.isRequired,
@@ -68,6 +70,7 @@ GameBoardConnect.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+  playerRoom: state.player.playerRoom,
   playerStage: state.player.playerStage,
   playerNextPiece: state.player.playerNextPiece,
   playerGameOver: state.player.playerGameOver,

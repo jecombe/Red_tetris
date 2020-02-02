@@ -41,24 +41,22 @@ const Game = (props) => {
   console.log('LINE FULL:', playerLineFull);
 
   return (
-    <Paper>
-      <Grid container justify="center" spacing={2}>
-        <Grid item xs={12} lg={4} container>
-          <Grid item xs={12}>
-            <GameSettingsConnect />
-          </Grid>
-          <Grid item xs={12}>
-            <GameChatConnect />
-          </Grid>
+    <Grid container justify="space-around">
+      <Grid item xs={12} lg={3} container justify="center">
+        <Grid item xs={12}>
+          <GameSettingsConnect />
         </Grid>
-        <Grid item xs={12} lg={4}>
-          <GameBoardConnect />
-        </Grid>
-        <Grid item xs={12} lg={4}>
-          <GamePlayersConnect />
+        <Grid item xs={12}>
+          <GameChatConnect />
         </Grid>
       </Grid>
-    </Paper>
+      <Grid item xs={12} lg={3}>
+        <GameBoardConnect />
+      </Grid>
+      <Grid item xs={12} lg={3}>
+        <GamePlayersConnect />
+      </Grid>
+    </Grid>
   );
 };
 

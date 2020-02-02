@@ -10,8 +10,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-
+import CardHeader from '@material-ui/core/CardHeader';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
 import Stage from './Stage';
+import Divider from '@material-ui/core/Divider';
 
 const GameInfoMap = (playerOtherStage) => {
   if (playerOtherStage.length === 0) {
@@ -66,28 +69,20 @@ const GamePlayers = (props) => {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs">
-      <div className={classes.root}>
-        <Typography component="h2" variant="h5">
-            Users in room
-        </Typography>
+    <Card>
+      <CardHeader
+        title="Players in room"
+        subheader={`There is ${playerOtherStage.length} players`}
+      />
+      <Divider light />
+      <CardContent>
         <Grid item xs={12} style={{ maxHeight: '50vh', overflow: 'auto', width: '100%' }}>
-            <List style={{ maxHeight: '100%' }}>
-              {GameInfoMap(playerOtherStage)}
-            </List>
-            </Grid>
-      </div>
-      <div className={classes.root}>
-      <Typography component="h2" variant="h5">
-          Users in room
-      </Typography>
-      <Grid item xs={12} style={{ maxHeight: '50vh', overflow: 'auto', width: '100%' }}>
           <List style={{ maxHeight: '100%' }}>
             {GameInfoMap(playerOtherStage)}
           </List>
-          </Grid>
-    </div>
-    </Container>
+        </Grid>
+      </CardContent>
+    </Card>
   );
 };
 

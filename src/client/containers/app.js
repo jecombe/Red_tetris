@@ -33,8 +33,7 @@ const App = (props) => {
       <Grid item>
         <Header />
       </Grid>
-      <Grid item>
-        <Container>
+      <Grid item style={{ height: '80vh' }}>
           { connected === false || isLoading === true
             ? <Loader />
             : (
@@ -44,7 +43,6 @@ const App = (props) => {
                 <Route component={Error404} />
               </Switch>
             )}
-        </Container>
       </Grid>
       <Grid item>
         <Footer />

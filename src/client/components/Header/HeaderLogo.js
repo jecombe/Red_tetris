@@ -5,7 +5,7 @@ import logo from '../../img/header3.png';
 
 const HeaderLogo = () => (
   <Grid container justify="center" alignItems="center">
-    <img src={logo} width="50%" alt="Logo" />
+    <img src={logo} width="40%" alt="Logo" />
   </Grid>
 );
 

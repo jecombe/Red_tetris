@@ -1,30 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
 import RedInput from '../RedInput';
 import RedButton from '../RedButton';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginTop: theme.spacing(2),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+import Divider from '@material-ui/core/Divider';
 
 const GameSettings = (props) => {
   const {
@@ -33,46 +15,37 @@ const GameSettings = (props) => {
     handleStart,
     handleSettings,
   } = props;
-  const classes = useStyles();
 
-  const isAvailabe = false; // (playerOwner === false ? ' not ' : '');
+  const isOwner = (playerOwner === false ? ' not ' : ' ');
 
   return (
-    <Container component="main" maxWidth="xs">
-      <div className={classes.root}>
-        <Typography component="h1" variant="h5">
-          Game settings
-        </Typography>
-        <Box className={classes.form}>
-          { !isAvailabe
-            ? (
-              <Typography variant="body2">
-              Not available
-              </Typography>
-            )
-            : (
-              <div>
-                <RedInput
-                  label="playerDropTime"
-                  name="playerDropTime"
-                  defaultValue={playerDropTime}
-                  disabled={!playerOwner}
-                />
-                <RedButton
-                  name="Set settings"
-                  handleSubmit={handleSettings}
-                  disabled={!playerOwner}
-                />
-              </div>
-            )}
-        </Box>
+    <Card>
+      <CardHeader
+        title="Game settings"
+        subheader={`You are${isOwner}the owner`}
+      />
+      <Divider light />
+      <CardContent>
+        <RedInput
+          label="playerDropTime"
+          name="playerDropTime"
+          defaultValue={playerDropTime}
+          disabled
+        />
+      </CardContent>
+      <CardActions>
+        <RedButton
+          name="Set settings"
+          handleSubmit={handleSettings}
+          disabled
+        />
         <RedButton
           name="Start Game"
           handleSubmit={handleStart}
           disabled={!playerOwner}
         />
-      </div>
-    </Container>
+      </CardActions>
+    </Card>
   );
 };
 

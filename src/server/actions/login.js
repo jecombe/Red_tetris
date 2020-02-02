@@ -1,6 +1,54 @@
-import Player from '../models/Player';
-import Game from '../models/Game';
+
 import { emitterStageOther } from '../emitter/emitter';
+import logger from '../utils/logger';
+import ev from '../../shared/events';
+
+export const login = (socket, data, redGame) => {
+  const { id } = socket;
+  const { username, roomActual } = data;
+
+  logger.info(`Client ${socket.id} request ${ev.req_LOGIN}`);
+
+  redGame.loginPlayer(id, username, roomActual);
+
+  if (!redGame.getPlayer(id)) {
+    logger.error('ioDispatchLogin: Error to login.');
+
+    socket.emit(ev.res_LOGIN, { status: 400 });
+    return;
+  }
+  socket.emit(ev.res_LOGIN, { status: 200 });
+
+  logger.info(`Player join socket room ${redGame.getPlayer(id).room}.`);
+  socket.join(redGame.getPlayer(id).room);
+
+  logger.info(`Sending event ${ev.res_ROOMS} to all.`);
+  redGame.socketServer.emit(ev.res_ROOMS, {
+    games: redGame.getGames(),
+  });
+
+  logger.info(`Sending event ${ev.OBJ_PLAYER} to client.`);
+  redGame.socketServer.to(`${socket.id}`).emit(ev.OBJ_PLAYER, {
+    playerStage: redGame.getPlayer(id).getStage(),
+    playerNextPiece: redGame.getPlayer(id).getNextPiece(),
+    playerOtherStage: redGame.getPlayer(id).getPlayerOtherStage(),
+    playerOwner: redGame.getPlayer(id).isOwner(),
+  });
+
+  logger.info(`Sending event ${ev.res_BELLO} to all clients in room ${redGame.getPlayer(id).room}.`);
+  redGame.socketServer.to(`${redGame.getPlayer(id).room}`).emit(ev.res_BELLO, {
+    message: 'Only players in room can see that.',
+  });
+};
+
+export const rooms = (socket, data, redGame) => {
+  const { message } = data;
+  logger.info(`client says: ${message}`);
+  const data4Client = {
+    status: 200, message: 'SERVER ROOMS', games: redGame.getGames(),
+  };
+  socket.emit(ev.res_ROOMS, data4Client);
+};
 
 
 const userInGameExceptActua = (userTab, userActual) => {
@@ -27,25 +75,6 @@ const getAllStagePlayers = (objGame, redGame, objPlayer) => {
   }
 };
 
-export const login = (redGame, data, id) => {
-  const { username, roomActual } = data;
-  const player = new Player(id, username, roomActual);
-  let game;
-
-  game = redGame.getGame(roomActual);
-  if (!game) {
-    game = new Game(username, roomActual);
-    player.setOwner();
-    redGame.setGame(game);
-  }
-  game.setPlayer(player);
-  redGame.setPlayer(player);
-
-  getAllStagePlayers(game, redGame, player);
-
-
-  return player;
-};
 
 const replaceOtherStage = (objPlayer, objOther) => {
   const index = objOther.peopleSpectre.indexOf(objPlayer.login);
@@ -65,10 +94,9 @@ const dispatchStage = (objPlayer, redGame, game) => {
   }
 };
 
-export const logout = (redGame, id) => {
-  const player = redGame.getPlayer(id);
-  if (!player) return;
-
+export const logout = (socket, redGame) => {
+  // if (!player) return;
+  const player = redGame.getPlayer(socket.id);
   const game = redGame.getGame(player.roomAssociate);
 
 

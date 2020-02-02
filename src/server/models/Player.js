@@ -1,8 +1,9 @@
 import { createStage, createStagePiece } from '../stage/utils';
+import { flushUpdate } from '../stage/stage';
 
 export default class Player {
-  constructor(idSocket) {
-    this.idSocket = idSocket;
+  constructor(socket) {
+    this.id = socket;
     this.username = '';
     this.room = '';
     this.owner = false;
@@ -35,7 +36,7 @@ export default class Player {
   }
 
   getIdSocket() {
-    return this.idSocket;
+    return this.id;
   }
 
   getroom() {
@@ -165,5 +166,30 @@ export default class Player {
 
   setWin() {
     this.win = true;
+  }
+
+  initPlayer(len, pieceStart, nextPiece, newStage) {
+    this.setPositionNull();
+    this.setNoLosing(len);
+    this.setPlayerNull();
+    this.setPiece(pieceStart);
+    this.setPosition(10 / 2 - 2, 0);
+    this.setNextPiece(nextPiece);
+    this.setStage(newStage);
+  }
+
+  updatePlayerStage(piece, newStage, obj) {
+    piece.form.shape.forEach((row, y) => {
+      row.forEach((value, x) => {
+        if (value !== 0) {
+          newStage[y + obj.pos.y][x + obj.pos.x] = [
+            value,
+            `${obj.collided ? 'merged' : 'clear'}`,
+          ];
+        }
+      });
+    });
+
+    return newStage;
   }
 }

@@ -24,3 +24,11 @@ export const updateStage = (piece, newStage, obj) => {
   });
   return newStage;
 };
+
+
+// export const flushUpdate = (piece, obj, stage) => {
+
+//   const newStage = stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
+
+//   updateStage(piece, newStage, obj);
+// }

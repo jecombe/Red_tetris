@@ -2,103 +2,39 @@ import socketIO from 'socket.io';
 
 import ev from '../shared/events';
 import logger from './utils/logger';
-import ioEngine from './socket/';
-
 import IoGame from './models/IoGame';
+import { socketConnect, socketDisconnect, socketError } from './actions/socket';
+import { login, logout, rooms } from './actions/login';
+import { startGame, positionTetro } from './actions/game';
+import { message } from './actions/chat';
 
 const io = (server) => {
-  const socketServer = socketIO(
-    server,
-    {
-      pingInterval: 5000,
-      pingTimeout: 15000,
-    },
-  );
-
-  const redGame = new IoGame();
-
-  // socket CONNECT
-  socketServer.on(ev.CONNECT, (socketClient) => {
-    ioEngine(
-      {
-        server: socketServer,
-        client: socketClient,
-      },
-      redGame,
-    );
+  const socketServer = socketIO(server, {
+    path: '/',
+    serveClient: true,
+    // below are engine.IO options
+    pingInterval: 10000,
+    pingTimeout: 5000,
+    cookie: false,
   });
-  //   logger.info(`Client ${socketClient.id} connected.`);
 
-  //   redGame.setSockets(socketServer, socketClient);
+  const redGame = new IoGame(socketServer);
 
-  //   // socket DISCONNECT
-  //   socketClient.on(ev.DISCONNECT, () => {
-  //     logger.info(`Client ${socketClient.id} disconnected.`);
-  //   });
+  redGame.socketServer.on(ev.CONNECT, (socket) => {
+    socketConnect(socket, redGame);
 
-  //   // socket ERROR
-  //   socketClient.on(ev.ERROR, () => {
-  //     logger.error(`Client ${socketClient.id} error.`);
-  //   });
+    socket.on(ev.DISCONNECT, () => socketDisconnect(socket, redGame));
+    socket.on(ev.ERROR, () => socketError(socket, redGame));
 
-  //   ioEngine(redGame);
-  // });
+    socket.on(ev.req_LOGIN, (data) => login(socket, data, redGame));
+    socket.on(ev.req_ROOMS, (data) => rooms(socket, data, redGame));
+
+    socket.on(ev.START_GAME, (data) => startGame(socket, data, redGame));
+    socket.on(ev.POSITION_TETRO, (data) => positionTetro(socket, data, redGame));
+
+    socket.on(ev.req_ECHO, (data) => message(socket, data, redGame));
+    socket.on(ev.req_BELLO, (data) => message(socket, data, redGame));
+  });
 };
 
 module.exports = io;
-
-// import socketIO from 'socket.io';
-// import { actions } from './actions/eventActions';
-// import logger from './helpers/logger';
-// import { loginUser } from './handlers/player/createPlayer';
-
-// const CLIENT_STATUS = 'client/status';
-// const CLIENT_ROOMS = 'client/rooms';
-
-// const ioHandler = (server) => {
-//   const connections = [];
-//   const userlist = [];
-//   const rooms = [];
-
-//   const io = socketIO(server, {
-//     pingInterval: 5000,
-//     pingTimeout: 15000,
-//   });
-
-//   io.use((socket, next) => {
-//     connections.push(socket.id);
-//     const { id } = socket;
-//     logger.info('io-middleware:', { id });
-//     socket.emit(CLIENT_STATUS, {
-//       type: CLIENT_STATUS,
-//       connexion: true,
-//     });
-//     return next();
-//   });
-
-//   io.on('connection', (socket) => {
-//     const { id } = socket;
-
-//     logger.info('io-connect:', { id });
-
-//     socket.on('error', (err) => {
-//       logger.err('Socket err:', err);
-//     });
-
-//     socket.on('disconnect', (action) => {
-//       logger.info('Socket disconnected:', socket.id);
-//     });
-//   });
-// };
-
-// const socketHandler = (io, userlist, rooms) => {
-//   io.on('connection', (socket) => {
-//     io.emit('resRooms', {
-//       rooms,
-//     });
-//     /* --- Go to action dispatcher --- */
-//     actions(socket, userlist, rooms, io);
-//   });
-// };
-
-// export default ioHandler;

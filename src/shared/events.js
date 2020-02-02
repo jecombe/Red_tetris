@@ -1,12 +1,14 @@
 module.exports = {
   CONNECT: 'connect',
   DISCONNECT: 'disconnect',
+  RECONNECTING: 'reconnecting',
   ERROR: 'error',
 
-  CLIENT_CONNECT: 'CLIENT_CONNECT',
-  CLIENT_DISCONNECT: 'CLIENT_DISCONNECT',
+  SOCKET_ID: 'CLIENT',
+  SOCKET_CONNECT: 'CLIENT_CONNECT',
+  SOCKET_DISCONNECT: 'CLIENT_DISCONNECT',
 
-  LOGIN: 'login',
+  LOGIN: 'username',
   START_GAME: 'startGame',
   POSITION_TETRO: 'positionTetro',
   OBJ_PLAYER: 'objPlayer',
@@ -20,11 +22,11 @@ module.exports = {
   req_BELLO: '#bello',
   res_BELLO: '@bello',
 
-  req_ROOMS: '#rooms',
-  res_ROOMS: '@rooms',
+  req_ROOMS: 'req_ROOMS',
+  res_ROOMS: 'res_ROOMS',
 
-  req_LOGIN: '#login',
-  res_LOGIN: '@login',
+  req_LOGIN: 'req_LOGIN',
+  res_LOGIN: 'res_LOGIN',
 
   req_START_GAME: '#startGame',
   res_START_GAME: '@startGame',

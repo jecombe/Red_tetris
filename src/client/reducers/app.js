@@ -3,6 +3,12 @@ import ev from '../../shared/events';
 
 export const appState = {
   connected: false,
+  host: '',
+  port: 0,
+  error: false,
+  isLoading: false,
+  message: '',
+  logged: false,
   games: {},
 };
 
@@ -14,23 +20,36 @@ export const appStatePropTypes = PropTypes.shape({
 
 const appReducer = (state = appState, action) => {
   switch (action.type) {
-    // case actions.APP_STATE: {
-    //   const { connected } = action.payload;
-    //   return {
-    //     ...state,
-    //     connected,
-    //   };
-    // }
-    case ev.CLIENT_CONNECT: {
+    case ev.SOCKET_CONNECT: {
+      const { connected, host, port } = action.payload;
       return {
         ...state,
-        connected: true,
+        connected,
+        host,
+        port,
       };
     }
-    case ev.DISCONNECT: {
+    case ev.SOCKET_DISCONNECT: {
+      const { connected } = action.payload;
       return {
         ...state,
-        connected: false,
+        connected,
+      };
+    }
+    case ev.req_LOGIN: {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
+    case ev.res_LOGIN: {
+      const { error, message, logged } = action.payload;
+      return {
+        ...state,
+        error,
+        isLoading: false,
+        message,
+        logged,
       };
     }
     case ev.res_ROOMS: {

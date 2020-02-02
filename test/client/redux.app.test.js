@@ -1,66 +1,85 @@
 import ev from '../../src/shared/events';
-import * as actions from '../../src/client/actions';
-import reducer from '../../src/client/reducers/app';
+import actions from '../../src/client/actions';
+import reducer, { appState } from '../../src/client/reducers/app';
+import { createStage, createStagePiece } from '../../src/server/stage/utils';
 
 describe('# Redux Tests - App', () => {
-  describe('## Actions Creators - App', () => {
-    it('should create action - APP_STATUS', () => {
-      const payload = { connected: true };
-      const expectedAction = {
-        type: actions.APP_STATE,
-        payload,
-      };
-      expect(actions.CLIENT_STATE(payload)).toEqual(expectedAction);
-    });
+  const initialState = appState;
 
-    it('should create action - res_ROOMS', () => {
-      const payload = { rooms: [] };
-      const expectedAction = {
-        type: ev.res_ROOMS,
-        payload,
-      };
-      expect(actions.resRooms(payload)).toEqual(expectedAction);
-    });
+  it('should return the initial state', () => {
+    expect(reducer(undefined, {})).toEqual(initialState);
   });
 
-  describe('## App Actions Reducers - App', () => {
-    const initialState = {
-      connected: false,
-      rooms: [],
-    };
-
-    it('should return the initial state', () => {
-      expect(reducer(undefined, {})).toEqual(initialState);
-    });
-    it('should handle APP_STATUS', () => {
-      const action = {
-        type: actions.APP_STATE,
-        payload: {
-          connected: true,
-        },
+  describe('## Socket', () => {
+    it('should reduce - CLIENT_CONNECT', () => {
+      const payload = {
+        host: 'host',
+        port: 'port',
+      };
+      const expectedAction = {
+        type: ev.CLIENT_CONNECT,
+        payload,
       };
       const expectedState = {
         connected: true,
-        rooms: [],
+        games: {},
       };
 
-      expect(reducer(undefined, action)).toEqual(expectedState);
-      expect(reducer(initialState, action)).toEqual(expectedState);
+      expect(actions.app.CLIENT_CONNECT(payload)).toEqual(expectedAction);
+      expect(reducer(undefined, expectedAction)).toEqual(expectedState);
+      expect(reducer(initialState, expectedAction)).toEqual(expectedState);
     });
-    it('should handle APP_GET_ROOMS', () => {
-      const action = {
-        type: ev.res_ROOMS,
-        payload: {
-          rooms: [{ roomName: 'zboub' }],
-        },
+
+    it('should reduce - CLIENT_DISCONNECT', () => {
+      initialState.connected = true;
+
+      const payload = {};
+      const expectedAction = {
+        type: ev.CLIENT_DISCONNECT,
+        payload,
       };
       const expectedState = {
         connected: false,
-        rooms: [{ roomName: 'zboub' }],
+        games: {},
       };
 
-      expect(reducer(undefined, action)).toEqual(expectedState);
-      expect(reducer(initialState, action)).toEqual(expectedState);
+      expect(actions.app.CLIENT_DISCONNECT(payload)).toEqual(expectedAction);
+      expect(reducer(undefined, expectedAction)).toEqual(expectedState);
+      expect(reducer(initialState, expectedAction)).toEqual(expectedState);
+    });
+  });
+
+  describe('## Login', () => {
+    initialState.connected = true;
+
+    it('should reduce - req_LOGIN', () => {
+      const payload = {
+        playerName: 'playerName',
+        playerRoom: 'playerRoom',
+      };
+      const expectedAction = {
+        type: ev.req_LOGIN,
+        payload,
+      };
+
+      expect(actions.app.reqLogin(payload)).toEqual(expectedAction);
+    });
+
+    it('should reduce - res_ROOMS', () => {
+      const payload = {
+        games: [{ roomName: 'zboub' }]
+      };
+      const expectedAction = {
+        type: ev.res_ROOMS,
+        payload,
+      };
+      const expectedState = {
+        ...initialState,
+        games: [{ roomName: 'zboub' }],
+      };
+
+      expect(actions.app.resRooms(payload)).toEqual(expectedAction);
+      expect(reducer(initialState, expectedAction)).toEqual(expectedState);
     });
   });
 });

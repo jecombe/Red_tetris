@@ -1,21 +1,26 @@
 import { createStage, createStagePiece } from '../stage/utils';
+import { flushUpdate } from '../stage/stage';
 
 export default class Player {
-  constructor(socketId, username, room) {
-    this.idSocket = socketId;
-    this.login = username;
+  constructor(socket) {
+    this.id = socket;
+    this.username = '';
+    this.room = '';
     this.owner = false;
-    this.stage = createStage();
     this.losing = false;
-    this.roomAssociate = room;
+    this.rank = 0;
+    this.score = 0;
+
+    this.stage = createStage();
+    this.nextPiece = createStagePiece();
     this.pos = { x: 0, y: 0 };
     this.pos1 = { x: 0, y: 0 };
     this.collided = false;
+    this.lineFull = 0;
+    this.mallus = 0;
     this.piece = null;
     this.index = 0;
-    this.nextPiece = createStagePiece();
-    this.mallus = 0;
-    this.lineFull = 0;
+
     this.otherStage = [];
     this.peopleSpectre = [];
     this.notLosing = -1;
@@ -27,15 +32,23 @@ export default class Player {
   }
 
   getLogin() {
-    return this.login;
+    return this.username;
   }
 
   getIdSocket() {
-    return this.idSocket;
+    return this.id;
   }
 
-  getroomAssociate() {
-    return this.roomAssociate;
+  getroom() {
+    return this.room;
+  }
+
+  getStage() {
+    return this.stage;
+  }
+
+  getPlayerOtherStage() {
+    return this.otherStage;
   }
 
   getNextPiece() {
@@ -58,8 +71,12 @@ export default class Player {
     return this.peopleSpectre;
   }
 
-  setLogin(login) {
-    this.login = login;
+  setPlayerName(playerName) {
+    this.username = playerName;
+  }
+
+  setRoomName(roomName) {
+    this.room = roomName;
   }
 
   setOwner() {
@@ -149,5 +166,30 @@ export default class Player {
 
   setWin() {
     this.win = true;
+  }
+
+  initPlayer(len, pieceStart, nextPiece, newStage) {
+    this.setPositionNull();
+    this.setNoLosing(len);
+    this.setPlayerNull();
+    this.setPiece(pieceStart);
+    this.setPosition(10 / 2 - 2, 0);
+    this.setNextPiece(nextPiece);
+    this.setStage(newStage);
+  }
+
+  updatePlayerStage(piece, newStage, obj) {
+    piece.form.shape.forEach((row, y) => {
+      row.forEach((value, x) => {
+        if (value !== 0) {
+          newStage[y + obj.pos.y][x + obj.pos.x] = [
+            value,
+            `${obj.collided ? 'merged' : 'clear'}`,
+          ];
+        }
+      });
+    });
+
+    return newStage;
   }
 }

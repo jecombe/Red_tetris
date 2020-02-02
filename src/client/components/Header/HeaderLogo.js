@@ -1,9 +1,12 @@
 import React from 'react';
+import Grid from '@material-ui/core/Grid';
 
-import logo from '../../img/header1.png';
+import logo from '../../img/header3.png';
 
 const HeaderLogo = () => (
-  <img src={logo} width="70%" alt="Logo" />
+  <Grid container justify="center" alignItems="center">
+    <img src={logo} width="50%" alt="Logo" />
+  </Grid>
 );
 
 export default HeaderLogo;

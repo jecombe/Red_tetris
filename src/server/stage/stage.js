@@ -5,7 +5,7 @@ import { emitterMallus, emitterStageOther } from '../emitter/emitter';
 export const flushUpdate = (piece, obj, stage) => updateStage(piece, stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell))), obj);
 
 const replaceOtherStage = (objPlayer, objOther) => {
-  const index = objPlayer.peopleSpectre.indexOf(objOther.login);
+  const index = objPlayer.peopleSpectre.indexOf(objOther.username);
   console.log('INDEX ', index);
   let id = 0;
   objPlayer.otherStage[index] = objOther.stage;
@@ -20,7 +20,7 @@ const replaceOtherStage = (objPlayer, objOther) => {
 
 const sendSpectreToOther = (tabUser, objPlayer, io, objOther) => {
   objOther.forEach((element) => {
-    if (element.login !== objPlayer.login) {
+    if (element.username !== objPlayer.username) {
       replaceOtherStage(objPlayer, element);
     }
   });
@@ -34,7 +34,7 @@ export const dispatchStage = (objPlayer, io, objGame) => {
 
 const setMallusToPlayers = (userTab, userActual, io, objGame, objPlayer) => {
   for (let i = 0; i < userTab.length; i++) {
-    if (userTab[i].login !== userActual) {
+    if (userTab[i].username !== userActual) {
       userTab[i].setMallus();
       const calcRow = 20 - userTab[i].getMallus();
       /* --- Check Game Over with mallus --- */

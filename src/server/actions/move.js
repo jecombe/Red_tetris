@@ -10,7 +10,7 @@ import { emitterStageOther } from '../emitter/emitter'
 
 /*= ============================= DISPATCH SPECTRE ============================== */
 const replaceOtherStage = (objPlayer, objOther) => {
-  const index = objOther.peopleSpectre.indexOf(objPlayer.login);
+  const index = objOther.peopleSpectre.indexOf(objPlayer.username);
   console.log('INDEX ', index);
   let id = 0;
   objOther.otherStage[index] = objPlayer.stage;
@@ -25,13 +25,13 @@ const replaceOtherStage = (objPlayer, objOther) => {
 
 const sendSpectreToOther = (userList, usernameOther, objPlayer, io) => {
   userList.find((obj) => {
-    if (obj.login === usernameOther) {
+    if (obj.username === usernameOther) {
       replaceOtherStage(objPlayer, obj);
       if (objPlayer.losing === true) {
         obj.setNoLosing2();
         if (obj.notLosing === 0)
         {
-          console.log('JOUEUR GAGNANT ', obj.login);
+          console.log('JOUEUR GAGNANT ', obj.username);
           obj.setWin();
         }
       }

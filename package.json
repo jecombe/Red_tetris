@@ -1,16 +1,16 @@
 {
-  "name": "react-express-webpack-babel-setup",
+  "name": "red-tetris",
   "version": "1.0.0",
   "description": "",
   "scripts": {
     "client-dist": "NODE_ENV=production webpack --mode production --progress --colors",
     "client-dev": "webpack-dev-server --mode development --colors --hot --inline --host 0.0.0.0 --port 8080",
     "srv-dist": "DEBUG=tetris:* babel src --out-dir dist",
-    "srv-dev": "DEBUG=tetris:* nodemon --experimental-worker --exec babel-node ./src/server/server.js",
+    "srv-dev": "DEBUG=tetris:* nodemon --exec babel-node ./src/server/server.js",
     "dev": "concurrently --kill-others \"npm run client-dev\" \"npm run srv-dev\"",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
-    "test": "jest test/react.test.js --verbose --coverage",
+    "test": "jest test/client/redux.player.test.js --verbose --coverage",
     "test:watch": "npm test -- --watch-All"
   },
   "keywords": [],
@@ -21,6 +21,7 @@
     "@material-ui/icons": "^4.5.1",
     "express": "^4.16.4",
     "lodash": "^4.17.15",
+    "notistack": "^0.9.7",
     "prop-types": "^15.7.2",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",

@@ -1,0 +1,4 @@
+1) lorsque le bouton start est active lancer le chrono pour que les piece tombent
+2) arrret du jeux quand il y a mallus
+3) arret du jeux lorsque refresh page de connexion quand le user ne s'est pas connecte
+4) arret du jeux lorsque les piece tombent et qu'on appuye sur le bouton start game

@@ -1,5 +1,6 @@
 import { isFull, updateStage } from './utils';
 import { emitterMallus, emitterStageOther } from '../emitter/emitter';
+import { red } from '@material-ui/core/colors';
 
 
 export const flushUpdate = (piece, obj, stage) => updateStage(piece, stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell))), obj);
@@ -50,6 +51,7 @@ const setMallusToPlayers = (userTab, userActual, io, objGame, objPlayer) => {
       }
     }
   }
+  console.log(io)
   dispatchStage(objPlayer, io, objGame);
 };
 
@@ -68,7 +70,7 @@ export const updateRows = (newStage, objPlayer, objGame, redGame) => {
       newStage.splice(index, 1);
       // Ajoute au debut du tableau un nouveau tableau de 10 a 0
       newStage.unshift(new Array(10).fill([0, 'clear']));
-      setMallusToPlayers(objGame.getUserInGame(), objPlayer.getLogin(), redGame.io, objGame, objPlayer);
+      setMallusToPlayers(objGame.getUserInGame(), objPlayer.getLogin(), redGame.socketServer, objGame, objPlayer);
     }
   });
   return (newStage);

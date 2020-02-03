@@ -12,6 +12,8 @@ export const createStagePiece = () => Array.from(Array(STAGE_HEIGHT_PIECE), () =
 export const isFull = (currentValue) => (currentValue[1] === 'merged');
 
 export const updateStage = (piece, newStage, obj) => {
+
+
   piece.form.shape.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== 0) {

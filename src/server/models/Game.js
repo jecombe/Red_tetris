@@ -68,18 +68,17 @@ export default class Game {
 
   startGame(id) {
     if (!this.getPlayer(id).owner) return false;
-
     const newStage = createStage().map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
-
     this.setTetroNull();
     this.setGameStart();
     this.getPieceStart().cleanPiece(newStage);
+
     this.users.map((user) => {
-      const nextPiece = flushUpdate(this.getNextPieceStart(), user, createStagePiece());
-      user.initPlayer(this.users.length, this.getPieceStart(), nextPiece, newStage);
+      user.initPlayer(this.users.length, this.getPieceStart(), newStage);
+      user.setNextPiece(flushUpdate(this.getNextPieceStart(), user, createStagePiece()));
       return user;
     });
-
+    
     return ({
       newStage,
       nextPiece: flushUpdate(this.getNextPieceStart(), this.users[0], createStagePiece()),

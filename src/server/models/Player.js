@@ -168,13 +168,13 @@ export default class Player {
     this.win = true;
   }
 
-  initPlayer(len, pieceStart, nextPiece, newStage) {
+  initPlayer(len, pieceStart, newStage) {
     this.setPositionNull();
     this.setNoLosing(len);
     this.setPlayerNull();
     this.setPiece(pieceStart);
     this.setPosition(10 / 2 - 2, 0);
-    this.setNextPiece(nextPiece);
+    this.setPositionNextTetro(10 / 2 - 2, 0);
     this.setStage(newStage);
   }
 

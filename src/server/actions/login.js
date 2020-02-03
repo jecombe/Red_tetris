@@ -95,17 +95,16 @@ const dispatchStage = (objPlayer, redGame, game) => {
 };
 
 export const logout = (socket, redGame) => {
-  // if (!player) return;
   const player = redGame.getPlayer(socket.id);
-  const game = redGame.getGame(player.roomAssociate);
-
-
+  if (player.username === '')
+    return;
+  const game = redGame.getGame(player.room);
   game.unsetPlayer(player.getIdSocket());
   if (game.users.length !== 0) {
     game.setPlayerOwner(game.users[0]);
     game.users[0].setOwner();
   } else {
-    redGame.unsetGame(player.roomAssociate);
+    redGame.unsetGame(player.room);
   }
   dispatchStage(player, redGame, game);
   redGame.unsetPlayer(player.idSocket);

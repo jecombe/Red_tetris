@@ -2,9 +2,10 @@ import { createStage, createStagePiece } from '../stage/utils';
 import { flushUpdate, updateStagingAfterCollision, updateStagingBeforeCollision } from '../stage/stage';
 import { checkCollision } from '../helpers/gameHelpers';
 import { rotate, dispatchStage2 } from '../actions/move'
-
+import { dispatchStageLogin } from '../actions/login'
 export default class Player {
   constructor(socket) {
+
     this.id = socket;
     this.username = '';
     this.room = '';
@@ -287,7 +288,20 @@ export default class Player {
     this.setNextPiece(flushUpdate(game.tetro[this.index + 1], this, createStagePiece()));
   };
 
-
+  logout(redGame) {
+    if (this.username === '')
+      return;
+    const game = redGame.getGame(this.room);
+    game.unsetPlayer(this.getIdSocket());
+    if (game.users.length !== 0) {
+      game.setPlayerOwner(game.users[0]);
+      game.users[0].setOwner();
+    } else {
+      redGame.unsetGame(this.room);
+    }
+    dispatchStageLogin(this, redGame, game);
+    redGame.unsetPlayer(this.idSocket);
+  }
 
   positionTetro(keyCode, game, redGame) {
     if (this.getLosing() === false) {

@@ -83,7 +83,7 @@ const replaceOtherStage = (objPlayer, objOther) => {
 };
 
 
-const dispatchStageLogin = (objPlayer, redGame, game) => {
+export const dispatchStageLogin = (objPlayer, redGame, game) => {
   const tabUser = game.getUserInGame();
 
   for (let i = 0; i < tabUser.length; i++) {
@@ -92,21 +92,4 @@ const dispatchStageLogin = (objPlayer, redGame, game) => {
       emitterStageOther(redGame.io, tabUser[i]);
     }
   }
-};
-
-export const logout = (socket, redGame) => {
-  const player = redGame.getPlayer(socket.id);
-  if (player.username === '')
-    return;
-  const game = redGame.getGame(player.room);
-  game.unsetPlayer(player.getIdSocket());
-  if (game.users.length !== 0) {
-    game.setPlayerOwner(game.users[0]);
-    game.users[0].setOwner();
-  } else {
-    redGame.unsetGame(player.room);
-  }
-  dispatchStageLogin(player, redGame, game);
-  redGame.unsetPlayer(player.idSocket);
-
 };

@@ -28,7 +28,6 @@ const io = (server) => {
 
     socket.on(ev.req_LOGIN, (data) => login(socket, data, redGame));
     socket.on(ev.req_ROOMS, (data) => rooms(socket, data, redGame));
-
     socket.on(ev.START_GAME, (data) => startGame(socket, data, redGame));
 
     socket.on(ev.POSITION_TETRO, (data) => {

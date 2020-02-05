@@ -10,7 +10,9 @@ export const socketDisconnect = (socket, redGame) => {
   logger.info(`Client ${socket.id} disconnected.`);
   logger.info('We are in ioDispatchLogin for handle disconnect !');
   // redGame.unsetPlayer(socketClient.id);
-  logout(socket, redGame);
+  const player = redGame.getPlayer(socket.id);
+
+  player.logout(redGame);
 };
 
 export const socketError = (socket, redGame) => {

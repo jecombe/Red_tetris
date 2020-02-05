@@ -30,7 +30,22 @@ const io = (server) => {
     socket.on(ev.req_ROOMS, (data) => rooms(socket, data, redGame));
 
     socket.on(ev.START_GAME, (data) => startGame(socket, data, redGame));
-    socket.on(ev.POSITION_TETRO, (data) => positionTetro(socket, data, redGame));
+
+    socket.on(ev.POSITION_TETRO, (data) => {
+
+      const { keyCode, playerRoom } = data;
+      const game = redGame.getGame(playerRoom);
+      const player = redGame.getGame(playerRoom).getPlayer(socket.id);
+      player.positionTetro(keyCode, game, redGame)
+      redGame.socketServer.to(`${socket.id}`).emit(ev.STAGE, {
+        newStage: player.stage,
+        nextPiece: player.nextPiece,
+        gameOver: player.getLosing(),
+        otherNotLosing: player.notLosing,
+        win: player.win,
+        playerLineFull: player.getLineFull(),
+      });
+    })
 
     socket.on(ev.req_ECHO, (data) => message(socket, data, redGame));
     socket.on(ev.req_BELLO, (data) => message(socket, data, redGame));

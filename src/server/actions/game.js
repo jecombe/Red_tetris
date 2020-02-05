@@ -86,13 +86,13 @@ export const startGame = (socket, data, redGame) => {
   });
 };
 
-export const positionTetro = (socket, data, redGame) => {
+/*export const positionTetro = (socket, data, redGame) => {
   const { keyCode, playerRoom } = data;
 
   const game = redGame.getGame(playerRoom);
   const player = redGame.getGame(playerRoom).getPlayer(socket.id);
 
-  /* --- Check Game Over --- */
+   --- Check Game Over --- 
   if (player.getLosing() === false) {
     if (keyCode === 40) {
       dropTetro(player, game, redGame);
@@ -118,4 +118,4 @@ export const positionTetro = (socket, data, redGame) => {
     win: player.win,
     playerLineFull: player.getLineFull(),
   });
-};
+};*/

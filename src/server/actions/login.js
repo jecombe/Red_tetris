@@ -83,7 +83,7 @@ const replaceOtherStage = (objPlayer, objOther) => {
 };
 
 
-const dispatchStage = (objPlayer, redGame, game) => {
+const dispatchStageLogin = (objPlayer, redGame, game) => {
   const tabUser = game.getUserInGame();
 
   for (let i = 0; i < tabUser.length; i++) {
@@ -106,7 +106,7 @@ export const logout = (socket, redGame) => {
   } else {
     redGame.unsetGame(player.room);
   }
-  dispatchStage(player, redGame, game);
+  dispatchStageLogin(player, redGame, game);
   redGame.unsetPlayer(player.idSocket);
 
 };

@@ -37,12 +37,12 @@ const GameBoardConnect = (props) => {
     reqSendPosition,
   } = props;
 
-  useInterval(() => {
+  /*useInterval(() => {
     if (otherNotLosing > -1) {
       const keyCode = 40;
       reqSendPosition({ keyCode, playerRoom });
     }
-  }, playerDropTime);
+  }, playerDropTime);*/
 
   const move = ({ keyCode }) => {
     if (playerGameOver === false) {

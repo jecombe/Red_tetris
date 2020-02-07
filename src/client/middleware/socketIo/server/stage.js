@@ -2,6 +2,7 @@ import ev from '../../../../shared/events';
 
 // eslint-disable-next-line no-shadow
 export const dispatch = (action, data, dispatch) => {
+  console.log("=====================++> 222 ", data.actualPiece)
 
   dispatch({
     type: ev.STAGE,
@@ -11,6 +12,8 @@ export const dispatch = (action, data, dispatch) => {
       playerGameOver: data.gameOver,
       otherNotLosing: data.otherNotLosing,
       playerLineFull: data.playerLineFull,
+      actualPiece: data.actualPiece,
+      pos: data.pos
     },
   });
 };

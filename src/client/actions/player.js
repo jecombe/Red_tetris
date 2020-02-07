@@ -38,6 +38,7 @@ export const updateStage = (payload) => ({
     playerGameOver: payload.gameOver,
     otherNotLosing: payload.otherNotLosing,
     playerLineFull: payload.playerLineFull,
+    actualPiece: payload.actualPiece,
   },
 });
 

@@ -76,6 +76,7 @@ export const startGame = (socket, data, redGame) => {
   // });
 
   const payload = redGame.startGame(id, playerRoom);
+  console.log("1 -> ,", payload.actualPiece)
 
 
   redGame.socketServer.sockets.in(playerRoom).emit(ev.STAGE, {
@@ -83,6 +84,8 @@ export const startGame = (socket, data, redGame) => {
     nextPiece: payload.nextPiece,
     gameOver: payload.gameOver,
     otherNotLosing: payload.notLosing,
+    actualPiece: payload.actualPiece,
+    pos: payload.pos
   });
 };
 

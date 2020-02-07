@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions';
 import GameBoard from '../../components/Game/GameBoard';
+import { checkCollision2 } from '../../../server/helpers/gameHelpers';
+import { flushUpdate2 } from '../../../server/stage/stage';
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -35,6 +37,10 @@ const GameBoardConnect = (props) => {
     playerDropTime,
     playerGameOver,
     reqSendPosition,
+    actualPiece,
+    x,
+    y,
+
   } = props;
 
   /*useInterval(() => {
@@ -44,9 +50,42 @@ const GameBoardConnect = (props) => {
     }
   }, playerDropTime);*/
 
+  const dropTetro = () => {
+    if (!checkCollision2(actualPiece, playerStage, { x: 0, y: 1 }), x, y) {
+      //this.setPosition(0, 1);
+      x = x + 0;
+      y = y + 1;
+      playerStage = flushUpdate2(actualPiece, playerStage, x, y);
+    /*else {
+
+      if (this.pos.y < 1) {
+        this.setLosing(true);
+        if (!this.peopleSpectre.length) {
+          this.setNoLosing2();
+        }
+      }
+      this.setIndex(this.index + 1);
+      this.setStage(updateStagingBeforeCollision(this, game, redGame));
+      
+      if (this.peopleSpectre.length) {
+        dispatchStage2(this, redGame.socketServer, game);
+      }
+      this.setPiece(game.tetro[this.index]);
+      if (!game.tetro[this.index + 1]) game.setTetro();
+      this.setStage(updateStagingAfterCollision(this.piece, this));
+      this.setNextPiece(flushUpdate(game.tetro[this.index + 1], this, createStagePiece()));
+    }*/
+  }
+}
+
   const move = ({ keyCode }) => {
     if (playerGameOver === false) {
-      reqSendPosition({ keyCode, playerRoom });
+      if (keyCode === 40)
+      {
+        dropTetro()
+
+      } 
+      //reqSendPosition({ keyCode, playerRoom });
     }
   };
 
@@ -76,6 +115,9 @@ const mapStateToProps = (state) => ({
   playerGameOver: state.player.playerGameOver,
   otherNotLosing: state.player.otherNotLosing,
   playerDropTime: state.player.playerDropTime,
+  actualPiece: state.player.actualPiece,
+  x: state.player.x,
+  y: state.player.y,
 });
 
 const mapDispatchToProps = {

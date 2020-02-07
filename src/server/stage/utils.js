@@ -28,6 +28,24 @@ export const updateStage = (piece, newStage, obj) => {
 };
 
 
+export const updateStage2 = (piece, newStage, x, y) => {
+
+
+  piece.form.shape.forEach((row, fy) => {
+    row.forEach((value, fx) => {
+      if (value !== 0) {
+        newStage[fy + y][fx + x] = [
+          value,
+          `${obj.collided ? 'merged' : 'clear'}`,
+        ];
+      }
+    });
+  });
+  return newStage;
+};
+
+
+
 // export const flushUpdate = (piece, obj, stage) => {
 
 //   const newStage = stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));

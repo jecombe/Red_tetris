@@ -84,6 +84,8 @@ export default class Game {
       nextPiece: flushUpdate(this.getNextPieceStart(), this.users[0], createStagePiece()),
       gameOver: false,
       otherNotLosing: 1,
+      actualPiece: this.tetro[0],
+      pos: {x: 10 / 2 - 2, y: 0},
     });
   }
 }

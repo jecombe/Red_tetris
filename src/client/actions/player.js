@@ -4,11 +4,20 @@ import ev from '../../shared/events';
  * action creators for client socket event
  */
 
-export const reqSendPosition = (payload) => ({
+/*export const reqSendPosition = (payload) => ({
   type: ev.POSITION_TETRO,
   payload: {
     keyCode: payload.keyCode,
     playerRoom: payload.playerRoom,
+  },
+});*/
+
+export const updatePosition = (payload) => ({
+
+  type: ev.UPDATE_POSITION,
+  payload: {
+    x: payload.x,
+    y: payload.y,
   },
 });
 
@@ -29,6 +38,14 @@ export const resObjPlayer = (payload) => ({
     playerOwner: payload.playerOwner,
   },
 });
+
+export const update = (stage) => ({
+  type: ev.UPDATE,
+  payload: {
+    playerStage: stage,
+  },
+});
+
 
 export const updateStage = (payload) => ({
   type: ev.STAGE,

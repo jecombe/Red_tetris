@@ -6,6 +6,7 @@ import actions from '../../actions';
 import GameBoard from '../../components/Game/GameBoard';
 import { checkCollision2 } from '../../../server/helpers/gameHelpers';
 import { flushUpdate2 } from '../../../server/stage/stage';
+import { updateStage } from '../../actions/player';
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -38,6 +39,8 @@ const GameBoardConnect = (props) => {
     playerGameOver,
     reqSendPosition,
     actualPiece,
+    updatePosition,
+    update,
     x,
     y,
 
@@ -49,13 +52,18 @@ const GameBoardConnect = (props) => {
       reqSendPosition({ keyCode, playerRoom });
     }
   }, playerDropTime);*/
+  console.log("PIECE =======================================+++++++++++> ", x, y)
 
-  const dropTetro = () => {
-    if (!checkCollision2(actualPiece, playerStage, { x: 0, y: 1 }), x, y) {
+  const dropTetro = (keyCode) => {
+    if (!checkCollision2(actualPiece, playerStage, { px: 0, py: 1 }, x, y)) {
+      console.log("NO COLLISION")
       //this.setPosition(0, 1);
-      x = x + 0;
-      y = y + 1;
-      playerStage = flushUpdate2(actualPiece, playerStage, x, y);
+     /* x = x + 0;
+      y = y + 1;*/
+     // updatePosition()
+   // reqSendPosition({x, y});
+     // update(flushUpdate2(actualPiece, playerStage, x, y))
+      //playerStage = flushUpdate2(actualPiece, playerStage, x, y);
     /*else {
 
       if (this.pos.y < 1) {
@@ -82,9 +90,21 @@ const GameBoardConnect = (props) => {
     if (playerGameOver === false) {
       if (keyCode === 40)
       {
-        dropTetro()
+        //dropTetro(keyCode)
+        console.log(actualPiece)
+        if (!checkCollision2(actualPiece, playerStage, { x: 0, y: 1 }, x, y)) {
+        
+        //console.log('OKOKOKOk', actualPiece, playerStage, x, y)
 
-      } 
+         // console.log('OKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOKOK')
+          //this.setPosition(0, 1);
+         /* x = x + 0;
+          y = y + 1;*/
+          updatePosition({x, y})
+        //reqSendPosition({x, y});
+        }
+           // reqSendPosition({ keyCode, playerRoom });
+  }
       //reqSendPosition({ keyCode, playerRoom });
     }
   };
@@ -122,6 +142,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   reqSendPosition: actions.player.reqSendPosition,
+  updatePosition: actions.player.updatePosition,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameBoardConnect);

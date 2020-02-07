@@ -28,7 +28,9 @@ export const checkCollision = (player, stage, { x: moveX, y: moveY }) => {
 
 
 export const checkCollision2 = (piece, stage, { x: moveX, y: moveY }, px, py) => {
+
   for (let y = 0; y < piece.form.shape.length; y += 1) {
+
     for (let x = 0; x < piece.form.shape[y].length; x += 1) {
       // 1. Check that we're on an actual Tetromino cell
       if (piece.form.shape[y][x] !== 0) {
@@ -47,4 +49,5 @@ export const checkCollision2 = (piece, stage, { x: moveX, y: moveY }, px, py) =>
       }
     }
   }
+
 };

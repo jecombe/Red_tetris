@@ -40,9 +40,10 @@ const GameBoardConnect = (props) => {
     reqSendPosition,
     actualPiece,
     updatePosition,
-    update,
     x,
     y,
+    setStage,
+    collided,
 
   } = props;
 
@@ -92,6 +93,7 @@ const GameBoardConnect = (props) => {
       {
         //dropTetro(keyCode)
         console.log(actualPiece)
+
         if (!checkCollision2(actualPiece, playerStage, { x: 0, y: 1 }, x, y)) {
         
         //console.log('OKOKOKOk', actualPiece, playerStage, x, y)
@@ -100,8 +102,14 @@ const GameBoardConnect = (props) => {
           //this.setPosition(0, 1);
          /* x = x + 0;
           y = y + 1;*/
-          updatePosition({x, y})
+          console.log('NO COLLISION')
+          updatePosition({x: 0, y: 1})
+          setStage({stage: flushUpdate2(actualPiece, playerStage, x, y, collided)})
         //reqSendPosition({x, y});
+        }
+        else
+        {
+          console.log('COLLISION')
         }
            // reqSendPosition({ keyCode, playerRoom });
   }
@@ -138,11 +146,13 @@ const mapStateToProps = (state) => ({
   actualPiece: state.player.actualPiece,
   x: state.player.x,
   y: state.player.y,
+  collided: state.player.collided,
 });
 
 const mapDispatchToProps = {
   reqSendPosition: actions.player.reqSendPosition,
   updatePosition: actions.player.updatePosition,
+  setStage: actions.player.setStage,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameBoardConnect);

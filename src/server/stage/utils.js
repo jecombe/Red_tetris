@@ -28,7 +28,7 @@ export const updateStage = (piece, newStage, obj) => {
 };
 
 
-export const updateStage2 = (piece, newStage, x, y) => {
+export const updateStage2 = (piece, newStage, x, y, collided) => {
 
 
   piece.form.shape.forEach((row, fy) => {
@@ -36,7 +36,7 @@ export const updateStage2 = (piece, newStage, x, y) => {
       if (value !== 0) {
         newStage[fy + y][fx + x] = [
           value,
-          `${obj.collided ? 'merged' : 'clear'}`,
+          `${collided ? 'merged' : 'clear'}`,
         ];
       }
     });

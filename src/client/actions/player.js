@@ -21,6 +21,15 @@ export const updatePosition = (payload) => ({
   },
 });
 
+
+export const setStage = (payload) => ({
+
+  type: ev.SET_STAGE,
+  payload: {
+    playerStage: payload.stage,
+  },
+});
+
 export const reqStartGame = (payload) => ({
   type: ev.START_GAME,
   payload: {

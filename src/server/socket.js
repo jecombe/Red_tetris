@@ -43,6 +43,7 @@ const io = (server) => {
         otherNotLosing: player.notLosing,
         win: player.win,
         playerLineFull: player.getLineFull(),
+        collided: player.collided,
       });
     })
 

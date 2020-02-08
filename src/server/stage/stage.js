@@ -4,7 +4,7 @@ import { red } from '@material-ui/core/colors';
 
 
 export const flushUpdate = (piece, obj, stage) => updateStage(piece, stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell))), obj);
-export const flushUpdate2 = (piece, stage) => updateStage2(piece, stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell))), x, y);
+export const flushUpdate2 = (piece, stage, x, y, collided) => updateStage2(piece, stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell))), x, y, collided);
 
 
 const replaceOtherStage = (objPlayer, objOther) => {

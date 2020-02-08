@@ -13,7 +13,8 @@ export const dispatch = (action, data, dispatch) => {
       otherNotLosing: data.otherNotLosing,
       playerLineFull: data.playerLineFull,
       actualPiece: data.actualPiece,
-      pos: data.pos
+      pos: data.pos,
+      collided: data.collided,
     },
   });
 };

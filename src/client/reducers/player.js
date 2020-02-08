@@ -20,6 +20,7 @@ export const playerState = {
   pos: { x: 10 / 2 - 2, y: 0 },
   x: 10 / 2 - 2,
   y: 0,
+  collided: false,
 };
 
 export const playerStatePropTypes = PropTypes.shape({
@@ -58,7 +59,7 @@ const playerReducer = (state = playerState, action) => {
     }
 
     case ev.STAGE: {
-      const { playerStage, playerNextPiece, playerGameOver, otherNotLosing, playerLineFull, actualPiece, pos} = action.payload;
+      const { playerStage, playerNextPiece, playerGameOver, otherNotLosing, playerLineFull, actualPiece, collided} = action.payload;
 
       return {
         ...state,
@@ -68,6 +69,7 @@ const playerReducer = (state = playerState, action) => {
         otherNotLosing,
         playerLineFull,
         actualPiece,
+        collided,
       };
     }
     case ev.UPDATE_POSITION: {
@@ -80,7 +82,7 @@ const playerReducer = (state = playerState, action) => {
       };
     }
 
-    case ev.UPDATE: {
+    case ev.SET_STAGE: {
       const {playerStage} = action.payload;
 
       return {

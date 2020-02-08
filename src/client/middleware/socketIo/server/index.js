@@ -4,6 +4,7 @@ import stage from './stage';
 import stageMallus from './stageMallus';
 import stageOther from './stageOther';
 import resLogin from './resLogin';
+import resUpdateCollision from './resUpdateCollision'
 
 export default [
   resRooms,
@@ -12,4 +13,5 @@ export default [
   stageMallus,
   stageOther,
   resLogin,
+  resUpdateCollision
 ];

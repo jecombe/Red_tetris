@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import actions from '../../actions';
 import GameBoard from '../../components/Game/GameBoard';
 import { checkCollision2 } from '../../../server/helpers/gameHelpers';
-import { flushUpdate2 } from '../../../server/stage/stage';
+import { flushUpdate2, updateRows2 } from '../../../server/stage/stage';
 import { updateStage } from '../../actions/player';
+import { updateStage2 } from '../../../server/stage/utils';
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -44,6 +45,7 @@ const GameBoardConnect = (props) => {
     y,
     setStage,
     collided,
+    updateCollision,
 
   } = props;
 
@@ -53,7 +55,7 @@ const GameBoardConnect = (props) => {
       reqSendPosition({ keyCode, playerRoom });
     }
   }, playerDropTime);*/
-  console.log("PIECE =======================================+++++++++++> ", x, y)
+  console.log("PIECE =======================================+++++++++++> ", playerStage)
 
   const dropTetro = (keyCode) => {
     if (!checkCollision2(actualPiece, playerStage, { px: 0, py: 1 }, x, y)) {
@@ -103,13 +105,30 @@ const GameBoardConnect = (props) => {
          /* x = x + 0;
           y = y + 1;*/
           console.log('NO COLLISION')
-          updatePosition({x: 0, y: 1})
-          setStage({stage: flushUpdate2(actualPiece, playerStage, x, y, collided)})
+          let newX = x + 0;
+          let newY = y + 1;
+          /*playerStage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)))
+            actualPiece.form.shape.forEach((row, fy) => {
+              row.forEach((value, fx) => {
+                if (value !== 0) {
+                  playerStage[fy + newY][fx + newX] = [
+                    value,
+                    `${collided ? 'merged' : 'clear'}`,
+                  ];
+                }
+              });
+            });*/
+            
+            
+          updatePosition({ x: newX, y: newY, playerStage: flushUpdate2(actualPiece, playerStage, newX, newY, collided)})
+          //setStage({stage: playerStage})
+          //setStage(updateStage2(actualPiece, playerStage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell))), x, y, collided))
         //reqSendPosition({x, y});
         }
         else
         {
           console.log('COLLISION')
+          updateCollision({playerStage: updateRows2(updateStage2(actualPiece, playerStage, x, y)),playerRoom: playerRoom})
         }
            // reqSendPosition({ keyCode, playerRoom });
   }
@@ -147,12 +166,14 @@ const mapStateToProps = (state) => ({
   x: state.player.x,
   y: state.player.y,
   collided: state.player.collided,
+ 
 });
 
 const mapDispatchToProps = {
   reqSendPosition: actions.player.reqSendPosition,
   updatePosition: actions.player.updatePosition,
   setStage: actions.player.setStage,
+  updateCollision: actions.player.updateCollision,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameBoardConnect);

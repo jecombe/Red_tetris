@@ -18,6 +18,9 @@ module.exports = {
   UPDATE_POSITION: 'updatePosition',
   SET_STAGE: 'setStage',
 
+  req_UPDATE_COLLISION: '#updateCollision',
+  res_UPDATE_COLLISION: '@updateCollision',
+
   req_ECHO: '#echo',
   res_ECHO: '@echo',
 

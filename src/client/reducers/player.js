@@ -18,7 +18,7 @@ export const playerState = {
   playerDropTime: 0,
   actualPiece: null,
   pos: { x: 10 / 2 - 2, y: 0 },
-  x: 10 / 2 - 2,
+  x: 0,
   y: 0,
   collided: false,
 };
@@ -59,7 +59,7 @@ const playerReducer = (state = playerState, action) => {
     }
 
     case ev.STAGE: {
-      const { playerStage, playerNextPiece, playerGameOver, otherNotLosing, playerLineFull, actualPiece, collided} = action.payload;
+      const { playerStage, playerNextPiece, playerGameOver, otherNotLosing, playerLineFull, actualPiece, pos, collided} = action.payload;
 
       return {
         ...state,
@@ -69,16 +69,19 @@ const playerReducer = (state = playerState, action) => {
         otherNotLosing,
         playerLineFull,
         actualPiece,
+        x: pos.x,
+        y: pos.y,
         collided,
       };
     }
     case ev.UPDATE_POSITION: {
-      const {x, y} = action.payload;
+      const {x, y, playerStage} = action.payload;
 
       return {
         ...state,
-        x: state.x + x,
-        y: state.y + y,
+        x,
+        y,
+        playerStage,
       };
     }
 
@@ -91,6 +94,16 @@ const playerReducer = (state = playerState, action) => {
       };
     }
 
+    case ev.res_UPDATE_COLLISION: {
+      const {playerStage} = action.payload;
+
+      return {
+        ...state,
+        playerStage,
+        x: 10 / 2 - 2,
+        y: 0,
+      };
+    }
 
 
     case ev.STAGE_MALLUS: {

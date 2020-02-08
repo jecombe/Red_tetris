@@ -18,6 +18,7 @@ export const updatePosition = (payload) => ({
   payload: {
     x: payload.x,
     y: payload.y,
+    playerStage: payload.playerStage,
   },
 });
 
@@ -52,6 +53,14 @@ export const update = (stage) => ({
   type: ev.UPDATE,
   payload: {
     playerStage: stage,
+  },
+});
+
+export const updateCollision = (payload) => ({
+  type: ev.req_UPDATE_COLLISION,
+  payload: {
+    playerStage: payload.playerStage,
+    playerRoom: payload.playerRoom,
   },
 });
 

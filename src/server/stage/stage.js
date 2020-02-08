@@ -78,6 +78,29 @@ export const updateRows = (newStage, objPlayer, objGame, redGame) => {
   return (newStage);
 };
 
+export const updateRows2 = (newStage) => {
+  // Pour la hauteur verifie si une ligne est pleine
+  newStage.forEach((row) => {
+    const fullLine = row.every(isFull);
+    if (fullLine === true) {
+     // objPlayer.setLineFull();
+
+      // Check l'index de la ligne pleine;
+      const index = newStage.indexOf(row);
+      // Met la ligne a 0
+      row.fill([0, 'clear']);
+      // Supprime la ligne avec l'index et decalle e tableau, il restera non pas 20 de hauteur mais 19
+      newStage.splice(index, 1);
+      // Ajoute au debut du tableau un nouveau tableau de 10 a 0
+      newStage.unshift(new Array(10).fill([0, 'clear']));
+     /// setMallusToPlayers(objGame.getUserInGame(), objPlayer.getLogin(), redGame.socketServer, objGame, objPlayer);
+    }
+  });
+  return (newStage);
+};
+
+
+
 export const updateStagingBeforeCollision = (objPlayer, objGame, redGame) => {
   objPlayer.setCollidedTrue();
   return (updateRows(updateStage(objPlayer.piece, objPlayer.stage, objPlayer), objPlayer, objGame, redGame));

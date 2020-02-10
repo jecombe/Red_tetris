@@ -1,4 +1,6 @@
 import Piece from './Piece';
+import { createStage, createStagePiece } from '../stage/utils';
+import { flushUpdate } from '../stage/stage';
 
 export default class Game {
   constructor(username, roomName) {
@@ -50,9 +52,37 @@ export default class Game {
   setTetroNull() {
     this.tetro = [];
   }
+  getPlayer(id) {
+    return this.users.find((x) => x.idSocket === id);
+  }
+
 
   unsetPlayer(id) {
     const index = this.users.findIndex((user) => user.idSocket === id);
     this.users.splice(index, 1);
   }
+
+  startGame(id) {
+    console.log("ID ", id)
+    if (!this.getPlayer(id).isOwner()) return false;
+    const newStage = createStage().map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
+    this.setTetroNull();
+    this.setGameStart();
+    this.getPieceStart().cleanPiece(newStage);
+
+    this.users.map((user) => {
+      user.initPlayer(this.users.length, this.getPieceStart(), newStage);
+      user.setNextPiece(flushUpdate(this.getNextPieceStart(), user, createStagePiece()));
+      return user;
+    });
+    
+    return ({
+      newStage,
+      nextPiece: flushUpdate(this.getNextPieceStart(), this.users[0], createStagePiece()),
+      otherNotLosing: 1,
+
+    });
+  }
+
+
 }

@@ -16,16 +16,9 @@ const ioDispatchGame = (redGame, socketClient) => {
   });
 
   socketClient.on(ev.POSITION_TETRO, (data) => {
-    const { newStage, nextPiece, gameOver, otherNotLosing, playerLineFull } = positionTetro(redGame, data, socketClient.id);
+   // const { newStage, nextPiece, gameOver, otherNotLosing, playerLineFull } = positionTetro(redGame, data, socketClient.id);
 
-
-    redGame.io.to(`${socketClient.id}`).emit(ev.STAGE, {
-      newStage,
-      nextPiece,
-      gameOver,
-      otherNotLosing,
-      playerLineFull,
-    });
+   positionTetro(data, redGame, socketClient);
   });
 };
 

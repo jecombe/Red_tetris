@@ -35,6 +35,7 @@ export const reqSendPosition = (payload) => ({
   type: ev.POSITION_TETRO,
   payload: {
     keyCode: payload.keyCode,
+    playerRoom: payload.playerRoom
   },
 });
 

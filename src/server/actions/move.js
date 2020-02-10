@@ -47,6 +47,14 @@ export const dispatchStage = (objPlayer, io, objGame) => {
     sendSpectreToOther(objGame.getUserInGame(), tabUser[i], objPlayer, io);
   }
 };
+
+export const dispatchStage2 = (objPlayer, io, objGame) => {
+  const tabUser = objPlayer.getPeopleSpectre();
+
+  for (let i = 0; i < tabUser.length; i++) {
+    sendSpectreToOther(objGame.getUserInGame(), tabUser[i], objPlayer, io);
+  }
+};
 /*= ============================= DISPATCH SPECTRE ============================== */
 
 
@@ -110,7 +118,7 @@ export const dropTetro = (objPlayer, objGame, redGame) => {
   }
 };
 
-const rotate = (matrix, dir) => {
+export const rotate = (matrix, dir) => {
   // Make the rows to become cols (transpose)
   const rotatedTetro = matrix.map((_, index) => matrix.map((col) => col[index]));
   // Reverse each row to get a rotated matrix

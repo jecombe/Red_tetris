@@ -47,14 +47,14 @@ const GameBoard = (props) => {
 
   const move = ({ keyCode }) => {
     if (playerGameOver === false) {
-      reqSendPosition({ keyCode });
+      reqSendPosition({ keyCode, playerRoom });
     }
   };
 
   useInterval(() => {
     if (otherNotLosing > -1) {
       const keyCode = 40;
-      reqSendPosition({ keyCode });
+      reqSendPosition({ keyCode, playerRoom });
     }
   }, playerDropTime);
 

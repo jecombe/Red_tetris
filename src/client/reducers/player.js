@@ -16,6 +16,9 @@ export const playerState = {
   playerOwner: false,
   playerLineFull: 0,
   playerDropTime: 0,
+  position: { x: 0, y: 0 },
+  collided: false,
+  piece: null,
 };
 
 export const playerStatePropTypes = PropTypes.shape({
@@ -54,7 +57,7 @@ const playerReducer = (state = playerState, action) => {
     }
 
     case ev.STAGE: {
-      const { playerStage, playerNextPiece, playerGameOver, otherNotLosing, playerLineFull } = action.payload;
+      const { playerStage, playerNextPiece, playerGameOver, otherNotLosing, playerLineFull, position, collided, piece} = action.payload;
 
       return {
         ...state,
@@ -63,9 +66,50 @@ const playerReducer = (state = playerState, action) => {
         playerGameOver,
         otherNotLosing,
         playerLineFull,
+        position,
+        collided,
+        piece,
       };
     }
 
+    case ev.res_UPDATE_COLLISION: {
+      const {piece} = action.payload;
+
+      return {
+        ...state,
+        piece,
+        position: {x: 10 / 2 - 2, y: 0},
+      };
+    }
+    case ev.req_UPDATE_COLLISION: {
+      const {playerStage} = action.payload;
+
+      return {
+        ...state,
+        playerStage,
+      };
+    }
+
+    case ev.UPDATE_STAGE_3: {
+      const {playerStage} = action.payload;
+
+      return {
+        ...state,
+        playerStage,
+      };
+    }
+
+
+
+    case ev.UPDATE_POSITION: {
+      const {x, y, playerStage} = action.payload;
+
+      return {
+        ...state,
+        position: {x: x, y: y}, 
+        playerStage,
+      };
+    }
     case ev.STAGE_MALLUS: {
       const { playerStage } = action.payload;
       return {
@@ -89,6 +133,7 @@ const playerReducer = (state = playerState, action) => {
     default:
       return state;
   }
+  
 };
 
 export default playerReducer;

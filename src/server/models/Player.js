@@ -38,6 +38,10 @@ export default class Player {
   getIdSocket() {
     return this.idSocket;
   }
+  getPiece()
+  {
+    return this.piece;
+  }
 
   getroomAssociate() {
     return this.roomAssociate;

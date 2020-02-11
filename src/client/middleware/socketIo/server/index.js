@@ -3,6 +3,8 @@ import objPlayer from './objPlayer';
 import stage from './stage';
 import stageMallus from './stageMallus';
 import stageOther from './stageOther';
+import resUpdateCollision from './resUpdateCollision'
+
 
 export default [
   resRooms,
@@ -10,4 +12,5 @@ export default [
   stage,
   stageMallus,
   stageOther,
+  resUpdateCollision,
 ];

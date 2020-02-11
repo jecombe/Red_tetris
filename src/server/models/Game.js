@@ -77,9 +77,12 @@ export default class Game {
     });
     
     return ({
-      newStage,
+      newStage: createStage(),
       nextPiece: flushUpdate(this.getNextPieceStart(), this.users[0], createStagePiece()),
       otherNotLosing: 1,
+      position: {x: 10 / 2 - 2, y: 0},
+      collided: false,
+      piece: this.getPieceStart(),
 
     });
   }

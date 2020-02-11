@@ -39,6 +39,30 @@ export const reqSendPosition = (payload) => ({
   },
 });
 
+export const updatePosition = (payload) => ({
+
+  type: ev.UPDATE_POSITION,
+  payload: {
+    x: payload.x,
+    y: payload.y,
+    playerStage: payload.playerStage,
+  },
+});
+export const updateCollision = (payload) => ({
+  type: ev.req_UPDATE_COLLISION,
+  payload: {
+    playerStage: payload.playerStage,
+    playerRoom: payload.playerRoom,
+  },
+});
+
+export const updateStage3 = (payload) => ({
+  type: ev.UPDATE_STAGE_3,
+  payload: {
+    playerStage: payload.playerStage,
+  },
+});
+
 export const reqStartGame = (payload) => ({
   type: ev.START_GAME,
   payload: {

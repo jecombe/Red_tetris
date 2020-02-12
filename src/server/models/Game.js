@@ -72,13 +72,13 @@ export default class Game {
 
     this.users.map((user) => {
       user.initPlayer(this.users.length, this.getPieceStart(), newStage);
-      user.setNextPiece(flushUpdate(this.getNextPieceStart(), user, createStagePiece()));
+      user.setNextPiece(flushUpdate(this.getNextPieceStart(), createStagePiece(), user.getPositionX(), user.getPositionY(), false));
       return user;
     });
     
     return ({
       newStage: createStage(),
-      nextPiece: flushUpdate(this.getNextPieceStart(), this.users[0], createStagePiece()),
+      nextPiece: flushUpdate(this.getNextPieceStart(), createStagePiece(), this.users[0].getPositionX(), this.users[0].getPositionY(), false),
       otherNotLosing: 1,
       position: {x: 10 / 2 - 2, y: 0},
       collided: false,

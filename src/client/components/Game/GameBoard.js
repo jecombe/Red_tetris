@@ -6,10 +6,10 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import Stage from './Stage';
 import GameStatus from './GameStatus';
-import { checkCollision2 } from '../../../server/helpers/gameHelpers';
-import { flushUpdate2, updateRows2 } from '../../../server/stage/stage';
+import { checkCollision } from '../../../server/helpers/gameHelpers';
+import { flushUpdate, updateRows } from '../../../server/stage/stage';
 
-import { updateStage2 } from '../../../server/stage/utils';
+import { updateStage } from '../../../server/stage/utils';
 import { positionTetro } from '../../../server/actions/game';
 import { rotate } from '../../../server/actions/move'
 
@@ -54,47 +54,32 @@ const GameBoard = (props) => {
   } = props;
 
   const dropTetro = () => {
-    if (!checkCollision2(piece, playerStage, { x: 0, y: 1 }, position.x, position.y)) {
+    if (!checkCollision(piece, playerStage, { x: 0, y: 1 }, position.x, position.y)) {
 
       let newX = position.x + 0;
       let newY = position.y + 1;
 
-      updatePosition({ x: newX, y: newY, playerStage: flushUpdate2(piece, playerStage, newX, newY, false), piece: piece })
+      updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, false), piece: piece })
 
     }
     else
-      updateCollision({ playerStage: updateRows2(updateStage2(piece, playerStage, position.x, position.y, true)), playerRoom: playerRoom })
+      updateCollision({ playerStage: updateRows(updateStage(piece, playerStage, position.x, position.y, true)), playerRoom: playerRoom })
 
   }
 
-  const moveTetroLeft = () => {
-    if (!checkCollision2(piece, playerStage, { x: -1, y: 0 }, position.x, position.y)) {
-      let newX = position.x + -1;
-      let newY = position.y + 0;
-      updatePosition({ x: newX, y: newY, playerStage: flushUpdate2(piece, playerStage, newX, newY, false), piece: piece })
-    } else {
-      this.setPosition(0, 0);
-      let newX = position.x + 0;
-      let newY = position.y + 0;
-      updatePosition({ x: newX, y: newY, playerStage: flushUpdate2(piece, playerStage, newX, newY, true), piece: piece })
-
-    }
-  }
   
-  const moveTetroRight = () => {
-    if (!checkCollision2(piece, playerStage, { x: 1, y: 0 }, position.x, position.y)) {
-      let newX = position.x + 1;
+  const moveTetro = (dir) => {
+    if (!checkCollision(piece, playerStage, { x: dir, y: 0 }, position.x, position.y)) {
+      let newX = position.x + dir;
       let newY = position.y + 0;
-      updatePosition({ x: newX, y: newY, playerStage: flushUpdate2(piece, playerStage, newX, newY, false), piece: piece })
+      updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, false), piece: piece })
     } else {
       this.setPosition(0, 0);
       let newX = position.x + 0;
       let newY = position.y + 0;
-      updatePosition({ x: newX, y: newY, playerStage: flushUpdate2(piece, playerStage, newX, newY, true), piece: piece })
+      updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece: piece })
 
     }
-
-
   }
 
   const moveTetroUp = (dir) => {
@@ -107,7 +92,7 @@ const GameBoard = (props) => {
     let offset = 1;
 
 
-    while (checkCollision2(clonedPiece, playerStage, { x: 0, y: 0 }, position.x, position.y)) {
+    while (checkCollision(clonedPiece, playerStage, { x: 0, y: 0 }, position.x, position.y)) {
 
       pos2 += offset;
       offset = -(offset + (offset > 0 ? 1 : -1));
@@ -118,7 +103,7 @@ const GameBoard = (props) => {
         return;
       }
     }
-    updatePosition({ x: pos2, y: position.y, playerStage: flushUpdate2(clonedPiece, playerStage, pos2, position.y, false), piece: clonedPiece })
+    updatePosition({ x: pos2, y: position.y, playerStage: flushUpdate(clonedPiece, playerStage, pos2, position.y, false), piece: clonedPiece })
   }
 
 
@@ -129,10 +114,10 @@ const GameBoard = (props) => {
         dropTetro()
       }
       else if (keyCode === 37) {
-        moveTetroLeft();
+        moveTetro(-1);
       }
       else if (keyCode === 39) {
-        moveTetroRight();
+        moveTetro(1);
       }
       else if (keyCode === 38) {
         moveTetroUp(1);
@@ -155,7 +140,7 @@ const GameBoard = (props) => {
   }
 
   if (piece) {
-    updateStage2(piece, playerStage, position.x, position.y, false)
+    updateStage(piece, playerStage, position.x, position.y, false)
   }
 
   return (

@@ -50,6 +50,8 @@ export const updateCollision = (payload) => ({
   payload: {
     playerStage: payload.playerStage,
     playerRoom: payload.playerRoom,
+    x: payload.x,
+    y: payload.y,
   },
 });
 

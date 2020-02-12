@@ -82,11 +82,13 @@ const playerReducer = (state = playerState, action) => {
       };
     }
     case ev.req_UPDATE_COLLISION: {
-      const {playerStage} = action.payload;
+      const {playerStage, x, y} = action.payload;
 
       return {
         ...state,
         playerStage,
+         x: x,
+         y: y,
       };
     }
 

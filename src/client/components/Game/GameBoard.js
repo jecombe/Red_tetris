@@ -63,7 +63,7 @@ const GameBoard = (props) => {
 
     }
     else
-      updateCollision({ playerStage: updateRows(updateStage(piece, playerStage, position.x, position.y, true)), playerRoom: playerRoom })
+      updateCollision({ playerStage: updateRows(updateStage(piece, playerStage, position.x, position.y, true)), playerRoom: playerRoom, x: 10 /2 - 2, y: 0 })
 
   }
 
@@ -90,14 +90,11 @@ const GameBoard = (props) => {
     const pos = position.x;
     let pos2 = position.x;
     let offset = 1;
-
-
     while (checkCollision(clonedPiece, playerStage, { x: 0, y: 0 }, position.x, position.y)) {
 
       pos2 += offset;
       offset = -(offset + (offset > 0 ? 1 : -1));
       if (offset > clonedPiece.form.shape[0].length) {
-
         rotate(clonedPiece.form.shape, -dir);
         pos2 = pos;
         return;
@@ -105,6 +102,35 @@ const GameBoard = (props) => {
     }
     updatePosition({ x: pos2, y: position.y, playerStage: flushUpdate(clonedPiece, playerStage, pos2, position.y, false), piece: clonedPiece })
   }
+
+  const moveDownTetro = () => {
+    let i = 0;
+    let checkColl = false;
+    while (checkColl !== true) {
+      i += 1;
+      checkColl = checkCollision(piece, playerStage, { x: 0, y: i }, position.x, position.y)
+      if (checkColl === true) {
+        /* --- Check Game Over --- */
+       /* if (this.pos.y < 1) {
+          console.log('GAME OVER');
+          this.setLosing(true);
+          if (!this.peopleSpectre.length) {
+            this.setNoLosing2();
+          }
+        }*/
+        i -= 1;
+        break;
+      }
+      checkColl = checkCollision(piece, playerStage, { x: 0, y: i + 1 }, position.x, position.y)
+    }
+    let newX = position.x + 0;
+    let newY = position.y + i;
+    console.log(i);
+    ///updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece: piece })
+    console.log("STAGE ", playerStage)
+
+    updateCollision({ playerStage: updateRows(flushUpdate(piece, playerStage, newX, newY, true)), playerRoom: playerRoom, x: 10 / 2 - 2 , y: 0 })
+  };
 
 
   const move = ({ keyCode }) => {
@@ -121,6 +147,9 @@ const GameBoard = (props) => {
       }
       else if (keyCode === 38) {
         moveTetroUp(1);
+      }
+      else if (keyCode === 32) {
+        moveDownTetro();
       }
     }
 

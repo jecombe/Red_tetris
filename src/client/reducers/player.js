@@ -90,26 +90,18 @@ const playerReducer = (state = playerState, action) => {
       };
     }
 
-    case ev.UPDATE_STAGE_3: {
-      const {playerStage} = action.payload;
-
-      return {
-        ...state,
-        playerStage,
-      };
-    }
-
-
 
     case ev.UPDATE_POSITION: {
-      const {x, y, playerStage} = action.payload;
+      const {x, y, playerStage, piece} = action.payload;
 
       return {
         ...state,
         position: {x: x, y: y}, 
         playerStage,
+        piece,
       };
     }
+
     case ev.STAGE_MALLUS: {
       const { playerStage } = action.payload;
       return {

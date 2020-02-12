@@ -15,6 +15,7 @@ module.exports = {
   STAGE_OTHER: 'stageOther',
   UPDATE_POSITION: 'updatePosition',
   UPDATE_STAGE_3: 'updateStage3',
+  UPDATE_POSITION_NULL: 'updatePositionNull',
   
   req_ECHO: '#echo',
   res_ECHO: '@echo',

@@ -31,13 +31,7 @@ export const reqLogin = (payload) => ({
   },
 });
 
-export const reqSendPosition = (payload) => ({
-  type: ev.POSITION_TETRO,
-  payload: {
-    keyCode: payload.keyCode,
-    playerRoom: payload.playerRoom
-  },
-});
+
 
 export const updatePosition = (payload) => ({
 
@@ -46,8 +40,11 @@ export const updatePosition = (payload) => ({
     x: payload.x,
     y: payload.y,
     playerStage: payload.playerStage,
+    piece: payload.piece,
   },
 });
+
+
 export const updateCollision = (payload) => ({
   type: ev.req_UPDATE_COLLISION,
   payload: {
@@ -56,12 +53,9 @@ export const updateCollision = (payload) => ({
   },
 });
 
-export const updateStage3 = (payload) => ({
-  type: ev.UPDATE_STAGE_3,
-  payload: {
-    playerStage: payload.playerStage,
-  },
-});
+
+
+
 
 export const reqStartGame = (payload) => ({
   type: ev.START_GAME,

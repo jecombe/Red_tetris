@@ -11,6 +11,8 @@ import { flushUpdate2, updateRows2 } from '../../../server/stage/stage';
 
 import { updateStage2 } from '../../../server/stage/utils';
 import { positionTetro } from '../../../server/actions/game';
+import { rotate } from '../../../server/actions/move'
+
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -33,21 +35,6 @@ function useInterval(callback, delay) {
   }, [delay]);
 }
 
-/*const updateStage = (piece, newStage, pos, collided) => {
-  console.log('OKOKOKOKOKOKOKOKOKOKOK')
-  piece.form.shape.forEach((row, y) => {
-    row.forEach((value, x) => {
-      if (value !== 0) {
-        newStage[y + 0][x + 3] = [
-          value,
-          `${collided ? 'merged' : 'clear'}`,
-        ];
-      }
-    });
-  });
-  return newStage;
-};
-*/
 const GameBoard = (props) => {
   const {
     playerName,
@@ -59,72 +46,127 @@ const GameBoard = (props) => {
     playerDropTime,
     otherNotLosing,
     reqStartGame,
-    reqSendPosition,
     position,
-    collided,
     piece,
     updatePosition,
     updateCollision,
-    updateStage3
+
   } = props;
 
-  const move = ({ keyCode }) => {
-    if (playerGameOver === false) {
-      if (keyCode === 40)
-      {
-        //dropTetro(keyCode)
+  const dropTetro = () => {
+    if (!checkCollision2(piece, playerStage, { x: 0, y: 1 }, position.x, position.y)) {
 
+      let newX = position.x + 0;
+      let newY = position.y + 1;
 
-        if (!checkCollision2(piece, playerStage, { x: 0, y: 1 }, position.x, position.y)) {
-     
-          console.log('NO COLLISION')
-          let newX = position.x + 0;
-          let newY = position.y + 1;
-          console.log("STAGE : ", playerStage)
+      updatePosition({ x: newX, y: newY, playerStage: flushUpdate2(piece, playerStage, newX, newY, false), piece: piece })
 
-          updatePosition({ x: newX, y: newY, playerStage: flushUpdate2(piece, playerStage, newX, newY, collided)})
+    }
+    else
+      updateCollision({ playerStage: updateRows2(updateStage2(piece, playerStage, position.x, position.y, true)), playerRoom: playerRoom })
 
-        }
-        else
-        {
-          console.log('COLLISION')
-          updateCollision({playerStage: updateRows2(updateStage2(piece, playerStage, position.x, position.y)),playerRoom: playerRoom})
-        }
   }
+
+  const moveTetroLeft = () => {
+    if (!checkCollision2(piece, playerStage, { x: -1, y: 0 }, position.x, position.y)) {
+      let newX = position.x + -1;
+      let newY = position.y + 0;
+      updatePosition({ x: newX, y: newY, playerStage: flushUpdate2(piece, playerStage, newX, newY, false), piece: piece })
+    } else {
+      this.setPosition(0, 0);
+      let newX = position.x + 0;
+      let newY = position.y + 0;
+      updatePosition({ x: newX, y: newY, playerStage: flushUpdate2(piece, playerStage, newX, newY, true), piece: piece })
+
+    }
+  }
+  
+  const moveTetroRight = () => {
+    if (!checkCollision2(piece, playerStage, { x: 1, y: 0 }, position.x, position.y)) {
+      let newX = position.x + 1;
+      let newY = position.y + 0;
+      updatePosition({ x: newX, y: newY, playerStage: flushUpdate2(piece, playerStage, newX, newY, false), piece: piece })
+    } else {
+      this.setPosition(0, 0);
+      let newX = position.x + 0;
+      let newY = position.y + 0;
+      updatePosition({ x: newX, y: newY, playerStage: flushUpdate2(piece, playerStage, newX, newY, true), piece: piece })
+
+    }
+
+
+  }
+
+  const moveTetroUp = (dir) => {
+
+
+    const clonedPiece = JSON.parse(JSON.stringify(piece));
+    clonedPiece.form.shape = rotate(clonedPiece.form.shape, dir);
+    const pos = position.x;
+    let pos2 = position.x;
+    let offset = 1;
+
+
+    while (checkCollision2(clonedPiece, playerStage, { x: 0, y: 0 }, position.x, position.y)) {
+
+      pos2 += offset;
+      offset = -(offset + (offset > 0 ? 1 : -1));
+      if (offset > clonedPiece.form.shape[0].length) {
+
+        rotate(clonedPiece.form.shape, -dir);
+        pos2 = pos;
+        return;
+      }
+    }
+    updatePosition({ x: pos2, y: position.y, playerStage: flushUpdate2(clonedPiece, playerStage, pos2, position.y, false), piece: clonedPiece })
+  }
+
+
+  const move = ({ keyCode }) => {
+
+    if (playerGameOver === false) {
+      if (keyCode === 40) {
+        dropTetro()
+      }
+      else if (keyCode === 37) {
+        moveTetroLeft();
+      }
+      else if (keyCode === 39) {
+        moveTetroRight();
+      }
+      else if (keyCode === 38) {
+        moveTetroUp(1);
+      }
     }
 
   };
 
+  /*******      TIMER DROP  *************/
   /*useInterval(() => {
     if (otherNotLosing > -1) {
       const keyCode = 40;
       reqSendPosition({ keyCode, playerRoom });
     }
   }, playerDropTime);
-*/
-  const handleSubmitStatus = () =>
-  {
+/*******      TIMER DROP  *************/
+
+  const handleSubmitStatus = () => {
     reqStartGame({ playerName, playerRoom });
-    //updateStage2(piece, playerStage, position.x, position.y, collided);
-
   }
-  console.log("1 ", position, "2 ", collided, "3 ", playerStage)
-  if (piece)
-  updateStage3({playerStage: updateStage2(piece, playerStage, positionTetro.x, position.y, collided)})
-  //updateStage3(piece, playerStage, position.x, position.y, collided);
-  
 
-  //flushUpdate2(piece, playerStage, position.x, position.y, collided )
+  if (piece) {
+    updateStage2(piece, playerStage, position.x, position.y, false)
+  }
 
   return (
     <Grid container justify="center" onKeyDown={(e) => move(e)} tabIndex="0">
       <Grid item xs={6} lg={9} container justify="center" alignItems="center">
         {playerStage && playerStage.length
-        && <Stage tabIndex="0" stage={playerStage} />}
+          && <Stage tabIndex="0" stage={playerStage} />}
       </Grid>
       <Grid item xs={6} lg={3} container justify="center" style={{ height: '30vh' }}>
         {playerNextPiece && playerNextPiece.length
-        && <Stage stage={playerNextPiece} /> }
+          && <Stage stage={playerNextPiece} />}
         {playerOwner ? (
           <GameStatus handleSubmit={handleSubmitStatus} />
         ) : (0)}
@@ -158,7 +200,7 @@ const mapStateToProps = (state) => ({
   position: state.player.position,
   collided: state.player.collided,
   piece: state.player.piece,
-  
+
 
 });
 
@@ -168,6 +210,7 @@ const mapDispatchToProps = {
   updatePosition: actions.updatePosition,
   updateCollision: actions.updateCollision,
   updateStage3: actions.updateStage3,
+  updatePositionNull: actions.updatePositionNull,
 
 };
 

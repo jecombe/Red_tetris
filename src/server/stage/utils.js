@@ -24,3 +24,20 @@ export const updateStage = (piece, newStage, x, y, collided) => {
   });
   return newStage;
 };
+
+/*export const updateStage2 = (piece, newStage, x, y, collided) => {
+  console.log(newStage)
+  piece.form.shape.forEach((row, fy) => {
+    row.forEach((value, fx) => {
+      if (value !== 0) {
+        newStage[fy + y][fx + x] = [
+          0,
+          `${collided ? 'merged' : 'clear'}`,
+        ];
+      }
+    });
+  });
+  console.log(newStage)
+
+  return newStage;
+};*/

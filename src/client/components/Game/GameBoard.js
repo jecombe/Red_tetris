@@ -7,7 +7,7 @@ import * as actions from '../../actions';
 import Stage from './Stage';
 import GameStatus from './GameStatus';
 import { checkCollision } from '../../../server/helpers/gameHelpers';
-import { flushUpdate, updateRows } from '../../../server/stage/stage';
+import { flushUpdate, flushUpdate2, updateRows } from '../../../server/stage/stage';
 
 import { updateStage } from '../../../server/stage/utils';
 import { positionTetro } from '../../../server/actions/game';
@@ -125,11 +125,15 @@ const GameBoard = (props) => {
     }
     let newX = position.x + 0;
     let newY = position.y + i;
-    console.log(i);
+   // console.log(i);
     ///updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece: piece })
-    console.log("STAGE ", playerStage)
+   console.log("STAGE 1 ", playerStage)
+    //updatePosition({ x: newX, y: newY, playerStage: flushUpdate2(piece, playerStage, position.x, position.y, false), piece: piece })
 
-    updateCollision({ playerStage: updateRows(flushUpdate(piece, playerStage, newX, newY, true)), playerRoom: playerRoom, x: 10 / 2 - 2 , y: 0 })
+    updateCollision({ playerStage: updateRows(flushUpdate(piece, playerStage, newX, newY, true)), playerRoom: playerRoom, x: newX, y: newY })
+    //console.log("STAGE 2 ", playerStage)
+
+    //updatePosition({ x: 10 / 2 - 2, y: 0, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece: piece })
   };
 
 
@@ -169,6 +173,7 @@ const GameBoard = (props) => {
   }
 
   if (piece) {
+    console.log("ICICIC +++++++++ > ", playerStage)
     updateStage(piece, playerStage, position.x, position.y, false)
   }
 

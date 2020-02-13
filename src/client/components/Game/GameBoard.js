@@ -63,11 +63,11 @@ const GameBoard = (props) => {
 
     }
     else
-      updateCollision({ playerStage: updateRows(updateStage(piece, playerStage, position.x, position.y, true)), playerRoom: playerRoom, x: 10 /2 - 2, y: 0 })
+      updateCollision({ playerStage: updateRows(updateStage(piece, playerStage, position.x, position.y, true)), playerRoom: playerRoom, x: 10 / 2 - 2, y: 0 })
 
   }
 
-  
+
   const moveTetro = (dir) => {
     if (!checkCollision(piece, playerStage, { x: dir, y: 0 }, position.x, position.y)) {
       let newX = position.x + dir;
@@ -110,13 +110,13 @@ const GameBoard = (props) => {
       checkColl = checkCollision(piece, playerStage, { x: 0, y: i }, position.x, position.y)
       if (checkColl === true) {
         /* --- Check Game Over --- */
-       /* if (this.pos.y < 1) {
-          console.log('GAME OVER');
-          this.setLosing(true);
-          if (!this.peopleSpectre.length) {
-            this.setNoLosing2();
-          }
-        }*/
+        /* if (this.pos.y < 1) {
+           console.log('GAME OVER');
+           this.setLosing(true);
+           if (!this.peopleSpectre.length) {
+             this.setNoLosing2();
+           }
+         }*/
         i -= 1;
         break;
       }
@@ -124,98 +124,74 @@ const GameBoard = (props) => {
     }
     let newX = position.x + 0;
     let newY = position.y + i;
-    let tab;
-   // console.log(i);
-    ///updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece: piece })
+    
+    //**************** A EVITER D'UTILISER CAR NE MET PAS EN MERGED LES PIECES (SERT JUSTE A MOUV LES PIECE SANS GERER LES COLLISIONS)*************************/
+    // updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece: piece })
 
-    //updatePosition({ x: newX, y: newY, playerStage: updateStage(piece, playerStage, newX, newY, true), piece: piece })
-    if (position.y === newY)
-    {
-      tab =  updateStage(piece, playerStage, newX, newY, true)
-        //updatePosition({ x: newX, y: newY, playerStage:tab, piece: piece })
+   //*********** A UTILISER CAR MET LES PIECES NE MERGED ET APPEL LA PIECE SUIVANTE *************************/
+    updateCollision({ playerStage: updateRows(flushUpdate(piece, playerStage, newX, newY, true)), playerRoom: playerRoom, x: newX, y: newY })
+};
 
+
+const move = ({ keyCode }) => {
+
+  if (playerGameOver === false) {
+    if (keyCode === 40) {
+      dropTetro()
     }
-    else
-    {
-      console.log("STAGE ", playerStage)
-          updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece: piece })
-          //let stage =  flushUpdate(piece, playerStage, newX, newY, true)
-          console.log("STAGE 2", stage)
-
-          //updateCollision({ playerStage:flushUpdate(piece, playerStage, newX, newY, true), playerRoom: playerRoom, x: 10 / 2 - 2, y: 0 })
-          //updateCollision({ playerStage: stage, playerRoom: playerRoom, x:0, y: 0 })
-
-
-
+    else if (keyCode === 37) {
+      moveTetro(-1);
     }
-    console.log("STAGE END", playerStage)
-
-    //updateCollision({ playerStage:tab, playerRoom: playerRoom, x: newX, y: newY })
-    //console.log("STAGE 2 ", playerStage)
-
-    //updatePosition({ x: 10 / 2 - 2, y: 0, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece: piece })
-  };
-
-
-  const move = ({ keyCode }) => {
-
-    if (playerGameOver === false) {
-      if (keyCode === 40) {
-        dropTetro()
-      }
-      else if (keyCode === 37) {
-        moveTetro(-1);
-      }
-      else if (keyCode === 39) {
-        moveTetro(1);
-      }
-      else if (keyCode === 38) {
-        moveTetroUp(1);
-      }
-      else if (keyCode === 32) {
-        moveDownTetro();
-      }
+    else if (keyCode === 39) {
+      moveTetro(1);
     }
-
-  };
-
-  /*******      TIMER DROP  *************/
-  /*useInterval(() => {
-    if (otherNotLosing > -1) {
-      const keyCode = 40;
-      reqSendPosition({ keyCode, playerRoom });
+    else if (keyCode === 38) {
+      moveTetroUp(1);
     }
-  }, playerDropTime);
+    else if (keyCode === 32) {
+      moveDownTetro();
+    }
+  }
+
+};
+
+/*******      TIMER DROP  *************/
+/*useInterval(() => {
+  if (otherNotLosing > -1) {
+    const keyCode = 40;
+    reqSendPosition({ keyCode, playerRoom });
+  }
+}, playerDropTime);
 /*******      TIMER DROP  *************/
 
-  const handleSubmitStatus = () => {
-    reqStartGame({ playerName, playerRoom });
-    //({ x: 10 / 2 - 2, y: 0, playerStage:  updateStage(piece, playerStage, position.x, position.y, false), piece: piece })
+const handleSubmitStatus = () => {
+  reqStartGame({ playerName, playerRoom });
+  //({ x: 10 / 2 - 2, y: 0, playerStage:  updateStage(piece, playerStage, position.x, position.y, false), piece: piece })
 
 
-  }
+}
 
-  if (piece) {
-    console.log("ICICIC +++++++++ > ", playerStage)
-    updateStage(piece, playerStage, position.x, position.y, false)
-    //flushUpdate(piece, playerStage, position.x, position.y, true)
-  }
+if (piece) {
+  console.log("ICICIC +++++++++ > ", playerStage)
+   //*********** AJOUTE LE OU LES PIECES SUR LA STAGE *************************/
+  updateStage(piece, playerStage, position.x, position.y, false)
+}
 
-  return (
-    <Grid container justify="center" onKeyDown={(e) => move(e)} tabIndex="0">
-      <Grid item xs={6} lg={9} container justify="center" alignItems="center">
-        {playerStage && playerStage.length
-          && <Stage tabIndex="0" stage={playerStage} />}
-      </Grid>
-      <Grid item xs={6} lg={3} container justify="center" style={{ height: '30vh' }}>
-        {playerNextPiece && playerNextPiece.length
-          && <Stage stage={playerNextPiece} />}
-        {playerOwner ? (
-          <GameStatus handleSubmit={handleSubmitStatus} />
-        ) : (0)}
-      </Grid>
+return (
+  <Grid container justify="center" onKeyDown={(e) => move(e)} tabIndex="0">
+    <Grid item xs={6} lg={9} container justify="center" alignItems="center">
+      {playerStage && playerStage.length
+        && <Stage tabIndex="0" stage={playerStage} />}
     </Grid>
-  );
+    <Grid item xs={6} lg={3} container justify="center" style={{ height: '30vh' }}>
+      {playerNextPiece && playerNextPiece.length
+        && <Stage stage={playerNextPiece} />}
+      {playerOwner ? (
+        <GameStatus handleSubmit={handleSubmitStatus} />
+      ) : (0)}
+    </Grid>
+  </Grid>
+);
 };
 
 GameBoard.propTypes = {

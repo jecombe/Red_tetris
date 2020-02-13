@@ -128,7 +128,7 @@ const GameBoard = (props) => {
     //**************** A EVITER D'UTILISER CAR NE MET PAS EN MERGED LES PIECES (SERT JUSTE A MOUV LES PIECE SANS GERER LES COLLISIONS)*************************/
     // updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece: piece })
 
-   //*********** A UTILISER CAR MET LES PIECES NE MERGED ET APPEL LA PIECE SUIVANTE *************************/
+   //*********** A UTILISER CAR MET LES PIECES EN MERGED ET APPEL LA NOUVELLE PIECE, SET LA POSITION DE LA PIECE ACTUEL EN req ET EN res MET LA POSITION DE LA NOUVELLE PIECE PAR DEFAULT (x: 10 / 2 - 2, y: 0) *************************/
     updateCollision({ playerStage: updateRows(flushUpdate(piece, playerStage, newX, newY, true)), playerRoom: playerRoom, x: newX, y: newY })
 };
 

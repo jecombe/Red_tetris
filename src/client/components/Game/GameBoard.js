@@ -74,7 +74,6 @@ const GameBoard = (props) => {
       let newY = position.y + 0;
       updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, false), piece: piece })
     } else {
-      this.setPosition(0, 0);
       let newX = position.x + 0;
       let newY = position.y + 0;
       updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece: piece })
@@ -125,12 +124,33 @@ const GameBoard = (props) => {
     }
     let newX = position.x + 0;
     let newY = position.y + i;
+    let tab;
    // console.log(i);
     ///updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece: piece })
-   console.log("STAGE 1 ", playerStage)
-    //updatePosition({ x: newX, y: newY, playerStage: flushUpdate2(piece, playerStage, position.x, position.y, false), piece: piece })
 
-    updateCollision({ playerStage: updateRows(flushUpdate(piece, playerStage, newX, newY, true)), playerRoom: playerRoom, x: newX, y: newY })
+    //updatePosition({ x: newX, y: newY, playerStage: updateStage(piece, playerStage, newX, newY, true), piece: piece })
+    if (position.y === newY)
+    {
+      tab =  updateStage(piece, playerStage, newX, newY, true)
+        //updatePosition({ x: newX, y: newY, playerStage:tab, piece: piece })
+
+    }
+    else
+    {
+      console.log("STAGE ", playerStage)
+          updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece: piece })
+          //let stage =  flushUpdate(piece, playerStage, newX, newY, true)
+          console.log("STAGE 2", stage)
+
+          //updateCollision({ playerStage:flushUpdate(piece, playerStage, newX, newY, true), playerRoom: playerRoom, x: 10 / 2 - 2, y: 0 })
+          //updateCollision({ playerStage: stage, playerRoom: playerRoom, x:0, y: 0 })
+
+
+
+    }
+    console.log("STAGE END", playerStage)
+
+    //updateCollision({ playerStage:tab, playerRoom: playerRoom, x: newX, y: newY })
     //console.log("STAGE 2 ", playerStage)
 
     //updatePosition({ x: 10 / 2 - 2, y: 0, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece: piece })
@@ -170,11 +190,15 @@ const GameBoard = (props) => {
 
   const handleSubmitStatus = () => {
     reqStartGame({ playerName, playerRoom });
+    //({ x: 10 / 2 - 2, y: 0, playerStage:  updateStage(piece, playerStage, position.x, position.y, false), piece: piece })
+
+
   }
 
   if (piece) {
     console.log("ICICIC +++++++++ > ", playerStage)
     updateStage(piece, playerStage, position.x, position.y, false)
+    //flushUpdate(piece, playerStage, position.x, position.y, true)
   }
 
   return (

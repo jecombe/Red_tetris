@@ -59,6 +59,7 @@ export const dispatchStage2 = (objPlayer, io, objGame) => {
 
 
 export const moveDownTetro = (redGame, objGame, objPlayer) => {
+  console.log('OKOKOKOKOKOKOKOk')
   let i = 0;
   let checkColl = false;
   while (checkColl !== true) {
@@ -78,8 +79,9 @@ export const moveDownTetro = (redGame, objGame, objPlayer) => {
     }
     checkColl = checkCollision(objPlayer, objPlayer.stage, { x: 0, y: i + 1 });
   }
-
+  console.log('avant',objPlayer.pos.x)
   objPlayer.setPosition(0, i);
+  console.log('apres ', objPlayer.pos.x)
   objPlayer.setStage(flushUpdate(objPlayer.piece, objPlayer, objPlayer.stage));
   objPlayer.setIndex(objPlayer.index + 1);
   objPlayer.setStage(updateStagingBeforeCollision(objPlayer, objGame, redGame));

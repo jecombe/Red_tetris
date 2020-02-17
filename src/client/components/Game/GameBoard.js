@@ -9,7 +9,7 @@ import GameStatus from './GameStatus';
 import { checkCollision } from '../../../server/helpers/gameHelpers';
 import { flushUpdate, flushUpdate2, updateRows } from '../../../server/stage/stage';
 
-import { updateStage } from '../../../server/stage/utils';
+import { updateStage, updateStage2 } from '../../../server/stage/utils';
 import { positionTetro } from '../../../server/actions/game';
 import { rotate } from '../../../server/actions/move'
 
@@ -50,6 +50,7 @@ const GameBoard = (props) => {
     piece,
     updatePosition,
     updateCollision,
+    collided,
 
   } = props;
 
@@ -59,12 +60,11 @@ const GameBoard = (props) => {
       let newX = position.x + 0;
       let newY = position.y + 1;
 
-      updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, false), piece: piece })
+      updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, false), piece: piece, collided: false })
 
     }
     else
-      updateCollision({ playerStage: updateRows(updateStage(piece, playerStage, position.x, position.y, true)), playerRoom: playerRoom, x: 10 / 2 - 2, y: 0 })
-
+      updatePosition({ x: position.x, y: position.y, playerStage: flushUpdate(piece, playerStage, position.x, position.y, false), piece: piece, collided: true })
   }
 
 
@@ -72,11 +72,11 @@ const GameBoard = (props) => {
     if (!checkCollision(piece, playerStage, { x: dir, y: 0 }, position.x, position.y)) {
       let newX = position.x + dir;
       let newY = position.y + 0;
-      updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, false), piece: piece })
+      updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, false), piece: piece, collided: false })
     } else {
       let newX = position.x + 0;
       let newY = position.y + 0;
-      updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece: piece })
+      updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece: piece, collided: false })
 
     }
   }
@@ -124,74 +124,78 @@ const GameBoard = (props) => {
     }
     let newX = position.x + 0;
     let newY = position.y + i;
-    
-    //**************** A EVITER D'UTILISER CAR NE MET PAS EN MERGED LES PIECES (SERT JUSTE A MOUV LES PIECE SANS GERER LES COLLISIONS)*************************/
-    // updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece: piece })
+    updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece: piece, collided: true })
 
-   //*********** A UTILISER CAR MET LES PIECES EN MERGED ET APPEL LA NOUVELLE PIECE, SET LA POSITION DE LA PIECE ACTUEL EN req ET EN res MET LA POSITION DE LA NOUVELLE PIECE PAR DEFAULT (x: 10 / 2 - 2, y: 0) *************************/
-    updateCollision({ playerStage: updateRows(flushUpdate(piece, playerStage, newX, newY, true)), playerRoom: playerRoom, x: newX, y: newY })
-};
+  };
 
 
-const move = ({ keyCode }) => {
+  const move = ({ keyCode }) => {
 
-  if (playerGameOver === false) {
-    if (keyCode === 40) {
-      dropTetro()
+    if (playerGameOver === false) {
+      if (keyCode === 40) {
+        dropTetro()
+      }
+      else if (keyCode === 37) {
+        moveTetro(-1);
+      }
+      else if (keyCode === 39) {
+        moveTetro(1);
+      }
+      else if (keyCode === 38) {
+        moveTetroUp(1);
+      }
+      else if (keyCode === 32) {
+        moveDownTetro();
+      }
     }
-    else if (keyCode === 37) {
-      moveTetro(-1);
+
+  };
+
+  /*******      TIMER DROP  *************/
+  /*useInterval(() => {
+    if (otherNotLosing > -1) {
+      const keyCode = 40;
+      reqSendPosition({ keyCode, playerRoom });
     }
-    else if (keyCode === 39) {
-      moveTetro(1);
-    }
-    else if (keyCode === 38) {
-      moveTetroUp(1);
-    }
-    else if (keyCode === 32) {
-      moveDownTetro();
-    }
+  }, playerDropTime);
+  /*******      TIMER DROP  *************/
+
+  const handleSubmitStatus = () => {
+    reqStartGame({ playerName, playerRoom });
   }
 
-};
+  //*********** FONCTION POUR AFFICHER LES PIECES SELON LES COLLISONS *************************/
+  const printTetroStage = () => {
+    if (piece && !collided) {
 
-/*******      TIMER DROP  *************/
-/*useInterval(() => {
-  if (otherNotLosing > -1) {
-    const keyCode = 40;
-    reqSendPosition({ keyCode, playerRoom });
+      //*********** AJOUTE LE OU LES PIECES SUR LA STAGE *************************/
+      updateStage(piece, playerStage, position.x, position.y, collided)
+    }
+    else if (collided) {
+      //*********** AJOUTE LA PROCHAINE PIECES SUR LA STAGE LORSQU'IL Y A COLLISION *************************/
+      updateCollision({ playerStage: updateRows(updateStage(piece, playerStage, position.x, position.y, true)), playerRoom: playerRoom, x: 10 / 2 - 2, y: 0 })
+    }
+
   }
-}, playerDropTime);
-/*******      TIMER DROP  *************/
 
-const handleSubmitStatus = () => {
-  reqStartGame({ playerName, playerRoom });
-  //({ x: 10 / 2 - 2, y: 0, playerStage:  updateStage(piece, playerStage, position.x, position.y, false), piece: piece })
+  printTetroStage();
 
 
-}
-
-if (piece) {
-  console.log("ICICIC +++++++++ > ", playerStage)
-   //*********** AJOUTE LE OU LES PIECES SUR LA STAGE *************************/
-  updateStage(piece, playerStage, position.x, position.y, false)
-}
-
-return (
-  <Grid container justify="center" onKeyDown={(e) => move(e)} tabIndex="0">
-    <Grid item xs={6} lg={9} container justify="center" alignItems="center">
-      {playerStage && playerStage.length
-        && <Stage tabIndex="0" stage={playerStage} />}
+  return (
+    <Grid container justify="center" onKeyDown={(e) => move(e)} tabIndex="0">
+      <Grid item xs={6} lg={9} container justify="center" alignItems="center">
+        {playerStage && playerStage.length
+          && <Stage tabIndex="0" stage={playerStage} />}
+      </Grid>
+      <Grid item xs={6} lg={3} container justify="center" style={{ height: '30vh' }}>
+        {playerNextPiece && playerNextPiece.length
+          && <Stage stage={playerNextPiece} />}
+        {playerOwner ? (
+          <GameStatus handleSubmit={handleSubmitStatus} />
+        ) : (0)}
+      </Grid>
     </Grid>
-    <Grid item xs={6} lg={3} container justify="center" style={{ height: '30vh' }}>
-      {playerNextPiece && playerNextPiece.length
-        && <Stage stage={playerNextPiece} />}
-      {playerOwner ? (
-        <GameStatus handleSubmit={handleSubmitStatus} />
-      ) : (0)}
-    </Grid>
-  </Grid>
-);
+  );
 };
 
 GameBoard.propTypes = {

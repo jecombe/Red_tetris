@@ -7,7 +7,6 @@ export const flushUpdate2 = (piece, stage, x, y, collided) => updateStage2(piece
 
 const replaceOtherStage = (objPlayer, objOther) => {
   const index = objPlayer.peopleSpectre.indexOf(objOther.login);
-  console.log('INDEX ', index);
   let id = 0;
   objPlayer.otherStage[index] = objOther.stage;
 

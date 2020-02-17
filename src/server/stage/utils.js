@@ -12,6 +12,7 @@ export const createStagePiece = () => Array.from(Array(STAGE_HEIGHT_PIECE), () =
 export const isFull = (currentValue) => (currentValue[1] === 'merged');
 
 export const updateStage = (piece, newStage, x, y, collided) => {
+
   piece.form.shape.forEach((row, fy) => {
     row.forEach((value, fx) => {
       if (value !== 0) {
@@ -25,14 +26,14 @@ export const updateStage = (piece, newStage, x, y, collided) => {
   return newStage;
 };
 
-/*export const updateStage2 = (piece, newStage, x, y, collided) => {
+export const updateStage2 = (piece, newStage, x, y, collided) => {
   console.log(newStage)
   piece.form.shape.forEach((row, fy) => {
     row.forEach((value, fx) => {
       if (value !== 0) {
         newStage[fy + y][fx + x] = [
           0,
-          `${collided ? 'merged' : 'clear'}`,
+          'merged',
         ];
       }
     });
@@ -40,4 +41,4 @@ export const updateStage = (piece, newStage, x, y, collided) => {
   console.log(newStage)
 
   return newStage;
-};*/
+};

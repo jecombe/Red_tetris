@@ -180,7 +180,6 @@ const GameBoard = (props) => {
 
   printTetroStage();
 
-
   return (
     <Grid container justify="center" onKeyDown={(e) => move(e)} tabIndex="0">
       <Grid item xs={6} lg={9} container justify="center" alignItems="center">

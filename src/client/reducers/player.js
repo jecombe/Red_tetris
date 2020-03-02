@@ -73,13 +73,14 @@ const playerReducer = (state = playerState, action) => {
     }
 
     case ev.res_UPDATE_COLLISION: {
-      const {piece} = action.payload;
+      const {piece, playerNextPiece} = action.payload;
 
       return {
         ...state,
         piece,
         position: {x: 10 / 2 - 2, y: 0},
         collided: false,
+        playerNextPiece,
       };
     }
     case ev.req_UPDATE_COLLISION: {
@@ -97,7 +98,6 @@ const playerReducer = (state = playerState, action) => {
 
     case ev.UPDATE_POSITION: {
       const {x, y, playerStage, piece, collided} = action.payload;
-      console.log("COLLIDED", collided)
 
       return {
         ...state,

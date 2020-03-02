@@ -24,7 +24,7 @@ const ioDispatchLogin = (redGame, socketClient) => {
     });
     /* Join room */
     socketClient.join(player.roomAssociate);
-    console.log('SOCKET => ', socketClient);
+    //console.log('SOCKET => ', socketClient);
     redGame.io.to(`${socketClient.id}`).emit(ev.OBJ_PLAYER, {
       playerStage: player.stage,
       playerNextPiece: player.nextPiece,

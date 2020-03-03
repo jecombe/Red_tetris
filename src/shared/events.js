@@ -16,6 +16,7 @@ module.exports = {
   UPDATE_POSITION: 'updatePosition',
   UPDATE_STAGE_3: 'updateStage3',
   UPDATE_POSITION_NULL: 'updatePositionNull',
+  SHARE_POSITION: 'sharePosition',
   
   req_ECHO: '#echo',
   res_ECHO: '@echo',
@@ -37,4 +38,6 @@ module.exports = {
 
   req_UPDATE_COLLISION: '#updateCollision',
   res_UPDATE_COLLISION: '@updateCollision',
+
+  req_SHARE_POSITION: '#sharePosition',
 };

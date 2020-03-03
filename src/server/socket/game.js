@@ -36,13 +36,18 @@ const ioDispatchGame = (redGame, socketClient) => {
     if (!game.tetro[player.index + 1]) game.setTetro();
     player.setNextPiece(flushUpdate(game.tetro[player.index + 1], createStagePiece(), player.getPositionX(), player.getPositionY()));
 
-    console.log("_----------------------_____> ", player.getNextPiece())
     socketClient.emit(ev.res_UPDATE_COLLISION, {
       piece: player.getPiece(),
       playerNextPiece: player.getNextPiece(),
     })
 
   })
+
+  socketClient.on(ev.SHARE_POSITION, (data) => {
+    // const { newStage, nextPiece, gameOver, otherNotLosing, playerLineFull } = positionTetro(redGame, data, socketClient.id);
+    console.log("+++++++++++++++> ", data)
+  });
+
 
 };
 

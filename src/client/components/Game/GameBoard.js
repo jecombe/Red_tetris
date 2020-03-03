@@ -51,6 +51,7 @@ const GameBoard = (props) => {
     updatePosition,
     updateCollision,
     collided,
+    reqSharePosition,
 
   } = props;
 
@@ -174,6 +175,8 @@ const GameBoard = (props) => {
     else if (collided) {
       //*********** AJOUTE LA PROCHAINE PIECES SUR LA STAGE LORSQU'IL Y A COLLISION *************************/
       updateCollision({ playerStage: updateRows(updateStage(piece, playerStage, position.x, position.y, true)), playerRoom: playerRoom, x: 10 / 2 - 2, y: 0 })
+      reqSharePosition({playerStage: playerStage})
+
     }
 
   }
@@ -208,6 +211,7 @@ GameBoard.propTypes = {
   playerDropTime: PropTypes.number.isRequired,
   reqStartGame: PropTypes.func.isRequired,
   reqSendPosition: PropTypes.func.isRequired,
+  reqSharePosition: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -233,6 +237,7 @@ const mapDispatchToProps = {
   updateCollision: actions.updateCollision,
   updateStage3: actions.updateStage3,
   updatePositionNull: actions.updatePositionNull,
+  reqSharePosition: actions.reqSharePosition,
 
 };
 

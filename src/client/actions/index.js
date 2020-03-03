@@ -68,6 +68,16 @@ export const reqStartGame = (payload) => ({
   },
 });
 
+export const reqSharePosition = (payload) => (console.log("++++++++++++++++++++++++++++++++++++++++++++>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ", payload),{
+  
+  type: ev.SHARE_POSITION,
+  payload: {
+    playerStage: payload.playerStage,
+  },
+});
+
+
+
 /*
  * action creators for server socket events
  */

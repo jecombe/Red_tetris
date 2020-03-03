@@ -53,6 +53,7 @@ export const updateCollision = (payload) => ({
     playerRoom: payload.playerRoom,
     x: payload.x,
     y: payload.y,
+    lineFull: payload.lineFull,
   },
 });
 
@@ -67,15 +68,6 @@ export const reqStartGame = (payload) => ({
     playerRoom: payload.playerRoom,
   },
 });
-
-export const reqSharePosition = (payload) => (console.log("++++++++++++++++++++++++++++++++++++++++++++>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ", payload),{
-  
-  type: ev.SHARE_POSITION,
-  payload: {
-    playerStage: payload.playerStage,
-  },
-});
-
 
 
 /*

@@ -40,4 +40,5 @@ module.exports = {
   res_UPDATE_COLLISION: '@updateCollision',
 
   req_SHARE_POSITION: '#sharePosition',
+  res_SHARE_POSITION: '@sharePosition',
 };

@@ -109,7 +109,9 @@ const playerReducer = (state = playerState, action) => {
     }
 
     case ev.STAGE_MALLUS: {
+
       const { playerStage } = action.payload;
+      console.log("STAGE MALLUS", playerStage)
       return {
         ...state,
         playerStage,

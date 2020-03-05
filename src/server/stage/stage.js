@@ -1,10 +1,6 @@
-import { isFull, updateStage, updateStage2 } from './utils';
-
+import { isFull, updateStage } from './utils';
 
 export const flushUpdate = (piece, stage, x, y, collided) => updateStage(piece, stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell))), x, y, collided);
-export const flushUpdate2 = (piece, stage, x, y, collided) => updateStage2(piece, stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell))), x, y, collided);
-
-
 
 export const updateRows = (newStage, objGame, objPlayer, redGame) => {
   // Pour la hauteur verifie si une ligne est pleine

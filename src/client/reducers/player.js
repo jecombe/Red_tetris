@@ -124,9 +124,9 @@ const playerReducer = (state = playerState, action) => {
       return {
         ...state,
         playerOtherStage,
-        otherNotLosing,
-        playerWin,
-        playerOwner,
+       // otherNotLosing,
+      //  playerWin,
+       // playerOwner,
       };
     }
 

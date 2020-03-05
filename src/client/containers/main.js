@@ -7,6 +7,7 @@ import Login from './login';
 import Game from './game';
 import Loader from '../components/Loader';
 import Error404 from '../components/Error404';
+import { BlockLoading } from 'react-loadingg';
 
 const Main = (props) => {
   const { connected } = props;

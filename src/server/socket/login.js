@@ -17,7 +17,7 @@ const ioDispatchLogin = (redGame, socketClient) => {
 
   // LOGIN
   socketClient.on(ev.req_LOGIN, (data) => {
-    const player = login(redGame, data, socketClient);
+    const {player, game} = login(redGame, data, socketClient);
 
     redGame.io.emit(ev.res_ROOMS, {
       games,
@@ -28,7 +28,7 @@ const ioDispatchLogin = (redGame, socketClient) => {
     redGame.io.to(`${socketClient.id}`).emit(ev.OBJ_PLAYER, {
       playerStage: player.stage,
       playerNextPiece: player.nextPiece,
-      playerOtherStage: player.otherStage,
+      playerOtherStage: game.getAllStage(),
       playerOwner: player.owner,
     });
   });

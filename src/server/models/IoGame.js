@@ -46,7 +46,7 @@ export default class IoGame {
 
 
   startGame(id, room) {
-    return this.getGame(room).startGame(id);
+    return this.getGame(room).startGame(id, this);
     // const player = game.getPlayer(id);
 
   }

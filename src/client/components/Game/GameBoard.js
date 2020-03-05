@@ -10,6 +10,7 @@ import { checkCollision } from '../../../server/helpers/gameHelpers';
 import { flushUpdate, updateRows } from '../../../server/stage/stage';
 
 import { updateStage  } from '../../../server/stage/utils';
+import { BlockLoading } from 'react-loadingg';
 
 
  const rotate = (matrix, dir) => {
@@ -96,7 +97,6 @@ const GameBoard = (props) => {
     let pos2 = position.x;
     let offset = 1;
     while (checkCollision(clonedPiece, playerStage, { x: 0, y: 0 }, position.x, position.y)) {
-
       pos2 += offset;
       offset = -(offset + (offset > 0 ? 1 : -1));
       if (offset > clonedPiece.form.shape[0].length) {
@@ -178,7 +178,6 @@ const GameBoard = (props) => {
     else if (collided) {
       //*********** AJOUTE LA PROCHAINE PIECES SUR LA STAGE LORSQU'IL Y A COLLISION *************************/
       const {stage, lineFull } = updateRows(updateStage(piece, playerStage, position.x, position.y, true))
-      console.log("LIBE FULL", lineFull)
       updateCollision({ playerStage: stage, playerRoom: playerRoom, x: 10 / 2 - 2, y: 0 , lineFull: lineFull})
     }
   }
@@ -194,9 +193,10 @@ const GameBoard = (props) => {
       <Grid item xs={6} lg={3} container justify="center" style={{ height: '30vh' }}>
         {playerNextPiece && playerNextPiece.length
           && <Stage stage={playerNextPiece} />}
+
         {playerOwner ? (
           <GameStatus handleSubmit={handleSubmitStatus} />
-        ) : (0)}
+        ) :  <h1>YOU ARE NOT THE OWNER</h1>}
       </Grid>
     </Grid>
   );

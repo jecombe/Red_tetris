@@ -1,6 +1,4 @@
-import { createStage } from '../stage/utils';
 
-import { emitterStageOther } from '../emitter/emitter';
 import ev from '../../shared/events';
 
 
@@ -20,8 +18,8 @@ export const positionTetro = (data, redGame, socketClient) => {
   
   player.positionTetro(keyCode, game, redGame)
   redGame.io.to(`${socketClient.id}`).emit(ev.STAGE, {
-    newStage: player.stage,
-    nextPiece: player.nextPiece,
+    newStage: player.getStage(),
+    nextPiece: player.getNextPiece(),
     gameOver: player.getLosing(),
     otherNotLosing: player.notLosing,
     win: player.win,

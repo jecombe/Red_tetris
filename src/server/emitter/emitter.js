@@ -1,11 +1,11 @@
 import ev from '../../shared/events';
 
-export const emitterStageOther = (io, player) => {
-    io.to(`${player.getIdSocket()}`).emit(ev.STAGE_OTHER, {
-        otherStage: player.otherStage,
-        otherNotLosing: player.notLosing,
-        win: player.win,
-        playerOwner: player.owner,
+export const emitterStageOther = (redGame, stageOther, game) => {
+    redGame.io.sockets.in(game.getGameName()).emit(ev.STAGE_OTHER, {
+        otherStage: game.getAllStage(),
+        //otherNotLosing: player.notLosing,
+       // win: player.win,
+        //playerOwner: player.owner,
 
     });
 };

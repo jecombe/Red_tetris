@@ -1,13 +1,9 @@
 import { createStage, createStagePiece } from '../stage/utils';
 
-import { flushUpdate, updateStagingAfterCollision, updateStagingBeforeCollision } from '../stage/stage';
-import { checkCollision } from '../helpers/gameHelpers';
-import { rotate, dispatchStage2 } from '../actions/move'
-import { dispatchStageLogin } from '../actions/login'
 
 export default class Player {
-  constructor(socketId, username, room) {
-    this.idSocket = socketId;
+  constructor(socketid, username, room ) {
+    this.idSocket = socketid;
     this.login = username;
     this.owner = false;
     this.stage = createStage();
@@ -133,8 +129,8 @@ export default class Player {
     this.win = false;
   }
 
-  setMallus() {
-    this.mallus += 1;
+  setMallus(lineFull) {
+    this.mallus += lineFull;
   }
 
   setLineFull() {

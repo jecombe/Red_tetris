@@ -7,12 +7,18 @@ import * as actions from '../../actions';
 import Stage from './Stage';
 import GameStatus from './GameStatus';
 import { checkCollision } from '../../../server/helpers/gameHelpers';
-import { flushUpdate, flushUpdate2, updateRows } from '../../../server/stage/stage';
+import { flushUpdate, updateRows } from '../../../server/stage/stage';
 
-import { updateStage, updateStage2 } from '../../../server/stage/utils';
-import { positionTetro } from '../../../server/actions/game';
-import { rotate } from '../../../server/actions/move'
+import { updateStage  } from '../../../server/stage/utils';
 
+
+ const rotate = (matrix, dir) => {
+  // Make the rows to become cols (transpose)
+  const rotatedTetro = matrix.map((_, index) => matrix.map((col) => col[index]));
+  // Reverse each row to get a rotated matrix
+  if (dir > 0) return rotatedTetro.map((row) => row.reverse());
+  return rotatedTetro.reverse();
+};
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -130,7 +136,7 @@ const GameBoard = (props) => {
 
   const move = ({ keyCode }) => {
 
-    if (playerGameOver === false) {
+    //if (playerGameOver === false) {
       if (keyCode === 40) {
         dropTetro()
       }
@@ -146,7 +152,7 @@ const GameBoard = (props) => {
       else if (keyCode === 32) {
         moveDownTetro();
       }
-    }
+    //}
   };
 
   /*******      TIMER DROP  *************/

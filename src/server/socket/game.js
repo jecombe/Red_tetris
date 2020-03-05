@@ -5,7 +5,6 @@ import { flushUpdate, updateRows } from '../stage/stage';
 import { createStagePiece } from '../stage/utils';
 
 import { emitterStageOther, emitterMallus } from '../emitter/emitter';
-//import {dispatchStage} from '../actions/move'
 
 
 const replaceOtherStage = (objPlayer, objOther) => {
@@ -39,30 +38,32 @@ export const dispatchStage = (objPlayer, io, objGame) => {
 
 
 
-const setMallusToPlayers = (userTab, userActual, io, objGame, objPlayer, lineFull) => {
-  console.log("LINE FULL ", userTab)
+const setMallusToPlayers = (game, player, redGame, lineFull, socketClient) => {
 
-  if (lineFull === true)
-  {
-  for (let i = 0; i < userTab.length; i++) {
-    if (userTab[i].login !== userActual) {
-      userTab[i].setMallus();
-      const calcRow = 20 - userTab[i].getMallus();
-      /* --- Check Game Over with mallus --- */
-      if (calcRow === 0) {
-        console.log('GAME OVER MALLUS');
-        userTab[i].setLosing(true);
-      }
-      if (calcRow < 20) {
-        const newStage = userTab[i].stage.slice(1, 20);
-        newStage.push(new Array(10).fill(['M', 'mallus']));
-        userTab[i].setStage(newStage);
-        emitterMallus(io, userTab[i]);
+  let userTab = game.getUserInGame();
+
+  if (lineFull !== 0) {
+
+    for (let i = 0; i < userTab.length; i++) {
+      if (userTab[i].login !== player.login) {
+        userTab[i].setMallus(lineFull);
+        const calcRow = 20 - userTab[i].getMallus();
+        /* --- Check Game Over with mallus --- */
+        if (calcRow === 0) {
+          userTab[i].setLosing(true);
+        }
+        if (calcRow < 20) {
+          const newStage = userTab[i].stage.slice(lineFull, 20);
+          while (lineFull !== 0) {
+            newStage.push(new Array(10).fill(['M', 'mallus']));
+            lineFull--;
+          }
+          userTab[i].setStage(newStage);
+          emitterMallus(redGame.io, userTab[i]);
+        }
       }
     }
   }
-}
-  dispatchStage(objPlayer, io, objGame);
 };
 
 
@@ -82,11 +83,6 @@ const ioDispatchGame = (redGame, socketClient) => {
     });
   });
 
-  socketClient.on(ev.POSITION_TETRO, (data) => {
-    // const { newStage, nextPiece, gameOver, otherNotLosing, playerLineFull } = positionTetro(redGame, data, socketClient.id);
-
-    positionTetro(data, redGame, socketClient);
-  });
 
   socketClient.on(ev.req_UPDATE_COLLISION, (data) => {
 
@@ -94,12 +90,8 @@ const ioDispatchGame = (redGame, socketClient) => {
     const { playerStage, playerRoom, lineFull } = data;
     const game = redGame.getGame(playerRoom);
     const player = redGame.getGame(playerRoom).getPlayer(socketClient.id);
-    //updateRows(playerStage, game, player, redGame)
     player.setStage(playerStage);
-    //dispatchStage(player, redGame.io, game);
-    console.log("LINE FULL PREMIER +> ", lineFull)
-    setMallusToPlayers(game.getUserInGame(), player.getLogin(), redGame.socketClient, game, player, lineFull)
-
+    setMallusToPlayers(game, player, redGame, lineFull, socketClient)
     player.setIndex(player.index + 1);
     player.setPiece(game.tetro[player.index]);
     if (!game.tetro[player.index + 1]) game.setTetro();
@@ -109,6 +101,12 @@ const ioDispatchGame = (redGame, socketClient) => {
       piece: player.getPiece(),
       playerNextPiece: player.getNextPiece(),
     })
+
+    /*socketClient.to(game.getGameName()).emit(ev.STAGE_OTHER, {
+      otherStage: player.getStage(),
+    })*/
+
+
 
   })
 

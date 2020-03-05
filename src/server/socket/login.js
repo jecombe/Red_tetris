@@ -17,7 +17,7 @@ const ioDispatchLogin = (redGame, socketClient) => {
 
   // LOGIN
   socketClient.on(ev.req_LOGIN, (data) => {
-    const player = login(redGame, data, socketClient.id);
+    const player = login(redGame, data, socketClient);
 
     redGame.io.emit(ev.res_ROOMS, {
       games,

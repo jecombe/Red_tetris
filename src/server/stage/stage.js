@@ -8,11 +8,11 @@ export const flushUpdate2 = (piece, stage, x, y, collided) => updateStage2(piece
 
 export const updateRows = (newStage, objGame, objPlayer, redGame) => {
   // Pour la hauteur verifie si une ligne est pleine
-let lineFull = false;
+let lineFull = 0;
   newStage.forEach((row) => {
     const fullLine = row.every(isFull);
     if (fullLine === true) {
-      lineFull = true;
+      lineFull++;
      // objPlayer.setLineFull();
 
       // Check l'index de la ligne pleine;

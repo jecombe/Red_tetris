@@ -27,9 +27,9 @@ const getAllStagePlayers = (objGame, redGame, objPlayer) => {
   }
 };
 
-export const login = (redGame, data, id) => {
+export const login = (redGame, data, socketClient) => {
   const { username, roomActual } = data;
-  const player = new Player(id, username, roomActual);
+  const player = new Player(socketClient.id, username, roomActual);
   let game;
 
   game = redGame.getGame(roomActual);

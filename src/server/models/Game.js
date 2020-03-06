@@ -1,7 +1,7 @@
 import Piece from './Piece';
-import { createStage, createStagePiece } from '../stage/utils';
-import { flushUpdate } from '../stage/stage';
-import { emitterMallus, emitterStageOther } from '../emitter/emitter';
+import { createStage, createStagePiece } from '../../shared/stage';
+import { flushUpdate } from '../../shared/stage';
+import { emitterMallus, emitterStageOther } from '../socket/emitter';
 
 export default class Game {
   constructor(username, roomName) {
@@ -10,7 +10,6 @@ export default class Game {
     this.users = [];
     this.gameStart = false;
     this.tetro = [];
-    this.allStage = [];
   }
 
   getGameName() {
@@ -63,26 +62,25 @@ export default class Game {
     const index = this.users.findIndex((user) => user.idSocket === id);
     this.users.splice(index, 1);
   }
-  setAllStage(id, stage) {
-    this.allStage.push({ login: id, stage: stage })
-  }
+
   getAllStage() {
-    return this.allStage;
+
+    let tabRes = []
+    this.users.forEach(res => {
+      tabRes.push({ login: res.login, stage: res.stage, mallus: res.mallus,  lineFull: res.lineFull})
+    })
+    return tabRes;
   }
 
   startGame(id, redGame) {
     if (!this.getPlayer(id).isOwner()) return false;
-    const newStage = createStage().map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
     this.setTetroNull();
     this.setGameStart();
-    this.getPieceStart().cleanPiece(newStage);
-
     this.users.map((user) => {
-      user.initPlayer(this.users.length, this.getPieceStart(), newStage);
+      user.initPlayer(this.users.length, this.getPieceStart());
       user.setNextPiece(flushUpdate(this.getNextPieceStart(), createStagePiece(), user.getPositionX(), user.getPositionY(), false));
       return user;
     });
-    this.resetStage()
     emitterStageOther(redGame, this.getAllStage(), this);
     return ({
       newStage: createStage(),
@@ -114,7 +112,6 @@ export default class Game {
               lineFull--;
             }
             userTab[i].setStage(newStage);
-            this.updateStage(userTab[i].getStage(), player.getLogin())
             emitterMallus(redGame.io, userTab[i]);
           }
         }
@@ -122,20 +119,4 @@ export default class Game {
     }
     emitterStageOther(redGame, this.getAllStage(), this);
   }
-
-  updateStage(newStage, id) {
-    this.allStage.forEach(res => {
-      if (res.login === id) {
-        res.stage = newStage;
-        console.log(res.stage)
-      }
-    })
-  }
-
-  resetStage() {
-    this.allStage.forEach(res => {
-      res.stage = createStage();
-    })
-  }
-
 }

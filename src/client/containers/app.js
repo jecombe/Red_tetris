@@ -26,7 +26,7 @@ const App = (props) => {
           <Header />
         </Grid>
         <Grid item>
-          <Main />
+          <Main  />
         </Grid>
         <Grid item>
           <Footer />
@@ -39,5 +39,7 @@ const App = (props) => {
 App.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
+
+
 
 export default connect()(App);

@@ -7,6 +7,7 @@ export const dispatch = (action, data, dispatch) => {
     type: ev.STAGE_MALLUS,
     payload: {
       playerStage: data.newStage,
+      playerMallus: data.playerMallus,
     },
   });
 };

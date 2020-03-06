@@ -6,14 +6,19 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import Stage from './Stage';
 import GameStatus from './GameStatus';
-import { checkCollision } from '../../../server/helpers/gameHelpers';
-import { flushUpdate, updateRows } from '../../../server/stage/stage';
+import { flushUpdate, updateRows, updateStage, checkCollision } from '../../../shared/stage';
 
-import { updateStage  } from '../../../server/stage/utils';
 import { BlockLoading } from 'react-loadingg';
 
+import styled, { keyframes } from 'styled-components';
+import { zoomIn } from 'react-animations';
 
- const rotate = (matrix, dir) => {
+const bounceAnimation = keyframes`${zoomIn}`;
+
+const BouncyDiv = styled.div`
+  animation: 1s ${bounceAnimation};
+`;
+const rotate = (matrix, dir) => {
   // Make the rows to become cols (transpose)
   const rotatedTetro = matrix.map((_, index) => matrix.map((col) => col[index]));
   // Reverse each row to get a rotated matrix
@@ -67,11 +72,16 @@ const GameBoard = (props) => {
       let newX = position.x + 0;
       let newY = position.y + 1;
 
-      updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, false), piece: piece, collided: false })
+      updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, false), piece: piece, collided: false, playerGameOver: playerGameOver })
 
     }
-    else
-      updatePosition({ x: position.x, y: position.y, playerStage: flushUpdate(piece, playerStage, position.x, position.y, false), piece: piece, collided: true })
+    else {
+      let playerGameOver = false
+      if (position.y < 1) {
+        playerGameOver = true;
+      }
+      updatePosition({ x: position.x, y: position.y, playerStage: flushUpdate(piece, playerStage, position.x, position.y, false), piece: piece, collided: true, playerGameOver: playerGameOver })
+    }
   }
 
 
@@ -79,11 +89,11 @@ const GameBoard = (props) => {
     if (!checkCollision(piece, playerStage, { x: dir, y: 0 }, position.x, position.y)) {
       let newX = position.x + dir;
       let newY = position.y + 0;
-      updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, false), piece: piece, collided: false })
+      updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, false), piece: piece, collided: false, playerGameOver: playerGameOver })
     } else {
       let newX = position.x + 0;
       let newY = position.y + 0;
-      updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece: piece, collided: false })
+      updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece: piece, collided: false, playerGameOver: playerGameOver })
 
     }
   }
@@ -105,7 +115,7 @@ const GameBoard = (props) => {
         return;
       }
     }
-    updatePosition({ x: pos2, y: position.y, playerStage: flushUpdate(clonedPiece, playerStage, pos2, position.y, false), piece: clonedPiece })
+    updatePosition({ x: pos2, y: position.y, playerStage: flushUpdate(clonedPiece, playerStage, pos2, position.y, false), piece: clonedPiece, playerGameOver: playerGameOver })
   }
 
   const moveDownTetro = () => {
@@ -137,21 +147,21 @@ const GameBoard = (props) => {
   const move = ({ keyCode }) => {
 
     //if (playerGameOver === false) {
-      if (keyCode === 40) {
-        dropTetro()
-      }
-      else if (keyCode === 37) {
-        moveTetro(-1);
-      }
-      else if (keyCode === 39) {
-        moveTetro(1);
-      }
-      else if (keyCode === 38) {
-        moveTetroUp(1);
-      }
-      else if (keyCode === 32) {
-        moveDownTetro();
-      }
+    if (keyCode === 40) {
+      dropTetro()
+    }
+    else if (keyCode === 37) {
+      moveTetro(-1);
+    }
+    else if (keyCode === 39) {
+      moveTetro(1);
+    }
+    else if (keyCode === 38) {
+      moveTetroUp(1);
+    }
+    else if (keyCode === 32) {
+      moveDownTetro();
+    }
     //}
   };
 
@@ -177,28 +187,38 @@ const GameBoard = (props) => {
     }
     else if (collided) {
       //*********** AJOUTE LA PROCHAINE PIECES SUR LA STAGE LORSQU'IL Y A COLLISION *************************/
-      const {stage, lineFull } = updateRows(updateStage(piece, playerStage, position.x, position.y, true))
-      updateCollision({ playerStage: stage, playerRoom: playerRoom, x: 10 / 2 - 2, y: 0 , lineFull: lineFull})
+      const { stage, lineFull } = updateRows(updateStage(piece, playerStage, position.x, position.y, true))
+      updateCollision({ playerStage: stage, playerRoom: playerRoom, x: 10 / 2 - 2, y: 0, lineFull: lineFull })
     }
-  }
+  }// <BouncyDiv><h1 style={mystyle}>GAME OVER</h1></BouncyDiv>
 
   printTetroStage();
 
   return (
-    <Grid container justify="center" onKeyDown={(e) => move(e)} tabIndex="0">
-      <Grid item xs={6} lg={9} container justify="center" alignItems="center">
-        {playerStage && playerStage.length
-          && <Stage tabIndex="0" stage={playerStage} />}
-      </Grid>
-      <Grid item xs={6} lg={3} container justify="center" style={{ height: '30vh' }}>
-        {playerNextPiece && playerNextPiece.length
-          && <Stage stage={playerNextPiece} />}
+    <>
+      {playerGameOver === false ? (
+        <Grid container justify="center" onKeyDown={(e) => move(e)} tabIndex="0">
 
-        {playerOwner ? (
-          <GameStatus handleSubmit={handleSubmitStatus} />
-        ) :  <h1>YOU ARE NOT THE OWNER</h1>}
-      </Grid>
-    </Grid>
+          {playerStage && playerStage.length ? (
+            <Grid item xs={6} lg={9} container justify="center" alignItems="center">
+              <Stage tabIndex="0" stage={playerStage} />
+            </Grid>
+          ) : <BlockLoading />}
+          {playerNextPiece && playerNextPiece.length ? (
+            <Grid item xs={6} lg={3} container justify="center" style={{ height: '30vh' }}>
+              <Stage stage={playerNextPiece} />
+              {playerOwner ? (
+                <GameStatus handleSubmit={handleSubmitStatus} />
+              ) : <h1>YOU ARE NOT THE OWNER</h1>}
+            </Grid>
+          ) : <BlockLoading />}
+        </Grid>
+      ) : <BouncyDiv>
+
+          <h1 style={mystyle}>LOOSER</h1>
+        </BouncyDiv>}
+    </>
+
   );
 };
 
@@ -238,6 +258,41 @@ const mapDispatchToProps = {
   updateCollision: actions.updateCollision,
   updateStage3: actions.updateStage3,
   updatePositionNull: actions.updatePositionNull,
+
+};
+const mystyle = {
+
+
+
+  position: "absolute",
+  top: "50%",
+  right: "50%",
+  transform: "translate(50%,-50%)",
+  textTransform: "uppercase",
+  fontFamily: "verdana",
+  fontSize: "12em",
+  fontWeight: "700",
+  color: "red",
+  textShadow: "1px 1px 1px #919191, 1px 2px 1px #919191, 1px 3px 1px #919191, 1px 4px 1px #919191, 1px 5px 1px #919191, 1px 6px 1px #919191, 1px 7px 1px #919191,1px 8px 1px #919191,1px 9px 1px #919191,1px 10px 1px #919191,1px 18px 6px rgba(16,16,16,0.4),1px 22px 10px rgba(16,16,16,0.2),1px 25px 35px rgba(16,16,16,0.2),1px 30px 60px rgba(16,16,16,0.4)",
+
+
+};
+
+const mystyle2 = {
+
+
+
+  position: "absolute",
+  top: "50%",
+  right: "50%",
+  transform: "translate(50%,-50%)",
+  textTransform: "uppercase",
+  fontFamily: "verdana",
+  fontSize: "12em",
+  fontWeight: "700",
+  color: "green",
+  textShadow: "1px 1px 1px #919191, 1px 2px 1px #919191, 1px 3px 1px #919191, 1px 4px 1px #919191, 1px 5px 1px #919191, 1px 6px 1px #919191, 1px 7px 1px #919191,1px 8px 1px #919191,1px 9px 1px #919191,1px 10px 1px #919191,1px 18px 6px rgba(16,16,16,0.4),1px 22px 10px rgba(16,16,16,0.2),1px 25px 35px rgba(16,16,16,0.2),1px 30px 60px rgba(16,16,16,0.4)",
+
 
 };
 

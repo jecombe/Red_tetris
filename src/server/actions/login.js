@@ -1,6 +1,6 @@
 import Player from '../models/Player';
 import Game from '../models/Game';
-import { emitterStageOther } from '../emitter/emitter';
+import { emitterStageOther } from '../socket/emitter';
 
 export const login = (redGame, data, socketClient) => {
   const { username, roomActual } = data;
@@ -13,7 +13,6 @@ export const login = (redGame, data, socketClient) => {
   }
   game.setPlayer(player);
   redGame.setPlayer(player);
-  game.setAllStage(player.getLogin(), player.getStage())
   const tabUser = game.getAllStage();
   emitterStageOther(redGame, tabUser, game);
   return ({ player: player, game: game });

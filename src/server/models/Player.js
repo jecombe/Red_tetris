@@ -1,4 +1,4 @@
-import { createStage, createStagePiece } from '../stage/utils';
+import { createStage, createStagePiece } from '../../shared/stage';
 
 
 export default class Player {
@@ -133,8 +133,8 @@ export default class Player {
     this.mallus += lineFull;
   }
 
-  setLineFull() {
-    this.lineFull += 1;
+  setLineFull(lineFull) {
+    this.lineFull += lineFull;
   }
 
   setNullOtherStage() {
@@ -165,13 +165,13 @@ export default class Player {
     this.win = true;
   }
 
-  initPlayer(len, pieceStart, newStage) {
+  initPlayer(len, pieceStart) {
     this.setPositionNull();
     this.setNoLosing(len);
     this.setPlayerNull();
     this.setPiece(pieceStart);
     this.setPosition(10 / 2 - 2, 0);
     this.setPositionNextTetro(10 / 2 - 2, 0);
-    this.setStage(newStage);
+    this.setStage(createStage());
   }
 }

@@ -42,6 +42,7 @@ export const updatePosition = (payload) => ({
     playerStage: payload.playerStage,
     piece: payload.piece,
     collided: payload.collided,
+    playerGameOver: payload.playerGameOver,
   },
 });
 

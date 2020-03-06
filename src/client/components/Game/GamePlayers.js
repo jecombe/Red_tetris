@@ -12,33 +12,30 @@ import Stage from './Stage';
 
 const GameInfoMap = (playerOtherStage, playerName) => {
 
-  return playerOtherStage.map((stage) => (
-    <>
-  
 
-    {stage.login !== playerName ? (
-          <Card style={{ margin: '2px' }}>
+  return playerOtherStage.map((stage) => (
+
+
+<Card style={{ margin: '2px' }}>
           <ListItem>
             <Grid container justify="center" alignItems="center" width="100%">
               <Grid item xs={3}>
-                Name
+                Name: {stage.login}
               </Grid>
               <Grid item xs={3}>
-                Score
+                Line Full: {stage.lineFull} 
               </Grid>
               <Grid item xs={3}>
-                Rank
+                Mallus: {stage.mallus}
               </Grid>
               <Grid item xs={3}>
+              {stage.login !== playerName ? (
                 <Stage stage={stage.stage} type="other" />
+                ) : <h1>Me</h1>}
               </Grid>
             </Grid>
           </ListItem>
         </Card>
-        ) :  <h1>Me</h1>}
-
-    
-    </>
   ));
 };
 

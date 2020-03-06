@@ -8,6 +8,7 @@ export const playerState = {
   playerSocket: null,
   playerStage: [],
   playerOtherStage: [],
+  playerMallus: 0,
   tetromino: TETROMINOS[0].shape,
   playerNextPiece: [],
   playerGameOver: false,
@@ -53,11 +54,12 @@ const playerReducer = (state = playerState, action) => {
         playerGameOver: false,
         playerOwner,
         playerDropTime: 1000,
+        playerLineFull: 0,
       };
     }
 
     case ev.STAGE: {
-      const { playerStage, playerNextPiece, playerGameOver, otherNotLosing, playerLineFull, position, collided, piece} = action.payload;
+      const { playerStage, playerNextPiece, playerGameOver, otherNotLosing, position, collided, piece} = action.payload;
 
       return {
         ...state,
@@ -65,15 +67,15 @@ const playerReducer = (state = playerState, action) => {
         playerNextPiece,
         playerGameOver,
         otherNotLosing,
-        playerLineFull,
         position,
         collided,
         piece,
+        playerLineFull: 0,
       };
     }
 
     case ev.res_UPDATE_COLLISION: {
-      const {piece, playerNextPiece} = action.payload;
+      const {piece, playerNextPiece, playerLineFull} = action.payload;
 
       return {
         ...state,
@@ -81,6 +83,7 @@ const playerReducer = (state = playerState, action) => {
         position: {x: 10 / 2 - 2, y: 0},
         collided: false,
         playerNextPiece,
+        playerLineFull,
       };
     }
     case ev.req_UPDATE_COLLISION: {
@@ -97,7 +100,7 @@ const playerReducer = (state = playerState, action) => {
 
 
     case ev.UPDATE_POSITION: {
-      const {x, y, playerStage, piece, collided} = action.payload;
+      const {x, y, playerStage, piece, collided, playerGameOver} = action.payload;
 
       return {
         ...state,
@@ -105,17 +108,20 @@ const playerReducer = (state = playerState, action) => {
         playerStage,
         piece,
         collided,
+        playerGameOver,
+        
       };
     }
 
     case ev.STAGE_MALLUS: {
 
-      const { playerStage } = action.payload;
+      const { playerStage, playerMallus} = action.payload;
       console.log("STAGE MALLUS", playerStage)
       return {
         ...state,
         playerStage,
         tetromino: TETROMINOS.I.shape,
+        playerMallus
       };
     }
 

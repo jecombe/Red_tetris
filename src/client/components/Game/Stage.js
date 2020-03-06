@@ -25,7 +25,7 @@ const Stage = (props) => {
   const { stage, type } = props;
 
   let size = 35;
-  if (type === 'other') size = '3';
+  if (type === 'other') size = '6';
   const style = {
     width: stage[0].length,
     height: stage.length,

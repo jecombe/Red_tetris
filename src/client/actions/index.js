@@ -55,6 +55,7 @@ export const updateCollision = (payload) => ({
     x: payload.x,
     y: payload.y,
     lineFull: payload.lineFull,
+    playerGameOver: payload.playerGameOver,
   },
 });
 

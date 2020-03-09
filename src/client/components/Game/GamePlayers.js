@@ -16,43 +16,45 @@ const GameInfoMap = (playerOtherStage, playerName) => {
   return playerOtherStage.map((stage) => (
 
 
-<Card style={{ margin: '2px' }}>
-          <ListItem>
-            <Grid container justify="center" alignItems="center" width="100%">
-              <Grid item xs={3}>
-                Name: {stage.login}
-              </Grid>
-              <Grid item xs={3}>
-                Line Full: {stage.lineFull} 
-              </Grid>
-              <Grid item xs={3}>
-                Mallus: {stage.mallus}
-              </Grid>
-              <Grid item xs={3}>
-              {stage.login !== playerName ? (
-                <Stage stage={stage.stage} type="other" />
-                ) : <h1>Me</h1>}
-              </Grid>
-            </Grid>
-          </ListItem>
-        </Card>
+    <Card style={{ margin: '2px', opacity: '0.8' }}>
+      <ListItem>
+        <Grid container justify="center" alignItems="center" width="100%">
+          <Grid item xs={3}>
+            Name: {stage.login}
+          </Grid>
+          <Grid item xs={3}>
+            Line Full: {stage.lineFull}
+          </Grid>
+          <Grid item xs={3}>
+            Mallus: {stage.mallus}
+          </Grid>
+          <Grid item xs={3}>
+            {stage.login !== playerName ? (
+              <Stage stage={stage.stage} type="other" />
+            ) : <h1>Me</h1>}
+          </Grid>
+        </Grid>
+      </ListItem>
+    </Card>
   ));
 };
 
 const GamePlayers = (props) => {
   const { playerOtherStage, playerName } = props;
 
+
   return (
-    <Grid container justify="center">
-      <Typography component="h1" variant="h5">
+    
+        <Grid container justify="center">
+          <Typography component="h1" variant="h5">
             Users in room
-      </Typography>
-      <Grid item xs={12} style={{ maxHeight: '50vh', overflow: 'auto', width: '100%' }}>
-        <List style={{ maxHeight: '100%' }}>
-          {GameInfoMap(playerOtherStage, playerName)}
-        </List>
-      </Grid>
-    </Grid>
+               </Typography>
+          <Grid item xs={12} style={{ maxHeight: '50vh', overflow: 'auto', width: '100%' }}>
+            <List style={{ maxHeight: '100%' }}>
+              {GameInfoMap(playerOtherStage, playerName)}
+            </List>
+          </Grid>
+        </Grid>
   );
 };
 

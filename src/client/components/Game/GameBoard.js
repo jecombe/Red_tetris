@@ -56,13 +56,13 @@ const GameBoard = (props) => {
     playerOwner,
     playerGameOver,
     playerDropTime,
-    otherNotLosing,
     reqStartGame,
     position,
     piece,
     updatePosition,
     updateCollision,
     collided,
+    playerWin,
 
   } = props;
 
@@ -188,38 +188,63 @@ const GameBoard = (props) => {
     else if (collided) {
       //*********** AJOUTE LA PROCHAINE PIECES SUR LA STAGE LORSQU'IL Y A COLLISION *************************/
       const { stage, lineFull } = updateRows(updateStage(piece, playerStage, position.x, position.y, true))
-      updateCollision({ playerStage: stage, playerRoom: playerRoom, x: 10 / 2 - 2, y: 0, lineFull: lineFull })
+      updateCollision({ playerStage: stage, playerRoom: playerRoom, x: 10 / 2 - 2, y: 0, lineFull: lineFull, playerGameOver: playerGameOver })
     }
   }// <BouncyDiv><h1 style={mystyle}>GAME OVER</h1></BouncyDiv>
 
   printTetroStage();
 
-  return (
-    <>
-      {playerGameOver === false ? (
-        <Grid container justify="center" onKeyDown={(e) => move(e)} tabIndex="0">
+  if (playerWin === true) {
+    return (
+      <>
+        <BouncyDiv>
+          <h1 style={mystyle2}>WINNER</h1>
+        </BouncyDiv>
 
-          {playerStage && playerStage.length ? (
-            <Grid item xs={6} lg={9} container justify="center" alignItems="center">
-              <Stage tabIndex="0" stage={playerStage} />
-            </Grid>
-          ) : <BlockLoading />}
-          {playerNextPiece && playerNextPiece.length ? (
-            <Grid item xs={6} lg={3} container justify="center" style={{ height: '30vh' }}>
-              <Stage stage={playerNextPiece} />
-              {playerOwner ? (
-                <GameStatus handleSubmit={handleSubmitStatus} />
-              ) : <h1>YOU ARE NOT THE OWNER</h1>}
-            </Grid>
-          ) : <BlockLoading />}
+        <Grid item xs={6} lg={3} container justify="center" style={{ height: '30vh' }}>
+          {playerOwner ? (
+            <GameStatus handleSubmit={handleSubmitStatus} />
+          ) : <h1>YOU ARE NOT THE OWNER</h1>}
         </Grid>
-      ) : <BouncyDiv>
 
+      </>
+
+    )
+  }
+  else if (playerGameOver === true) {
+    return (
+      <>
+        <BouncyDiv>
           <h1 style={mystyle}>LOOSER</h1>
-        </BouncyDiv>}
-    </>
+        </BouncyDiv>
 
-  );
+        <Grid item xs={6} lg={3} container justify="center" style={{ height: '30vh' }}>
+          {playerOwner ? (
+            <GameStatus handleSubmit={handleSubmitStatus} />
+          ) : <h1>YOU ARE NOT THE OWNER</h1>}
+        </Grid>
+      </>
+    )
+  }
+  else {
+    return (
+      <Grid container justify="center" onKeyDown={(e) => move(e)} tabIndex="0">
+
+        {playerStage && playerStage.length ? (
+          <Grid item xs={6} lg={9} container justify="center" alignItems="center">
+            <Stage tabIndex="0" stage={playerStage} />
+          </Grid>
+        ) : <BlockLoading />}
+        {playerNextPiece && playerNextPiece.length ? (
+          <Grid item xs={6} lg={3} container justify="center" style={{ height: '30vh' }}>
+            <Stage stage={playerNextPiece} />
+            {playerOwner ? (
+              <GameStatus handleSubmit={handleSubmitStatus} />
+            ) : <h1>YOU ARE NOT THE OWNER</h1>}
+          </Grid>
+        ) : <BlockLoading />}
+      </Grid>)
+  }
 };
 
 GameBoard.propTypes = {
@@ -229,10 +254,10 @@ GameBoard.propTypes = {
   playerNextPiece: PropTypes.arrayOf(PropTypes.string).isRequired,
   playerOwner: PropTypes.bool.isRequired,
   playerGameOver: PropTypes.bool.isRequired,
-  otherNotLosing: PropTypes.number.isRequired,
   playerDropTime: PropTypes.number.isRequired,
   reqStartGame: PropTypes.func.isRequired,
   reqSendPosition: PropTypes.func.isRequired,
+
 };
 
 const mapStateToProps = (state) => ({
@@ -242,11 +267,12 @@ const mapStateToProps = (state) => ({
   playerNextPiece: state.player.playerNextPiece,
   playerOwner: state.player.playerOwner,
   playerGameOver: state.player.playerGameOver,
-  otherNotLosing: state.player.otherNotLosing,
   playerDropTime: state.player.playerDropTime,
   position: state.player.position,
   collided: state.player.collided,
   piece: state.player.piece,
+  playerWin: state.player.playerWin,
+
 
 
 });
@@ -261,18 +287,12 @@ const mapDispatchToProps = {
 
 };
 const mystyle = {
-
-
-
   position: "absolute",
-  top: "50%",
-  right: "50%",
-  transform: "translate(50%,-50%)",
   textTransform: "uppercase",
   fontFamily: "verdana",
   fontSize: "12em",
   fontWeight: "700",
-  color: "red",
+  color: "#E50003",
   textShadow: "1px 1px 1px #919191, 1px 2px 1px #919191, 1px 3px 1px #919191, 1px 4px 1px #919191, 1px 5px 1px #919191, 1px 6px 1px #919191, 1px 7px 1px #919191,1px 8px 1px #919191,1px 9px 1px #919191,1px 10px 1px #919191,1px 18px 6px rgba(16,16,16,0.4),1px 22px 10px rgba(16,16,16,0.2),1px 25px 35px rgba(16,16,16,0.2),1px 30px 60px rgba(16,16,16,0.4)",
 
 
@@ -283,14 +303,11 @@ const mystyle2 = {
 
 
   position: "absolute",
-  top: "50%",
-  right: "50%",
-  transform: "translate(50%,-50%)",
   textTransform: "uppercase",
   fontFamily: "verdana",
   fontSize: "12em",
   fontWeight: "700",
-  color: "green",
+  color: "#32E306",
   textShadow: "1px 1px 1px #919191, 1px 2px 1px #919191, 1px 3px 1px #919191, 1px 4px 1px #919191, 1px 5px 1px #919191, 1px 6px 1px #919191, 1px 7px 1px #919191,1px 8px 1px #919191,1px 9px 1px #919191,1px 10px 1px #919191,1px 18px 6px rgba(16,16,16,0.4),1px 22px 10px rgba(16,16,16,0.2),1px 25px 35px rgba(16,16,16,0.2),1px 30px 60px rgba(16,16,16,0.4)",
 
 

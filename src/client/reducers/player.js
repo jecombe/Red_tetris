@@ -51,7 +51,6 @@ const playerReducer = (state = playerState, action) => {
         playerStage,
         playerNextPiece,
         playerOtherStage,
-        playerGameOver: false,
         playerOwner,
         playerDropTime: 1000,
         playerLineFull: 0,
@@ -71,6 +70,8 @@ const playerReducer = (state = playerState, action) => {
         collided,
         piece,
         playerLineFull: 0,
+        playerGameOver:  false,
+        playerWin: false,
       };
     }
 
@@ -116,7 +117,6 @@ const playerReducer = (state = playerState, action) => {
     case ev.STAGE_MALLUS: {
 
       const { playerStage, playerMallus} = action.payload;
-      console.log("STAGE MALLUS", playerStage)
       return {
         ...state,
         playerStage,
@@ -126,13 +126,20 @@ const playerReducer = (state = playerState, action) => {
     }
 
     case ev.STAGE_OTHER: {
-      const { playerOtherStage, otherNotLosing, playerWin, playerOwner } = action.payload;
+      const { playerOtherStage } = action.payload;
       return {
         ...state,
         playerOtherStage,
-       // otherNotLosing,
-      //  playerWin,
-       // playerOwner,
+
+      };
+    }
+
+    case ev.WINNER: {
+      const { winner} = action.payload;
+      return {
+        ...state,
+        playerWin: winner
+  
       };
     }
 

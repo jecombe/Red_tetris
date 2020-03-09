@@ -1,13 +1,15 @@
 import Piece from './Piece';
 import { createStage, createStagePiece } from '../../shared/stage';
 import { flushUpdate } from '../../shared/stage';
-import { emitterMallus, emitterStageOther } from '../socket/emitter';
+import { emitterMallus, emitterStageOther, emitterWinner } from '../socket/emitter';
+import { array } from 'prop-types';
 
 export default class Game {
   constructor(username, roomName) {
     this.owner = username;
     this.roomName = roomName;
     this.users = [];
+    this.copyUser = [];
     this.gameStart = false;
     this.tetro = [];
   }
@@ -64,15 +66,19 @@ export default class Game {
   }
 
   getAllStage() {
-
     let tabRes = []
     this.users.forEach(res => {
-      tabRes.push({ login: res.login, stage: res.stage, mallus: res.mallus,  lineFull: res.lineFull})
+      tabRes.push({ login: res.login, stage: res.stage, mallus: res.mallus, lineFull: res.lineFull })
     })
     return tabRes;
   }
 
+  setCopyUser() {
+    this.copyUser = Array.from(this.users)
+  }
+
   startGame(id, redGame) {
+
     if (!this.getPlayer(id).isOwner()) return false;
     this.setTetroNull();
     this.setGameStart();
@@ -82,6 +88,7 @@ export default class Game {
       return user;
     });
     emitterStageOther(redGame, this.getAllStage(), this);
+    this.setCopyUser()
     return ({
       newStage: createStage(),
       nextPiece: flushUpdate(this.getNextPieceStart(), createStagePiece(), this.users[0].getPositionX(), this.users[0].getPositionY(), false),
@@ -118,5 +125,15 @@ export default class Game {
       }
     }
     emitterStageOther(redGame, this.getAllStage(), this);
+  }
+
+  checkUserWin(redGame) {
+    if (this.copyUser.length === 1) {
+      emitterWinner(this.copyUser[0], redGame)
+    }
+  }
+  deleteUser(socketId) {
+    const index = this.copyUser.findIndex((user) => user.idSocket === socketId);
+    this.copyUser.splice(index, 1);
   }
 }

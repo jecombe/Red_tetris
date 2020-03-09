@@ -18,9 +18,19 @@ const ioDispatchGame = (redGame, socketClient) => {
   //COLLISION
   socketClient.on(ev.req_UPDATE_COLLISION, (data) => {
 
-    const { playerStage, playerRoom, lineFull } = data;
+    const { playerStage, playerRoom, lineFull, playerGameOver } = data;
+    console.log("===========+++> ", playerGameOver)
     const game = redGame.getGame(playerRoom);
     const player = redGame.getGame(playerRoom).getPlayer(socketClient.id);
+    if (playerGameOver === true)
+    {
+      console.log("Before ", game.copyUser)
+
+      game.deleteUser(socketClient.id)
+      game.checkUserWin(redGame);
+      console.log("Before ", game.users)
+
+    }
     player.setStage(playerStage);
     player.setLineFull(lineFull);
     game.setMallusToPlayers(redGame, lineFull, player);

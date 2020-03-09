@@ -41,4 +41,6 @@ module.exports = {
 
   req_SHARE_POSITION: '#sharePosition',
   res_SHARE_POSITION: '@sharePosition',
+
+  WINNER: 'winner'
 };

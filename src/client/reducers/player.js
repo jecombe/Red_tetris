@@ -20,6 +20,7 @@ export const playerState = {
   position: { x: 0, y: 0 },
   collided: false,
   piece: null,
+  startGame: false,
 };
 
 export const playerStatePropTypes = PropTypes.shape({
@@ -72,6 +73,7 @@ const playerReducer = (state = playerState, action) => {
         playerLineFull: 0,
         playerGameOver:  false,
         playerWin: false,
+        startGame: true,
       };
     }
 
@@ -138,14 +140,25 @@ const playerReducer = (state = playerState, action) => {
       const { winner} = action.payload;
       return {
         ...state,
-        playerWin: winner
+        playerWin: winner,
   
       };
+    }
+    case ev.START_GAME: {
+      console.log("PASSE DEDAND")
+
+      return {
+        ...state,
+        startGame: false,
+  
+      };
+
     }
 
     default:
       return state;
   }
+
   
 };
 

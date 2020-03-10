@@ -6,12 +6,14 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import Stage from './Stage';
 import GameStatus from './GameStatus';
-import { flushUpdate, updateRows, updateStage, checkCollision } from '../../../shared/stage';
+import { flushUpdate, updateRows, updateStage, checkCollision, createStage } from '../../../shared/stage';
 
 import { BlockLoading } from 'react-loadingg';
 
 import styled, { keyframes } from 'styled-components';
 import { zoomIn } from 'react-animations';
+
+
 
 const bounceAnimation = keyframes`${zoomIn}`;
 
@@ -63,6 +65,7 @@ const GameBoard = (props) => {
     updateCollision,
     collided,
     playerWin,
+    startGame,
 
   } = props;
 
@@ -121,18 +124,16 @@ const GameBoard = (props) => {
   const moveDownTetro = () => {
     let i = 0;
     let checkColl = false;
+    let playerGameOver = false;
     while (checkColl !== true) {
       i += 1;
       checkColl = checkCollision(piece, playerStage, { x: 0, y: i }, position.x, position.y)
       if (checkColl === true) {
         /* --- Check Game Over --- */
-        /* if (this.pos.y < 1) {
-           console.log('GAME OVER');
-           this.setLosing(true);
-           if (!this.peopleSpectre.length) {
-             this.setNoLosing2();
-           }
-         }*/
+        if (position.y < 1) {
+          console.log('GAME OVER');
+          playerGameOver = true;
+        }
         i -= 1;
         break;
       }
@@ -140,29 +141,29 @@ const GameBoard = (props) => {
     }
     let newX = position.x + 0;
     let newY = position.y + i;
-    updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece: piece, collided: true })
+    updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece: piece, collided: true, playerGameOver: playerGameOver })
 
   };
 
   const move = ({ keyCode }) => {
 
-    //if (playerGameOver === false) {
-    if (keyCode === 40) {
-      dropTetro()
+    if (playerGameOver === false) {
+      if (keyCode === 40) {
+        dropTetro()
+      }
+      else if (keyCode === 37) {
+        moveTetro(-1);
+      }
+      else if (keyCode === 39) {
+        moveTetro(1);
+      }
+      else if (keyCode === 38) {
+        moveTetroUp(1);
+      }
+      else if (keyCode === 32) {
+        moveDownTetro();
+      }
     }
-    else if (keyCode === 37) {
-      moveTetro(-1);
-    }
-    else if (keyCode === 39) {
-      moveTetro(1);
-    }
-    else if (keyCode === 38) {
-      moveTetroUp(1);
-    }
-    else if (keyCode === 32) {
-      moveDownTetro();
-    }
-    //}
   };
 
   /*******      TIMER DROP  *************/
@@ -173,8 +174,10 @@ const GameBoard = (props) => {
     }
   }, playerDropTime);
   /*******      TIMER DROP  *************/
+  //const [t, setT] = useState(0);
 
   const handleSubmitStatus = () => {
+    // setT(1)
     reqStartGame({ playerName, playerRoom });
   }
 
@@ -194,6 +197,7 @@ const GameBoard = (props) => {
 
   printTetroStage();
 
+  console.log("PLAYER WINNER ++++++++++> ", playerWin)
   if (playerWin === true) {
     return (
       <>
@@ -244,7 +248,9 @@ const GameBoard = (props) => {
           </Grid>
         ) : <BlockLoading />}
       </Grid>)
+
   }
+
 };
 
 GameBoard.propTypes = {
@@ -272,6 +278,7 @@ const mapStateToProps = (state) => ({
   collided: state.player.collided,
   piece: state.player.piece,
   playerWin: state.player.playerWin,
+  startGame: state.player.startGame
 
 
 

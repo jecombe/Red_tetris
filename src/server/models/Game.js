@@ -105,18 +105,19 @@ export default class Game {
     let userTab = this.getUserInGame();
     if (lineFull !== 0) {
       for (let i = 0; i < userTab.length; i++) {
+        let lineFullTemp = lineFull;
         if (userTab[i].login !== player.login) {
-          userTab[i].setMallus(lineFull);
+          userTab[i].setMallus(lineFullTemp);
           const calcRow = 20 - userTab[i].getMallus();
           /* --- Check Game Over with mallus --- */
-          if (calcRow === 0) {
-            userTab[i].setLosing(true);
-          }
+           if (calcRow === 0) {
+             userTab[i].setLosing(true);
+           }
           if (calcRow < 20) {
-            const newStage = userTab[i].stage.slice(lineFull, 20);
-            while (lineFull !== 0) {
+            const newStage = userTab[i].stage.slice(lineFullTemp, 20);
+            while (lineFullTemp !== 0) {
               newStage.push(new Array(10).fill(['M', 'mallus']));
-              lineFull--;
+              lineFullTemp--;
             }
             userTab[i].setStage(newStage);
             emitterMallus(redGame.io, userTab[i]);

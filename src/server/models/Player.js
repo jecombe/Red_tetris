@@ -21,10 +21,17 @@ export default class Player {
     this.peopleSpectre = [];
     this.notLosing = -1;
     this.win = false;
+    this.gameOver = false;
   }
 
   getLosing() {
     return this.losing;
+  }
+  getGameOver() {
+    return this.gameOver;
+  }
+  setGameOver() {
+    this.gameOver = true;
   }
 
   getLogin() {

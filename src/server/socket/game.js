@@ -25,7 +25,7 @@ const ioDispatchGame = (redGame, socketClient) => {
     if (playerGameOver === true)
     {
       console.log("Before ", game.copyUser)
-
+      player.setGameOver();
       game.deleteUser(socketClient.id)
       game.checkUserWin(redGame);
       console.log("Before ", game.users)

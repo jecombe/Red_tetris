@@ -12,7 +12,6 @@ export const playerState = {
   tetromino: TETROMINOS[0].shape,
   playerNextPiece: [],
   playerGameOver: false,
-  otherNotLosing: -1,
   playerWin: false,
   playerOwner: false,
   playerLineFull: 0,
@@ -59,14 +58,13 @@ const playerReducer = (state = playerState, action) => {
     }
 
     case ev.STAGE: {
-      const { playerStage, playerNextPiece, playerGameOver, otherNotLosing, position, collided, piece} = action.payload;
+      const { playerStage, playerNextPiece, playerGameOver, position, collided, piece} = action.payload;
 
       return {
         ...state,
         playerStage,
         playerNextPiece,
         playerGameOver,
-        otherNotLosing,
         position,
         collided,
         piece,
@@ -145,8 +143,6 @@ const playerReducer = (state = playerState, action) => {
       };
     }
     case ev.START_GAME: {
-      console.log("PASSE DEDAND")
-
       return {
         ...state,
         startGame: false,

@@ -68,7 +68,7 @@ export default class Game {
   getAllStage() {
     let tabRes = []
     this.users.forEach(res => {
-      tabRes.push({ login: res.login, stage: res.stage, mallus: res.mallus, lineFull: res.lineFull })
+      tabRes.push({ login: res.login, stage: res.stage, mallus: res.mallus, lineFull: res.lineFull, playerGameOver: res.gameOver })
     })
     return tabRes;
   }

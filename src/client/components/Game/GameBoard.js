@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 import Stage from './Stage';
 import GameStatus from './GameStatus';
-import { flushUpdate, updateRows, updateStage, checkCollision, createStage } from '../../../shared/stage';
+import { flushUpdate, updateRows, updateStage, checkCollision } from '../../../shared/stage';
 
 import { BlockLoading } from 'react-loadingg';
 
@@ -65,7 +65,6 @@ const GameBoard = (props) => {
     updateCollision,
     collided,
     playerWin,
-    startGame,
 
   } = props;
 
@@ -167,11 +166,9 @@ const GameBoard = (props) => {
   };
 
   /*******      TIMER DROP  *************/
-  /*useInterval(() => {
-    if (otherNotLosing > -1) {
-      const keyCode = 40;
-      reqSendPosition({ keyCode, playerRoom });
-    }
+  useInterval(() => {
+    if (playerGameOver === false && playerWin === false)
+      dropTetro();
   }, playerDropTime);
   /*******      TIMER DROP  *************/
   //const [t, setT] = useState(0);
@@ -197,7 +194,6 @@ const GameBoard = (props) => {
 
   printTetroStage();
 
-  console.log("PLAYER WINNER ++++++++++> ", playerWin)
   if (playerWin === true) {
     return (
       <>
@@ -219,7 +215,7 @@ const GameBoard = (props) => {
     return (
       <>
         <BouncyDiv>
-          <h1 style={mystyle}>LOOSER</h1>
+          <h1 style={mystyle}>LOSER</h1>
         </BouncyDiv>
 
         <Grid item xs={6} lg={3} container justify="center" style={{ height: '30vh' }}>
@@ -278,7 +274,6 @@ const mapStateToProps = (state) => ({
   collided: state.player.collided,
   piece: state.player.piece,
   playerWin: state.player.playerWin,
-  startGame: state.player.startGame
 
 
 

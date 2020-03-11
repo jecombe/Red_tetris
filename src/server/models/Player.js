@@ -180,5 +180,7 @@ export default class Player {
     this.setPosition(10 / 2 - 2, 0);
     this.setPositionNextTetro(10 / 2 - 2, 0);
     this.setStage(createStage());
+    this.gameOver = false;
+    this.win = false;
   }
 }

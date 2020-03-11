@@ -198,7 +198,7 @@ const GameBoard = (props) => {
     return (
       <>
         <BouncyDiv>
-          <h1 style={mystyle2}>WINNER</h1>
+          <h1 style={winner}>WINNER</h1>
         </BouncyDiv>
 
         <Grid item xs={6} lg={3} container justify="center" style={{ height: '30vh' }}>
@@ -215,7 +215,7 @@ const GameBoard = (props) => {
     return (
       <>
         <BouncyDiv>
-          <h1 style={mystyle}>LOSER</h1>
+          <h1 style={gameOver}>LOSER</h1>
         </BouncyDiv>
 
         <Grid item xs={6} lg={3} container justify="center" style={{ height: '30vh' }}>
@@ -288,7 +288,7 @@ const mapDispatchToProps = {
   updatePositionNull: actions.updatePositionNull,
 
 };
-const mystyle = {
+const gameOver = {
   position: "absolute",
   textTransform: "uppercase",
   fontFamily: "verdana",
@@ -297,13 +297,9 @@ const mystyle = {
   color: "#E50003",
   textShadow: "1px 1px 1px #919191, 1px 2px 1px #919191, 1px 3px 1px #919191, 1px 4px 1px #919191, 1px 5px 1px #919191, 1px 6px 1px #919191, 1px 7px 1px #919191,1px 8px 1px #919191,1px 9px 1px #919191,1px 10px 1px #919191,1px 18px 6px rgba(16,16,16,0.4),1px 22px 10px rgba(16,16,16,0.2),1px 25px 35px rgba(16,16,16,0.2),1px 30px 60px rgba(16,16,16,0.4)",
 
-
 };
 
-const mystyle2 = {
-
-
-
+const winner = {
   position: "absolute",
   textTransform: "uppercase",
   fontFamily: "verdana",
@@ -311,8 +307,6 @@ const mystyle2 = {
   fontWeight: "700",
   color: "#32E306",
   textShadow: "1px 1px 1px #919191, 1px 2px 1px #919191, 1px 3px 1px #919191, 1px 4px 1px #919191, 1px 5px 1px #919191, 1px 6px 1px #919191, 1px 7px 1px #919191,1px 8px 1px #919191,1px 9px 1px #919191,1px 10px 1px #919191,1px 18px 6px rgba(16,16,16,0.4),1px 22px 10px rgba(16,16,16,0.2),1px 25px 35px rgba(16,16,16,0.2),1px 30px 60px rgba(16,16,16,0.4)",
-
-
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameBoard);

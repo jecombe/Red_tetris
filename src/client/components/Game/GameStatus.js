@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import { AwesomeButton } from "react-awesome-button";
+import AwesomeButtonStyles from "../../../style/style.css";
 
 const useStyles = makeStyles((theme) => ({
   gameBoard: {
@@ -10,12 +12,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GameStatus = ({ handleSubmit }) => {
-  const classes = useStyles();
-
+  
   return (
-    <div className={classes.gameBoard}>
-      <button type="submit" onClick={handleSubmit}>Submit</button>
-    </div>
+    <button type="submit" onClick={handleSubmit} className={AwesomeButtonStyles.box} >
+      START
+  </button>
   );
 };
 

@@ -13,6 +13,8 @@ import Stage from './Stage';
 
 import styled, { keyframes } from 'styled-components';
 import { zoomIn } from 'react-animations';
+import { styles } from 'react-animations/lib/swing';
+import game from '../../containers/game';
 
 const bounceAnimation = keyframes`${zoomIn}`;
 
@@ -24,15 +26,15 @@ const Rd = (stage, playerName, playerGameOver, playerWin) => {
   if (stage.login !== playerName) {
     if (stage.playerGameOver === false)
       return <Stage stage={stage.stage} type="other" />
-    return <h1>GAME OVER</h1>
+    return <h1 style={gameOver}>GAME OVER</h1>
   }
   else {
     if (playerGameOver === true)
-      return (<h1>GAME OVER</h1>)
+      return (<h1 style={gameOver}>GAME OVER</h1>)
     else if (playerWin === true)
-      return (<h1>WIN</h1>)
+      return (<h1 style={winner}>WIN</h1>)
     else
-      return (<h1>ME</h1>)
+      return (<h1 style={me}>ME</h1>)
 
   }
 }
@@ -95,5 +97,17 @@ const mapStateToProps = (state) => ({
   playerGameOver: state.player.playerGameOver,
   playerWin: state.player.playerWin,
 });
+
+const gameOver = {
+  color: "#E50003",
+};
+
+const winner = {
+  color: "#32E306",
+};
+
+const me = {
+  color: "#E8B806",
+};
 
 export default connect(mapStateToProps, null)(GamePlayers);

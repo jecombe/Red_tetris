@@ -1,8 +1,9 @@
-import { createStage, createStagePiece } from '../stage/utils';
+import { createStage, createStagePiece } from '../../shared/stage';
+
 
 export default class Player {
-  constructor(socketId, username, room) {
-    this.idSocket = socketId;
+  constructor(socketid, username, room ) {
+    this.idSocket = socketid;
     this.login = username;
     this.owner = false;
     this.stage = createStage();
@@ -20,10 +21,17 @@ export default class Player {
     this.peopleSpectre = [];
     this.notLosing = -1;
     this.win = false;
+    this.gameOver = false;
   }
 
   getLosing() {
     return this.losing;
+  }
+  getGameOver() {
+    return this.gameOver;
+  }
+  setGameOver() {
+    this.gameOver = true;
   }
 
   getLogin() {
@@ -33,7 +41,16 @@ export default class Player {
   getIdSocket() {
     return this.idSocket;
   }
-
+  getPiece()
+  {
+    return this.piece;
+  }
+  getPositionX(){
+    return this.pos.x;
+  }
+  getPositionY(){
+    return this.pos.y;
+  }
   getroomAssociate() {
     return this.roomAssociate;
   }
@@ -56,6 +73,10 @@ export default class Player {
 
   getPeopleSpectre() {
     return this.peopleSpectre;
+  }
+
+  getStage(){
+    return this.stage;
   }
 
   setLogin(login) {
@@ -115,12 +136,12 @@ export default class Player {
     this.win = false;
   }
 
-  setMallus() {
-    this.mallus += 1;
+  setMallus(lineFull) {
+    this.mallus += lineFull;
   }
 
-  setLineFull() {
-    this.lineFull += 1;
+  setLineFull(lineFull) {
+    this.lineFull += lineFull;
   }
 
   setNullOtherStage() {
@@ -149,5 +170,17 @@ export default class Player {
 
   setWin() {
     this.win = true;
+  }
+
+  initPlayer(len, pieceStart) {
+    this.setPositionNull();
+    this.setNoLosing(len);
+    this.setPlayerNull();
+    this.setPiece(pieceStart);
+    this.setPosition(10 / 2 - 2, 0);
+    this.setPositionNextTetro(10 / 2 - 2, 0);
+    this.setStage(createStage());
+    this.gameOver = false;
+    this.win = false;
   }
 }

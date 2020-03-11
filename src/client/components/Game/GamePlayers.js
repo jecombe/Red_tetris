@@ -10,29 +10,57 @@ import Typography from '@material-ui/core/Typography';
 
 import Stage from './Stage';
 
-const GameInfoMap = (playerOtherStage) => {
-  if (playerOtherStage.length === 0) {
-    return (
-      <Grid container item justify="center">
-        No users in room
-      </Grid>
-    );
+
+import styled, { keyframes } from 'styled-components';
+import { zoomIn } from 'react-animations';
+import { styles } from 'react-animations/lib/swing';
+import game from '../../containers/game';
+
+const bounceAnimation = keyframes`${zoomIn}`;
+
+const BouncyDiv = styled.div`
+  animation: 1s ${bounceAnimation};
+`;
+
+const Rd = (stage, playerName, playerGameOver, playerWin) => {
+  if (stage.login !== playerName) {
+    if (stage.playerGameOver === false)
+      return <Stage stage={stage.stage} type="other" />
+    return <h1 style={gameOver}>GAME OVER</h1>
   }
+  else {
+    if (playerGameOver === true)
+      return (<h1 style={gameOver}>GAME OVER</h1>)
+    else if (playerWin === true)
+      return (<h1 style={winner}>WIN</h1>)
+    else
+      return (<h1 style={me}>ME</h1>)
+
+  }
+}
+
+
+const GameInfoMap = (playerOtherStage, playerName, playerGameOver, playerWin) => {
+
+
   return playerOtherStage.map((stage) => (
-    <Card style={{ margin: '2px' }}>
+    console.log(stage),
+
+
+    <Card style={{ margin: '2px', opacity: '0.8' }}>
       <ListItem>
         <Grid container justify="center" alignItems="center" width="100%">
           <Grid item xs={3}>
-            Name
+            Name: {stage.login}
           </Grid>
           <Grid item xs={3}>
-            Score
+            Line Full: {stage.lineFull}
           </Grid>
           <Grid item xs={3}>
-            Rank
+            Mallus: {stage.mallus}
           </Grid>
           <Grid item xs={3}>
-            <Stage stage={stage} type="other" />
+            {Rd(stage, playerName, playerGameOver, playerWin)}
           </Grid>
         </Grid>
       </ListItem>
@@ -41,16 +69,18 @@ const GameInfoMap = (playerOtherStage) => {
 };
 
 const GamePlayers = (props) => {
-  const { playerOtherStage } = props;
+  const { playerOtherStage, playerName, playerGameOver, playerWin } = props;
+
 
   return (
+
     <Grid container justify="center">
       <Typography component="h1" variant="h5">
-            Users in room
-      </Typography>
+        Users in room
+               </Typography>
       <Grid item xs={12} style={{ maxHeight: '50vh', overflow: 'auto', width: '100%' }}>
         <List style={{ maxHeight: '100%' }}>
-          {GameInfoMap(playerOtherStage)}
+          {GameInfoMap(playerOtherStage, playerName, playerGameOver, playerWin)}
         </List>
       </Grid>
     </Grid>
@@ -63,6 +93,21 @@ GamePlayers.propTypes = {
 
 const mapStateToProps = (state) => ({
   playerOtherStage: state.player.playerOtherStage,
+  playerName: state.player.playerName,
+  playerGameOver: state.player.playerGameOver,
+  playerWin: state.player.playerWin,
 });
+
+const gameOver = {
+  color: "#E50003",
+};
+
+const winner = {
+  color: "#32E306",
+};
+
+const me = {
+  color: "#E8B806",
+};
 
 export default connect(mapStateToProps, null)(GamePlayers);

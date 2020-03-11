@@ -13,7 +13,11 @@ module.exports = {
   STAGE: 'stage',
   STAGE_MALLUS: 'stageMallus',
   STAGE_OTHER: 'stageOther',
-
+  UPDATE_POSITION: 'updatePosition',
+  UPDATE_STAGE_3: 'updateStage3',
+  UPDATE_POSITION_NULL: 'updatePositionNull',
+  SHARE_POSITION: 'sharePosition',
+  
   req_ECHO: '#echo',
   res_ECHO: '@echo',
 
@@ -31,4 +35,12 @@ module.exports = {
 
   req_POSITION_TETRO: '#positionTetro',
   res_POSITION_TETRO: '@positionTetro',
+
+  req_UPDATE_COLLISION: '#updateCollision',
+  res_UPDATE_COLLISION: '@updateCollision',
+
+  req_SHARE_POSITION: '#sharePosition',
+  res_SHARE_POSITION: '@sharePosition',
+
+  WINNER: 'winner'
 };

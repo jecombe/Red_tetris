@@ -31,12 +31,37 @@ export const reqLogin = (payload) => ({
   },
 });
 
-export const reqSendPosition = (payload) => ({
-  type: ev.POSITION_TETRO,
+
+
+export const updatePosition = (payload) => ({
+
+  type: ev.UPDATE_POSITION,
   payload: {
-    keyCode: payload.keyCode,
+    x: payload.x,
+    y: payload.y,
+    playerStage: payload.playerStage,
+    piece: payload.piece,
+    collided: payload.collided,
+    playerGameOver: payload.playerGameOver,
   },
 });
+
+
+export const updateCollision = (payload) => ({
+  type: ev.req_UPDATE_COLLISION,
+  payload: {
+    playerStage: payload.playerStage,
+    playerRoom: payload.playerRoom,
+    x: payload.x,
+    y: payload.y,
+    lineFull: payload.lineFull,
+    playerGameOver: payload.playerGameOver,
+  },
+});
+
+
+
+
 
 export const reqStartGame = (payload) => ({
   type: ev.START_GAME,
@@ -45,6 +70,7 @@ export const reqStartGame = (payload) => ({
     playerRoom: payload.playerRoom,
   },
 });
+
 
 /*
  * action creators for server socket events

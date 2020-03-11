@@ -1,6 +1,7 @@
 import ev from '../../shared/events';
 import logger from '../utils/logger';
 import { login, logout } from '../actions/login';
+import { emitterLogin } from './emitter';
 
 const ioDispatchLogin = (redGame, socketClient) => {
   const games = redGame.getGames();
@@ -17,20 +18,15 @@ const ioDispatchLogin = (redGame, socketClient) => {
 
   // LOGIN
   socketClient.on(ev.req_LOGIN, (data) => {
-    const player = login(redGame, data, socketClient.id);
+    const {player, game} = login(redGame, data, socketClient);
 
     redGame.io.emit(ev.res_ROOMS, {
       games,
     });
     /* Join room */
     socketClient.join(player.roomAssociate);
-    console.log('SOCKET => ', socketClient);
-    redGame.io.to(`${socketClient.id}`).emit(ev.OBJ_PLAYER, {
-      playerStage: player.stage,
-      playerNextPiece: player.nextPiece,
-      playerOtherStage: player.otherStage,
-      playerOwner: player.owner,
-    });
+    emitterLogin(redGame, player, game, socketClient)
+ 
   });
 
   // LOGOUT

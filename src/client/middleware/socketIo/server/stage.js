@@ -11,6 +11,9 @@ export const dispatch = (action, data, dispatch) => {
       playerGameOver: data.gameOver,
       otherNotLosing: data.otherNotLosing,
       playerLineFull: data.playerLineFull,
+      position: data.position,
+      collided: data.collided,
+      piece: data.piece,
     },
   });
 };

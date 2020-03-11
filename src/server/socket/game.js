@@ -1,32 +1,46 @@
 import ev from '../../shared/events';
-// import { positionTetro } from '../actions/eventActions';
-import { startGame, positionTetro } from '../actions/game';
+import { startGame } from '../actions/game';
+import { flushUpdate, createStagePiece } from '../../shared/stage';
+import { emitterUpdateCollision, emitterStartGame } from './emitter';
+
 
 const ioDispatchGame = (redGame, socketClient) => {
+
+  //START GAME
   socketClient.on(ev.START_GAME, (data) => {
+
     const { playerRoom } = data;
-    const { newStage, nextPiece, otherNotLosing } = startGame(redGame, data, socketClient.id);
-
-    redGame.io.sockets.in(playerRoom).emit(ev.STAGE, {
-      newStage,
-      nextPiece,
-      gameOver: false,
-      otherNotLosing,
-    });
+    const { newStage, nextPiece, otherNotLosing, position, collided, piece } = startGame(redGame, data, socketClient.id);
+    emitterStartGame(newStage, nextPiece, otherNotLosing, position, collided, piece, redGame, playerRoom)
+    
   });
 
-  socketClient.on(ev.POSITION_TETRO, (data) => {
-    const { newStage, nextPiece, gameOver, otherNotLosing, playerLineFull } = positionTetro(redGame, data, socketClient.id);
+  //COLLISION
+  socketClient.on(ev.req_UPDATE_COLLISION, (data) => {
 
+    const { playerStage, playerRoom, lineFull, playerGameOver } = data;
+    console.log("===========+++> ", playerGameOver)
+    const game = redGame.getGame(playerRoom);
+    const player = redGame.getGame(playerRoom).getPlayer(socketClient.id);
+    if (playerGameOver === true)
+    {
+      console.log("Before ", game.copyUser)
+      player.setGameOver();
+      game.deleteUser(socketClient.id)
+      game.checkUserWin(redGame);
+      console.log("Before ", game.users)
 
-    redGame.io.to(`${socketClient.id}`).emit(ev.STAGE, {
-      newStage,
-      nextPiece,
-      gameOver,
-      otherNotLosing,
-      playerLineFull,
-    });
-  });
+    }
+    player.setStage(playerStage);
+    player.setLineFull(lineFull);
+    game.setMallusToPlayers(redGame, lineFull, player);
+    player.setIndex(player.index + 1);
+    player.setPiece(game.tetro[player.index]);
+    if (!game.tetro[player.index + 1]) game.setTetro();
+    player.setNextPiece(flushUpdate(game.tetro[player.index + 1], createStagePiece(), player.getPositionX(), player.getPositionY()));
+    emitterUpdateCollision(socketClient, player)
+  
+  })
 };
 
 module.exports = ioDispatchGame;

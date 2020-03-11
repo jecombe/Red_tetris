@@ -19,6 +19,12 @@ const App = (props) => {
   });
 
   return (
+    <div
+    style={{
+      backgroundColor: 'skyblue',
+   
+    }}
+>
     <Container>
       <Grid container direction="column" justify="space-between" style={{ height: '100vh' }}>
         <CssBaseline />
@@ -26,18 +32,21 @@ const App = (props) => {
           <Header />
         </Grid>
         <Grid item>
-          <Main />
+          <Main  />
         </Grid>
         <Grid item>
           <Footer />
         </Grid>
       </Grid>
     </Container>
+    </div>
   );
 };
 
 App.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
+
+
 
 export default connect()(App);

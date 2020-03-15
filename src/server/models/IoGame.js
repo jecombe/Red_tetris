@@ -1,7 +1,7 @@
 
 export default class IoGame {
-  constructor() {
-    this.io = null;
+  constructor(socketServer) {
+    this.io = socketServer;
     this.socketClient = null;
     this.games = {};
     this.players = {};
@@ -26,13 +26,13 @@ export default class IoGame {
 
   setGame(game) {
     // if (!(`${game.roomName}` in this.games)) {
-      this.games[game.roomName] = game;
+    this.games[game.roomName] = game;
     // }
   }
 
   setPlayer(player) {
     // if (!(`${player.idSocket}` in this.players)) {
-      this.players[player.idSocket] = player;
+    this.players[player.idSocket] = player;
     // }
   }
 
@@ -48,7 +48,6 @@ export default class IoGame {
   startGame(id, room) {
     return this.getGame(room).startGame(id, this);
     // const player = game.getPlayer(id);
-
   }
 
   loginPlayer(id, playerName, roomName) {
@@ -67,5 +66,4 @@ export default class IoGame {
     this.games[roomName].setPlayer(this.players[id]);
     return this.players[id];
   }
-
 }

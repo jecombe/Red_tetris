@@ -1,8 +1,8 @@
-import Piece from './Piece';
-import { createStage, createStagePiece } from '../../shared/stage';
-import { flushUpdate } from '../../shared/stage';
-import { emitterMallus, emitterStageOther, emitterWinner } from '../socket/emitter';
 import { array } from 'prop-types';
+import Piece from './Piece';
+import { createStage, createStagePiece, flushUpdate } from '../../shared/stage';
+
+import { emitterMallus, emitterStageOther, emitterWinner } from '../actions/emitter';
 
 export default class Game {
   constructor(username, roomName) {
@@ -55,6 +55,7 @@ export default class Game {
   setTetroNull() {
     this.tetro = [];
   }
+
   getPlayer(id) {
     return this.users.find((x) => x.idSocket === id);
   }
@@ -66,19 +67,20 @@ export default class Game {
   }
 
   getAllStage() {
-    let tabRes = []
-    this.users.forEach(res => {
-      tabRes.push({ login: res.login, stage: res.stage, mallus: res.mallus, lineFull: res.lineFull, playerGameOver: res.gameOver })
-    })
+    const tabRes = [];
+    this.users.forEach((res) => {
+      tabRes.push({
+        login: res.login, stage: res.stage, mallus: res.mallus, lineFull: res.lineFull, playerGameOver: res.gameOver,
+      });
+    });
     return tabRes;
   }
 
   setCopyUser() {
-    this.copyUser = Array.from(this.users)
+    this.copyUser = Array.from(this.users);
   }
 
   startGame(id, redGame) {
-
     if (!this.getPlayer(id).isOwner()) return false;
     this.setTetroNull();
     this.setGameStart();
@@ -88,7 +90,7 @@ export default class Game {
       return user;
     });
     emitterStageOther(redGame, this.getAllStage(), this);
-    this.setCopyUser()
+    this.setCopyUser();
     return ({
       newStage: createStage(),
       nextPiece: flushUpdate(this.getNextPieceStart(), createStagePiece(), this.users[0].getPositionX(), this.users[0].getPositionY(), false),
@@ -101,8 +103,7 @@ export default class Game {
   }
 
   setMallusToPlayers(redGame, lineFull, player) {
-
-    let userTab = this.getUserInGame();
+    const userTab = this.getUserInGame();
     if (lineFull !== 0) {
       for (let i = 0; i < userTab.length; i++) {
         let lineFullTemp = lineFull;
@@ -110,9 +111,9 @@ export default class Game {
           userTab[i].setMallus(lineFullTemp);
           const calcRow = 20 - userTab[i].getMallus();
           /* --- Check Game Over with mallus --- */
-           if (calcRow === 0) {
-             userTab[i].setLosing(true);
-           }
+          if (calcRow === 0) {
+            userTab[i].setLosing(true);
+          }
           if (calcRow < 20) {
             const newStage = userTab[i].stage.slice(lineFullTemp, 20);
             while (lineFullTemp !== 0) {
@@ -130,9 +131,10 @@ export default class Game {
 
   checkUserWin(redGame) {
     if (this.copyUser.length === 1) {
-      emitterWinner(this.copyUser[0], redGame)
+      emitterWinner(this.copyUser[0], redGame);
     }
   }
+
   deleteUser(socketId) {
     const index = this.copyUser.findIndex((user) => user.idSocket === socketId);
     this.copyUser.splice(index, 1);

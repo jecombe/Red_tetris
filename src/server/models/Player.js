@@ -2,7 +2,7 @@ import { createStage, createStagePiece } from '../../shared/stage';
 
 
 export default class Player {
-  constructor(socketid, username, room ) {
+  constructor(socketid, username, room) {
     this.idSocket = socketid;
     this.login = username;
     this.owner = false;
@@ -27,9 +27,11 @@ export default class Player {
   getLosing() {
     return this.losing;
   }
+
   getGameOver() {
     return this.gameOver;
   }
+
   setGameOver() {
     this.gameOver = true;
   }
@@ -41,16 +43,19 @@ export default class Player {
   getIdSocket() {
     return this.idSocket;
   }
-  getPiece()
-  {
+
+  getPiece() {
     return this.piece;
   }
-  getPositionX(){
+
+  getPositionX() {
     return this.pos.x;
   }
-  getPositionY(){
+
+  getPositionY() {
     return this.pos.y;
   }
+
   getroomAssociate() {
     return this.roomAssociate;
   }
@@ -75,7 +80,7 @@ export default class Player {
     return this.peopleSpectre;
   }
 
-  getStage(){
+  getStage() {
     return this.stage;
   }
 

@@ -63,6 +63,7 @@ class Piece {
     const randTetromino = tetrominos[Math.floor(Math.random() * tetrominos.length)];
     this.form = TETROMINOS[randTetromino];
   }
+
   cleanPiece(newStage) {
     this.form.shape.forEach((row, y) => {
       row.forEach((value, x) => {

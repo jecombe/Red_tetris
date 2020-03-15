@@ -10,7 +10,7 @@
     "dev": "concurrently --kill-others \"npm run client-dev\" \"npm run srv-dev\"",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
-    "test": "jest test/react.test.js --verbose --coverage",
+    "test": "jest test/server/*.test.js --verbose --coverage",
     "test:watch": "npm test -- --watch-All"
   },
   "keywords": [],
@@ -39,6 +39,7 @@
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
     "socket.io-middleware": "^2.0.1",
+    "styled-components": "^5.0.1",
     "winston": "^2.4.4"
   },
   "devDependencies": {

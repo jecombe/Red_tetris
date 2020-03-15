@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import { BlockLoading } from 'react-loadingg';
 import Login from './login';
 import Game from './game';
 import Loader from '../components/Loader';
 import Error404 from '../components/Error404';
-import { BlockLoading } from 'react-loadingg';
 
 const Main = (props) => {
   const { connected } = props;

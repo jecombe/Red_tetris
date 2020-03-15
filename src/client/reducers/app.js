@@ -3,6 +3,7 @@ import ev from '../../shared/events';
 
 export const appState = {
   connected: false,
+  isLoading: false,
   games: {},
 };
 
@@ -14,13 +15,6 @@ export const appStatePropTypes = PropTypes.shape({
 
 const appReducer = (state = appState, action) => {
   switch (action.type) {
-    // case actions.APP_STATE: {
-    //   const { connected } = action.payload;
-    //   return {
-    //     ...state,
-    //     connected,
-    //   };
-    // }
     case ev.CLIENT_CONNECT: {
       return {
         ...state,

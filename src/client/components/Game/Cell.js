@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { TETROMINOS } from './tetrominos';
+import { TETROMINOS } from '../../helpers/tetrominos';
 
 const useStyles = makeStyles(() => ({
   cell: (props) => ({

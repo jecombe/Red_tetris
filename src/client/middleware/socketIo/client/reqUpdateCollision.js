@@ -1,4 +1,4 @@
-  
+
 import ev from '../../../../shared/events';
 
 export const dispatch = (socket, store, action) => {

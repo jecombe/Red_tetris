@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { AwesomeButton } from "react-awesome-button";
-import AwesomeButtonStyles from "../../../style/style.css";
+import { AwesomeButton } from 'react-awesome-button';
+import AwesomeButtonStyles from '../../../style/style.css';
 
 const useStyles = makeStyles((theme) => ({
   gameBoard: {
@@ -11,14 +11,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const GameStatus = ({ handleSubmit }) => {
-  
-  return (
-    <button type="submit" onClick={handleSubmit} className={AwesomeButtonStyles.box} >
+const GameStatus = ({ handleSubmit }) => (
+  <button type="submit" onClick={handleSubmit} className={AwesomeButtonStyles.box}>
       START
   </button>
-  );
-};
+);
 
 GameStatus.propTypes = {
   handleSubmit: PropTypes.func.isRequired,

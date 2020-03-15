@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import * as actions from '../../actions';
+import actions from '../../actions';
 import LoginInput from './LoginInput';
 import LoginButton from './LoginButton';
 

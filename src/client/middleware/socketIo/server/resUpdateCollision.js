@@ -2,11 +2,11 @@ import ev from '../../../../shared/events';
 
 // eslint-disable-next-line no-shadow
 export const dispatch = (action, data, dispatch) => {
-  console.log("============++> ", data)
-    dispatch({
-        type: ev.res_UPDATE_COLLISION,
-        payload: data,
-    });
+  console.log('============++> ', data);
+  dispatch({
+    type: ev.res_UPDATE_COLLISION,
+    payload: data,
+  });
 };
 
 export default {

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import ev from '../../shared/events';
-import { TETROMINOS } from '../components/Game/tetrominos';
+import { TETROMINOS } from '../helpers/tetrominos';
 
 export const playerState = {
   playerName: null,
@@ -44,7 +44,9 @@ const playerReducer = (state = playerState, action) => {
     }
 
     case ev.OBJ_PLAYER: {
-      const { playerStage, playerNextPiece, playerOtherStage, playerOwner, } = action.payload;
+      const {
+        playerStage, playerNextPiece, playerOtherStage, playerOwner,
+      } = action.payload;
 
       return {
         ...state,
@@ -58,7 +60,9 @@ const playerReducer = (state = playerState, action) => {
     }
 
     case ev.STAGE: {
-      const { playerStage, playerNextPiece, playerGameOver, position, collided, piece} = action.payload;
+      const {
+        playerStage, playerNextPiece, playerGameOver, position, collided, piece,
+      } = action.payload;
 
       return {
         ...state,
@@ -69,59 +73,57 @@ const playerReducer = (state = playerState, action) => {
         collided,
         piece,
         playerLineFull: 0,
-        playerGameOver:  false,
+        playerGameOver: false,
         playerWin: false,
         startGame: true,
       };
     }
 
     case ev.res_UPDATE_COLLISION: {
-      const {piece, playerNextPiece, playerLineFull} = action.payload;
+      const { piece, playerNextPiece, playerLineFull } = action.payload;
 
       return {
         ...state,
         piece,
-        position: {x: 10 / 2 - 2, y: 0},
+        position: { x: 10 / 2 - 2, y: 0 },
         collided: false,
         playerNextPiece,
         playerLineFull,
       };
     }
     case ev.req_UPDATE_COLLISION: {
-      const {playerStage, x, y} = action.payload;
+      const { playerStage, x, y } = action.payload;
 
       return {
         ...state,
         playerStage,
-         x: x,
-         y: y,
-         collided: true,
+        x,
+        y,
+        collided: true,
       };
     }
-
 
     case ev.UPDATE_POSITION: {
       const {x, y, playerStage, piece, collided, playerGameOver} = action.payload;
 
       return {
         ...state,
-        position: {x: x, y: y}, 
+        position: {x: x, y: y},
         playerStage,
         piece,
         collided,
         playerGameOver,
-        
+
       };
     }
 
     case ev.STAGE_MALLUS: {
-
-      const { playerStage, playerMallus} = action.payload;
+      const { playerStage, playerMallus } = action.payload;
       return {
         ...state,
         playerStage,
         tetromino: TETROMINOS.I.shape,
-        playerMallus
+        playerMallus,
       };
     }
 
@@ -135,27 +137,24 @@ const playerReducer = (state = playerState, action) => {
     }
 
     case ev.WINNER: {
-      const { winner} = action.payload;
+      const { winner } = action.payload;
       return {
         ...state,
         playerWin: winner,
-  
+
       };
     }
     case ev.START_GAME: {
       return {
         ...state,
         startGame: false,
-  
-      };
 
+      };
     }
 
     default:
       return state;
   }
-
-  
 };
 
 export default playerReducer;

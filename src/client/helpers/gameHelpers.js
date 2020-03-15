@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+
 export const STAGE_WIDTH = 10;
 export const STAGE_HEIGHT = 20;
 
@@ -27,3 +29,32 @@ export const checkCollision = (player, stage, { x: moveX, y: moveY }) => {
     }
   }
 };
+
+export const rotate = (matrix, dir) => {
+  // Make the rows to become cols (transpose)
+  const rotatedTetro = matrix.map((_, index) => matrix.map((col) => col[index]));
+  // Reverse each row to get a rotated matrix
+  if (dir > 0) return rotatedTetro.map((row) => row.reverse());
+  return rotatedTetro.reverse();
+};
+
+export function useInterval(callback, delay) {
+  const savedCallback = useRef();
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      const id = setInterval(tick, delay);
+      return () => {
+        clearInterval(id);
+      };
+    }
+  }, [delay]);
+}

@@ -17,7 +17,7 @@ module.exports = {
   UPDATE_STAGE_3: 'updateStage3',
   UPDATE_POSITION_NULL: 'updatePositionNull',
   SHARE_POSITION: 'sharePosition',
-  
+
   req_ECHO: '#echo',
   res_ECHO: '@echo',
 
@@ -42,5 +42,5 @@ module.exports = {
   req_SHARE_POSITION: '#sharePosition',
   res_SHARE_POSITION: '@sharePosition',
 
-  WINNER: 'winner'
+  WINNER: 'winner',
 };

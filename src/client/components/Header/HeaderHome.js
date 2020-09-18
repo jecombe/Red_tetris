@@ -1,31 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles({
-  homeIcon: {
-    color: 'grey',
-    '&:hover': {
-      color: 'red',
-    },
-  },
-});
+import RedIconButton from '../Common/RedIconButton';
 
 const HeaderHome = (props) => {
   const { handleOnClick } = props;
-  const classes = useStyles();
 
   return (
-    <IconButton
-      aria-label="Home"
-      component="span"
+    <RedIconButton
+      label="Home"
       onClick={handleOnClick}
-      className={classes.homeIcon}
-    >
-      <HomeIcon />
-    </IconButton>
+      icon={HomeIcon}
+    />
   );
 };
 

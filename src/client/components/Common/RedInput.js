@@ -19,6 +19,7 @@ const RedInput = (props) => {
     defaultValue,
     disabled,
     refHandle,
+    err,
   } = props;
   const classes = useStyles();
 
@@ -35,6 +36,7 @@ const RedInput = (props) => {
         name={name}
         disabled={disabled}
         inputRef={refHandle}
+        error={err}
       />
     </FormControl>
   );
@@ -49,6 +51,7 @@ RedInput.propTypes = {
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   ]).isRequired,
+  err: PropTypes.bool,
 };
 
 export default RedInput;

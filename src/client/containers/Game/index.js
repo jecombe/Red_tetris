@@ -10,6 +10,10 @@ import GameChatConnect from './GameChatConnect';
 import GameBoardConnect from './GameBoardConnect';
 import GamePlayersConnect from './GamePlayersConnect';
 
+const getRoom = (pathname) => pathname.split('/')[1].split('[')[0].trim();
+
+const getName = (pathname) => pathname.split('/')[1].split('[')[1].split(']')[0].trim();
+
 const Game = (props) => {
   const {
     playerName,
@@ -20,8 +24,8 @@ const Game = (props) => {
 
   // if (!playerName || !playerRoom) history.push('/');
   if (!playerName || !playerRoom) {
-    const room = history.location.pathname.split('/')[1].split('[')[0].trim();
-    const name = history.location.pathname.split('/')[1].split('[')[1].split(']')[0].trim();
+    const room = getRoom(history.location.pathname);
+    const name = getName(history.location.pathname);
 
     if (!room || !name) history.push('/');
 
@@ -33,7 +37,7 @@ const Game = (props) => {
 
   return (
     <Grid container justify="space-around">
-      <Grid item xs={12} lg={3} container justify="center">
+      <Grid item xs={12} lg={3} container spacing={2} justify="center" style={{ height: '75vh' }}>
         <Grid item xs={12}>
           <GameSettingsConnect />
         </Grid>
@@ -41,10 +45,10 @@ const Game = (props) => {
           <GameChatConnect />
         </Grid>
       </Grid>
-      <Grid item xs={12} lg={3}>
+      <Grid item xs={12} lg={4} style={{ height: '75vh' }}>
         <GameBoardConnect />
       </Grid>
-      <Grid item xs={12} lg={3}>
+      <Grid item xs={12} lg={4} style={{ height: '75vh' }}>
         <GamePlayersConnect />
       </Grid>
     </Grid>

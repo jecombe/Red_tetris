@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { withRouter } from 'react-router-dom';
+import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -22,17 +23,19 @@ const Header = () => {
   const classes = useStyles();
 
   return (
-    <Grid container alignItems="center" className={classes.rootHeader}>
-      <Grid item xs={3} container justify="center">
-        <HeaderHomeConnect />
+    <AppBar color="inherit">
+      <Grid container alignItems="center" className={classes.rootHeader}>
+        <Grid item xs={3} container justify="center">
+          <HeaderHomeConnect />
+        </Grid>
+        <Grid item xs={6} container justify="center">
+          <HeaderLogo />
+        </Grid>
+        <Grid item xs={3} container justify="center">
+          <HeaderStateConnect />
+        </Grid>
       </Grid>
-      <Grid item xs={6} container justify="center">
-        <HeaderLogo />
-      </Grid>
-      <Grid item xs={3} container justify="center">
-        <HeaderStateConnect />
-      </Grid>
-    </Grid>
+    </AppBar>
   );
 };
 

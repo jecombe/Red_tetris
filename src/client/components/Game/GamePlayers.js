@@ -41,6 +41,27 @@ const Rd = (stage, playerName, playerGameOver, playerWin) => {
   return (<h1 style={me}>ME</h1>);
 };
 
+const playersMap = (playerOtherStage, playerName, playerGameOver, playerWin) => {
+  return playerOtherStage.map((stage) => (
+    <ListItem>
+      <Grid container justify="center" alignItems="center" width="100%">
+        <Grid item xs={3}>
+          {`Name: ${stage.login}`}
+        </Grid>
+        <Grid item xs={3}>
+          {`Line Full: ${stage.lineFull}`}
+        </Grid>
+        <Grid item xs={3}>
+          {`Mallus: ${stage.mallus}`}
+        </Grid>
+        <Grid item xs={3}>
+          {Rd(stage, playerName, playerGameOver, playerWin)}
+        </Grid>
+      </Grid>
+    </ListItem>
+  ));
+};
+
 const GamePlayers = (props) => {
   const {
     playerOtherStage, playerName, playerGameOver, playerWin,
@@ -54,32 +75,9 @@ const GamePlayers = (props) => {
       />
       <Divider light />
       <CardContent>
-        <Grid item xs={12} style={{ maxHeight: '50vh', overflow: 'auto', width: '100%' }}>
+        <Grid item xs={12} style={{ maxHeight: 250, overflow: 'auto', width: '100%' }}>
           <List style={{ maxHeight: '100%' }}>
-            {playerOtherStage.map((stage) => (
-              <ListItem>
-                <Grid container justify="center" alignItems="center" width="100%">
-                  <Grid item xs={3}>
-                        Name:
-                    {' '}
-                    {stage.login}
-                  </Grid>
-                  <Grid item xs={3}>
-                        Line Full:
-                    {' '}
-                    {stage.lineFull}
-                  </Grid>
-                  <Grid item xs={3}>
-                        Mallus:
-                    {' '}
-                    {stage.mallus}
-                  </Grid>
-                  <Grid item xs={3}>
-                    {Rd(stage, playerName, playerGameOver, playerWin)}
-                  </Grid>
-                </Grid>
-              </ListItem>
-            ))}
+            {playersMap(playerOtherStage, playerName, playerGameOver, playerWin)}
           </List>
         </Grid>
       </CardContent>

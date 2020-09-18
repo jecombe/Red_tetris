@@ -1,20 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import LaunchIcon from '@material-ui/icons/Launch';
-import { makeStyles } from '@material-ui/core/styles';
-import { connect } from 'react-redux';
-
-const useStyles = makeStyles((theme) => ({
-  roomRow: {
-    margin: theme.spacing(1),
-    padding: theme.spacing(1),
-  },
-}));
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
 
 const LoginGamesMap = (games, onClickRoom) => {
   if (Object.entries(games).length === 0
@@ -42,17 +36,22 @@ const LoginGamesMap = (games, onClickRoom) => {
 
 const LoginRooms = (props) => {
   const { games, onClickRoom } = props;
-  const classes = useStyles();
 
   return (
-    <Grid container direction="row" justify="center" className={classes.roomRow}>
-      <Typography component="h1" variant="h5">
-        Available rooms
-      </Typography>
-      <Grid item xs={12} style={{ maxHeight: 250, overflow: 'auto' }}>
-        <List style={{ maxHeight: '100%' }}>
-          {LoginGamesMap(games, onClickRoom)}
-        </List>
+    <Grid container justify="center" alignItems="center" spacing="10">
+      <Grid item xs={12}>
+        <Card>
+          <CardHeader
+            title="Available rooms"
+          />
+          <CardContent>
+            <Grid item xs={12} style={{ maxHeight: 350, overflow: 'auto' }}>
+              <List style={{ maxHeight: '100%' }}>
+                {LoginGamesMap(games, onClickRoom)}
+              </List>
+            </Grid>
+          </CardContent>
+        </Card>
       </Grid>
     </Grid>
   );

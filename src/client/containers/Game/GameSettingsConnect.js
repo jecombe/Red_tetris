@@ -22,6 +22,7 @@ const GameSettingsConnect = (props) => {
 
   return (
     <GameSettings
+      playerName={playerName}
       playerOwner={playerOwner}
       playerDropTime={playerDropTime}
       handleSettings={handleSettings}

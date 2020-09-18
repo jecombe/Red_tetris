@@ -1,43 +1,71 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
+import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import { makeStyles } from '@material-ui/core/styles';
 
 import LoginForm from '../../components/Login/LoginForm';
 import LoginRooms from '../../components/Login/LoginRooms';
 
-const useStyles = makeStyles((theme) => ({
-  rootLogin: {
-    padding: theme.spacing(3, 3),
-  },
-}));
+import actions from '../../actions';
 
-const Login = () => {
-  const classes = useStyles();
+const LoginConnect = (props) => {
+  const {
+    reqLogin,
+    history,
+  } = props;
+
   const refPlayerName = React.createRef();
   const refPlayerRoom = React.createRef();
+
+  const [errPlayerName, setErrPlayerName] = useState(false);
+  const [errPlayerRoom, setErrPlayerRoom] = useState(false);
 
   const handleOnClickRoom = (e) => {
     refPlayerRoom.current.value = e;
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault(); // event.persist();
+    const name = refPlayerName.current.value.trim();
+    const room = refPlayerRoom.current.value.trim();
+
+    if (!name) setErrPlayerName(true); else setErrPlayerName(false);
+    if (!room) setErrPlayerRoom(true); else setErrPlayerRoom(false);
+
+    if (!name || !room) return;
+
+    reqLogin({
+      playerName: name,
+      playerRoom: room,
+    });
+
+    history.push(`/#${room}[${name}]`);
+  };
+
   return (
-    <Grid container justify="center" alignItems="center">
-      <Card className={classes.rootLogin}>
-        <Grid container justify="center">
-          <Grid item xs={12}>
-            <LoginForm
-              refPlayerName={refPlayerName}
-              refPlayerRoom={refPlayerRoom}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <LoginRooms onClickRoom={handleOnClickRoom} />
-          </Grid>
-        </Grid>
-      </Card>
-    </Grid>
+    <Container component="main" maxWidth="sm">
+      <LoginForm
+        refPlayerName={refPlayerName}
+        errPlayerName={errPlayerName}
+        refPlayerRoom={refPlayerRoom}
+        errPlayerRoom={errPlayerRoom}
+        handleSubmit={handleSubmit}
+      />
+      <LoginRooms onClickRoom={handleOnClickRoom} />
+    </Container>
   );
 };
 
-export default Login;
+LoginConnect.propTypes = {
+  reqLogin: PropTypes.func.isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
+};
+
+const mapDispatchToProps = {
+  reqLogin: actions.reqLogin,
+};
+
+export default withRouter(connect(null, mapDispatchToProps)(LoginConnect));

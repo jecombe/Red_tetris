@@ -1,6 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import Divider from '@material-ui/core/Divider';
 
 import FooterAuthors from '../../components/Footer/FooterAuthors';
 
@@ -14,9 +15,12 @@ const Footer = () => {
   const classes = useStyles();
 
   return (
-    <Grid container justify="center" alignItems="center" className={classes.rootFooter}>
-      <FooterAuthors />
-    </Grid>
+    <div>
+      <Divider />
+      <Grid container justify="center" alignItems="center" className={classes.rootFooter}>
+        <FooterAuthors />
+      </Grid>
+    </div>
   );
 };
 

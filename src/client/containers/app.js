@@ -3,13 +3,12 @@ import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
 import params from '../../shared/params';
 import actions from '../actions';
 import Header from './Header';
-import Login from './Login';
+import LoginConnect from './Login';
 import Game from './Game';
 import Footer from './Footer';
 import Loader from '../components/Common/Loader';
@@ -24,7 +23,7 @@ const App = (props) => {
   });
 
   return (
-    <Grid container direction="column" justify="space-between" style={{ height: '100vh', backgroundColor: 'skyblue' }}>
+    <Grid container direction="column" justify="space-between" style={{ height: '100vh' }}>
       <CssBaseline />
       <Grid item>
         <Header />
@@ -34,7 +33,7 @@ const App = (props) => {
           ? <Loader />
           : (
             <Switch>
-              <Route exact path="/" component={Login} />
+              <Route exact path="/" component={LoginConnect} />
               <Route path="/:room[:playerName]" component={Game} />
               <Route component={Error404} />
             </Switch>

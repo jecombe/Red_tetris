@@ -15,9 +15,10 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import RedButton from '../Common/RedButton';
 import RedInput from '../Common/RedInput';
+import RedIconButton from '../Common/RedIconButton';
 
 const Messages = ({ messages }) => (
-  <List style={{ maxHeight: '25vh', overflow: 'auto', width: '100%' }}>
+  <List style={{ minHeight: 175, maxHeight: 175, overflow: 'auto', width: '100%' }}>
     {messages.flatMap((message, index) => [
       <ListItem alignItems="flex-start" key={index}>
         <ListItemText primary="Name says:" secondary={message} />
@@ -41,46 +42,27 @@ const MessageBox = ({ onSendMessage: pushSendMessage }) => {
         />
       </Grid>
       <Grid item xs={1} container justify="center" alignItems="center">
-        <IconButton aria-label="send">
-          <SendIcon />
-        </IconButton>
+        <RedIconButton
+          label="Send"
+          onClick={() => alert('Send')}
+          icon={SendIcon}
+        />
       </Grid>
     </Grid>
-    // <TextField
-    //   fullWidth
-    //   label="Message"
-    //   margin="normal"
-    //   multiline
-    //   onChange={(evt) => setMessage(evt.target.value)}
-    //   onKeyDown={(evt) => {
-    //     if (evt.key === 'Enter') {
-    //       evt.preventDefault();
-    //       pushSendMessage(message);
-    //       setMessage('');
-    //     }
-    //   }}
-    //   rows="4"
-    //   value={message}
-    // />
   );
 };
 
-
-// export default MessageBox;
-
-
 const GameChat = () => {
-  const messages = ['ok', 'macaille'];
-
+  // const messages = ['ok', 'macaille', 'macaille', 'macaille', 'macaille', 'macaille', 'macaille', 'macaille', 'macaille'];
+  const messages = [];
   const sendMessage = (message) => {
     console.log('Message sent: ', message);
   };
 
   return (
-    <Card>
+    <Card style={{ height: '100%' }}>
       <CardHeader
         title="Chat"
-        subheader="room: Unknown"
       />
       <Divider light />
       <CardContent>
@@ -96,6 +78,5 @@ const GameChat = () => {
     </Card>
   );
 };
-
 
 export default GameChat;

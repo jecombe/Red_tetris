@@ -1,70 +1,48 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import ReactRouterPropTypes from 'react-router-prop-types';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
-import actions from '../../actions';
-import LoginInput from './LoginInput';
-import LoginButton from './LoginButton';
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    margin: theme.spacing(1),
-    padding: theme.spacing(1),
-  },
-}));
+import RedInput from '../Common/RedInput';
+import RedIconButton from '../Common/RedIconButton';
 
 const LoginForm = (props) => {
   const {
-    reqLogin,
-    history,
     refPlayerName,
+    errPlayerName,
     refPlayerRoom,
+    errPlayerRoom,
+    handleSubmit,
   } = props;
-  const classes = useStyles();
-
-  const [errPlayerName, setErrPlayerName] = useState(false);
-  const [errPlayerRoom, setErrPlayerRoom] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault(); // event.persist();
-    const name = refPlayerName.current.value.trim();
-    const room = refPlayerRoom.current.value.trim();
-
-    if (!name) setErrPlayerName(true); else setErrPlayerName(false);
-    if (!room) setErrPlayerRoom(true); else setErrPlayerRoom(false);
-
-    if (!name || !room) return;
-
-    reqLogin({
-      playerName: name,
-      playerRoom: room,
-    });
-
-    history.push(`/#${room}[${name}]`);
-  };
 
   return (
-    <Grid container direction="row" spacing={1} className={classes.paper}>
-      <Grid item xs={12} sm={6}>
-        <LoginInput
-          title="Enter a username"
+    <Grid container justify="center" alignItems="center" spacing="2">
+      <Grid item xs={5}>
+        <RedInput
+          label="username"
+          name="username"
+          defaultValue=""
+          disabled={false}
           refHandle={refPlayerName}
           err={errPlayerName}
         />
       </Grid>
-      <Grid item xs={12} sm={6}>
-        <LoginInput
-          title="Enter a room"
+      <Grid item xs={5}>
+        <RedInput
+          label="room"
+          name="room"
+          defaultValue=""
+          disabled={false}
           refHandle={refPlayerRoom}
           err={errPlayerRoom}
         />
       </Grid>
-      <Grid item xs={12}>
-        <LoginButton handleSubmit={handleSubmit} />
+      <Grid item xs={2}>
+        <RedIconButton
+          label="Join"
+          onClick={handleSubmit}
+          icon={ArrowForwardIcon}
+        />
       </Grid>
     </Grid>
   );
@@ -76,14 +54,11 @@ const refPropTypes = PropTypes.oneOfType([
 ]);
 
 LoginForm.propTypes = {
-  reqLogin: PropTypes.func.isRequired,
-  history: ReactRouterPropTypes.history.isRequired,
   refPlayerName: refPropTypes.isRequired,
+  errPlayerName: PropTypes.bool.isRequired,
   refPlayerRoom: refPropTypes.isRequired,
+  errPlayerRoom: PropTypes.bool.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = {
-  reqLogin: actions.reqLogin,
-};
-
-export default withRouter(connect(null, mapDispatchToProps)(LoginForm));
+export default LoginForm;

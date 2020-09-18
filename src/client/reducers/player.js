@@ -136,6 +136,14 @@ const playerReducer = (state = playerState, action) => {
       };
     }
 
+    case ev.req_MOVE_TETRO: {
+      const { collided } = action.payload;
+      return {
+        ...state,
+        collided,
+      };
+    }
+
     case ev.WINNER: {
       const { winner } = action.payload;
       return {

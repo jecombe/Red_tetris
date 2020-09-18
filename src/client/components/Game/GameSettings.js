@@ -5,15 +5,15 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
-import RedInput from '../Common/RedInput';
+import Grid from '@material-ui/core/Grid';
+
 import RedButton from '../Common/RedButton';
 
 const GameSettings = (props) => {
   const {
+    playerName,
     playerOwner,
-    playerDropTime,
     handleStart,
-    handleSettings,
   } = props;
 
   const isOwner = (playerOwner === false ? ' not ' : ' ');
@@ -21,39 +21,53 @@ const GameSettings = (props) => {
   return (
     <Card>
       <CardHeader
-        title="Game settings"
+        title={playerName}
         subheader={`You are${isOwner}the owner`}
       />
       <Divider light />
       <CardContent>
-        <RedInput
-          label="playerDropTime"
-          name="playerDropTime"
-          defaultValue={playerDropTime}
-          disabled
-        />
+        <Grid container>
+          <Grid container>
+            <Grid item xs={6}>
+              Rank
+            </Grid>
+            <Grid item xs={6}>
+              0
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid item xs={6}>
+              Mallus
+            </Grid>
+            <Grid item xs={6}>
+              0
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid item xs={6}>
+              Rank
+            </Grid>
+            <Grid item xs={6}>
+              0
+            </Grid>
+          </Grid>
+        </Grid>
+        <CardActions>
+          <RedButton
+            name="Start Game"
+            handleSubmit={handleStart}
+            disabled={!playerOwner}
+          />
+        </CardActions>
       </CardContent>
-      <CardActions>
-        <RedButton
-          name="Set settings"
-          handleSubmit={handleSettings}
-          disabled
-        />
-        <RedButton
-          name="Start Game"
-          handleSubmit={handleStart}
-          disabled={!playerOwner}
-        />
-      </CardActions>
     </Card>
   );
 };
 
 GameSettings.propTypes = {
+  playerName: PropTypes.string.isRequired,
   playerOwner: PropTypes.bool.isRequired,
-  playerDropTime: PropTypes.number.isRequired,
   handleStart: PropTypes.func.isRequired,
-  handleSettings: PropTypes.func.isRequired,
 };
 
 export default GameSettings;

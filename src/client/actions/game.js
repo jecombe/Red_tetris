@@ -4,6 +4,13 @@ import ev from '../../shared/events';
  * action creators for client socket event
  */
 
+export const reqMoveTetro = (payload) => ({
+  type: ev.req_MOVE_TETRO,
+  payload: {
+    keyCode: payload.keyCode,
+  },
+});
+
 export const updatePosition = (payload) => ({
 
   type: ev.UPDATE_POSITION,

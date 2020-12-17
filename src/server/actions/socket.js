@@ -1,30 +1,50 @@
 import ev from '../../shared/events';
 import logger from '../utils/logger';
-import { logout } from './login';
+// import { logout } from './login';
 
-export const socketConnect = (socket, redGame) => {
-  logger.info(`Client ${socket.id} connected.`);
+import { resInfos } from './app';
 
-  logger.info(`Sending rooms to ${socket.id}.`);
-  const data4Client = {
-    status: 200,
-    message: 'SERVER ROOMS',
-    games: redGame.getGames(),
-  };
-  socket.emit(ev.res_ROOMS, data4Client);
-  // redGame.setPlayer(socket.id);
-  // redGame.setSockets(socketServer, socketClient);
-};
+// export const socketConnect = (socket, redGame) => {
+//   logger.info(`socket: ${socket.id} connected`);
 
-export const socketDisconnect = (socket, redGame) => {
-  logger.info(`Client ${socket.id} disconnected.`);
-  // logger.info('We are in ioDispatchLogin for handle disconnect !');
-  // // redGame.unsetPlayer(socketClient.id);
-  // const player = redGame.getPlayer(socket.id);
+//   redGame.setSocket(socket);
 
-  // player.logout(redGame);
-  logout(redGame, socket.id);
-};
+//   redGame.emitToAll(ev.res_UPDATE_APP_INFOS, {
+//     nbPlayers: Object.keys(redGame.getSockets()).length,
+//     nbGames: Object.keys(redGame.getGames()).length,
+//     games: redGame.getGames(),
+//   });
+
+//   const currentRoom = Object.keys(redGame.io.sockets.adapter.sids[socket.id]).filter((item) => item !== socket.id)[0];
+
+
+// };
+
+// export const socketDisconnect = (socket, redGame) => {
+//   // const { name, playerRoom, playerOwner } = data;
+
+//   logger.info(`socket: ${socket.id} disconnected.`);
+
+//   redGame.unsetSocket(socket);
+
+//   if (redGame.getSocketRoom(socket)) {
+//     // redGame.unsetPlayer(socket.id);
+//     redGame.logout(socket);
+//   }
+
+//   redGame.emitToAll(ev.res_STATS, {
+//     nbPlayers: Object.keys(redGame.getSockets()).length,
+//     nbGames: Object.keys(redGame.getGames()).length,
+//     games: redGame.getGames(),
+//   });
+
+//   // logger.info('We are in ioDispatchLogin for handle disconnect !');
+//   // // redGame.unsetPlayer(socketClient.id);
+//   // const player = redGame.getPlayer(socket.id);
+
+//   // player.logout(redGame);
+//   // logout(redGame, socket.id);
+// };
 
 export const socketError = (socket, redGame) => {
   logger.error(`Client ${socket.id} error.`);

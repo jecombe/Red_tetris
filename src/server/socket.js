@@ -1,31 +1,30 @@
-import socketIO from 'socket.io';
+// import socketIO from 'socket.io';
+import socketIo from 'socket.io';
 
-import IoGame from './models/IoGame';
+import RedTetris from './models';
 import ev from '../shared/events';
 import actions from './actions';
+import logger from './utils/logger';
+import appController from './controllers/app';
 
-const io = (server) => {
-  const socketServer = socketIO(server, {
+import routes from './socket/routes';
+
+const redTetris = (server) => {
+  const io = socketIo(server, {
     pingInterval: 5000,
     pingTimeout: 15000,
   });
 
-  const redGame = new IoGame(socketServer);
+  RedTetris.setIo(io);
 
-  redGame.io.on(ev.CONNECT, (socket) => {
-    /* Socket events */
-    actions.socketConnect(socket, redGame);
-    socket.on(ev.DISCONNECT, () => actions.socketDisconnect(socket, redGame));
-    socket.on(ev.ERROR, () => actions.socketError(socket, redGame));
+  io.on('connect', (socket) => {
+    appController.connect({ socket }, {});
 
-    /* Login events */
-    socket.on(ev.req_LOGIN, (data) => actions.resLogin(socket, data, redGame));
-    socket.on(ev.req_ROOMS, (data) => actions.resRooms(socket, data, redGame));
-
-    /* Game events */
-    socket.on(ev.START_GAME, (data) => actions.startGame(socket, data, redGame));
-    socket.on(ev.req_UPDATE_COLLISION, (data) => actions.resUpdateCollision(socket, data, redGame));
+    routes().map((route) => socket.on(
+      route.event,
+      (data, callback) => route.handler({ socket, data }, { callback }),
+    ));
   });
 };
 
-module.exports = io;
+module.exports = redTetris;

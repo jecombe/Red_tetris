@@ -1,69 +1,130 @@
+import { v4 as uuidv4 } from 'uuid';
+
+import ev from '../../shared/events';
+import logger from '../utils/logger';
+// import { emitToAll, emitToSocket, emitToRoom, emitToRoomExceptSender } from '../helpers/emitHelper';
+
+import Game from './Game';
+import Player from './Player';
 
 export default class IoGame {
-  constructor(socketServer) {
-    this.io = socketServer;
-    this.socketClient = null;
+  constructor() {
+    this.io = null;
+    this.sockets = {};
     this.games = {};
-    this.players = {};
+  }
+
+  /* Io */
+
+  emitToAll(event, payload) {
+    this.io.emit(event, payload);
+  }
+
+  emitToSocket(id, event, payload) {
+    this.getSocket(id).emit(event, payload);
+  }
+
+  emitToRoom(room, event, payload) {
+    this.io.in(room).emit(event, payload);
+  }
+
+  emitToRoomExceptSender(id, room, event, payload) {
+    this.getSocket(id).to(room).emit(event, payload);
+  }
+
+  /* Sockets */
+
+  setIo(io) {
+    this.io = io;
+  }
+
+  setSocket(socket) {
+    this.sockets[socket.id] = socket;
+  }
+
+  setSocketRoom(id, room) {
+    this.sockets[id].room = room;
+  }
+
+  unsetSocketRoom(id) {
+    delete this.sockets[id].room;
+  }
+
+  unsetSocket(id) {
+    delete this.sockets[id];
+  }
+
+  getSockets() {
+    return this.sockets;
+  }
+
+  getSocket(id) {
+    return this.sockets[id];
+  }
+
+  getSocketRoom(id) {
+    return this.sockets[id].room;
+  }
+
+  /* Games */
+
+  setGame(room, owner) {
+    this.games[room] = new Game(room, owner);
+  }
+
+  unsetGame(room) {
+    delete this.games[room];
   }
 
   getGames() {
     return this.games;
   }
 
-  getGame(gameName) {
-    return this.games[gameName];
+  getGame(room) {
+    return this.games[room];
   }
 
-  getPlayer(idSocket) {
-    return this.players[idSocket];
+  /* Events handler */
+
+  connect(socket) {
+    this.setSocket(socket);
   }
 
-  setSockets(socketServer, socketClient) {
-    this.io = socketServer;
-    this.socketClient = socketClient;
-  }
-
-  setGame(game) {
-    // if (!(`${game.roomName}` in this.games)) {
-    this.games[game.roomName] = game;
-    // }
-  }
-
-  setPlayer(player) {
-    // if (!(`${player.idSocket}` in this.players)) {
-    this.players[player.idSocket] = player;
-    // }
-  }
-
-  unsetGame(gameName) {
-    delete this.games[gameName];
-  }
-
-  unsetPlayer(idSocket) {
-    delete this.players[idSocket];
-  }
-
-
-  startGame(id, room) {
-    return this.getGame(room).startGame(id, this);
-    // const player = game.getPlayer(id);
-  }
-
-  loginPlayer(id, playerName, roomName) {
-    logger.info(`IoGame: Trying to login player ${playerName} in room ${roomName}...`);
-
-    if (!(`${roomName}` in this.games)) {
-      logger.info('IoGame: Game not found. Creating new one...');
-      this.games[roomName] = new Game(playerName, roomName);
-    } else if (this.games[roomName].getPlayerByPlayerName(playerName)) {
-      logger.error('IoGame: Player already exists in room.');
-      return false;
+  disconnect(socket) {
+    if (this.getSocketRoom(socket.id)) {
+      this.logout(this.getSocketRoom(socket.id), socket.id);
     }
-    this.players[id].setPlayerName(playerName);
-    this.players[id].setRoomName(roomName);
-    this.players[id].setOwner();
-    this.games[roomName].setPlayer(this.players[id]);
-    return this.players[id];
+    this.unsetSocket(socket.id);
+  }
+
+  login(room, id, name) {
+    if (!this.getGame(room)) {
+      this.setGame(room, name);
+    }
+
+    this.getGame(room).login(id, name);
+    this.setSocketRoom(id, room);
+  }
+
+  logout(room, name) {
+    if (!this.getGame(room)) {
+      throw new Error('Game not exist');
+    }
+
+    this.getGame(room).logout(name);
+
+    if (this.getGame(room).isEmpty()) {
+      this.unsetGame(room);
+    }
+
+    this.unsetSocket(name);
+  }
+
+  start(room, name) {
+    this.getGame(room).start(name);
+  }
+
+  move(room, name, keyCode) {
+    this.getGame(room).move(name, keyCode);
   }
 }

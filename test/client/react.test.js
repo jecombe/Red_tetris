@@ -38,7 +38,7 @@ describe('Footer', () => {
       rooms: [],
     };
     const handleButtonTest = () => {
-      console.log('Success.');
+
     };
     const component = renderer.create(
       <HeaderLayout

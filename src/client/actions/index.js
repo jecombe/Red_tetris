@@ -1,9 +1,9 @@
-import * as socket from './socket';
-import * as login from './login';
+import * as app from './app';
+import * as player from './player';
 import * as game from './game';
 
 export default {
-  ...socket,
-  ...login,
+  ...app,
+  ...player,
   ...game,
 };

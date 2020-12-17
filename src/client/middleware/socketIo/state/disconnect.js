@@ -2,16 +2,23 @@
 import * as actions from '../../../actions';
 import ev from '../../../../shared/events';
 
-const action = 'disconnect';
+const action = ev.DISCONNECT;
+
 // eslint-disable-next-line no-shadow
 const dispatch = (socket, store, next, action) => () => {
-  const type = ev.DISCONNECT;
-  const payload = {
-    connected: false,
-  };
+  console.error('socket: Disconnected');
 
-  console.warn('Disconnecting...');
-  store.dispatch({ type, payload });
+  store.dispatch({
+    type: ev.UPDATE_CONNECTION,
+    payload: {
+      id: null,
+      connected: false,
+      snackbar: {
+        message: 'socket: Disconnected',
+        variant: 'error',
+      },
+    },
+  });
 };
 
 export default {

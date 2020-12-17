@@ -1,18 +1,9 @@
-import resRooms from './resRooms';
-import objPlayer from './objPlayer';
-import stage from './stage';
-import stageMallus from './stageMallus';
-import stageOther from './stageOther';
-import resUpdateCollision from './resUpdateCollision';
-import resWinner from './resWinner';
-
+import app from './app';
+import game from './game';
+import player from './player';
 
 export default [
-  resRooms,
-  objPlayer,
-  stage,
-  stageMallus,
-  stageOther,
-  resUpdateCollision,
-  resWinner,
+  ...app,
+  ...game,
+  ...player,
 ];

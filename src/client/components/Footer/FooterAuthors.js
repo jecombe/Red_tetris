@@ -1,11 +1,9 @@
-/* eslint-disable react/jsx-curly-brace-presence */
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 
 const FooterAuthors = () => (
-  <Typography variant="body2" color="textSecondary" align="center">
-    {'Made by '}
+  <Typography variant="caption" color="textSecondary">
     <Link color="inherit" href="https://github.com/jecombe">
       jecombe
     </Link>

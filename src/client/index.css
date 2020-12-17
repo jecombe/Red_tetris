@@ -1,5 +1,11 @@
-html, body, #app, #app>div {
-  height: 100%
+/* html, body {
+  background-color: #e8e8e851;
+}
+
+html, body, #tetris, #tetris>div {
+  height: '100%';
+  width: '100%';
+  margin: 0;
 }
 
 /* Roboto Regular */

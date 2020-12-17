@@ -1,22 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
 import HomeIcon from '@material-ui/icons/Home';
 import RedIconButton from '../Common/RedIconButton';
 
 const HeaderHome = (props) => {
-  const { handleOnClick } = props;
+  const { reqLogout } = props;
 
   return (
-    <RedIconButton
-      label="Home"
-      onClick={handleOnClick}
-      icon={HomeIcon}
-    />
+    <Grid container justify="center">
+      <RedIconButton
+        onClick={reqLogout}
+      >
+        <HomeIcon />
+      </RedIconButton>
+    </Grid>
   );
 };
 
 HeaderHome.propTypes = {
-  handleOnClick: PropTypes.func.isRequired,
+  reqLogout: PropTypes.func.isRequired,
 };
 
 export default HeaderHome;

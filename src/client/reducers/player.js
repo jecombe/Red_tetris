@@ -1,162 +1,133 @@
-import PropTypes from 'prop-types';
 import ev from '../../shared/events';
-import { TETROMINOS } from '../helpers/tetrominos';
 
 export const playerState = {
-  playerName: null,
-  playerRoom: null,
-  playerSocket: null,
-  playerStage: [],
-  playerOtherStage: [],
-  playerMallus: 0,
-  tetromino: TETROMINOS[0].shape,
-  playerNextPiece: [],
-  playerGameOver: false,
-  playerWin: false,
-  playerOwner: false,
-  playerLineFull: 0,
-  playerDropTime: 0,
-  position: { x: 0, y: 0 },
-  collided: false,
+  name: '',
+  score: 0,
+  level: 0,
+  lines: 0,
+  mallus: 0,
+  rank: 0,
+  stage: null,
   piece: null,
-  startGame: false,
+  position: { x: 10 / 2 - 2, y: 0 },
+  nbPiece: 0,
+  loose: false,
+  win: false,
 };
-
-export const playerStatePropTypes = PropTypes.shape({
-  playerName: PropTypes.string.isRequired,
-  playerRoom: PropTypes.string.isRequired,
-  playerStage: PropTypes.array.isRequired,
-  playerOtherStage: PropTypes.array.isRequired,
-  playerNextPiece: PropTypes.array.isRequired,
-});
 
 const playerReducer = (state = playerState, action) => {
   switch (action.type) {
-    case ev.req_LOGIN: {
-      const { playerName, playerRoom, playerNextPiece } = action.payload;
+    case ev.UPDATE_LOG: {
+      const {
+        name,
+      } = action.payload;
 
       return {
-        ...state,
-        playerName,
-        playerRoom,
-        playerNextPiece,
+        ...playerState,
+        name,
+      };
+    }
+    case ev.UPDATE_PLAYER_LOG: {
+      const {
+        player,
+      } = action.payload;
+
+      return {
+        ...player,
       };
     }
 
-    case ev.OBJ_PLAYER: {
+    case ev.UPDATE_START_GAME: {
       const {
-        playerStage, playerNextPiece, playerOtherStage, playerOwner,
+        player,
+      } = action.payload;
+
+      return {
+        ...player,
+        name: state.name,
+      };
+    }
+
+    case ev.UPDATE_PLAYER: {
+      const {
+        player,
+      } = action.payload;
+
+      return {
+        ...player,
+      };
+    }
+
+    case ev.req_LOGOUT: {
+      return {
+        ...playerState,
+      };
+    }
+
+    case ev.res_LOGOUT: {
+      return {
+        ...playerState,
+      };
+    }
+
+    case ev.res_START_GAME: {
+      const {
+        stage, piece, level,
+      } = action.payload;
+
+      return {
+        ...playerState,
+        name: state.name,
+        stage,
+        piece,
+        level,
+      };
+    }
+
+    case ev.req_UPDATE_POSITION: {
+      const {
+        stage, piece, position,
       } = action.payload;
 
       return {
         ...state,
-        playerStage,
-        playerNextPiece,
-        playerOtherStage,
-        playerOwner,
-        playerDropTime: 1000,
-        playerLineFull: 0,
-      };
-    }
-
-    case ev.STAGE: {
-      const {
-        playerStage, playerNextPiece, playerGameOver, position, collided, piece,
-      } = action.payload;
-
-      return {
-        ...state,
-        playerStage,
-        playerNextPiece,
-        playerGameOver,
+        stage,
+        piece,
         position,
-        collided,
+      };
+    }
+
+    case ev.req_COLLISION: {
+      const {
+        stage, piece, position, score, level, lines, nbPiece,
+      } = action.payload;
+
+      return {
+        ...state,
+        stage,
         piece,
-        playerLineFull: 0,
-        playerGameOver: false,
-        playerWin: false,
-        startGame: true,
+        position,
+        score,
+        lines,
+        level,
+        nbPiece,
       };
     }
 
-    case ev.res_UPDATE_COLLISION: {
-      const { piece, playerNextPiece, playerLineFull } = action.payload;
+    case ev.req_UPDATE_MALLUS: {
+      const { mallus, stage } = action.payload;
 
       return {
         ...state,
-        piece,
-        position: { x: 10 / 2 - 2, y: 0 },
-        collided: false,
-        playerNextPiece,
-        playerLineFull,
-      };
-    }
-    case ev.req_UPDATE_COLLISION: {
-      const { playerStage, x, y } = action.payload;
-
-      return {
-        ...state,
-        playerStage,
-        x,
-        y,
-        collided: true,
+        mallus,
+        stage,
       };
     }
 
-    case ev.UPDATE_POSITION: {
-      const {x, y, playerStage, piece, collided, playerGameOver} = action.payload;
-
+    case ev.req_PLAYER_LOOSE: {
       return {
         ...state,
-        position: {x: x, y: y},
-        playerStage,
-        piece,
-        collided,
-        playerGameOver,
-
-      };
-    }
-
-    case ev.STAGE_MALLUS: {
-      const { playerStage, playerMallus } = action.payload;
-      return {
-        ...state,
-        playerStage,
-        tetromino: TETROMINOS.I.shape,
-        playerMallus,
-      };
-    }
-
-    case ev.STAGE_OTHER: {
-      const { playerOtherStage } = action.payload;
-      return {
-        ...state,
-        playerOtherStage,
-
-      };
-    }
-
-    case ev.req_MOVE_TETRO: {
-      const { collided } = action.payload;
-      return {
-        ...state,
-        collided,
-      };
-    }
-
-    case ev.WINNER: {
-      const { winner } = action.payload;
-      return {
-        ...state,
-        playerWin: winner,
-
-      };
-    }
-    case ev.START_GAME: {
-      return {
-        ...state,
-        startGame: false,
-
+        loose: true,
       };
     }
 

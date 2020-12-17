@@ -14,29 +14,31 @@ const useStyles = makeStyles({
 
 const RedIconButton = (props) => {
   const {
-    label,
     onClick,
-    icon,
+    disabled,
+    children,
   } = props;
   const classes = useStyles();
 
-  const Icon = icon;
-
   return (
     <IconButton
-      aria-label={label}
-      component="span"
       onClick={onClick}
+      disabled={disabled}
       className={classes.RedIconButton}
     >
-      <Icon />
+      {children}
     </IconButton>
   );
 };
 
+RedIconButton.defaultProps = {
+  disabled: false,
+};
+
 RedIconButton.propTypes = {
-  label: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+  children: PropTypes.node.isRequired,
 };
 
 export default RedIconButton;

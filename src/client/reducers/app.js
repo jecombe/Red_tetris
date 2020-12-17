@@ -1,37 +1,57 @@
-import PropTypes from 'prop-types';
 import ev from '../../shared/events';
 
 export const appState = {
+  id: null,
   connected: false,
-  isLoading: false,
-  games: {},
+  isLoading: true,
+  infos: {
+    nbPlayers: 0,
+    nbGames: 0,
+    games: [],
+  },
+  snackbar: {
+    message: 'socket: Connection...',
+    variant: 'info',
+  },
 };
-
-export const appStatePropTypes = PropTypes.shape({
-  connected: PropTypes.bool.isRequired,
-  rooms: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
-  games: PropTypes.object.isRequired,
-});
 
 const appReducer = (state = appState, action) => {
   switch (action.type) {
-    case ev.CLIENT_CONNECT: {
+    case ev.UPDATE_CONNECTION: {
+      const { id, connected, snackbar } = action.payload;
+
       return {
         ...state,
-        connected: true,
+        id,
+        connected,
+        isLoading: !connected,
+        snackbar: {
+          message: snackbar.message,
+          variant: snackbar.variant,
+        },
       };
     }
-    case ev.DISCONNECT: {
+    case ev.UPDATE_LOG: {
+      const { isLoading, snackbar } = action.payload;
+
       return {
         ...state,
-        connected: false,
+        isLoading,
+        snackbar: {
+          message: snackbar.message,
+          variant: snackbar.variant,
+        },
       };
     }
-    case ev.res_ROOMS: {
-      const { games } = action.payload;
+    case ev.UPDATE_INFOS: {
+      const { nbPlayers, nbGames, games } = action.payload;
       return {
         ...state,
-        games,
+        infos: {
+          nbPlayers,
+          nbGames,
+          games,
+        },
       };
     }
     default:

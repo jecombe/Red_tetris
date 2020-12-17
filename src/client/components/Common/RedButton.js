@@ -1,13 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles((theme) => ({
-  button: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+import Typography from '@material-ui/core/Typography';
 
 const RedButton = (props) => {
   const {
@@ -15,19 +9,19 @@ const RedButton = (props) => {
     handleSubmit,
     disabled,
   } = props;
-  const classes = useStyles();
 
   return (
     <Button
-      type="submit"
-      fullWidth
-      variant="contained"
       color="primary"
-      className={classes.button}
+      variant="contained"
+      size="small"
       onClick={handleSubmit}
       disabled={disabled}
+      fullWidth
     >
-      {name}
+      <Typography variant="button" color="textPrimary" style={{ fontWeight: 'bold' }}>
+        {name}
+      </Typography>
     </Button>
   );
 };

@@ -1,82 +1,83 @@
-import React, { useState } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Avatar from '@material-ui/core/Avatar';
-import Divider from '@material-ui/core/Divider';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import SendIcon from '@material-ui/icons/Send';
+import React, { useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import RedButton from '../Common/RedButton';
-import RedInput from '../Common/RedInput';
-import RedIconButton from '../Common/RedIconButton';
+import CardContent from '@material-ui/core/CardContent';
+import List from '@material-ui/core/List';
+import Paper from '@material-ui/core/Paper';
+import { chatStatePropTypes } from '../../reducers/reducers.types';
 
-const Messages = ({ messages }) => (
-  <List style={{ minHeight: 175, maxHeight: 175, overflow: 'auto', width: '100%' }}>
-    {messages.flatMap((message, index) => [
-      <ListItem alignItems="flex-start" key={index}>
-        <ListItemText primary="Name says:" secondary={message} />
-      </ListItem>,
-      <Divider light />,
-    ])}
-  </List>
-);
+import GameChatMessage from './GameChat/GameChatMessage';
+import GameChatBox from './GameChat/GameChatBox';
 
-const MessageBox = ({ onSendMessage: pushSendMessage }) => {
-  const [message, setMessage] = useState('');
+const useStyles = makeStyles({
+  grid: {
+    height: '100%',
+  },
+  list: {
+    height: '40vh',
+    overflow: 'auto',
+  },
+});
+
+const GameChat = (props) => {
+  const {
+    chat, message, handleMessage, handleSubmit,
+  } = props;
+  const scrollRef = useRef(null);
+  const classes = useStyles();
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behaviour: 'smooth' });
+    }
+  }, [chat]);
 
   return (
-    <Grid container justify="center" alignItems="center">
-      <Grid item xs={11}>
-        <RedInput
-          label="Message"
-          name="Message"
-          defaultValue=""
-          disabled={false}
-        />
-      </Grid>
-      <Grid item xs={1} container justify="center" alignItems="center">
-        <RedIconButton
-          label="Send"
-          onClick={() => alert('Send')}
-          icon={SendIcon}
-        />
+    <Grid container alignItems="center" className={classes.grid}>
+      <Grid item xs>
+        <Tabs
+          value={0}
+          indicatorColor="primary"
+          textColor="primary"
+        >
+          <Tab disabled label="#room" style={{ color: 'red' }} />
+        </Tabs>
+        <Paper variant="outlined" elevation={0}>
+          <Grid container alignItems="center">
+            <Grid item xs>
+              <List className={classes.list}>
+                {chat.map((entryMessage) => (
+                  <GameChatMessage key={entryMessage.id} message={entryMessage} />
+                ))}
+                <div ref={scrollRef} />
+              </List>
+              <CardContent>
+                <Grid container>
+                  <Grid item xs>
+                    <GameChatBox
+                      message={message}
+                      handleMessage={handleMessage}
+                      handleSubmit={handleSubmit}
+                    />
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Grid>
+          </Grid>
+        </Paper>
       </Grid>
     </Grid>
   );
 };
 
-const GameChat = () => {
-  // const messages = ['ok', 'macaille', 'macaille', 'macaille', 'macaille', 'macaille', 'macaille', 'macaille', 'macaille'];
-  const messages = [];
-  const sendMessage = (message) => {
-    console.log('Message sent: ', message);
-  };
-
-  return (
-    <Card style={{ height: '100%' }}>
-      <CardHeader
-        title="Chat"
-      />
-      <Divider light />
-      <CardContent>
-        <Messages messages={messages} />
-      </CardContent>
-      <CardActions>
-        <MessageBox
-          onSendMessage={(message) => {
-            sendMessage({ message });
-          }}
-        />
-      </CardActions>
-    </Card>
-  );
+GameChat.propTypes = {
+  chat: chatStatePropTypes.isRequired,
+  message: PropTypes.string.isRequired,
+  handleMessage: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
 
 export default GameChat;

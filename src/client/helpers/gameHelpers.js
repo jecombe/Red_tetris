@@ -1,7 +1,7 @@
-import { useEffect, useRef } from 'react';
 import {
-  flushUpdate, updateRows, updateStage, checkCollision,
+  flushUpdate, checkCollision, updateRows,
 } from '../../shared/stage';
+import { keys } from '../constants/keys';
 
 export const STAGE_WIDTH = 10;
 export const STAGE_HEIGHT = 20;
@@ -11,156 +11,150 @@ export const STAGE_HEIGHT_SMALL = 8;
 
 export const createStage = () => Array.from(Array(STAGE_HEIGHT), () => new Array(STAGE_WIDTH).fill([0, 'clear']));
 
-// export const checkCollision = (player, stage, { x: moveX, y: moveY }) => {
-//   for (let y = 0; y < player.tetromino.length; y += 1) {
-//     for (let x = 0; x < player.tetromino[y].length; x += 1) {
-//       // 1. Check that we're on an actual Tetromino cell
-//       if (player.tetromino[y][x] !== 0) {
-//         if (
-//         // 2. Check that our move is inside the game areas height (y)
-//         // We shouldn't go through the bottom of the play area
-//           !stage[y + player.pos.y + moveY]
-//             // 3. Check that our move is inside the game areas width (x)
-//             || !stage[y + player.pos.y + moveY][x + player.pos.x + moveX]
-//             // 4. Check that the cell wer'e moving to isn't set to clear
-//             || stage[y + player.pos.y + moveY][x + player.pos.x + moveX][1]
-//               !== 'clear'
-//         ) {
-//           return true;
-//         }
-//       }
-//     }
-//   }
-// };
+export const calcScore = (level, lines) => {
+  switch (lines) {
+    case 1:
+      return level * 40;
+    case 2:
+      return level * 100;
+    case 3:
+      return level * 300;
+    case 4:
+      return level * 1200;
+    default:
+      return 0;
+  }
+};
+
+export const calcLevel = (lines) => Math.trunc(lines / 10) + 1;
 
 export const rotate = (matrix, dir) => {
   // Make the rows to become cols (transpose)
   const rotatedTetro = matrix.map((_, index) => matrix.map((col) => col[index]));
   // Reverse each row to get a rotated matrix
-  if (dir > 0) return rotatedTetro.map((row) => row.reverse());
-  return rotatedTetro.reverse();
+
+  if (dir > 0) {
+    const rotated = rotatedTetro.map((row) => row.reverse());
+    console.log(rotated);
+
+    return rotated;
+  }
+  const rotated = rotatedTetro.reverse();
+  return rotated;
 };
 
-export function useInterval(callback, delay) {
-  const savedCallback = useRef();
-  // Remember the latest callback.
-  useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
-
-  // Set up the interval.
-  useEffect(() => {
-    function tick() {
-      savedCallback.current();
-    }
-    if (delay !== null) {
-      const id = setInterval(tick, delay);
-      return () => {
-        clearInterval(id);
-      };
-    }
-  }, [delay]);
-}
-
-export const dropTetro = (piece, playerStage, position) => {
-  let playerGameOver = false;
-  if (!checkCollision(piece, playerStage, { x: 0, y: 1 }, position.x, position.y)) {
-    const newX = position.x + 0;
-    const newY = position.y + 1;
-    // updatePosition({ x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, false), piece, collided: false, playerGameOver, });
+export const dropTetro = (stage, piece, position) => {
+  if (!checkCollision(piece, stage, { x: 0, y: 1 }, position.x, position.y)) {
     return ({
-      x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, false), piece, collided: false, playerGameOver,
+      stage: flushUpdate(piece, stage, position.x, position.y + 1, false),
+      piece,
+      position: { x: position.x, y: position.y + 1 },
+      collided: false,
+      loose: false,
     });
-    // return null;
   }
-  if (position.y < 1) playerGameOver = true;
-  // updatePosition({
-  //   x: position.x, y: position.y, playerStage: flushUpdate(piece, playerStage, position.x, position.y, false), piece, collided: true, playerGameOver
-  // });
-  // return null;
+
   return ({
-    x: position.x, y: position.y, playerStage: flushUpdate(piece, playerStage, position.x, position.y, false), piece, collided: true, playerGameOver,
+    stage: flushUpdate(piece, stage, position.x, position.y, true),
+    piece,
+    position,
+    collided: true,
+    loose: (position.y < 1),
   });
 };
 
-
-export const moveTetro = (playerGameOver, piece, playerStage, position, dir) => {
-  if (!checkCollision(piece, playerStage, { x: dir, y: 0 }, position.x, position.y)) {
-    const newX = position.x + dir;
-    const newY = position.y + 0;
-
+export const moveTetro = (stage, piece, position, dir) => {
+  if (!checkCollision(piece, stage, { x: dir, y: 0 }, position.x, position.y)) {
     return ({
-      x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, false), piece, collided: false, playerGameOver,
+      position: { x: position.x + dir, y: position.y },
+      stage: flushUpdate(piece, stage, position.x + dir, position.y, false),
+      piece,
+      collided: false,
+      loose: false,
     });
   }
-  const newX = position.x + 0;
-  const newY = position.y + 0;
+
   return ({
-    x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece, collided: false, playerGameOver,
+    position,
+    stage: flushUpdate(piece, stage, position.x, position.y, false),
+    piece,
+    collided: false,
+    loose: false,
   });
 };
 
-export const moveTetroUp = (playerGameOver, piece, playerStage, position, dir) => {
+export const moveTetroUp = (stage, piece, position, dir) => {
   const clonedPiece = JSON.parse(JSON.stringify(piece));
   clonedPiece.form.shape = rotate(clonedPiece.form.shape, dir);
   const pos = position.x;
   let pos2 = position.x;
   let offset = 1;
-  while (checkCollision(clonedPiece, playerStage, { x: 0, y: 0 }, position.x, position.y)) {
+  while (checkCollision(clonedPiece, stage, { x: 0, y: 0 }, position.x, position.y)) {
     pos2 += offset;
     offset = -(offset + (offset > 0 ? 1 : -1));
     if (offset > clonedPiece.form.shape[0].length) {
       rotate(clonedPiece.form.shape, -dir);
       pos2 = pos;
-      return null;
+      return ({
+        position,
+        stage: flushUpdate(piece, stage, position.x, position.y, false),
+        piece,
+        collided: false,
+        loose: false,
+      });
     }
   }
   return ({
-    x: pos2, y: position.y, playerStage: flushUpdate(clonedPiece, playerStage, pos2, position.y, false), piece: clonedPiece, playerGameOver,
+    position: { x: pos2, y: position.y },
+    stage: flushUpdate(clonedPiece, stage, pos2, position.y, false),
+    piece: clonedPiece,
+    collided: false,
+    loose: false,
   });
 };
 
-export const moveDownTetro = (piece, playerStage, position) => {
+export const moveDownTetro = (stage, piece, position) => {
   let i = 0;
-  let checkColl = false;
-  let playerGameOver = false;
-  while (checkColl !== true) {
+  let drop = dropTetro(stage, piece, position);
+
+  while (!drop.collided) {
     i += 1;
-    checkColl = checkCollision(piece, playerStage, { x: 0, y: i }, position.x, position.y);
-    if (checkColl === true) {
-      /* --- Check Game Over --- */
-      if (position.y < 1) {
-        console.log('GAME OVER');
-        playerGameOver = true;
-      }
-      i -= 1;
-      break;
-    }
-    checkColl = checkCollision(piece, playerStage, { x: 0, y: i + 1 }, position.x, position.y);
+    drop = dropTetro(stage, piece, { x: position.x, y: position.y + i });
   }
-  const newX = position.x + 0;
-  const newY = position.y + i;
+
   return ({
-    x: newX, y: newY, playerStage: flushUpdate(piece, playerStage, newX, newY, true), piece, collided: true, playerGameOver,
+    stage: flushUpdate(piece, stage, position.x, position.y + i, true),
+    piece,
+    position: { x: position.x, y: position.y + i },
+    collided: true,
+    loose: drop.loose,
   });
 };
 
-export const move = (keyCode, playerGameOver, piece, playerStage, position) => {
-  let payload = null;
-
-  if (playerGameOver === false) {
-    if (keyCode === 40) {
-      payload = dropTetro(piece, playerStage, position);
-    } else if (keyCode === 37) {
-      payload = moveTetro(playerGameOver, piece, playerStage, position, -1);
-    } else if (keyCode === 39) {
-      payload = moveTetro(playerGameOver, piece, playerStage, position, 1);
-    } else if (keyCode === 38) {
-      payload = moveTetroUp(playerGameOver, piece, playerStage, position, 1);
-    } else if (keyCode === 32) {
-      payload = moveDownTetro(piece, playerStage, position);
-    }
-  }
-
-  return payload;
+export default {
+  [keys.KDOWN]: {
+    keyCode: keys.KDOWN,
+    dir: null,
+    handler: dropTetro,
+  },
+  [keys.KLEFT]: {
+    keyCode: keys.KLEFT,
+    dir: -1,
+    handler: moveTetro,
+  },
+  [keys.KRIGHT]: {
+    keyCode: keys.KRIGHT,
+    dir: 1,
+    handler: moveTetro,
+  },
+  [keys.KUP]: {
+    keyCode: keys.KUP,
+    dir: 1,
+    handler: moveTetroUp,
+  },
+  [keys.KSPACE]: {
+    keyCode: keys.KSPACE,
+    dir: null,
+    handler: moveDownTetro,
+  },
 };

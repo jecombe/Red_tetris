@@ -8,7 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
+    // marginTop: theme.spacing(1),
+    border: '1px solid red'
   },
 }));
 
@@ -16,26 +17,23 @@ const RedInput = (props) => {
   const {
     label,
     name,
-    defaultValue,
     disabled,
-    refHandle,
     err,
+    value,
+    onChange,
   } = props;
   const classes = useStyles();
 
   return (
     <FormControl className={classes.form}>
-      <InputLabel shrink htmlFor="bootstrap-input">
-        {label}
-      </InputLabel>
       <TextField
-        margin="normal"
-        fullWidth
-        defaultValue={defaultValue}
         id={name}
+        fullWidth
+        label={label}
         name={name}
+        value={value}
+        onChange={onChange}
         disabled={disabled}
-        inputRef={refHandle}
         error={err}
       />
     </FormControl>
@@ -45,12 +43,9 @@ const RedInput = (props) => {
 RedInput.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  defaultValue: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool.isRequired,
-  refHandle: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-  ]).isRequired,
   err: PropTypes.bool,
 };
 

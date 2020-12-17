@@ -1,11 +1,9 @@
-import login from './login';
-import startGame from './startGame';
-import reqUpdateCollision from './reqUpdateCollision';
-import reqMoveTetro from './reqMoveTetro';
+import app from './app';
+import game from './game';
+import player from './player';
 
 export default [
-  login,
-  startGame,
-  reqUpdateCollision,
-  reqMoveTetro,
+  ...app,
+  ...game,
+  ...player,
 ];

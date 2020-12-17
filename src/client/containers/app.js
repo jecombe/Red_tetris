@@ -1,45 +1,32 @@
-import React, { useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 
 import params from '../../shared/params';
 import actions from '../actions';
-import Header from './Header';
-import LoginConnect from './Login';
-import Game from './Game';
-import Footer from './Footer';
-import Loader from '../components/Common/Loader';
-import Error404 from '../components/Common/Error404';
+import Header from '../components/Header/Header';
+import Main from './Main';
+import Footer from '../components/Footer/Footer';
 
 const App = (props) => {
-  const { connected, isLoading, socketConnect } = props;
+  const {
+    connected,
+    reqConnect,
+  } = props;
   const { host, port } = params.server;
 
-  useEffect(() => {
-    if (!connected) socketConnect({ host, port });
-  });
+  if (!connected) reqConnect({ host, port });
 
   return (
     <Grid container direction="column" justify="space-between" style={{ height: '100vh' }}>
-      <CssBaseline />
-      <Grid item>
+      <Grid item style={{ height: '7vh', border: '1px solid red' }}>
         <Header />
       </Grid>
-      <Grid item>
-        { connected === false || isLoading === true
-          ? <Loader />
-          : (
-            <Switch>
-              <Route exact path="/" component={LoginConnect} />
-              <Route path="/:room[:playerName]" component={Game} />
-              <Route component={Error404} />
-            </Switch>
-          )}
+      <Grid item style={{ height: '65vh', border: '1px solid red' }}>
+        <Main connected={connected} />
       </Grid>
-      <Grid item>
+      <Grid item style={{ height: '5vh', border: '1px solid red' }}>
         <Footer />
       </Grid>
     </Grid>
@@ -48,8 +35,7 @@ const App = (props) => {
 
 App.propTypes = {
   connected: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  socketConnect: PropTypes.func.isRequired,
+  reqConnect: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -57,7 +43,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  socketConnect: actions.CLIENT_CONNECT,
+  reqConnect: actions.reqConnect,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

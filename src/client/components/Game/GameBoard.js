@@ -1,49 +1,60 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import { BlockLoading } from 'react-loadingg';
+import Card from '@material-ui/core/Card';
 
-import Stage from './Stage';
-import { useInterval } from '../../helpers/gameHelpers';
+import { createStage } from '../../../shared/stage';
+import { playerStatePropTypes, settingsProp } from '../../reducers/reducers.types';
+
+import Stage from '../Common/Stage';
+import GameBoardScore from './GameBoard/GameBoardScore';
+import GameBoardPieces from './GameBoard/GameBoardPieces';
+
+// import useKeyPress from '../../hooks/useKeyPress';
+
+const useStyles = makeStyles({
+  root: {
+    height: '100%',
+    // width: '100%',
+  },
+});
 
 const GameBoard = (props) => {
   const {
-    playerStage,
-    playerNextPiece,
-    playerGameOver,
-    playerDropTime,
-    playerWin,
-    move,
+    player,
+    pieces,
   } = props;
-
-  /* TIMER DROP */
-  useInterval(() => {
-    if (playerGameOver === false && playerWin === false) move({ keyCode: 40 });
-  }, playerDropTime);
+  const classes = useStyles();
 
   return (
-    <Grid container justify="center" onKeyDown={(e) => move(e)} tabIndex="0">
-      {playerStage && playerStage.length ? (
-        <Grid item xs={6} lg={9} container justify="center" alignItems="center">
-          <Stage tabIndex="0" stage={playerStage} />
+    <Card>
+      <Grid container justify="center" alignItems="center" className={classes.root}>
+        <Grid item xs={8}>
+          <Stage
+            stage={player.stage || createStage()}
+          />
         </Grid>
-      ) : <BlockLoading />}
-      {playerNextPiece && playerNextPiece.length ? (
-        <Grid item xs={6} lg={3} container justify="center" style={{ height: '30vh' }}>
-          <Stage stage={playerNextPiece} />
+        <Grid item xs={4}>
+          <GameBoardPieces
+            pieces={pieces}
+            nbPiece={player.nbPiece}
+          />
+          <GameBoardScore
+            name={player.name}
+            score={player.score}
+            level={player.level}
+            lines={player.lines}
+            rank={player.rank}
+          />
         </Grid>
-      ) : <BlockLoading />}
-    </Grid>
+      </Grid>
+    </Card>
   );
 };
 
 GameBoard.propTypes = {
-  playerStage: PropTypes.arrayOf(PropTypes.string).isRequired,
-  playerNextPiece: PropTypes.arrayOf(PropTypes.string).isRequired,
-  playerGameOver: PropTypes.bool.isRequired,
-  playerDropTime: PropTypes.number.isRequired,
-  playerWin: PropTypes.bool.isRequired,
-  move: PropTypes.func.isRequired,
+  player: playerStatePropTypes.isRequired,
+  pieces: settingsProp.pieces.isRequired,
 };
 
 export default GameBoard;

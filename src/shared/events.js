@@ -1,46 +1,69 @@
 module.exports = {
-  CONNECT: 'connect',
-  DISCONNECT: 'disconnect',
-  ERROR: 'error',
 
-  CLIENT_CONNECT: 'CLIENT_CONNECT',
+  /* Socket events */
+
+  CONNECT: 'connect',
+  CONNECT_ERROR: 'connect_error',
+  CONNECT_TIMEOUT: 'connect_timeout',
+  RECONNECT: 'reconnect',
+  RECONNECT_ATTEMPT: 'reconnect_attempt',
+  RECONNECTING: 'reconnecting',
+  RECONNECT_ERROR: 'reconnect_error',
+  RECONNECT_FAILED: 'reconnect_failed',
+  DISCONNECT: 'disconnect',
+
+  /* App events */
+
+  CLIENT_CONNECTING: 'CLIENT_CONNECT',
+  CLIENT_CONNECT: 'CLIENT_CONNECTED',
+  CLIENT_CONNECT_ERROR: 'CLIENT_CONNECT_ERROR',
+  CLIENT_CONNECT_TIMEOUT: 'CLIENT_CONNECT_TIMEOUT',
+  CLIENT_RECONNECT: 'CLIENT_RECONNECT',
+  CLIENT_RECONNECT_ATTEMPT: 'CLIENT_RECONNECT_ATTEMPT',
+  CLIENT_RECONNECTING: 'CLIENT_RECONNECTING',
+  CLIENT_RECONNECT_ERROR: 'CLIENT_RECONNECT_ERROR',
+  CLIENT_RECONNECT_FAILED: 'CLIENT_RECONNECT_FAILED',
   CLIENT_DISCONNECT: 'CLIENT_DISCONNECT',
 
-  LOGIN: 'login',
-  START_GAME: 'startGame',
-  POSITION_TETRO: 'positionTetro',
-  OBJ_PLAYER: 'objPlayer',
-  STAGE: 'stage',
-  STAGE_MALLUS: 'stageMallus',
-  STAGE_OTHER: 'stageOther',
-  UPDATE_POSITION: 'updatePosition',
-  UPDATE_STAGE_3: 'updateStage3',
-  UPDATE_POSITION_NULL: 'updatePositionNull',
-  SHARE_POSITION: 'sharePosition',
+  /* App events */
 
-  req_ECHO: '#echo',
-  res_ECHO: '@echo',
+  req_UPDATE_APP_INFOS: '#INFOS',
+  res_UPDATE_APP_INFOS: '@INFOS',
+  req_LOGIN: '#LOGIN',
+  res_LOGIN: '@LOGIN',
+  req_LOGOUT: '#LOGOUT',
+  res_LOGOUT: '@LOGOUT',
 
-  req_BELLO: '#bello',
-  res_BELLO: '@bello',
+  /* Game event */
 
-  req_ROOMS: '#rooms',
-  res_ROOMS: '@rooms',
+  req_UPDATE_GAME: '#UPDATE_GAME',
+  res_UPDATE_GAME: '@UPDATE_GAME',
+  req_UPDATE_GAME_SETTINGS: '#UPDATE_GAME_SETTINGS',
+  res_UPDATE_GAME_SETTINGS: '@UPDATE_GAME_SETTINGS',
+  req_UPDATE_GAME_CHAT: '#UPDATE_GAME_CHAT',
+  res_UPDATE_GAME_CHAT: '@UPDATE_GAME_CHAT',
+  req_START_GAME: '#START_GAME',
+  res_START_GAME: '@START_GAME',
 
-  req_LOGIN: '#login',
-  res_LOGIN: '@login',
+  /* Player events */
 
-  req_START_GAME: '#startGame',
-  res_START_GAME: '@startGame',
+  req_UPDATE_PLAYER: '#UPDATE_PLAYER',
+  res_UPDATE_PLAYER: '@UPDATE_PLAYER',
 
-  req_POSITION_TETRO: '#positionTetro',
-  res_POSITION_TETRO: '@positionTetro',
+  /* App actions */
 
-  req_UPDATE_COLLISION: '#updateCollision',
-  res_UPDATE_COLLISION: '@updateCollision',
+  UPDATE_CONNECTION: 'UPDATE_CONNECTION',
+  UPDATE_LOG: 'UPDATE_LOG',
+  UPDATE_INFOS: 'UPDATE_INFOS',
 
-  req_SHARE_POSITION: '#sharePosition',
-  res_SHARE_POSITION: '@sharePosition',
+  /* Game actions */
 
-  WINNER: 'winner',
+  UPDATE_GAME: 'UPDATE_GAME',
+  UPDATE_GAME_SETTINGS: 'UPDATE_GAME_SETTINGS',
+  UPDATE_GAME_PLAYERS: 'UPDATE_GAME_PLAYERS',
+  UPDATE_GAME_CHAT: 'UPDATE_GAME_CHAT',
+
+  /* Player actions */
+
+  UPDATE_PLAYER: 'UPDATE_PLAYER',
 };

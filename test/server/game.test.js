@@ -1,6 +1,7 @@
 import 'regenerator-runtime/runtime';
 
 import { initSocket, destroySocket } from './helpers/socket';
+import routes from '../../src/server/socket/routes';
 
 const ev = require('../../src/shared/events');
 const logger = require('../../src/server/utils/logger');
@@ -23,13 +24,13 @@ describe('test suit: Echo & Bello', () => {
     // create new promise for server response
     const serverResponse = new Promise((resolve, reject) => {
       // define a handler for the test event
+      // routes().map((route) => socketClient.on(
+      //   route.event,
+      //   (data, callback) => resolve(route.handler({ socketClient, data }, { callback })),
+      // ));
       socketClient.on(ev.res_LOGIN, (data4Client) => {
-        // process data received from server
-        // const { message } = data4Client;
-        // logger.info(`Server says: ${data4Client}`);
-
         // destroy socket after server responds
-        // destroySocket(socketClient);
+        destroySocket(socketClient);
 
         // return data for testing
         resolve(data4Client);
@@ -48,7 +49,7 @@ describe('test suit: Echo & Bello', () => {
     };
 
     // emit event with data to server
-    logger.info('Emitting ECHO event');
+    logger.info('Emitting req_START_GAME event');
     socketClient.emit(ev.req_LOGIN, data4Server);
 
     // wait for server to respond

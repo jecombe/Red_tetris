@@ -7,15 +7,7 @@ import ev from '../../../src/shared/events';
 import actions from '../../../src/client/actions';
 import store from '../../../src/client/store';
 
-const appModule = require('../../../src/client/middleware/socketIoMiddleware');
-
-const socketModule = appModule.middleware;
-const mockMiddleware = appModule.default;
-const { id } = appModule;
-const mockSocket = { emit: jest.fn() };
-
-socketModule.SOCKETS[id] = mockSocket;
-socketModule.toggleInitStatus(id);
+import { mockMiddleware, id, mockSocket } from '../helpers/socketHelper';
 
 describe('# Socket Tests - App Events', () => {
   describe('## Client Events', () => {

@@ -5,14 +5,21 @@ import app from './app';
 import redTetris from './socket';
 import logger from './utils/logger';
 
-// const port = process.env.PORT || 3000;
-const { host, port } = params.server;
+const http = require('http').createServer(app);
 
-const server = app.listen({ host, port }, () => {
-  logger.info('red-tetris_server');
-  logger.info(`Listening on ${host} port ${port}.`);
+redTetris(http);
+
+http.listen(3000, () => {
+  console.log('listening on *:3000');
 });
+// const port = process.env.PORT || 3000;
+// const { host, port } = params.server;
 
-redTetris(server);
+// const server = app.listen({ host, port }, () => {
+//   logger.info('red-tetris_server');
+//   logger.info(`Listening on ${host} port ${port}.`);
+// });
 
-module.exports = server;
+// redTetris(server);
+
+// module.exports = server;

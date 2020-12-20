@@ -49,7 +49,6 @@ export const emitterLogin = (redGame, player, game, socketClient) => {
 };
 
 export const emitterWinner = (player, redGame) => {
-
   redGame.io.to(`${player.getId()}`).emit(ev.WINNER, {
     winner: true,
   });

@@ -5,22 +5,22 @@ import { connect } from 'react-redux';
 import { keys, gameAllowedKeys } from '../../constants/keys';
 import useKey from '../../hooks/useKey';
 import useInterval from '../../hooks/useInterval';
-import { roomStateProp, playerStateProp, settingsProp } from '../../reducers/reducers.types';
+import { playerStateProp, settingsProp } from '../../reducers/reducers.types';
 import actions from '../../actions';
 
 import GameBoard from '../../components/Game/GameBoard';
 
 const GameBoardContainer = (props) => {
   const {
-    player,
     settings,
-    reqMoveTetro,
-    reqMove
+    player,
+    reqMove,
   } = props;
   const { started, pieces, dropTime } = settings;
+  const { loose } = player;
 
-  // useInterval(() => reqMoveTetro({ keyCode: keys.KDOWN }), dropTime);
-  useKey((event) => reqMove({ keyCode: event.keyCode }), gameAllowedKeys, { started: true, loose: false });
+  useInterval(() => reqMove({ keyCode: keys.KDOWN }), dropTime);
+  useKey((event) => reqMove({ keyCode: event.keyCode }), gameAllowedKeys, { started, loose });
 
   return (
     <GameBoard
@@ -44,7 +44,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   reqStartGame: actions.reqStartGame,
   reqMove: actions.reqMove,
-  reqMoveTetro: actions.reqMoveTetro,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameBoardContainer);

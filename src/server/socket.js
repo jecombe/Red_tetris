@@ -2,9 +2,6 @@
 import socketIo from 'socket.io';
 
 import RedTetris from './models';
-import ev from '../shared/events';
-import actions from './actions';
-import logger from './utils/logger';
 import appController from './controllers/app';
 
 import routes from './socket/routes';
@@ -27,4 +24,4 @@ const redTetris = (server) => {
   });
 };
 
-module.exports = redTetris;
+export default redTetris;

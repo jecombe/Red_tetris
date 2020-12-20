@@ -32,11 +32,11 @@ const GameBoardStage = (props) => {
     <Grid container alignItems="center" className={classes.boardBox}>
 
       {/* <Card elevation={0} square style={{ width: '100%' }}> */}
-        <CardContent>
-          <Stage
-            stage={stage || createStage()}
-          />
-        </CardContent>
+      <CardContent>
+        <Stage
+          stage={stage || createStage()}
+        />
+      </CardContent>
       {/* </Card> */}
     </Grid>
   );

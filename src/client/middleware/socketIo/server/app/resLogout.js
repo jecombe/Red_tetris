@@ -3,11 +3,12 @@ import ev from '../../../../../shared/events';
 
 // eslint-disable-next-line no-shadow
 export const dispatch = (action, data, dispatch) => {
-  const { player, room } = data;
+  const { status, payload } = data;
+  const { player, room } = payload;
 
-  dispatch(push('/'));
+  // dispatch(push('/'));
 
-  if (player.name === '' && room.room === '') {
+  if (status === 200) {
     dispatch(push('/'));
 
     dispatch({
@@ -18,6 +19,8 @@ export const dispatch = (action, data, dispatch) => {
           message: 'logout: Succed',
           variant: 'success',
         },
+        name: payload.name,
+        room: payload.room,
       },
     });
   } else {
@@ -31,19 +34,21 @@ export const dispatch = (action, data, dispatch) => {
           message: 'logout: Failed',
           variant: 'error',
         },
+        name: payload.name,
+        room: payload.room,
       },
     });
   }
 
-  dispatch({
-    type: ev.UPDATE_PLAYER_LOGIN,
-    payload: { player },
-  });
+  // dispatch({
+  //   type: ev.UPDATE_PLAYER_LOGIN,
+  //   payload: { player },
+  // });
 
-  dispatch({
-    type: ev.UPDATE_ROOM_LOGIN,
-    payload: { room },
-  });
+  // dispatch({
+  //   type: ev.UPDATE_ROOM_LOGIN,
+  //   payload: { room },
+  // });
 
   // dispatch({
   //   type: ev.res_LOGOUT,

@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   boardScoreBox: {
     height: '100%',
     width: '100%',
-    border: '1px solid blue'
+    border: '1px solid blue',
   },
 });
 
@@ -37,18 +37,18 @@ const GameBoardScore = (props) => {
   const classes = useStyles();
 
   return (
-    // <Grid container alignItems="flex-end" justify="flex-end" className={classes.boardScoreBox}>
-      <Card elevation={0} square>
-        <CardContent>
-          <Grid container spacing={1}>
-            {renderItem('score', score, classes.item)}
-            {renderItem('level', level, classes.item)}
-            {renderItem('lines', lines, classes.item)}
-            {renderItem('rank', rank, classes.item)}
-          </Grid>
-        </CardContent>
-      </Card>
-    // </Grid>
+  // <Grid container alignItems="flex-end" justify="flex-end" className={classes.boardScoreBox}>
+    <Card elevation={0} square>
+      <CardContent>
+        <Grid container spacing={1}>
+          {renderItem('score', score, classes.item)}
+          {renderItem('level', level, classes.item)}
+          {renderItem('lines', lines, classes.item)}
+          {renderItem('rank', rank, classes.item)}
+        </Grid>
+      </CardContent>
+    </Card>
+  // </Grid>
   );
 };
 

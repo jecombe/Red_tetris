@@ -77,37 +77,28 @@ export default class Player {
     });
   }
 
+  setMallus(lines) {
+    this.setStage(this.stage.slice(lines, 20));
+    while (lines) {
+      this.stage.push(new Array(10).fill(['M', 'mallus']));
+      lines -= 1;
+    }
+    this.setStage(flushUpdate(this.piece, this.stage, this.position.x, this.position.y, false));
+  }
+
   updatePosition(stage, piece, position) {
     this.setStage(stage);
     this.setPiece(piece);
     this.position = position;
   }
 
-  updateCollision(stage, pieces) {
-    const updated = updateRows(stage);
-
+  updateCollision(stage, lines, pieces) {
     this.position = { x: 10 / 2 - 2, y: 0 };
     this.nbPiece += 1;
     this.setPiece(pieces[this.nbPiece]);
-    this.setStage(flushUpdate(this.piece, updated.stage, this.position.x, this.position.y, false));
-    this.score += calcScore(this.level, updated.lines);
-    this.lines += updated.lines;
+    this.setStage(flushUpdate(this.piece, stage, this.position.x, this.position.y, false));
+    this.score += calcScore(this.level, lines);
+    this.lines += lines;
     this.level = calcLevel(this.lines);
-  }
-
-  move(keyCode, pieces) {
-    const key = gameHelper[keyCode];
-
-    if (key) {
-      const {
-        stage, piece, position, collided, loose,
-      } = key.handler(this.stage, this.piece, this.position, key.dir, this.loose);
-
-      if (collided) {
-        this.updateCollision(stage, pieces);
-      } else {
-        this.updatePosition(stage, piece, position);
-      }
-    }
   }
 }

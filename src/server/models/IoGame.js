@@ -16,6 +16,10 @@ export default class IoGame {
 
   /* Io */
 
+  setIo(io) {
+    this.io = io;
+  }
+
   emitToAll(event, payload) {
     this.io.emit(event, payload);
   }
@@ -34,8 +38,20 @@ export default class IoGame {
 
   /* Sockets */
 
-  setIo(io) {
-    this.io = io;
+  getSockets() {
+    return this.sockets;
+  }
+
+  getNbSockets() {
+    return Object.keys(this.getSockets()).length;
+  }
+
+  getSocket(id) {
+    return this.sockets[id];
+  }
+
+  getSocketRoom(id) {
+    return this.sockets[id].room;
   }
 
   setSocket(socket) {
@@ -54,19 +70,19 @@ export default class IoGame {
     delete this.sockets[id];
   }
 
-  getSockets() {
-    return this.sockets;
-  }
-
-  getSocket(id) {
-    return this.sockets[id];
-  }
-
-  getSocketRoom(id) {
-    return this.sockets[id].room;
-  }
-
   /* Games */
+
+  getGames() {
+    return this.games;
+  }
+
+  getNbGames() {
+    return Object.keys(this.getGames()).length;
+  }
+
+  getGame(room) {
+    return this.games[room];
+  }
 
   setGame(room, owner) {
     this.games[room] = new Game(room, owner);
@@ -76,15 +92,7 @@ export default class IoGame {
     delete this.games[room];
   }
 
-  getGames() {
-    return this.games;
-  }
-
-  getGame(room) {
-    return this.games[room];
-  }
-
-  /* Events handler */
+  /* Controllers handler */
 
   connect(socket) {
     this.setSocket(socket);
@@ -121,6 +129,9 @@ export default class IoGame {
   }
 
   start(room, name) {
+    if (!this.getGame(room)) {
+      throw new Error('Game not exist');
+    }
     this.getGame(room).start(name);
   }
 

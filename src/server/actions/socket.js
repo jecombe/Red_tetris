@@ -17,7 +17,6 @@ import { resInfos } from './app';
 
 //   const currentRoom = Object.keys(redGame.io.sockets.adapter.sids[socket.id]).filter((item) => item !== socket.id)[0];
 
-
 // };
 
 // export const socketDisconnect = (socket, redGame) => {

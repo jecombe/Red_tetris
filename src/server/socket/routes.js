@@ -46,23 +46,6 @@ const routes = () => [
     event: ev.req_UPDATE_PLAYER,
     handler: playerController.move,
   },
-  // // { event: ev.req_PLAYER_LOOSE, handler: actions.resLoose },
-  // {
-  //   event: ev.req_START_GAME,
-  //   handler: redGame.resStartGame.bind(redGame),
-  // },
-  // {
-  //   event: ev.req_UPDATE_GAME_CHAT,
-  //   handler: redGame.resChat.bind(redGame),
-  // },
-  // {
-  //   event: ev.req_UPDATE_GAME_OWNER,
-  //   handler: redGame.resOwner.bind(redGame),
-  // },
-  // { event: ev.req_PIECES, handler: actions.resPieces },
-  // { event: ev.req_COLLISION, handler: actions.resUpdateCollision },
-  // { event: ev.req_GAME_PLAYER, handler: actions.resGamePlayer },
-  // { event: ev.req_MALLUS, handler: actions.resMallus },
 ];
 
 export default routes;

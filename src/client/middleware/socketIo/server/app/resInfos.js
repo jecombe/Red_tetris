@@ -2,16 +2,19 @@ import ev from '../../../../../shared/events';
 
 // eslint-disable-next-line no-shadow
 export const dispatch = (action, data, dispatch) => {
-  const { nbPlayers, nbGames, games } = data;
+  const { status, payload } = data;
+  const { nbPlayers, nbGames, games } = payload;
 
-  dispatch({
-    type: ev.UPDATE_INFOS,
-    payload: {
-      nbPlayers,
-      nbGames,
-      games: Object.values(games),
-    },
-  });
+  if (status === 200) {
+    dispatch({
+      type: ev.UPDATE_INFOS,
+      payload: {
+        nbPlayers,
+        nbGames,
+        games: Object.values(games),
+      },
+    });
+  }
 };
 
 export default {

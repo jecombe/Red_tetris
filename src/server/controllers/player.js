@@ -1,14 +1,16 @@
 import ev, { res_UPDATE_GAME } from '../../shared/events';
 import logger from '../utils/logger';
 import gameHelper, { calcScore, calcLevel } from '../helpers/gameHelper';
-
+import {
+  createStage, createStagePiece, flushUpdate, updateRows,
+} from '../../shared/stage';
 import RedTetris from '../models';
 
 const move = (req, res) => {
   const { room, name, keyCode } = req.data;
 
   try {
-    console.log(keyCode);
+    // console.log(keyCode);
 
     // RedTetris.move(room, name, keyCode);
 
@@ -19,9 +21,11 @@ const move = (req, res) => {
     } = key.handler(RedTetris.getGame(room).getPlayer(name), key.dir);
 
     if (collided) {
-      RedTetris.getGame(room).updateCollision(name, stage);
+      const updated = updateRows(stage);
 
-      RedTetris.emitToSocket(req.socket.id, ev.res_UPDATE_GAME, {
+      RedTetris.getGame(room).updateCollision(name, updated.stage, updated.lines);
+
+      RedTetris.emitToRoom(room, ev.res_UPDATE_GAME, {
         status: 200,
         payload: {
           game: RedTetris.getGame(room),

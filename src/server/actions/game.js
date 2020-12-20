@@ -179,13 +179,13 @@ export const resOwner = (socket, data, redGame) => {
     }
 
     redGame.emitToRoom(room, ev.res_UPDATE_GAME_OWNER, {
-      owner: redGame.getGame(room).getOwner(),
+      owner: redGame.getGame(room).getSettingsOwner(),
     });
 
     resChat(socket, {
       name: 'server',
       room,
-      text: `${redGame.getGame(room).getOwner()} is the new owner`,
+      text: `${redGame.getGame(room).getSettingsOwner()} is the new owner`,
     }, redGame);
 
     logger.info('[game] Owner of room ', room, 'is now ', newOwner);
@@ -193,7 +193,7 @@ export const resOwner = (socket, data, redGame) => {
     logger.error('[game] ', err);
 
     redGame.emitToSocket(socket.id, ev.res_UPDATE_GAME_OWNER, {
-      owner: redGame.getGame(data.room).getOwner(),
+      owner: redGame.getGame(data.room).getSettingsOwner(),
     });
   }
 };

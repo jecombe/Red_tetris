@@ -139,7 +139,7 @@ export const reqUpdateMallus = (payload) => (dispatch, getState) => {
     stage, piece, position, score, lines, level, nbPiece,
   } = state.player;
 
-  let linesF = mallus; //+ lines;
+  let linesF = mallus; // + lines;
   let newStage = stage.slice(linesF, 20);
 
   while (linesF !== 0) {

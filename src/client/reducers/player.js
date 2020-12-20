@@ -27,26 +27,6 @@ const playerReducer = (state = playerState, action) => {
         name,
       };
     }
-    case ev.UPDATE_PLAYER_LOG: {
-      const {
-        player,
-      } = action.payload;
-
-      return {
-        ...player,
-      };
-    }
-
-    case ev.UPDATE_START_GAME: {
-      const {
-        player,
-      } = action.payload;
-
-      return {
-        ...player,
-        name: state.name,
-      };
-    }
 
     case ev.UPDATE_PLAYER: {
       const {
@@ -55,79 +35,6 @@ const playerReducer = (state = playerState, action) => {
 
       return {
         ...player,
-      };
-    }
-
-    case ev.req_LOGOUT: {
-      return {
-        ...playerState,
-      };
-    }
-
-    case ev.res_LOGOUT: {
-      return {
-        ...playerState,
-      };
-    }
-
-    case ev.res_START_GAME: {
-      const {
-        stage, piece, level,
-      } = action.payload;
-
-      return {
-        ...playerState,
-        name: state.name,
-        stage,
-        piece,
-        level,
-      };
-    }
-
-    case ev.req_UPDATE_POSITION: {
-      const {
-        stage, piece, position,
-      } = action.payload;
-
-      return {
-        ...state,
-        stage,
-        piece,
-        position,
-      };
-    }
-
-    case ev.req_COLLISION: {
-      const {
-        stage, piece, position, score, level, lines, nbPiece,
-      } = action.payload;
-
-      return {
-        ...state,
-        stage,
-        piece,
-        position,
-        score,
-        lines,
-        level,
-        nbPiece,
-      };
-    }
-
-    case ev.req_UPDATE_MALLUS: {
-      const { mallus, stage } = action.payload;
-
-      return {
-        ...state,
-        mallus,
-        stage,
-      };
-    }
-
-    case ev.req_PLAYER_LOOSE: {
-      return {
-        ...state,
-        loose: true,
       };
     }
 

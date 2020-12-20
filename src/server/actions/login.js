@@ -6,17 +6,17 @@ import IoGame from '../models/IoGame';
 
 import { resInfos } from './app';
 import { resChat, resOwner } from './game';
-    //
-    //
-    //
-    //
-    //
-    // const currentRoom = Object.keys(redGame.io.sockets.adapter.sids[socket.id]).filter((item) => item !== socket.id)[0];
+//
+//
+//
+//
+//
+// const currentRoom = Object.keys(redGame.io.sockets.adapter.sids[socket.id]).filter((item) => item !== socket.id)[0];
 
-    //
-    //
-    //
-    //
+//
+//
+//
+//
 
 export const resLog = (req, res) => {
   console.log(IoGame);
@@ -45,7 +45,7 @@ export const resLogin = (socket, data, redGame, callback) => {
       },
       game: {
         room: redGame.getGame(room).getRoom(),
-        owner: redGame.getGame(room).getOwner(),
+        owner: redGame.getGame(room).getSettingsOwner(),
         players: redGame.getGame(room).getPlayers(),
         messages: redGame.getGame(room).getMessages(),
       },

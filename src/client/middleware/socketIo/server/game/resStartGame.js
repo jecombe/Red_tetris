@@ -24,7 +24,6 @@ export const dispatch = (action, data, dispatch) => {
   //   },
   // });
 
-
   // dispatch({
   //   type: ev.res_START_GAME,
   //   payload: {

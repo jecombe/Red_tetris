@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 const keyevent = 'keydown';
 
 function useKey(callback, allowedKeys = [], conditions) {
+  let lastKeyCode = null;
   let lastKeyTime = Date.now();
 
   const handleEvent = (event) => {
@@ -10,11 +11,12 @@ function useKey(callback, allowedKeys = [], conditions) {
 
     // callback(event);
 
-    if (currentTime - lastKeyTime > 15) {
+    if (event.keyCode !== lastKeyCode || currentTime - lastKeyTime > 209) {
       // if (conditions.started && !conditions.loose
       //   && allowedKeys.includes(event.keyCode)) {
-          callback(event);
-          lastKeyTime = currentTime;
+      callback(event);
+      lastKeyCode = event.keyCode;
+      lastKeyTime = currentTime;
       // }
     }
   };
@@ -28,7 +30,6 @@ function useKey(callback, allowedKeys = [], conditions) {
     }
 
     // if const currentTime = Date.now();
-
 
     window.addEventListener(keyevent, handleEvent);
     return () => {

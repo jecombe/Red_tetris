@@ -31,7 +31,7 @@ const countdown = (req, res, count) => {
   }
 };
 
-const start = (req, res) => {
+const start = async (req, res) => {
   const { name, room } = req.data;
 
   try {
@@ -45,7 +45,7 @@ const start = (req, res) => {
   }
 };
 
-const owner = (req, res) => {
+const owner = async (req, res) => {
   const { socket } = req;
   const { name, room, newOwner } = req.data;
 
@@ -55,7 +55,7 @@ const owner = (req, res) => {
     if (newOwner === '') RedTetris.getGame(room).setRandomOwner();
     else RedTetris.getGame(room).setOwner(newOwner);
 
-    RedTetris.getGame(room).setMessage('server', `${RedTetris.getGame(room).getOwner()} is the new owner`);
+    RedTetris.getGame(room).setMessage('server', `${RedTetris.getGame(room).getSettingsOwner()} is the new owner`);
 
     RedTetris.emitToRoom(room, ev.res_UPDATE_GAME, {
       status: 200,
@@ -70,12 +70,12 @@ const owner = (req, res) => {
   }
 };
 
-const chat = (req, res) => {
+const chat = async (req, res) => {
   const { socket } = req;
   const { room, name, text } = req.data;
 
   try {
-    if (!RedTetris.isLogged(socket)) throw new Error('player not logged');
+    // if (!RedTetris.isLogged(socket)) throw new Error('player not logged');
 
     RedTetris.getGame(room).setMessage(name, text);
 

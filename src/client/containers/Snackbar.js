@@ -4,24 +4,24 @@ import { connect } from 'react-redux';
 import { useSnackbar } from 'notistack';
 
 const Snackbar = (props) => {
-  const { message, variant } = props;
-  const { enqueueSnackbar } = useSnackbar();
+    const { message, variant } = props;
+    const { enqueueSnackbar } = useSnackbar();
 
-  useEffect(() => {
-    enqueueSnackbar(message, { variant });
-  });
+    useEffect(() => {
+        enqueueSnackbar(message, { variant });
+    });
 
-  return null;
+    return null;
 };
 
 Snackbar.propTypes = {
-  message: PropTypes.string.isRequired,
-  variant: PropTypes.string.isRequired,
+    message: PropTypes.string.isRequired,
+    variant: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  message: state.app.snackbar.message,
-  variant: state.app.snackbar.variant,
+    message: state.app.snackbar.message,
+    variant: state.app.snackbar.variant
 });
 
 export default connect(mapStateToProps)(Snackbar);

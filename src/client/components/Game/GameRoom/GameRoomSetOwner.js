@@ -14,51 +14,48 @@ import { gameStateProp } from '../../../reducers/reducers.types';
 import RedIconButton from '../../Common/RedIconButton';
 
 const useStyles = makeStyles({
-  icon: {
-    color: 'red',
-  },
+    icon: {
+        color: 'red'
+    }
 });
 
 const GameRoomSetOwner = (props) => {
-  const {
-    open, owner, players, handleClose, handleOnClickOwner,
-  } = props;
-  const classes = useStyles();
+    const { open, owner, players, handleClose, handleOnClickOwner } = props;
+    const classes = useStyles();
 
-  const playersList = Object.entries(players);
+    const playersList = Object.entries(players);
 
-  return (
-    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-      <DialogTitle>Set new room owner</DialogTitle>
-      <List>
-        {playersList.map((player) => (
-          <ListItem
-            key={player[1].name}
-            disabled={owner === player[1].name}
-            onClick={() => handleOnClickOwner(player[1])}
-            button
-          >
-            <ListItemIcon>
-              <PersonAddIcon className={classes.icon} />
-            </ListItemIcon>
-            <ListItemText primary={player[1].name} />
-          </ListItem>
-        ))}
-      </List>
-    </Dialog>
-  );
+    return (
+        <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+            <DialogTitle>Set new room owner</DialogTitle>
+            <List>
+                {playersList.map((player) => (
+                    <ListItem
+                        key={player[1].name}
+                        disabled={owner === player[1].name}
+                        onClick={() => handleOnClickOwner(player[1])}
+                        button>
+                        <ListItemIcon>
+                            <PersonAddIcon className={classes.icon} />
+                        </ListItemIcon>
+                        <ListItemText primary={player[1].name} />
+                    </ListItem>
+                ))}
+            </List>
+        </Dialog>
+    );
 };
 
 GameRoomSetOwner.defaultProps = {
-  players: {},
+    players: {}
 };
 
 GameRoomSetOwner.propTypes = {
-  open: PropTypes.bool.isRequired,
-  owner: PropTypes.string.isRequired,
-  players: gameStateProp.players,
-  handleClose: PropTypes.func.isRequired,
-  handleOnClickOwner: PropTypes.func.isRequired,
+    open: PropTypes.bool.isRequired,
+    owner: PropTypes.string.isRequired,
+    players: gameStateProp.players,
+    handleClose: PropTypes.func.isRequired,
+    handleOnClickOwner: PropTypes.func.isRequired
 };
 
 export default GameRoomSetOwner;

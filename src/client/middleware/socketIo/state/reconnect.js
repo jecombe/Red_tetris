@@ -6,20 +6,20 @@ const action = ev.RECONNECT;
 
 // eslint-disable-next-line no-shadow
 const dispatch = (socket, store, next, action) => () => {
-  store.dispatch({
-    type: ev.UPDATE_CONNECTION,
-    payload: {
-      id: null,
-      connected: false,
-      snackbar: {
-        message: 'socket: Reconnected',
-        variant: 'success',
-      },
-    },
-  });
+    store.dispatch({
+        type: ev.UPDATE_CONNECTION,
+        payload: {
+            id: null,
+            connected: false,
+            snackbar: {
+                message: 'socket: Reconnected',
+                variant: 'success'
+            }
+        }
+    });
 };
 
 export default {
-  action,
-  dispatch,
+    action,
+    dispatch
 };

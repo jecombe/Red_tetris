@@ -6,50 +6,41 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
-  paper: {
-    // backgroundColor: 'rgba(0,0,0,0.1)',
-  },
-  typography: {
-    fontWeight: 'bold',
-  },
+    paper: (props) => ({
+        // backgroundColor: 'rgba(0,0,0,0.1)',
+        backgroundColor: props.dark ? 'rgba(0, 0, 0, 0.4)' : 0
+    }),
+    typography: {
+        fontWeight: 'bold'
+    }
 });
 
 const BoxInfo = (props) => {
-  const {
-    field,
-    value,
-  } = props;
-  const classes = useStyles();
+    const { field, value, dark } = props;
+    const classes = useStyles({ dark });
 
-  return (
-    <Box>
-      <Typography
-        variant="caption"
-        style={{ fontWeight: 'normal' }}
-      >
-        {field}
-      </Typography>
-      <Paper
-        className={classes.paper}
-        variant="outlined"
-      >
-        <Typography
-          className={classes.typography}
-          align="center"
-        >
-          {value}
-        </Typography>
-      </Paper>
-    </Box>
-  );
+    return (
+        <Box>
+            <Typography variant="caption" style={{ fontWeight: 'normal' }}>
+                {field}
+            </Typography>
+            <Paper className={classes.paper} variant="outlined">
+                <Typography className={classes.typography} align="center">
+                    {value}
+                </Typography>
+            </Paper>
+        </Box>
+    );
+};
+
+BoxInfo.defaultProps = {
+    dark: false
 };
 
 BoxInfo.propTypes = {
-  field: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]).isRequired,
+    field: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    dark: PropTypes.bool
 };
 
 export default BoxInfo;

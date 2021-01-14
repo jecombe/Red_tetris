@@ -15,64 +15,61 @@ import { settingsProp, playersStatePropTypes } from '../../../reducers/reducers.
 import RedIconButton from '../../Common/RedIconButton';
 
 const useStyles = makeStyles({
-  icon: {
-    color: 'red',
-  },
+    icon: {
+        color: 'red'
+    }
 });
 
 const GameSettingsRoomOwner = (props) => {
-  const {
-    disabled, owner, players, onClickOwner,
-  } = props;
-  const [open, setOpen] = React.useState(false);
-  const classes = useStyles();
+    const { disabled, owner, players, onClickOwner } = props;
+    const [open, setOpen] = React.useState(false);
+    const classes = useStyles();
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+    const handleClose = () => {
+        setOpen(false);
+    };
 
-  const handleListItemClick = (value) => {
-    onClickOwner(value);
-    handleClose();
-  };
+    const handleListItemClick = (value) => {
+        onClickOwner(value);
+        handleClose();
+    };
 
-  const playersList = Object.entries(players);
+    const playersList = Object.entries(players);
 
-  return (
-    <>
-      <RedIconButton disabled={disabled} onClick={handleClickOpen}>
-        <SupervisorAccountIcon fontSize="small" />
-      </RedIconButton>
-      <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-        <DialogTitle>Set new room owner</DialogTitle>
-        <List>
-          {playersList.map((player) => (
-            <ListItem
-              button
-              disabled={owner === player[1].name}
-              onClick={() => handleListItemClick(player[1])}
-              key={player[1].name}
-            >
-              <ListItemIcon>
-                <PersonAddIcon className={classes.icon} />
-              </ListItemIcon>
-              <ListItemText primary={player[1].name} />
-            </ListItem>
-          ))}
-        </List>
-      </Dialog>
-    </>
-  );
+    return (
+        <>
+            <RedIconButton disabled={disabled} onClick={handleClickOpen}>
+                <SupervisorAccountIcon fontSize="small" />
+            </RedIconButton>
+            <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+                <DialogTitle>Set new room owner</DialogTitle>
+                <List>
+                    {playersList.map((player) => (
+                        <ListItem
+                            button
+                            disabled={owner === player[1].name}
+                            onClick={() => handleListItemClick(player[1])}
+                            key={player[1].name}>
+                            <ListItemIcon>
+                                <PersonAddIcon className={classes.icon} />
+                            </ListItemIcon>
+                            <ListItemText primary={player[1].name} />
+                        </ListItem>
+                    ))}
+                </List>
+            </Dialog>
+        </>
+    );
 };
 
 GameSettingsRoomOwner.propTypes = {
-  owner: settingsProp.owner.isRequired,
-  players: playersStatePropTypes.isRequired,
-  onClickOwner: PropTypes.func.isRequired,
+    owner: settingsProp.owner.isRequired,
+    players: playersStatePropTypes.isRequired,
+    onClickOwner: PropTypes.func.isRequired
 };
 
 export default GameSettingsRoomOwner;

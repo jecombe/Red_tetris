@@ -6,27 +6,19 @@ import { playerStateProp, playersStatePropTypes } from '../../reducers/reducers.
 import GamePlayersRank from '../../components/Game/GamePlayers/GamePlayersRank';
 
 const GamePlayersContainer = (props) => {
-  const {
-    name,
-    players,
-  } = props;
+    const { name, players } = props;
 
-  return (
-    <GamePlayersRank
-      name={name}
-      players={players}
-    />
-  );
+    return <GamePlayersRank name={name} players={players} />;
 };
 
 GamePlayersContainer.propTypes = {
-  name: playerStateProp.name.isRequired,
-  players: playersStatePropTypes.isRequired,
+    name: playerStateProp.name.isRequired,
+    players: playersStatePropTypes.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  name: state.player.name,
-  players: state.game.players,
+    name: state.player.name,
+    players: state.game.players
 });
 
 export default connect(mapStateToProps)(GamePlayersContainer);

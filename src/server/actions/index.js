@@ -4,8 +4,8 @@ import * as game from './game';
 import * as chat from './chat';
 
 export default {
-  ...socket,
-  ...login,
-  ...game,
-  ...chat,
+    ...socket,
+    ...login,
+    ...game,
+    ...chat
 };

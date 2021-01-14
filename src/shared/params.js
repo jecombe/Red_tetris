@@ -1,10 +1,12 @@
 module.exports = {
-  socket: {
-    id: 'CLIENT',
-  },
-  server: {
-    host: '0.0.0.0',
-    port: 3000,
-    get url() { return `http://${this.host}:${this.port}`; },
-  },
+    socket: {
+        id: 'CLIENT'
+    },
+    server: {
+        host: '0.0.0.0',
+        port: 3000,
+        get url() {
+            return `http://${this.host}:${this.port}`;
+        }
+    }
 };

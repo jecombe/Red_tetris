@@ -1,0 +1,1836 @@
+{
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/actions/app.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/actions/app.js",
+        "statementMap": {
+            "0": { "start": { "line": 3, "column": 26 }, "end": { "line": 9, "column": 2 } },
+            "1": { "start": { "line": 3, "column": 40 }, "end": { "line": 9, "column": 1 } },
+            "2": { "start": { "line": 11, "column": 33 }, "end": { "line": 16, "column": 2 } },
+            "3": { "start": { "line": 11, "column": 40 }, "end": { "line": 16, "column": 1 } },
+            "4": { "start": { "line": 18, "column": 24 }, "end": { "line": 24, "column": 2 } },
+            "5": { "start": { "line": 18, "column": 38 }, "end": { "line": 24, "column": 1 } },
+            "6": { "start": { "line": 26, "column": 25 }, "end": { "line": 28, "column": 2 } },
+            "7": { "start": { "line": 26, "column": 32 }, "end": { "line": 28, "column": 1 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 3, "column": 26 },
+                    "end": { "line": 3, "column": 27 }
+                },
+                "loc": { "start": { "line": 3, "column": 40 }, "end": { "line": 9, "column": 1 } },
+                "line": 3
+            },
+            "1": {
+                "name": "(anonymous_1)",
+                "decl": {
+                    "start": { "line": 11, "column": 33 },
+                    "end": { "line": 11, "column": 34 }
+                },
+                "loc": {
+                    "start": { "line": 11, "column": 40 },
+                    "end": { "line": 16, "column": 1 }
+                },
+                "line": 11
+            },
+            "2": {
+                "name": "(anonymous_2)",
+                "decl": {
+                    "start": { "line": 18, "column": 24 },
+                    "end": { "line": 18, "column": 25 }
+                },
+                "loc": {
+                    "start": { "line": 18, "column": 38 },
+                    "end": { "line": 24, "column": 1 }
+                },
+                "line": 18
+            },
+            "3": {
+                "name": "(anonymous_3)",
+                "decl": {
+                    "start": { "line": 26, "column": 25 },
+                    "end": { "line": 26, "column": 26 }
+                },
+                "loc": {
+                    "start": { "line": 26, "column": 32 },
+                    "end": { "line": 28, "column": 1 }
+                },
+                "line": 26
+            }
+        },
+        "branchMap": {},
+        "s": { "0": 4, "1": 0, "2": 4, "3": 0, "4": 4, "5": 1, "6": 4, "7": 1 },
+        "f": { "0": 0, "1": 0, "2": 1, "3": 1 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "ee1a7b695b0ac4a766a4f8d1eece2a21165ddfb0"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/actions/game.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/actions/game.js",
+        "statementMap": {
+            "0": { "start": { "line": 3, "column": 26 }, "end": { "line": 19, "column": 1 } },
+            "1": { "start": { "line": 3, "column": 39 }, "end": { "line": 19, "column": 1 } },
+            "2": { "start": { "line": 4, "column": 17 }, "end": { "line": 4, "column": 31 } },
+            "3": { "start": { "line": 6, "column": 2 }, "end": { "line": 11, "column": 5 } },
+            "4": { "start": { "line": 13, "column": 2 }, "end": { "line": 18, "column": 5 } },
+            "5": { "start": { "line": 21, "column": 24 }, "end": { "line": 26, "column": 2 } },
+            "6": { "start": { "line": 21, "column": 38 }, "end": { "line": 26, "column": 1 } },
+            "7": { "start": { "line": 28, "column": 23 }, "end": { "line": 33, "column": 2 } },
+            "8": { "start": { "line": 28, "column": 37 }, "end": { "line": 33, "column": 1 } },
+            "9": { "start": { "line": 35, "column": 28 }, "end": { "line": 38, "column": 2 } },
+            "10": { "start": { "line": 35, "column": 35 }, "end": { "line": 38, "column": 1 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 3, "column": 26 },
+                    "end": { "line": 3, "column": 27 }
+                },
+                "loc": { "start": { "line": 3, "column": 39 }, "end": { "line": 19, "column": 1 } },
+                "line": 3
+            },
+            "1": {
+                "name": "(anonymous_1)",
+                "decl": {
+                    "start": { "line": 3, "column": 39 },
+                    "end": { "line": 3, "column": 40 }
+                },
+                "loc": { "start": { "line": 3, "column": 63 }, "end": { "line": 19, "column": 1 } },
+                "line": 3
+            },
+            "2": {
+                "name": "(anonymous_2)",
+                "decl": {
+                    "start": { "line": 21, "column": 24 },
+                    "end": { "line": 21, "column": 25 }
+                },
+                "loc": {
+                    "start": { "line": 21, "column": 38 },
+                    "end": { "line": 26, "column": 1 }
+                },
+                "line": 21
+            },
+            "3": {
+                "name": "(anonymous_3)",
+                "decl": {
+                    "start": { "line": 28, "column": 23 },
+                    "end": { "line": 28, "column": 24 }
+                },
+                "loc": {
+                    "start": { "line": 28, "column": 37 },
+                    "end": { "line": 33, "column": 1 }
+                },
+                "line": 28
+            },
+            "4": {
+                "name": "(anonymous_4)",
+                "decl": {
+                    "start": { "line": 35, "column": 28 },
+                    "end": { "line": 35, "column": 29 }
+                },
+                "loc": {
+                    "start": { "line": 35, "column": 35 },
+                    "end": { "line": 38, "column": 1 }
+                },
+                "line": 35
+            }
+        },
+        "branchMap": {},
+        "s": {
+            "0": 4,
+            "1": 1,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 4,
+            "6": 1,
+            "7": 4,
+            "8": 1,
+            "9": 4,
+            "10": 1
+        },
+        "f": { "0": 1, "1": 0, "2": 1, "3": 1, "4": 1 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "0bdb113606fde62eb135d4eab75d6223f5eb84dd"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/actions/index.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/actions/index.js",
+        "statementMap": {},
+        "fnMap": {},
+        "branchMap": {},
+        "s": {},
+        "f": {},
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "231b09950f3e2191d75bf5ac1b9a2015aa88af33"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/actions/player.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/actions/player.js",
+        "statementMap": {
+            "0": { "start": { "line": 3, "column": 28 }, "end": { "line": 12, "column": 1 } },
+            "1": { "start": { "line": 3, "column": 41 }, "end": { "line": 12, "column": 1 } },
+            "2": { "start": { "line": 4, "column": 17 }, "end": { "line": 4, "column": 31 } },
+            "3": { "start": { "line": 6, "column": 2 }, "end": { "line": 11, "column": 5 } },
+            "4": { "start": { "line": 14, "column": 23 }, "end": { "line": 19, "column": 2 } },
+            "5": { "start": { "line": 14, "column": 37 }, "end": { "line": 19, "column": 1 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 3, "column": 28 },
+                    "end": { "line": 3, "column": 29 }
+                },
+                "loc": { "start": { "line": 3, "column": 41 }, "end": { "line": 12, "column": 1 } },
+                "line": 3
+            },
+            "1": {
+                "name": "(anonymous_1)",
+                "decl": {
+                    "start": { "line": 3, "column": 41 },
+                    "end": { "line": 3, "column": 42 }
+                },
+                "loc": { "start": { "line": 3, "column": 65 }, "end": { "line": 12, "column": 1 } },
+                "line": 3
+            },
+            "2": {
+                "name": "(anonymous_2)",
+                "decl": {
+                    "start": { "line": 14, "column": 23 },
+                    "end": { "line": 14, "column": 24 }
+                },
+                "loc": {
+                    "start": { "line": 14, "column": 37 },
+                    "end": { "line": 19, "column": 1 }
+                },
+                "line": 14
+            }
+        },
+        "branchMap": {},
+        "s": { "0": 4, "1": 0, "2": 0, "3": 0, "4": 4, "5": 1 },
+        "f": { "0": 0, "1": 0, "2": 1 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "aed323ed86179529657463e2feace1e3bf76e531"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIoMiddleware.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIoMiddleware.js",
+        "statementMap": {
+            "0": { "start": { "line": 5, "column": 26 }, "end": { "line": 5, "column": 32 } },
+            "1": { "start": { "line": 6, "column": 26 }, "end": { "line": 6, "column": 32 } },
+            "2": { "start": { "line": 7, "column": 25 }, "end": { "line": 7, "column": 31 } },
+            "3": { "start": { "line": 9, "column": 22 }, "end": { "line": 9, "column": 35 } },
+            "4": { "start": { "line": 10, "column": 26 }, "end": { "line": 10, "column": 42 } },
+            "5": { "start": { "line": 11, "column": 22 }, "end": { "line": 11, "column": 26 } }
+        },
+        "fnMap": {},
+        "branchMap": {},
+        "s": { "0": 3, "1": 3, "2": 3, "3": 3, "4": 3, "5": 3 },
+        "f": {},
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "e94d715d0f8cf25ffd5434bbe9983369d77979e5"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/index.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/index.js",
+        "statementMap": {
+            "0": { "start": { "line": 5, "column": 22 }, "end": { "line": 5, "column": 34 } },
+            "1": { "start": { "line": 6, "column": 22 }, "end": { "line": 6, "column": 34 } },
+            "2": { "start": { "line": 7, "column": 21 }, "end": { "line": 7, "column": 32 } }
+        },
+        "fnMap": {},
+        "branchMap": {},
+        "s": { "0": 3, "1": 3, "2": 3 },
+        "f": {},
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "96567e77b054dabc20f4fda3b97c68a9b9ee17de"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/index.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/index.js",
+        "statementMap": {},
+        "fnMap": {},
+        "branchMap": {},
+        "s": {},
+        "f": {},
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "5a28434bdfc21b4ca4c676481c68738ca9773947"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/app/index.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/app/index.js",
+        "statementMap": {},
+        "fnMap": {},
+        "branchMap": {},
+        "s": {},
+        "f": {},
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "c63f3fbcd6319da708b7f8044e7746c151acd343"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/app/reqInfos.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/app/reqInfos.js",
+        "statementMap": {
+            "0": { "start": { "line": 3, "column": 24 }, "end": { "line": 5, "column": 1 } },
+            "1": { "start": { "line": 4, "column": 2 }, "end": { "line": 4, "column": 31 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 3, "column": 24 },
+                    "end": { "line": 3, "column": 25 }
+                },
+                "loc": { "start": { "line": 3, "column": 51 }, "end": { "line": 5, "column": 1 } },
+                "line": 3
+            }
+        },
+        "branchMap": {},
+        "s": { "0": 3, "1": 0 },
+        "f": { "0": 0 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "31888ab841a426d3408d6aeb669bab66c89e9a6e"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/app/reqLogin.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/app/reqLogin.js",
+        "statementMap": {
+            "0": { "start": { "line": 3, "column": 24 }, "end": { "line": 21, "column": 1 } },
+            "1": { "start": { "line": 4, "column": 25 }, "end": { "line": 4, "column": 39 } },
+            "2": { "start": { "line": 6, "column": 2 }, "end": { "line": 15, "column": 5 } },
+            "3": { "start": { "line": 17, "column": 2 }, "end": { "line": 20, "column": 5 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 3, "column": 24 },
+                    "end": { "line": 3, "column": 25 }
+                },
+                "loc": { "start": { "line": 3, "column": 51 }, "end": { "line": 21, "column": 1 } },
+                "line": 3
+            }
+        },
+        "branchMap": {},
+        "s": { "0": 3, "1": 1, "2": 1, "3": 1 },
+        "f": { "0": 1 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "898be3ecc6b8e90848a8b926a1e2f05e08728dcf"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/app/reqLogout.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/app/reqLogout.js",
+        "statementMap": {
+            "0": { "start": { "line": 3, "column": 24 }, "end": { "line": 12, "column": 1 } },
+            "1": { "start": { "line": 4, "column": 16 }, "end": { "line": 4, "column": 32 } },
+            "2": { "start": { "line": 5, "column": 19 }, "end": { "line": 5, "column": 31 } },
+            "3": { "start": { "line": 6, "column": 19 }, "end": { "line": 6, "column": 29 } },
+            "4": { "start": { "line": 8, "column": 2 }, "end": { "line": 11, "column": 5 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 3, "column": 24 },
+                    "end": { "line": 3, "column": 25 }
+                },
+                "loc": { "start": { "line": 3, "column": 51 }, "end": { "line": 12, "column": 1 } },
+                "line": 3
+            }
+        },
+        "branchMap": {},
+        "s": { "0": 3, "1": 1, "2": 1, "3": 1, "4": 1 },
+        "f": { "0": 1 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "abbf028808599d395368219577db2f981b9de81b"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/game/index.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/game/index.js",
+        "statementMap": {},
+        "fnMap": {},
+        "branchMap": {},
+        "s": {},
+        "f": {},
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "6392fa937ea97cfb59d9ff362a13dc92035f6ea7"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/game/reqStartGame.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/game/reqStartGame.js",
+        "statementMap": {
+            "0": { "start": { "line": 3, "column": 24 }, "end": { "line": 14, "column": 1 } },
+            "1": { "start": { "line": 5, "column": 19 }, "end": { "line": 5, "column": 42 } },
+            "2": { "start": { "line": 6, "column": 19 }, "end": { "line": 6, "column": 40 } },
+            "3": { "start": { "line": 8, "column": 18 }, "end": { "line": 11, "column": 3 } },
+            "4": { "start": { "line": 13, "column": 2 }, "end": { "line": 13, "column": 36 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 3, "column": 24 },
+                    "end": { "line": 3, "column": 25 }
+                },
+                "loc": { "start": { "line": 3, "column": 51 }, "end": { "line": 14, "column": 1 } },
+                "line": 3
+            }
+        },
+        "branchMap": {},
+        "s": { "0": 3, "1": 1, "2": 1, "3": 1, "4": 1 },
+        "f": { "0": 1 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "38e45015c976191d43ff7a161698afb16286e82d"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/game/reqUpdateGameChat.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/game/reqUpdateGameChat.js",
+        "statementMap": {
+            "0": { "start": { "line": 3, "column": 24 }, "end": { "line": 16, "column": 1 } },
+            "1": { "start": { "line": 4, "column": 19 }, "end": { "line": 4, "column": 40 } },
+            "2": { "start": { "line": 5, "column": 19 }, "end": { "line": 5, "column": 42 } },
+            "3": { "start": { "line": 7, "column": 22 }, "end": { "line": 7, "column": 36 } },
+            "4": { "start": { "line": 9, "column": 18 }, "end": { "line": 13, "column": 3 } },
+            "5": { "start": { "line": 15, "column": 2 }, "end": { "line": 15, "column": 36 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 3, "column": 24 },
+                    "end": { "line": 3, "column": 25 }
+                },
+                "loc": { "start": { "line": 3, "column": 51 }, "end": { "line": 16, "column": 1 } },
+                "line": 3
+            }
+        },
+        "branchMap": {},
+        "s": { "0": 3, "1": 1, "2": 1, "3": 1, "4": 1, "5": 1 },
+        "f": { "0": 1 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "44129238e2f1f94a67b6fa6abcf5fa077b4b470d"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/game/reqUpdateGameOwner.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/game/reqUpdateGameOwner.js",
+        "statementMap": {
+            "0": { "start": { "line": 3, "column": 24 }, "end": { "line": 14, "column": 1 } },
+            "1": { "start": { "line": 4, "column": 19 }, "end": { "line": 4, "column": 42 } },
+            "2": { "start": { "line": 5, "column": 19 }, "end": { "line": 5, "column": 40 } },
+            "3": { "start": { "line": 7, "column": 18 }, "end": { "line": 11, "column": 3 } },
+            "4": { "start": { "line": 13, "column": 2 }, "end": { "line": 13, "column": 36 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 3, "column": 24 },
+                    "end": { "line": 3, "column": 25 }
+                },
+                "loc": { "start": { "line": 3, "column": 51 }, "end": { "line": 14, "column": 1 } },
+                "line": 3
+            }
+        },
+        "branchMap": {},
+        "s": { "0": 3, "1": 1, "2": 1, "3": 1, "4": 1 },
+        "f": { "0": 1 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "c94debacc20df1690c6fe3b595184e4713067c67"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/player/index.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/player/index.js",
+        "statementMap": {},
+        "fnMap": {},
+        "branchMap": {},
+        "s": {},
+        "f": {},
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "34920d1b1c43e357a8d787286fb39d22896d8c46"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/player/reqUpdatePlayer.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/client/player/reqUpdatePlayer.js",
+        "statementMap": {
+            "0": { "start": { "line": 3, "column": 24 }, "end": { "line": 13, "column": 1 } },
+            "1": { "start": { "line": 4, "column": 19 }, "end": { "line": 4, "column": 40 } },
+            "2": { "start": { "line": 5, "column": 19 }, "end": { "line": 5, "column": 42 } },
+            "3": { "start": { "line": 6, "column": 17 }, "end": { "line": 6, "column": 37 } },
+            "4": { "start": { "line": 8, "column": 2 }, "end": { "line": 12, "column": 5 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 3, "column": 24 },
+                    "end": { "line": 3, "column": 25 }
+                },
+                "loc": { "start": { "line": 3, "column": 51 }, "end": { "line": 13, "column": 1 } },
+                "line": 3
+            }
+        },
+        "branchMap": {},
+        "s": { "0": 3, "1": 1, "2": 1, "3": 1, "4": 1 },
+        "f": { "0": 1 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "ff92120025df29b0f393ecfd3a5d270b48b6ecb1"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/index.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/index.js",
+        "statementMap": {},
+        "fnMap": {},
+        "branchMap": {},
+        "s": {},
+        "f": {},
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "dc685a77b31070e7a45ff96c5e5ef788dabfb1f3"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/app/index.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/app/index.js",
+        "statementMap": {},
+        "fnMap": {},
+        "branchMap": {},
+        "s": {},
+        "f": {},
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "562c62b304cae12f2b9ce6217d21ed7758d2eea7"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/app/resInfos.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/app/resInfos.js",
+        "statementMap": {
+            "0": { "start": { "line": 4, "column": 24 }, "end": { "line": 18, "column": 1 } },
+            "1": { "start": { "line": 5, "column": 30 }, "end": { "line": 5, "column": 34 } },
+            "2": { "start": { "line": 6, "column": 40 }, "end": { "line": 6, "column": 47 } },
+            "3": { "start": { "line": 8, "column": 2 }, "end": { "line": 17, "column": 3 } },
+            "4": { "start": { "line": 9, "column": 4 }, "end": { "line": 16, "column": 7 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 4, "column": 24 },
+                    "end": { "line": 4, "column": 25 }
+                },
+                "loc": { "start": { "line": 4, "column": 52 }, "end": { "line": 18, "column": 1 } },
+                "line": 4
+            }
+        },
+        "branchMap": {
+            "0": {
+                "loc": { "start": { "line": 8, "column": 2 }, "end": { "line": 17, "column": 3 } },
+                "type": "if",
+                "locations": [
+                    { "start": { "line": 8, "column": 2 }, "end": { "line": 17, "column": 3 } },
+                    { "start": { "line": 8, "column": 2 }, "end": { "line": 17, "column": 3 } }
+                ],
+                "line": 8
+            }
+        },
+        "s": { "0": 3, "1": 1, "2": 1, "3": 0, "4": 0 },
+        "f": { "0": 1 },
+        "b": { "0": [0, 0] },
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "7ba449a7602d15b4cb0dda3e07ef57a6f3857ec2"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/app/resLogin.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/app/resLogin.js",
+        "statementMap": {
+            "0": { "start": { "line": 6, "column": 24 }, "end": { "line": 50, "column": 1 } },
+            "1": { "start": { "line": 7, "column": 30 }, "end": { "line": 7, "column": 34 } },
+            "2": { "start": { "line": 9, "column": 2 }, "end": { "line": 39, "column": 3 } },
+            "3": { "start": { "line": 10, "column": 4 }, "end": { "line": 21, "column": 7 } },
+            "4": { "start": { "line": 23, "column": 4 }, "end": { "line": 23, "column": 56 } },
+            "5": { "start": { "line": 25, "column": 4 }, "end": { "line": 36, "column": 7 } },
+            "6": { "start": { "line": 38, "column": 4 }, "end": { "line": 38, "column": 24 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 6, "column": 24 },
+                    "end": { "line": 6, "column": 25 }
+                },
+                "loc": { "start": { "line": 6, "column": 52 }, "end": { "line": 50, "column": 1 } },
+                "line": 6
+            }
+        },
+        "branchMap": {
+            "0": {
+                "loc": { "start": { "line": 9, "column": 2 }, "end": { "line": 39, "column": 3 } },
+                "type": "if",
+                "locations": [
+                    { "start": { "line": 9, "column": 2 }, "end": { "line": 39, "column": 3 } },
+                    { "start": { "line": 9, "column": 2 }, "end": { "line": 39, "column": 3 } }
+                ],
+                "line": 9
+            }
+        },
+        "s": { "0": 3, "1": 2, "2": 2, "3": 1, "4": 1, "5": 1, "6": 1 },
+        "f": { "0": 2 },
+        "b": { "0": [1, 1] },
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "6089a3d174448cd3d07ffdcc7a566f03362d963b"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/app/resLogout.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/app/resLogout.js",
+        "statementMap": {
+            "0": { "start": { "line": 5, "column": 24 }, "end": { "line": 59, "column": 1 } },
+            "1": { "start": { "line": 6, "column": 30 }, "end": { "line": 6, "column": 34 } },
+            "2": { "start": { "line": 7, "column": 27 }, "end": { "line": 7, "column": 34 } },
+            "3": { "start": { "line": 11, "column": 2 }, "end": { "line": 41, "column": 3 } },
+            "4": { "start": { "line": 12, "column": 4 }, "end": { "line": 12, "column": 24 } },
+            "5": { "start": { "line": 14, "column": 4 }, "end": { "line": 25, "column": 7 } },
+            "6": { "start": { "line": 27, "column": 4 }, "end": { "line": 27, "column": 52 } },
+            "7": { "start": { "line": 29, "column": 4 }, "end": { "line": 40, "column": 7 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 5, "column": 24 },
+                    "end": { "line": 5, "column": 25 }
+                },
+                "loc": { "start": { "line": 5, "column": 52 }, "end": { "line": 59, "column": 1 } },
+                "line": 5
+            }
+        },
+        "branchMap": {
+            "0": {
+                "loc": { "start": { "line": 11, "column": 2 }, "end": { "line": 41, "column": 3 } },
+                "type": "if",
+                "locations": [
+                    { "start": { "line": 11, "column": 2 }, "end": { "line": 41, "column": 3 } },
+                    { "start": { "line": 11, "column": 2 }, "end": { "line": 41, "column": 3 } }
+                ],
+                "line": 11
+            }
+        },
+        "s": { "0": 3, "1": 2, "2": 2, "3": 2, "4": 1, "5": 1, "6": 1, "7": 1 },
+        "f": { "0": 2 },
+        "b": { "0": [1, 1] },
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "f746e0a35bda23763df5f762dbf2e074297f5696"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/game/index.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/game/index.js",
+        "statementMap": {},
+        "fnMap": {},
+        "branchMap": {},
+        "s": {},
+        "f": {},
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "b836c80b2549e169bd3cdefdcc284cacc16bb095"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/game/resStartGame.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/game/resStartGame.js",
+        "statementMap": {
+            "0": { "start": { "line": 7, "column": 24 }, "end": { "line": 38, "column": 1 } },
+            "1": { "start": { "line": 8, "column": 2 }, "end": { "line": 8, "column": 20 } },
+            "2": { "start": { "line": 9, "column": 30 }, "end": { "line": 9, "column": 34 } },
+            "3": { "start": { "line": 12, "column": 19 }, "end": { "line": 12, "column": 26 } },
+            "4": { "start": { "line": 14, "column": 2 }, "end": { "line": 14, "column": 43 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 7, "column": 24 },
+                    "end": { "line": 7, "column": 25 }
+                },
+                "loc": { "start": { "line": 7, "column": 52 }, "end": { "line": 38, "column": 1 } },
+                "line": 7
+            }
+        },
+        "branchMap": {},
+        "s": { "0": 3, "1": 0, "2": 0, "3": 0, "4": 0 },
+        "f": { "0": 0 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "84488a4993809367d8d7711c98e5ce824f1562dd"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/game/resUpdateGame.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/game/resUpdateGame.js",
+        "statementMap": {
+            "0": { "start": { "line": 6, "column": 24 }, "end": { "line": 12, "column": 1 } },
+            "1": { "start": { "line": 7, "column": 30 }, "end": { "line": 7, "column": 34 } },
+            "2": { "start": { "line": 9, "column": 2 }, "end": { "line": 11, "column": 3 } },
+            "3": { "start": { "line": 10, "column": 4 }, "end": { "line": 10, "column": 57 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 6, "column": 24 },
+                    "end": { "line": 6, "column": 25 }
+                },
+                "loc": { "start": { "line": 6, "column": 52 }, "end": { "line": 12, "column": 1 } },
+                "line": 6
+            }
+        },
+        "branchMap": {
+            "0": {
+                "loc": { "start": { "line": 9, "column": 2 }, "end": { "line": 11, "column": 3 } },
+                "type": "if",
+                "locations": [
+                    { "start": { "line": 9, "column": 2 }, "end": { "line": 11, "column": 3 } },
+                    { "start": { "line": 9, "column": 2 }, "end": { "line": 11, "column": 3 } }
+                ],
+                "line": 9
+            }
+        },
+        "s": { "0": 3, "1": 1, "2": 1, "3": 1 },
+        "f": { "0": 1 },
+        "b": { "0": [1, 0] },
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "f35496858071f81a51edcd51cc16c184123129d3"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/game/resUpdateGameChat.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/game/resUpdateGameChat.js",
+        "statementMap": {
+            "0": { "start": { "line": 5, "column": 24 }, "end": { "line": 16, "column": 1 } },
+            "1": { "start": { "line": 6, "column": 30 }, "end": { "line": 6, "column": 34 } },
+            "2": { "start": { "line": 8, "column": 2 }, "end": { "line": 15, "column": 3 } },
+            "3": { "start": { "line": 9, "column": 4 }, "end": { "line": 14, "column": 7 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 5, "column": 24 },
+                    "end": { "line": 5, "column": 25 }
+                },
+                "loc": { "start": { "line": 5, "column": 52 }, "end": { "line": 16, "column": 1 } },
+                "line": 5
+            }
+        },
+        "branchMap": {
+            "0": {
+                "loc": { "start": { "line": 8, "column": 2 }, "end": { "line": 15, "column": 3 } },
+                "type": "if",
+                "locations": [
+                    { "start": { "line": 8, "column": 2 }, "end": { "line": 15, "column": 3 } },
+                    { "start": { "line": 8, "column": 2 }, "end": { "line": 15, "column": 3 } }
+                ],
+                "line": 8
+            }
+        },
+        "s": { "0": 3, "1": 1, "2": 1, "3": 1 },
+        "f": { "0": 1 },
+        "b": { "0": [1, 0] },
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "96911606246636794294850083c59dab1fa61bb7"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/game/resUpdateGameSettings.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/game/resUpdateGameSettings.js",
+        "statementMap": {
+            "0": { "start": { "line": 4, "column": 24 }, "end": { "line": 11, "column": 1 } },
+            "1": { "start": { "line": 5, "column": 23 }, "end": { "line": 5, "column": 27 } },
+            "2": { "start": { "line": 7, "column": 2 }, "end": { "line": 10, "column": 5 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 4, "column": 24 },
+                    "end": { "line": 4, "column": 25 }
+                },
+                "loc": { "start": { "line": 4, "column": 52 }, "end": { "line": 11, "column": 1 } },
+                "line": 4
+            }
+        },
+        "branchMap": {},
+        "s": { "0": 3, "1": 0, "2": 0 },
+        "f": { "0": 0 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "092770bf396a7342b5600c00c15711e09fedb5cd"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/player/index.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/player/index.js",
+        "statementMap": {},
+        "fnMap": {},
+        "branchMap": {},
+        "s": {},
+        "f": {},
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "566550b9fb9a2194945860a8c46a4550835b15f9"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/player/resUpdatePlayer.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/server/player/resUpdatePlayer.js",
+        "statementMap": {
+            "0": { "start": { "line": 4, "column": 24 }, "end": { "line": 15, "column": 1 } },
+            "1": { "start": { "line": 5, "column": 30 }, "end": { "line": 5, "column": 34 } },
+            "2": { "start": { "line": 7, "column": 2 }, "end": { "line": 14, "column": 3 } },
+            "3": { "start": { "line": 8, "column": 4 }, "end": { "line": 13, "column": 7 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 4, "column": 24 },
+                    "end": { "line": 4, "column": 25 }
+                },
+                "loc": { "start": { "line": 4, "column": 52 }, "end": { "line": 15, "column": 1 } },
+                "line": 4
+            }
+        },
+        "branchMap": {
+            "0": {
+                "loc": { "start": { "line": 7, "column": 2 }, "end": { "line": 14, "column": 3 } },
+                "type": "if",
+                "locations": [
+                    { "start": { "line": 7, "column": 2 }, "end": { "line": 14, "column": 3 } },
+                    { "start": { "line": 7, "column": 2 }, "end": { "line": 14, "column": 3 } }
+                ],
+                "line": 7
+            }
+        },
+        "s": { "0": 3, "1": 1, "2": 1, "3": 1 },
+        "f": { "0": 1 },
+        "b": { "0": [1, 0] },
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "ed4e34097879cab57531f997bb6edadccafa63fe"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/state/connect.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/state/connect.js",
+        "statementMap": {
+            "0": { "start": { "line": 4, "column": 15 }, "end": { "line": 4, "column": 25 } },
+            "1": { "start": { "line": 7, "column": 17 }, "end": { "line": 41, "column": 1 } },
+            "2": { "start": { "line": 7, "column": 50 }, "end": { "line": 41, "column": 1 } },
+            "3": { "start": { "line": 8, "column": 21 }, "end": { "line": 8, "column": 37 } },
+            "4": { "start": { "line": 10, "column": 2 }, "end": { "line": 20, "column": 5 } },
+            "5": { "start": { "line": 22, "column": 2 }, "end": { "line": 40, "column": 3 } },
+            "6": { "start": { "line": 23, "column": 17 }, "end": { "line": 23, "column": 76 } },
+            "7": { "start": { "line": 24, "column": 17 }, "end": { "line": 24, "column": 90 } },
+            "8": { "start": { "line": 26, "column": 4 }, "end": { "line": 34, "column": 5 } },
+            "9": { "start": { "line": 27, "column": 6 }, "end": { "line": 33, "column": 9 } },
+            "10": { "start": { "line": 36, "column": 4 }, "end": { "line": 39, "column": 7 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 7, "column": 17 },
+                    "end": { "line": 7, "column": 18 }
+                },
+                "loc": { "start": { "line": 7, "column": 50 }, "end": { "line": 41, "column": 1 } },
+                "line": 7
+            },
+            "1": {
+                "name": "(anonymous_1)",
+                "decl": {
+                    "start": { "line": 7, "column": 50 },
+                    "end": { "line": 7, "column": 51 }
+                },
+                "loc": { "start": { "line": 7, "column": 56 }, "end": { "line": 41, "column": 1 } },
+                "line": 7
+            }
+        },
+        "branchMap": {
+            "0": {
+                "loc": { "start": { "line": 22, "column": 2 }, "end": { "line": 40, "column": 3 } },
+                "type": "if",
+                "locations": [
+                    { "start": { "line": 22, "column": 2 }, "end": { "line": 40, "column": 3 } },
+                    { "start": { "line": 22, "column": 2 }, "end": { "line": 40, "column": 3 } }
+                ],
+                "line": 22
+            },
+            "1": {
+                "loc": { "start": { "line": 26, "column": 4 }, "end": { "line": 34, "column": 5 } },
+                "type": "if",
+                "locations": [
+                    { "start": { "line": 26, "column": 4 }, "end": { "line": 34, "column": 5 } },
+                    { "start": { "line": 26, "column": 4 }, "end": { "line": 34, "column": 5 } }
+                ],
+                "line": 26
+            },
+            "2": {
+                "loc": {
+                    "start": { "line": 26, "column": 8 },
+                    "end": { "line": 26, "column": 20 }
+                },
+                "type": "binary-expr",
+                "locations": [
+                    { "start": { "line": 26, "column": 8 }, "end": { "line": 26, "column": 12 } },
+                    { "start": { "line": 26, "column": 16 }, "end": { "line": 26, "column": 20 } }
+                ],
+                "line": 26
+            }
+        },
+        "s": {
+            "0": 3,
+            "1": 3,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0,
+            "8": 0,
+            "9": 0,
+            "10": 0
+        },
+        "f": { "0": 0, "1": 0 },
+        "b": { "0": [0, 0], "1": [0, 0], "2": [0, 0] },
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "547e0ac0ba258e020c2e6feb9d791b20888a8228"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/state/connectError.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/state/connectError.js",
+        "statementMap": {
+            "0": { "start": { "line": 4, "column": 15 }, "end": { "line": 4, "column": 31 } },
+            "1": { "start": { "line": 7, "column": 17 }, "end": { "line": 21, "column": 1 } },
+            "2": { "start": { "line": 7, "column": 50 }, "end": { "line": 21, "column": 1 } },
+            "3": { "start": { "line": 8, "column": 2 }, "end": { "line": 8, "column": 44 } },
+            "4": { "start": { "line": 10, "column": 2 }, "end": { "line": 20, "column": 5 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 7, "column": 17 },
+                    "end": { "line": 7, "column": 18 }
+                },
+                "loc": { "start": { "line": 7, "column": 50 }, "end": { "line": 21, "column": 1 } },
+                "line": 7
+            },
+            "1": {
+                "name": "(anonymous_1)",
+                "decl": {
+                    "start": { "line": 7, "column": 50 },
+                    "end": { "line": 7, "column": 51 }
+                },
+                "loc": { "start": { "line": 7, "column": 56 }, "end": { "line": 21, "column": 1 } },
+                "line": 7
+            }
+        },
+        "branchMap": {},
+        "s": { "0": 3, "1": 3, "2": 0, "3": 0, "4": 0 },
+        "f": { "0": 0, "1": 0 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "09f45dea8996dd996b9ece0b135cde1f4cbf073f"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/state/connectTimeout.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/state/connectTimeout.js",
+        "statementMap": {
+            "0": { "start": { "line": 4, "column": 15 }, "end": { "line": 4, "column": 33 } },
+            "1": { "start": { "line": 7, "column": 17 }, "end": { "line": 21, "column": 1 } },
+            "2": { "start": { "line": 7, "column": 50 }, "end": { "line": 21, "column": 1 } },
+            "3": { "start": { "line": 8, "column": 2 }, "end": { "line": 8, "column": 46 } },
+            "4": { "start": { "line": 10, "column": 2 }, "end": { "line": 20, "column": 5 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 7, "column": 17 },
+                    "end": { "line": 7, "column": 18 }
+                },
+                "loc": { "start": { "line": 7, "column": 50 }, "end": { "line": 21, "column": 1 } },
+                "line": 7
+            },
+            "1": {
+                "name": "(anonymous_1)",
+                "decl": {
+                    "start": { "line": 7, "column": 50 },
+                    "end": { "line": 7, "column": 51 }
+                },
+                "loc": { "start": { "line": 7, "column": 56 }, "end": { "line": 21, "column": 1 } },
+                "line": 7
+            }
+        },
+        "branchMap": {},
+        "s": { "0": 3, "1": 3, "2": 0, "3": 0, "4": 0 },
+        "f": { "0": 0, "1": 0 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "eb5fff8887f0d263019ddb7d3a1d8610f30abe93"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/state/disconnect.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/state/disconnect.js",
+        "statementMap": {
+            "0": { "start": { "line": 5, "column": 15 }, "end": { "line": 5, "column": 28 } },
+            "1": { "start": { "line": 8, "column": 17 }, "end": { "line": 22, "column": 1 } },
+            "2": { "start": { "line": 8, "column": 50 }, "end": { "line": 22, "column": 1 } },
+            "3": { "start": { "line": 9, "column": 2 }, "end": { "line": 9, "column": 40 } },
+            "4": { "start": { "line": 11, "column": 2 }, "end": { "line": 21, "column": 5 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 8, "column": 17 },
+                    "end": { "line": 8, "column": 18 }
+                },
+                "loc": { "start": { "line": 8, "column": 50 }, "end": { "line": 22, "column": 1 } },
+                "line": 8
+            },
+            "1": {
+                "name": "(anonymous_1)",
+                "decl": {
+                    "start": { "line": 8, "column": 50 },
+                    "end": { "line": 8, "column": 51 }
+                },
+                "loc": { "start": { "line": 8, "column": 56 }, "end": { "line": 22, "column": 1 } },
+                "line": 8
+            }
+        },
+        "branchMap": {},
+        "s": { "0": 3, "1": 3, "2": 0, "3": 0, "4": 0 },
+        "f": { "0": 0, "1": 0 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "1b07510b9f31e2508bccb4a84443f187522ef058"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/state/index.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/state/index.js",
+        "statementMap": {},
+        "fnMap": {},
+        "branchMap": {},
+        "s": {},
+        "f": {},
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "85bfa3d861b149503a7aec58914c798933d72774"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/state/reconnect.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/state/reconnect.js",
+        "statementMap": {
+            "0": { "start": { "line": 5, "column": 15 }, "end": { "line": 5, "column": 27 } },
+            "1": { "start": { "line": 8, "column": 17 }, "end": { "line": 20, "column": 1 } },
+            "2": { "start": { "line": 8, "column": 50 }, "end": { "line": 20, "column": 1 } },
+            "3": { "start": { "line": 9, "column": 2 }, "end": { "line": 19, "column": 5 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 8, "column": 17 },
+                    "end": { "line": 8, "column": 18 }
+                },
+                "loc": { "start": { "line": 8, "column": 50 }, "end": { "line": 20, "column": 1 } },
+                "line": 8
+            },
+            "1": {
+                "name": "(anonymous_1)",
+                "decl": {
+                    "start": { "line": 8, "column": 50 },
+                    "end": { "line": 8, "column": 51 }
+                },
+                "loc": { "start": { "line": 8, "column": 56 }, "end": { "line": 20, "column": 1 } },
+                "line": 8
+            }
+        },
+        "branchMap": {},
+        "s": { "0": 3, "1": 3, "2": 0, "3": 0 },
+        "f": { "0": 0, "1": 0 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "b1d8e37d4f2073e4e051d09ac065dd1845a0ee85"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/state/reconnectAttempt.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/state/reconnectAttempt.js",
+        "statementMap": {
+            "0": { "start": { "line": 5, "column": 15 }, "end": { "line": 5, "column": 35 } },
+            "1": { "start": { "line": 8, "column": 17 }, "end": { "line": 20, "column": 1 } },
+            "2": { "start": { "line": 8, "column": 50 }, "end": { "line": 20, "column": 1 } },
+            "3": { "start": { "line": 9, "column": 2 }, "end": { "line": 19, "column": 5 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 8, "column": 17 },
+                    "end": { "line": 8, "column": 18 }
+                },
+                "loc": { "start": { "line": 8, "column": 50 }, "end": { "line": 20, "column": 1 } },
+                "line": 8
+            },
+            "1": {
+                "name": "(anonymous_1)",
+                "decl": {
+                    "start": { "line": 8, "column": 50 },
+                    "end": { "line": 8, "column": 51 }
+                },
+                "loc": { "start": { "line": 8, "column": 69 }, "end": { "line": 20, "column": 1 } },
+                "line": 8
+            }
+        },
+        "branchMap": {},
+        "s": { "0": 3, "1": 3, "2": 0, "3": 0 },
+        "f": { "0": 0, "1": 0 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "11f94d7b88f4456558c9d78de892707016f52cea"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/state/reconnectError.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/state/reconnectError.js",
+        "statementMap": {
+            "0": { "start": { "line": 5, "column": 15 }, "end": { "line": 5, "column": 33 } },
+            "1": { "start": { "line": 8, "column": 17 }, "end": { "line": 22, "column": 1 } },
+            "2": { "start": { "line": 8, "column": 50 }, "end": { "line": 22, "column": 1 } },
+            "3": { "start": { "line": 9, "column": 2 }, "end": { "line": 9, "column": 46 } },
+            "4": { "start": { "line": 11, "column": 2 }, "end": { "line": 21, "column": 5 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 8, "column": 17 },
+                    "end": { "line": 8, "column": 18 }
+                },
+                "loc": { "start": { "line": 8, "column": 50 }, "end": { "line": 22, "column": 1 } },
+                "line": 8
+            },
+            "1": {
+                "name": "(anonymous_1)",
+                "decl": {
+                    "start": { "line": 8, "column": 50 },
+                    "end": { "line": 8, "column": 51 }
+                },
+                "loc": { "start": { "line": 8, "column": 69 }, "end": { "line": 22, "column": 1 } },
+                "line": 8
+            }
+        },
+        "branchMap": {},
+        "s": { "0": 3, "1": 3, "2": 0, "3": 0, "4": 0 },
+        "f": { "0": 0, "1": 0 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "5083ed47900d26efcf5845bab498fa33ceae2372"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/state/reconnectFailed.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/state/reconnectFailed.js",
+        "statementMap": {
+            "0": { "start": { "line": 5, "column": 15 }, "end": { "line": 5, "column": 34 } },
+            "1": { "start": { "line": 8, "column": 17 }, "end": { "line": 22, "column": 1 } },
+            "2": { "start": { "line": 8, "column": 50 }, "end": { "line": 22, "column": 1 } },
+            "3": { "start": { "line": 9, "column": 2 }, "end": { "line": 9, "column": 47 } },
+            "4": { "start": { "line": 11, "column": 2 }, "end": { "line": 21, "column": 5 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 8, "column": 17 },
+                    "end": { "line": 8, "column": 18 }
+                },
+                "loc": { "start": { "line": 8, "column": 50 }, "end": { "line": 22, "column": 1 } },
+                "line": 8
+            },
+            "1": {
+                "name": "(anonymous_1)",
+                "decl": {
+                    "start": { "line": 8, "column": 50 },
+                    "end": { "line": 8, "column": 51 }
+                },
+                "loc": { "start": { "line": 8, "column": 69 }, "end": { "line": 22, "column": 1 } },
+                "line": 8
+            }
+        },
+        "branchMap": {},
+        "s": { "0": 3, "1": 3, "2": 0, "3": 0, "4": 0 },
+        "f": { "0": 0, "1": 0 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "b832763fa17701b5a27f6cb45e9e200a36f43417"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/state/reconnecting.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/middleware/socketIo/state/reconnecting.js",
+        "statementMap": {
+            "0": { "start": { "line": 5, "column": 15 }, "end": { "line": 5, "column": 30 } },
+            "1": { "start": { "line": 8, "column": 17 }, "end": { "line": 20, "column": 1 } },
+            "2": { "start": { "line": 8, "column": 50 }, "end": { "line": 20, "column": 1 } },
+            "3": { "start": { "line": 9, "column": 2 }, "end": { "line": 19, "column": 5 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 8, "column": 17 },
+                    "end": { "line": 8, "column": 18 }
+                },
+                "loc": { "start": { "line": 8, "column": 50 }, "end": { "line": 20, "column": 1 } },
+                "line": 8
+            },
+            "1": {
+                "name": "(anonymous_1)",
+                "decl": {
+                    "start": { "line": 8, "column": 50 },
+                    "end": { "line": 8, "column": 51 }
+                },
+                "loc": { "start": { "line": 8, "column": 69 }, "end": { "line": 20, "column": 1 } },
+                "line": 8
+            }
+        },
+        "branchMap": {},
+        "s": { "0": 3, "1": 3, "2": 0, "3": 0 },
+        "f": { "0": 0, "1": 0 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "94e922a1ecd0ceffdce9b5a95b5c0b6a1d0c7be0"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/reducers/app.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/reducers/app.js",
+        "statementMap": {
+            "0": { "start": { "line": 3, "column": 24 }, "end": { "line": 16, "column": 1 } },
+            "1": { "start": { "line": 18, "column": 19 }, "end": { "line": 60, "column": 1 } },
+            "2": { "start": { "line": 19, "column": 2 }, "end": { "line": 59, "column": 3 } },
+            "3": { "start": { "line": 21, "column": 42 }, "end": { "line": 21, "column": 56 } },
+            "4": { "start": { "line": 23, "column": 6 }, "end": { "line": 32, "column": 8 } },
+            "5": { "start": { "line": 35, "column": 38 }, "end": { "line": 35, "column": 52 } },
+            "6": { "start": { "line": 37, "column": 6 }, "end": { "line": 44, "column": 8 } },
+            "7": { "start": { "line": 47, "column": 44 }, "end": { "line": 47, "column": 58 } },
+            "8": { "start": { "line": 48, "column": 6 }, "end": { "line": 55, "column": 8 } },
+            "9": { "start": { "line": 58, "column": 6 }, "end": { "line": 58, "column": 19 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 18, "column": 19 },
+                    "end": { "line": 18, "column": 20 }
+                },
+                "loc": {
+                    "start": { "line": 18, "column": 49 },
+                    "end": { "line": 60, "column": 1 }
+                },
+                "line": 18
+            }
+        },
+        "branchMap": {
+            "0": {
+                "loc": {
+                    "start": { "line": 18, "column": 20 },
+                    "end": { "line": 18, "column": 36 }
+                },
+                "type": "default-arg",
+                "locations": [
+                    { "start": { "line": 18, "column": 28 }, "end": { "line": 18, "column": 36 } }
+                ],
+                "line": 18
+            },
+            "1": {
+                "loc": { "start": { "line": 19, "column": 2 }, "end": { "line": 59, "column": 3 } },
+                "type": "switch",
+                "locations": [
+                    { "start": { "line": 20, "column": 4 }, "end": { "line": 33, "column": 5 } },
+                    { "start": { "line": 34, "column": 4 }, "end": { "line": 45, "column": 5 } },
+                    { "start": { "line": 46, "column": 4 }, "end": { "line": 56, "column": 5 } },
+                    { "start": { "line": 57, "column": 4 }, "end": { "line": 58, "column": 19 } }
+                ],
+                "line": 19
+            }
+        },
+        "s": { "0": 4, "1": 4, "2": 14, "3": 1, "4": 1, "5": 2, "6": 2, "7": 1, "8": 1, "9": 10 },
+        "f": { "0": 14 },
+        "b": { "0": [10], "1": [1, 2, 1, 10] },
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "d4085b281b8e61fab252ee00afbcb0fb66273527"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/reducers/game.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/reducers/game.js",
+        "statementMap": {
+            "0": { "start": { "line": 3, "column": 19 }, "end": { "line": 8, "column": 1 } },
+            "1": { "start": { "line": 10, "column": 25 }, "end": { "line": 22, "column": 1 } },
+            "2": { "start": { "line": 24, "column": 20 }, "end": { "line": 78, "column": 1 } },
+            "3": { "start": { "line": 25, "column": 2 }, "end": { "line": 77, "column": 3 } },
+            "4": { "start": { "line": 29, "column": 10 }, "end": { "line": 29, "column": 24 } },
+            "5": { "start": { "line": 31, "column": 6 }, "end": { "line": 34, "column": 8 } },
+            "6": { "start": { "line": 39, "column": 10 }, "end": { "line": 39, "column": 24 } },
+            "7": { "start": { "line": 41, "column": 6 }, "end": { "line": 43, "column": 8 } },
+            "8": { "start": { "line": 48, "column": 10 }, "end": { "line": 48, "column": 24 } },
+            "9": { "start": { "line": 50, "column": 6 }, "end": { "line": 53, "column": 8 } },
+            "10": { "start": { "line": 58, "column": 10 }, "end": { "line": 58, "column": 24 } },
+            "11": { "start": { "line": 60, "column": 6 }, "end": { "line": 63, "column": 8 } },
+            "12": { "start": { "line": 68, "column": 10 }, "end": { "line": 68, "column": 24 } },
+            "13": { "start": { "line": 70, "column": 6 }, "end": { "line": 73, "column": 8 } },
+            "14": { "start": { "line": 76, "column": 6 }, "end": { "line": 76, "column": 19 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 24, "column": 20 },
+                    "end": { "line": 24, "column": 21 }
+                },
+                "loc": {
+                    "start": { "line": 24, "column": 51 },
+                    "end": { "line": 78, "column": 1 }
+                },
+                "line": 24
+            }
+        },
+        "branchMap": {
+            "0": {
+                "loc": {
+                    "start": { "line": 24, "column": 21 },
+                    "end": { "line": 24, "column": 38 }
+                },
+                "type": "default-arg",
+                "locations": [
+                    { "start": { "line": 24, "column": 29 }, "end": { "line": 24, "column": 38 } }
+                ],
+                "line": 24
+            },
+            "1": {
+                "loc": { "start": { "line": 25, "column": 2 }, "end": { "line": 77, "column": 3 } },
+                "type": "switch",
+                "locations": [
+                    { "start": { "line": 26, "column": 4 }, "end": { "line": 35, "column": 5 } },
+                    { "start": { "line": 36, "column": 4 }, "end": { "line": 44, "column": 5 } },
+                    { "start": { "line": 45, "column": 4 }, "end": { "line": 54, "column": 5 } },
+                    { "start": { "line": 55, "column": 4 }, "end": { "line": 64, "column": 5 } },
+                    { "start": { "line": 65, "column": 4 }, "end": { "line": 74, "column": 5 } },
+                    { "start": { "line": 75, "column": 4 }, "end": { "line": 76, "column": 19 } }
+                ],
+                "line": 25
+            }
+        },
+        "s": {
+            "0": 4,
+            "1": 4,
+            "2": 4,
+            "3": 16,
+            "4": 2,
+            "5": 2,
+            "6": 1,
+            "7": 1,
+            "8": 1,
+            "9": 1,
+            "10": 1,
+            "11": 1,
+            "12": 1,
+            "13": 1,
+            "14": 10
+        },
+        "f": { "0": 16 },
+        "b": { "0": [10], "1": [2, 1, 1, 1, 1, 10] },
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "0ef76cc839202537f272e8f1ea139f1ead95a2db"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/reducers/index.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/reducers/index.js",
+        "statementMap": {
+            "0": { "start": { "line": 8, "column": 20 }, "end": { "line": 13, "column": 2 } },
+            "1": { "start": { "line": 8, "column": 33 }, "end": { "line": 13, "column": 2 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 8, "column": 20 },
+                    "end": { "line": 8, "column": 21 }
+                },
+                "loc": { "start": { "line": 8, "column": 33 }, "end": { "line": 13, "column": 2 } },
+                "line": 8
+            }
+        },
+        "branchMap": {},
+        "s": { "0": 3, "1": 3 },
+        "f": { "0": 3 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "860e91a87ff3af979b6f1c78c4c0b307dea83dec"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/reducers/player.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/reducers/player.js",
+        "statementMap": {
+            "0": { "start": { "line": 3, "column": 27 }, "end": { "line": 16, "column": 1 } },
+            "1": { "start": { "line": 18, "column": 22 }, "end": { "line": 44, "column": 1 } },
+            "2": { "start": { "line": 19, "column": 2 }, "end": { "line": 43, "column": 3 } },
+            "3": { "start": { "line": 23, "column": 10 }, "end": { "line": 23, "column": 24 } },
+            "4": { "start": { "line": 25, "column": 6 }, "end": { "line": 28, "column": 8 } },
+            "5": { "start": { "line": 34, "column": 10 }, "end": { "line": 34, "column": 24 } },
+            "6": { "start": { "line": 36, "column": 6 }, "end": { "line": 38, "column": 8 } },
+            "7": { "start": { "line": 42, "column": 6 }, "end": { "line": 42, "column": 19 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 18, "column": 22 },
+                    "end": { "line": 18, "column": 23 }
+                },
+                "loc": {
+                    "start": { "line": 18, "column": 55 },
+                    "end": { "line": 44, "column": 1 }
+                },
+                "line": 18
+            }
+        },
+        "branchMap": {
+            "0": {
+                "loc": {
+                    "start": { "line": 18, "column": 23 },
+                    "end": { "line": 18, "column": 42 }
+                },
+                "type": "default-arg",
+                "locations": [
+                    { "start": { "line": 18, "column": 31 }, "end": { "line": 18, "column": 42 } }
+                ],
+                "line": 18
+            },
+            "1": {
+                "loc": { "start": { "line": 19, "column": 2 }, "end": { "line": 43, "column": 3 } },
+                "type": "switch",
+                "locations": [
+                    { "start": { "line": 20, "column": 4 }, "end": { "line": 29, "column": 5 } },
+                    { "start": { "line": 31, "column": 4 }, "end": { "line": 39, "column": 5 } },
+                    { "start": { "line": 41, "column": 4 }, "end": { "line": 42, "column": 19 } }
+                ],
+                "line": 19
+            }
+        },
+        "s": { "0": 4, "1": 4, "2": 13, "3": 2, "4": 2, "5": 1, "6": 1, "7": 10 },
+        "f": { "0": 13 },
+        "b": { "0": [10], "1": [2, 1, 10] },
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "77089cf2a2175202421364dedbc0f8df3456a4ae"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/client/store/index.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/client/store/index.js",
+        "statementMap": {
+            "0": { "start": { "line": 11, "column": 23 }, "end": { "line": 11, "column": 42 } },
+            "1": { "start": { "line": 13, "column": 15 }, "end": { "line": 13, "column": 29 } },
+            "2": { "start": { "line": 15, "column": 14 }, "end": { "line": 25, "column": 1 } }
+        },
+        "fnMap": {},
+        "branchMap": {},
+        "s": { "0": 3, "1": 3, "2": 3 },
+        "f": {},
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "945100b8cbd7a7e11bb6b2755d1e879be51ac86f"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/shared/events.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/shared/events.js",
+        "statementMap": {
+            "0": { "start": { "line": 1, "column": 0 }, "end": { "line": 69, "column": 2 } }
+        },
+        "fnMap": {},
+        "branchMap": {},
+        "s": { "0": 6 },
+        "f": {},
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "82debe70f1b53efe8b1edf4c278dcac09c2fef6d"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/shared/params.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/shared/params.js",
+        "statementMap": {
+            "0": { "start": { "line": 1, "column": 0 }, "end": { "line": 10, "column": 2 } },
+            "1": { "start": { "line": 8, "column": 16 }, "end": { "line": 8, "column": 58 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": { "start": { "line": 8, "column": 4 }, "end": { "line": 8, "column": 5 } },
+                "loc": { "start": { "line": 8, "column": 14 }, "end": { "line": 8, "column": 60 } },
+                "line": 8
+            }
+        },
+        "branchMap": {},
+        "s": { "0": 3, "1": 0 },
+        "f": { "0": 0 },
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "5db3e88c3cbc86f8dd9de51d67f3b38b01feb256"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/src/shared/stage.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/src/shared/stage.js",
+        "statementMap": {
+            "0": { "start": { "line": 1, "column": 27 }, "end": { "line": 1, "column": 29 } },
+            "1": { "start": { "line": 2, "column": 28 }, "end": { "line": 2, "column": 30 } },
+            "2": { "start": { "line": 4, "column": 33 }, "end": { "line": 4, "column": 34 } },
+            "3": { "start": { "line": 5, "column": 34 }, "end": { "line": 5, "column": 35 } },
+            "4": { "start": { "line": 7, "column": 27 }, "end": { "line": 7, "column": 113 } },
+            "5": { "start": { "line": 7, "column": 33 }, "end": { "line": 7, "column": 113 } },
+            "6": { "start": { "line": 7, "column": 71 }, "end": { "line": 7, "column": 112 } },
+            "7": { "start": { "line": 8, "column": 32 }, "end": { "line": 8, "column": 130 } },
+            "8": { "start": { "line": 8, "column": 38 }, "end": { "line": 8, "column": 130 } },
+            "9": { "start": { "line": 8, "column": 82 }, "end": { "line": 8, "column": 129 } },
+            "10": { "start": { "line": 12, "column": 26 }, "end": { "line": 34, "column": 1 } },
+            "11": { "start": { "line": 14, "column": 14 }, "end": { "line": 14, "column": 15 } },
+            "12": { "start": { "line": 15, "column": 16 }, "end": { "line": 15, "column": 24 } },
+            "13": { "start": { "line": 17, "column": 2 }, "end": { "line": 32, "column": 5 } },
+            "14": { "start": { "line": 18, "column": 19 }, "end": { "line": 18, "column": 60 } },
+            "15": { "start": { "line": 18, "column": 39 }, "end": { "line": 18, "column": 59 } },
+            "16": { "start": { "line": 19, "column": 4 }, "end": { "line": 31, "column": 5 } },
+            "17": { "start": { "line": 20, "column": 6 }, "end": { "line": 20, "column": 17 } },
+            "18": { "start": { "line": 23, "column": 20 }, "end": { "line": 23, "column": 38 } },
+            "19": { "start": { "line": 25, "column": 6 }, "end": { "line": 25, "column": 29 } },
+            "20": { "start": { "line": 27, "column": 6 }, "end": { "line": 27, "column": 29 } },
+            "21": { "start": { "line": 29, "column": 6 }, "end": { "line": 29, "column": 63 } },
+            "22": { "start": { "line": 33, "column": 2 }, "end": { "line": 33, "column": 28 } },
+            "23": { "start": { "line": 50, "column": 30 }, "end": { "line": 71, "column": 1 } },
+            "24": { "start": { "line": 51, "column": 2 }, "end": { "line": 69, "column": 3 } },
+            "25": { "start": { "line": 51, "column": 15 }, "end": { "line": 51, "column": 16 } },
+            "26": { "start": { "line": 52, "column": 4 }, "end": { "line": 68, "column": 5 } },
+            "27": { "start": { "line": 52, "column": 17 }, "end": { "line": 52, "column": 18 } },
+            "28": { "start": { "line": 54, "column": 6 }, "end": { "line": 67, "column": 7 } },
+            "29": { "start": { "line": 55, "column": 8 }, "end": { "line": 66, "column": 9 } },
+            "30": { "start": { "line": 65, "column": 10 }, "end": { "line": 65, "column": 22 } },
+            "31": { "start": { "line": 70, "column": 2 }, "end": { "line": 70, "column": 15 } },
+            "32": { "start": { "line": 73, "column": 27 }, "end": { "line": 87, "column": 1 } },
+            "33": { "start": { "line": 74, "column": 19 }, "end": { "line": 74, "column": 24 } },
+            "34": { "start": { "line": 76, "column": 2 }, "end": { "line": 85, "column": 5 } },
+            "35": { "start": { "line": 77, "column": 4 }, "end": { "line": 84, "column": 7 } },
+            "36": { "start": { "line": 78, "column": 6 }, "end": { "line": 83, "column": 7 } },
+            "37": { "start": { "line": 79, "column": 8 }, "end": { "line": 82, "column": 10 } },
+            "38": { "start": { "line": 86, "column": 2 }, "end": { "line": 86, "column": 18 } },
+            "39": { "start": { "line": 89, "column": 27 }, "end": { "line": 89, "column": 179 } },
+            "40": { "start": { "line": 89, "column": 61 }, "end": { "line": 89, "column": 179 } },
+            "41": { "start": { "line": 89, "column": 99 }, "end": { "line": 89, "column": 161 } },
+            "42": { "start": { "line": 89, "column": 118 }, "end": { "line": 89, "column": 159 } }
+        },
+        "fnMap": {
+            "0": {
+                "name": "(anonymous_0)",
+                "decl": {
+                    "start": { "line": 7, "column": 27 },
+                    "end": { "line": 7, "column": 28 }
+                },
+                "loc": {
+                    "start": { "line": 7, "column": 33 },
+                    "end": { "line": 7, "column": 113 }
+                },
+                "line": 7
+            },
+            "1": {
+                "name": "(anonymous_1)",
+                "decl": {
+                    "start": { "line": 7, "column": 65 },
+                    "end": { "line": 7, "column": 66 }
+                },
+                "loc": {
+                    "start": { "line": 7, "column": 71 },
+                    "end": { "line": 7, "column": 112 }
+                },
+                "line": 7
+            },
+            "2": {
+                "name": "(anonymous_2)",
+                "decl": {
+                    "start": { "line": 8, "column": 32 },
+                    "end": { "line": 8, "column": 33 }
+                },
+                "loc": {
+                    "start": { "line": 8, "column": 38 },
+                    "end": { "line": 8, "column": 130 }
+                },
+                "line": 8
+            },
+            "3": {
+                "name": "(anonymous_3)",
+                "decl": {
+                    "start": { "line": 8, "column": 76 },
+                    "end": { "line": 8, "column": 77 }
+                },
+                "loc": {
+                    "start": { "line": 8, "column": 82 },
+                    "end": { "line": 8, "column": 129 }
+                },
+                "line": 8
+            },
+            "4": {
+                "name": "(anonymous_4)",
+                "decl": {
+                    "start": { "line": 12, "column": 26 },
+                    "end": { "line": 12, "column": 27 }
+                },
+                "loc": {
+                    "start": { "line": 12, "column": 40 },
+                    "end": { "line": 34, "column": 1 }
+                },
+                "line": 12
+            },
+            "5": {
+                "name": "(anonymous_5)",
+                "decl": {
+                    "start": { "line": 17, "column": 16 },
+                    "end": { "line": 17, "column": 17 }
+                },
+                "loc": {
+                    "start": { "line": 17, "column": 25 },
+                    "end": { "line": 32, "column": 3 }
+                },
+                "line": 17
+            },
+            "6": {
+                "name": "(anonymous_6)",
+                "decl": {
+                    "start": { "line": 18, "column": 29 },
+                    "end": { "line": 18, "column": 30 }
+                },
+                "loc": {
+                    "start": { "line": 18, "column": 39 },
+                    "end": { "line": 18, "column": 59 }
+                },
+                "line": 18
+            },
+            "7": {
+                "name": "(anonymous_7)",
+                "decl": {
+                    "start": { "line": 50, "column": 30 },
+                    "end": { "line": 50, "column": 31 }
+                },
+                "loc": {
+                    "start": { "line": 50, "column": 80 },
+                    "end": { "line": 71, "column": 1 }
+                },
+                "line": 50
+            },
+            "8": {
+                "name": "(anonymous_8)",
+                "decl": {
+                    "start": { "line": 73, "column": 27 },
+                    "end": { "line": 73, "column": 28 }
+                },
+                "loc": {
+                    "start": { "line": 73, "column": 61 },
+                    "end": { "line": 87, "column": 1 }
+                },
+                "line": 73
+            },
+            "9": {
+                "name": "(anonymous_9)",
+                "decl": {
+                    "start": { "line": 76, "column": 27 },
+                    "end": { "line": 76, "column": 28 }
+                },
+                "loc": {
+                    "start": { "line": 76, "column": 40 },
+                    "end": { "line": 85, "column": 3 }
+                },
+                "line": 76
+            },
+            "10": {
+                "name": "(anonymous_10)",
+                "decl": {
+                    "start": { "line": 77, "column": 16 },
+                    "end": { "line": 77, "column": 17 }
+                },
+                "loc": {
+                    "start": { "line": 77, "column": 31 },
+                    "end": { "line": 84, "column": 5 }
+                },
+                "line": 77
+            },
+            "11": {
+                "name": "(anonymous_11)",
+                "decl": {
+                    "start": { "line": 89, "column": 27 },
+                    "end": { "line": 89, "column": 28 }
+                },
+                "loc": {
+                    "start": { "line": 89, "column": 61 },
+                    "end": { "line": 89, "column": 179 }
+                },
+                "line": 89
+            },
+            "12": {
+                "name": "(anonymous_12)",
+                "decl": {
+                    "start": { "line": 89, "column": 90 },
+                    "end": { "line": 89, "column": 91 }
+                },
+                "loc": {
+                    "start": { "line": 89, "column": 99 },
+                    "end": { "line": 89, "column": 161 }
+                },
+                "line": 89
+            },
+            "13": {
+                "name": "(anonymous_13)",
+                "decl": {
+                    "start": { "line": 89, "column": 107 },
+                    "end": { "line": 89, "column": 108 }
+                },
+                "loc": {
+                    "start": { "line": 89, "column": 118 },
+                    "end": { "line": 89, "column": 159 }
+                },
+                "line": 89
+            }
+        },
+        "branchMap": {
+            "0": {
+                "loc": { "start": { "line": 19, "column": 4 }, "end": { "line": 31, "column": 5 } },
+                "type": "if",
+                "locations": [
+                    { "start": { "line": 19, "column": 4 }, "end": { "line": 31, "column": 5 } },
+                    { "start": { "line": 19, "column": 4 }, "end": { "line": 31, "column": 5 } }
+                ],
+                "line": 19
+            },
+            "1": {
+                "loc": { "start": { "line": 54, "column": 6 }, "end": { "line": 67, "column": 7 } },
+                "type": "if",
+                "locations": [
+                    { "start": { "line": 54, "column": 6 }, "end": { "line": 67, "column": 7 } },
+                    { "start": { "line": 54, "column": 6 }, "end": { "line": 67, "column": 7 } }
+                ],
+                "line": 54
+            },
+            "2": {
+                "loc": { "start": { "line": 55, "column": 8 }, "end": { "line": 66, "column": 9 } },
+                "type": "if",
+                "locations": [
+                    { "start": { "line": 55, "column": 8 }, "end": { "line": 66, "column": 9 } },
+                    { "start": { "line": 55, "column": 8 }, "end": { "line": 66, "column": 9 } }
+                ],
+                "line": 55
+            },
+            "3": {
+                "loc": {
+                    "start": { "line": 58, "column": 10 },
+                    "end": { "line": 63, "column": 21 }
+                },
+                "type": "binary-expr",
+                "locations": [
+                    { "start": { "line": 58, "column": 10 }, "end": { "line": 58, "column": 32 } },
+                    { "start": { "line": 60, "column": 13 }, "end": { "line": 60, "column": 51 } },
+                    { "start": { "line": 62, "column": 13 }, "end": { "line": 63, "column": 21 } }
+                ],
+                "line": 58
+            },
+            "4": {
+                "loc": { "start": { "line": 78, "column": 6 }, "end": { "line": 83, "column": 7 } },
+                "type": "if",
+                "locations": [
+                    { "start": { "line": 78, "column": 6 }, "end": { "line": 83, "column": 7 } },
+                    { "start": { "line": 78, "column": 6 }, "end": { "line": 83, "column": 7 } }
+                ],
+                "line": 78
+            },
+            "5": {
+                "loc": {
+                    "start": { "line": 81, "column": 13 },
+                    "end": { "line": 81, "column": 42 }
+                },
+                "type": "cond-expr",
+                "locations": [
+                    { "start": { "line": 81, "column": 24 }, "end": { "line": 81, "column": 32 } },
+                    { "start": { "line": 81, "column": 35 }, "end": { "line": 81, "column": 42 } }
+                ],
+                "line": 81
+            },
+            "6": {
+                "loc": {
+                    "start": { "line": 89, "column": 118 },
+                    "end": { "line": 89, "column": 159 }
+                },
+                "type": "cond-expr",
+                "locations": [
+                    {
+                        "start": { "line": 89, "column": 140 },
+                        "end": { "line": 89, "column": 152 }
+                    },
+                    { "start": { "line": 89, "column": 155 }, "end": { "line": 89, "column": 159 } }
+                ],
+                "line": 89
+            }
+        },
+        "s": {
+            "0": 4,
+            "1": 4,
+            "2": 4,
+            "3": 4,
+            "4": 4,
+            "5": 0,
+            "6": 0,
+            "7": 4,
+            "8": 0,
+            "9": 0,
+            "10": 4,
+            "11": 0,
+            "12": 0,
+            "13": 0,
+            "14": 0,
+            "15": 0,
+            "16": 0,
+            "17": 0,
+            "18": 0,
+            "19": 0,
+            "20": 0,
+            "21": 0,
+            "22": 0,
+            "23": 4,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 0,
+            "28": 0,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 4,
+            "33": 0,
+            "34": 0,
+            "35": 0,
+            "36": 0,
+            "37": 0,
+            "38": 0,
+            "39": 4,
+            "40": 0,
+            "41": 0,
+            "42": 0
+        },
+        "f": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0,
+            "7": 0,
+            "8": 0,
+            "9": 0,
+            "10": 0,
+            "11": 0,
+            "12": 0,
+            "13": 0
+        },
+        "b": {
+            "0": [0, 0],
+            "1": [0, 0],
+            "2": [0, 0],
+            "3": [0, 0, 0],
+            "4": [0, 0],
+            "5": [0, 0],
+            "6": [0, 0]
+        },
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "41244dfc96049a9f9652b90c74dd070a4a4a9e9c"
+    },
+    "/Users/dzonda/Dev/42/Red_tetris/test/client/helpers/socketHelper.js": {
+        "path": "/Users/dzonda/Dev/42/Red_tetris/test/client/helpers/socketHelper.js",
+        "statementMap": {
+            "0": { "start": { "line": 1, "column": 18 }, "end": { "line": 1, "column": 78 } },
+            "1": { "start": { "line": 3, "column": 28 }, "end": { "line": 3, "column": 48 } },
+            "2": { "start": { "line": 4, "column": 30 }, "end": { "line": 4, "column": 47 } },
+            "3": { "start": { "line": 5, "column": 22 }, "end": { "line": 5, "column": 31 } },
+            "4": { "start": { "line": 6, "column": 26 }, "end": { "line": 6, "column": 45 } },
+            "5": { "start": { "line": 8, "column": 0 }, "end": { "line": 8, "column": 38 } },
+            "6": { "start": { "line": 9, "column": 0 }, "end": { "line": 9, "column": 34 } }
+        },
+        "fnMap": {},
+        "branchMap": {},
+        "s": { "0": 3, "1": 3, "2": 3, "3": 3, "4": 3, "5": 3, "6": 3 },
+        "f": {},
+        "b": {},
+        "_coverageSchema": "43e27e138ebf9cfc5966b082cf9a028302ed4184",
+        "hash": "36ada01ced290c2fa178a5b20d8034ae8e5e6502"
+    }
+}

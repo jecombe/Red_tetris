@@ -11,9 +11,9 @@ export const middleware = socketMiddleware;
 const initialSocket = null;
 
 export default socketMiddleware.socketio(
-  initialSocket,
-  EVENTS.client,
-  EVENTS.server,
-  EVENTS.state,
-  id,
+    initialSocket,
+    EVENTS.client,
+    EVENTS.server,
+    EVENTS.state,
+    id
 );

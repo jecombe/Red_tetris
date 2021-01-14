@@ -11,44 +11,44 @@ html, body, #tetris, #tetris>div {
 /* Roboto Regular */
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('font/Roboto-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'Roboto';
+    src: url('font/Roboto-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 @font-face {
-  font-family: 'Roboto';
-  src: url('font/Roboto-Italic.ttf') format('truetype');
-  font-weight: normal;
-  font-style: italic;
+    font-family: 'Roboto';
+    src: url('font/Roboto-Italic.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
 }
 
 /* Roboto Bold */
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('font/Roboto-Bold.ttf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
+    font-family: 'Roboto';
+    src: url('font/Roboto-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
 }
 @font-face {
-  font-family: 'Roboto';
-  src: url('font/Roboto-BoldItalic.ttf') format('truetype');
-  font-weight: bold;
-  font-style: italic;
+    font-family: 'Roboto';
+    src: url('font/Roboto-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
 }
 
 /* Roboto Light */
 
 @font-face {
-  font-family: 'Roboto';
-  src: url('font/Roboto-Light.ttf') format('truetype');
-  font-weight: lighter;
-  font-style: normal;
+    font-family: 'Roboto';
+    src: url('font/Roboto-Light.ttf') format('truetype');
+    font-weight: lighter;
+    font-style: normal;
 }
 @font-face {
-  font-family: 'Roboto';
-  src: url('font/Roboto-LightItalic.ttf') format('truetype');
-  font-weight: lighter;
-  font-style: italic;
+    font-family: 'Roboto';
+    src: url('font/Roboto-LightItalic.ttf') format('truetype');
+    font-weight: lighter;
+    font-style: italic;
 }

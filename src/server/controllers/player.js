@@ -1,60 +1,49 @@
-import ev, { res_UPDATE_GAME } from '../../shared/events';
+/* eslint-disable no-unused-vars */
+import ev from '../../shared/events';
 import logger from '../utils/logger';
 import gameHelper, { calcScore, calcLevel } from '../helpers/gameHelper';
-import {
-  createStage, createStagePiece, flushUpdate, updateRows,
-} from '../../shared/stage';
+import { createStage, createStagePiece, flushUpdate, updateRows } from '../../shared/stage';
 import RedTetris from '../models';
 
-const move = (req, res) => {
-  const { room, name, keyCode } = req.data;
+const reqMove = (req, res) => {
+    const { room, name, keyCode } = req.data;
 
-  try {
-    // console.log(keyCode);
+    try {
+        const key = gameHelper[keyCode];
 
-    // RedTetris.move(room, name, keyCode);
+        const { stage, piece, position, collided, loose } = key.handler(
+            RedTetris.getGame(room).getPlayer(name),
+            key.dir
+        );
 
-    const key = gameHelper[keyCode];
+        if (collided) {
+            const updated = updateRows(stage);
 
-    const {
-      stage, piece, position, collided, loose,
-    } = key.handler(RedTetris.getGame(room).getPlayer(name), key.dir);
+            RedTetris.getGame(room).updateCollision(name, updated.stage, updated.lines, loose);
 
-    if (collided) {
-      const updated = updateRows(stage);
+            RedTetris.emitToRoom(room, ev.res_UPDATE_GAME, {
+                status: 200,
+                payload: {
+                    game: RedTetris.getGame(room)
+                }
+            });
+        } else {
+            RedTetris.getGame(room).getPlayer(name).updatePosition(stage, piece, position);
 
-      RedTetris.getGame(room).updateCollision(name, updated.stage, updated.lines);
+            RedTetris.emitToSocket(req.socket.id, ev.res_UPDATE_PLAYER, {
+                status: 200,
+                payload: {
+                    player: RedTetris.getGame(room).getPlayer(name)
+                }
+            });
+        }
 
-      RedTetris.emitToRoom(room, ev.res_UPDATE_GAME, {
-        status: 200,
-        payload: {
-          game: RedTetris.getGame(room),
-        },
-      });
-    } else {
-      RedTetris.getGame(room).getPlayer(name).updatePosition(stage, piece, position);
-
-      RedTetris.emitToSocket(req.socket.id, ev.res_UPDATE_PLAYER, {
-        status: 200,
-        payload: {
-          player: RedTetris.getGame(room).getPlayer(name),
-        },
-      });
+        logger.info('[move]', 'success');
+    } catch (err) {
+        logger.error('[move] ', err);
     }
-
-    // RedTetris.emitToSocket(req.socket.id, ev.res_UPDATE_PLAYER, {
-    //   status: 200,
-    //   payload: {
-    //     player: RedTetris.getGame(room).getPlayer(name),
-    //   },
-    // });
-
-    logger.info('[move]', 'success');
-  } catch (err) {
-    logger.error('[move] ', err);
-  }
 };
 
 export default {
-  move,
+    reqMove
 };

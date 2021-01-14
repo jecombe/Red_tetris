@@ -5,21 +5,19 @@ import HomeIcon from '@material-ui/icons/Home';
 import RedIconButton from '../Common/RedIconButton';
 
 const HeaderHome = (props) => {
-  const { reqLogout } = props;
+    const { reqLogout } = props;
 
-  return (
-    <Grid container justify="center">
-      <RedIconButton
-        onClick={reqLogout}
-      >
-        <HomeIcon />
-      </RedIconButton>
-    </Grid>
-  );
+    return (
+        <Grid container justify="center">
+            <RedIconButton onClick={reqLogout}>
+                <HomeIcon />
+            </RedIconButton>
+        </Grid>
+    );
 };
 
 HeaderHome.propTypes = {
-  reqLogout: PropTypes.func.isRequired,
+    reqLogout: PropTypes.func.isRequired
 };
 
 export default HeaderHome;

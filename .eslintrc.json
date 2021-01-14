@@ -7,7 +7,10 @@
         "jest": true
     },
     "extends": [
-        "airbnb"
+        // "airbnb",
+        "plugin:react/recommended",
+        "plugin:jsx-a11y/recommended",
+        "plugin:prettier/recommended"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -20,11 +23,10 @@
         "ecmaVersion": 2018,
         "sourceType": "module"
     },
-    "plugins": [
-        "react"
-    ],
+    "plugins": ["react"],
     "rules": {
-      "no-console": "off",
-      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+        "no-console": "off",
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "prettier/prettier": ["error", {}, { "usePrettierrc": true }]
     }
 }

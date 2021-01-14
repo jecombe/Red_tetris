@@ -6,22 +6,22 @@ const action = ev.RECONNECT_FAILED;
 
 // eslint-disable-next-line no-shadow
 const dispatch = (socket, store, next, action) => (attemptNumber) => {
-  console.error('socket: Reconnection failed');
+    console.error('socket: Reconnection failed');
 
-  store.dispatch({
-    type: ev.UPDATE_CONNECTION,
-    payload: {
-      id: null,
-      connected: false,
-      snackbar: {
-        message: 'socket: Reconnection failed',
-        variant: 'error',
-      },
-    },
-  });
+    store.dispatch({
+        type: ev.UPDATE_CONNECTION,
+        payload: {
+            id: null,
+            connected: false,
+            snackbar: {
+                message: 'socket: Reconnection failed',
+                variant: 'error'
+            }
+        }
+    });
 };
 
 export default {
-  action,
-  dispatch,
+    action,
+    dispatch
 };

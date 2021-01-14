@@ -13,71 +13,65 @@ import GameChatMessage from './GameChat/GameChatMessage';
 import GameChatBox from './GameChat/GameChatBox';
 
 const useStyles = makeStyles({
-  grid: {
-    height: '100%',
-  },
-  list: {
-    height: '40vh',
-    overflow: 'auto',
-  },
+    grid: {
+        height: '100%'
+    },
+    list: {
+        height: '40vh',
+        overflow: 'auto'
+    }
 });
 
 const GameChat = (props) => {
-  const {
-    chat, message, handleMessage, handleSubmit,
-  } = props;
-  const scrollRef = useRef(null);
-  const classes = useStyles();
+    const { chat, message, handleMessage, handleSubmit } = props;
+    const scrollRef = useRef(null);
+    const classes = useStyles();
 
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behaviour: 'smooth' });
-    }
-  }, [chat]);
+    useEffect(() => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollIntoView({ behaviour: 'smooth' });
+        }
+    }, [chat]);
 
-  return (
-    <Grid container alignItems="center" className={classes.grid}>
-      <Grid item xs>
-        <Tabs
-          value={0}
-          indicatorColor="primary"
-          textColor="primary"
-        >
-          <Tab disabled label="#room" style={{ color: 'red' }} />
-        </Tabs>
-        <Paper variant="outlined" elevation={0}>
-          <Grid container alignItems="center">
+    return (
+        <Grid container alignItems="center" className={classes.grid}>
             <Grid item xs>
-              <List className={classes.list}>
-                {chat.map((entryMessage) => (
-                  <GameChatMessage key={entryMessage.id} message={entryMessage} />
-                ))}
-                <div ref={scrollRef} />
-              </List>
-              <CardContent>
-                <Grid container>
-                  <Grid item xs>
-                    <GameChatBox
-                      message={message}
-                      handleMessage={handleMessage}
-                      handleSubmit={handleSubmit}
-                    />
-                  </Grid>
-                </Grid>
-              </CardContent>
+                <Tabs value={0} indicatorColor="primary" textColor="primary">
+                    <Tab disabled label="#room" style={{ color: 'red' }} />
+                </Tabs>
+                <Paper variant="outlined" elevation={0}>
+                    <Grid container alignItems="center">
+                        <Grid item xs>
+                            <List className={classes.list}>
+                                {chat.map((entryMessage) => (
+                                    <GameChatMessage key={entryMessage.id} message={entryMessage} />
+                                ))}
+                                <div ref={scrollRef} />
+                            </List>
+                            <CardContent>
+                                <Grid container>
+                                    <Grid item xs>
+                                        <GameChatBox
+                                            message={message}
+                                            handleMessage={handleMessage}
+                                            handleSubmit={handleSubmit}
+                                        />
+                                    </Grid>
+                                </Grid>
+                            </CardContent>
+                        </Grid>
+                    </Grid>
+                </Paper>
             </Grid>
-          </Grid>
-        </Paper>
-      </Grid>
-    </Grid>
-  );
+        </Grid>
+    );
 };
 
 GameChat.propTypes = {
-  chat: chatStatePropTypes.isRequired,
-  message: PropTypes.string.isRequired,
-  handleMessage: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+    chat: chatStatePropTypes.isRequired,
+    message: PropTypes.string.isRequired,
+    handleMessage: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired
 };
 
 export default GameChat;

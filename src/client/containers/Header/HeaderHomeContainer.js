@@ -6,19 +6,17 @@ import actions from '../../actions';
 import HeaderHome from '../../components/Header/HeaderHome';
 
 const HeaderHomeConnect = (props) => {
-  const { reqLogout } = props;
+    const { reqLogout } = props;
 
-  return (
-    <HeaderHome reqLogout={reqLogout} />
-  );
+    return <HeaderHome reqLogout={reqLogout} />;
 };
 
 HeaderHomeConnect.propTypes = {
-  reqLogout: PropTypes.func.isRequired,
+    reqLogout: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = {
-  reqLogout: actions.reqLogout,
+    reqLogout: actions.reqLogout
 };
 
 export default connect(null, mapDispatchToProps)(HeaderHomeConnect);

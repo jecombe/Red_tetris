@@ -12,13 +12,14 @@ import App from './containers/App';
 
 console.log('jecombe && dzonda - 42 Lyon');
 
-ReactDom.render((
-  <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <ConnectedRouter history={history}>
-        <CssBaseline />
-        <App />
-      </ConnectedRouter>
-    </ThemeProvider>
-  </Provider>
-), document.getElementById('tetris'));
+ReactDom.render(
+    <Provider store={store}>
+        <ThemeProvider theme={theme}>
+            <ConnectedRouter history={history}>
+                <CssBaseline />
+                <App />
+            </ConnectedRouter>
+        </ThemeProvider>
+    </Provider>,
+    document.getElementById('tetris')
+);

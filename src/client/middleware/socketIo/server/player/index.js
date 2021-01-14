@@ -1,5 +1,3 @@
 import resUpdatePlayer from './resUpdatePlayer';
 
-export default [
-  resUpdatePlayer,
-];
+export default [resUpdatePlayer];

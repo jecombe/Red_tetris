@@ -11,24 +11,21 @@ import Slide from '@material-ui/core/Slide';
 const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
 const GameRankingList = (props) => {
-  const { status, players, reqGameStopped } = props;
+    const { status, players, reqGameStopped } = props;
 
-  return (
-    <Dialog
-      open={status === 'FINISHED'}
-      TransitionComponent={Transition}
-      onClose={reqGameStopped}
-    >
-      <DialogTitle>Game Ranking</DialogTitle>
-      <DialogContent>
-        {/* <GameRankingListTable players={players} /> */}
-      </DialogContent>
-    </Dialog>
-  );
+    return (
+        <Dialog
+            open={status === 'FINISHED'}
+            TransitionComponent={Transition}
+            onClose={reqGameStopped}>
+            <DialogTitle>Game Ranking</DialogTitle>
+            <DialogContent>{/* <GameRankingListTable players={players} /> */}</DialogContent>
+        </Dialog>
+    );
 };
 
 GameRankingList.propTypes = {
-  status: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired
 };
 
 export default GameRankingList;

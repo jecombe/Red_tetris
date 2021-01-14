@@ -46,5 +46,5 @@ import { resInfos } from './app';
 // };
 
 export const socketError = (socket, redGame) => {
-  logger.error(`Client ${socket.id} error.`);
+    logger.error(`Client ${socket.id} error.`);
 };

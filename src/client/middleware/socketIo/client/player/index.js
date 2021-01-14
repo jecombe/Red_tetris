@@ -1,5 +1,3 @@
 import reqUpdatePlayer from './reqUpdatePlayer';
 
-export default [
-  reqUpdatePlayer,
-];
+export default [reqUpdatePlayer];

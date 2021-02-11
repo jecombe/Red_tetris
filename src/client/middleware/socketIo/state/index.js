@@ -9,13 +9,13 @@ import reconnectFailed from './reconnectFailed';
 import disconnect from './disconnect';
 
 export default [
-    connect,
-    connectTimeout,
-    connectError,
-    reconnect,
-    reconnectAttempt,
-    reconnecting,
-    reconnectError,
-    reconnectFailed,
-    disconnect
+  connect,
+  connectTimeout,
+  connectError,
+  reconnect,
+  reconnectAttempt,
+  reconnecting,
+  reconnectError,
+  reconnectFailed,
+  disconnect,
 ];

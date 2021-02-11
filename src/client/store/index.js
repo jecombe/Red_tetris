@@ -13,10 +13,15 @@ export const history = createHashHistory();
 const logger = createLogger();
 
 const store = createStore(
-    rootReducer(history),
-    composeWithDevTools(
-        applyMiddleware(routerMiddleware(history), thunk, socketIoMiddleware, logger)
-    )
+  rootReducer(history),
+  composeWithDevTools(
+    applyMiddleware(
+      routerMiddleware(history),
+      thunk,
+      socketIoMiddleware,
+      logger,
+    ),
+  ),
 );
 
 export default store;

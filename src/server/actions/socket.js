@@ -1,8 +1,8 @@
-import ev from '../../shared/events';
-import logger from '../utils/logger';
-// import { logout } from './login';
+// import ev from '../../shared/events';
+// import logger from '../utils/logger';
+// // import { logout } from './login';
 
-import { resInfos } from './app';
+// import { resInfos } from './app';
 
 // export const socketConnect = (socket, redGame) => {
 //   logger.info(`socket: ${socket.id} connected`);
@@ -45,6 +45,6 @@ import { resInfos } from './app';
 //   // logout(redGame, socket.id);
 // };
 
-export const socketError = (socket, redGame) => {
-    logger.error(`Client ${socket.id} error.`);
-};
+// export const socketError = (socket, redGame) => {
+//   logger.error(`Client ${socket.id} error.`);
+// };

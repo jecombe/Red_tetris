@@ -1,107 +1,135 @@
-import ev, { res_UPDATE_APP_INFOS } from '../../shared/events';
+import ev from '../../shared/events';
 import logger from '../utils/logger';
 
 import RedTetris from '../models';
-import Game from '../models/Game';
-import Player from '../models/Player';
 
-const login = (req, res) => {
-    const { socket } = req;
-    const { name, room } = req.data;
-
-    try {
-        RedTetris.getSocket(socket.id).join(room);
-        logger.info('socket:', socket.id, 'join room :', room);
-
-        RedTetris.login(room, socket.id, name);
-
-        /* Emit */
-
-        RedTetris.emitToSocket(socket.id, ev.res_LOGIN, {
-            status: 200,
-            payload: {
-                name,
-                room
-            }
-        });
-
-        RedTetris.emitToRoom(room, ev.res_UPDATE_GAME, {
-            status: 200,
-            payload: {
-                game: RedTetris.getGame(room)
-            }
-        });
-
-        logger.info('[login]', 'success');
-    } catch (err) {
-        RedTetris.emitToSocket(socket.id, ev.res_LOGIN, {
-            status: 500,
-            payload: {
-                name: '',
-                room: ''
-            }
-        });
-
-        logger.error('[login] ', err);
-    }
+const resInfos = () => {
+  RedTetris.emitToAll(ev.res_UPDATE_APP_INFOS, {
+    status: 200,
+    payload: {
+      nbPlayers: RedTetris.getNbSockets(),
+      nbGames: RedTetris.getNbGames(),
+      games: RedTetris.getGames(),
+    },
+  });
 };
 
-const logout = (req, res) => {
-    const { socket } = req;
-    const { name, room } = req.data;
+const login = (req) => {
+  const { socket } = req;
+  const { name, room } = req.data;
 
-    try {
-        logger.info('[logout]', 'try to logout', name, 'in room', room);
-
-        RedTetris.getSocket(socket.id).leave(room);
-        logger.info('socket:', 'leave room :', room);
-
-        RedTetris.logout(room, name);
-
-        /* Emit */
-
-        RedTetris.emitToSocket(socket.id, ev.res_LOGOUT, {
-            status: 200,
-            payload: {
-                name: '',
-                room: ''
-            }
-        });
-
-        RedTetris.emitToRoom(room, ev.res_UPDATE_GAME, {
-            status: 200,
-            payload: {
-                game: RedTetris.getGame(room)
-            }
-        });
-
-        logger.info('[logout]', 'success');
-    } catch (err) {
-        RedTetris.emitToSocket(socket.id, ev.res_LOGOUT, {
-            status: 200,
-            payload: {
-                player: RedTetris.getGame(room).getPlayer(name).getName(),
-                room: RedTetris.getGame(room).getRoom()
-            }
-        });
-
-        logger.error('[logout] ', err);
+  try {
+    if (!RedTetris.getGame(room)) {
+      RedTetris.setGame(room, name);
     }
-};
 
-export const infos = (req, res) => {
-    RedTetris.emitToSocket(req.socket.id, ev.res_UPDATE_APP_INFOS, {
-        status: 200,
-        payload: {
-            nbPlayers: RedTetris.getNbSockets(),
-            nbGames: RedTetris.getNbGames(),
-            games: RedTetris.getGames()
-        }
+    RedTetris.getGame(room).login(socket.id, name);
+
+    RedTetris.getSocket(socket.id).join(room);
+    RedTetris.setSocketRoom(socket.id, room);
+
+    /* Responses */
+
+    RedTetris.emitToSocket(socket.id, ev.res_LOGIN, {
+      status: 200,
+      payload: { name, room },
     });
+
+    RedTetris.emitToRoom(room, ev.res_UPDATE_GAME, {
+      status: 200,
+      payload: { game: RedTetris.getGame(room) },
+    });
+
+    resInfos();
+  } catch (err) {
+    RedTetris.emitToSocket(socket.id, ev.res_LOGIN, {
+      status: 500,
+      payload: {},
+    });
+
+    logger.error('[login] ', err);
+  }
+};
+
+const logout = (req) => {
+  const { socket } = req;
+  const { name, room } = req.data;
+
+  try {
+    if (
+      !RedTetris.getGame(room) ||
+      !RedTetris.getGame(room).getPlayer(socket.id)
+    ) {
+      throw new Error("Can't logout");
+    }
+
+    RedTetris.getGame(room).logout(socket.id, name);
+
+    if (RedTetris.getGame(room).isEmpty()) {
+      RedTetris.unsetGame(room);
+    }
+
+    RedTetris.getSocket(socket.id).leave(room);
+    RedTetris.unsetSocketRoom(socket.id);
+
+    /* Responses */
+
+    if (socket) {
+      RedTetris.emitToSocket(socket.id, ev.res_LOGOUT, {
+        status: 200,
+        payload: {},
+      });
+    }
+
+    RedTetris.emitToRoom(room, ev.res_UPDATE_GAME, {
+      status: 200,
+      payload: { game: RedTetris.getGame(room) },
+    });
+
+    resInfos();
+  } catch (err) {
+    if (socket) {
+      RedTetris.emitToSocket(socket.id, ev.res_LOGOUT, {
+        status: 500,
+        payload: {},
+      });
+    }
+  }
+};
+
+const connect = (req) => {
+  logger.info(`socket: ${req.socket.id} connected`);
+
+  RedTetris.setSocket(req.socket);
+
+  resInfos();
+};
+
+const disconnect = (req) => {
+  logger.info(`socket: ${req.socket.id} disconnected.`);
+
+  if (RedTetris.getSocketRoom(req.socket.id)) {
+    logout({
+      socket: req.socket,
+      data: {
+        name: req.socket.id,
+        room: RedTetris.getSocketRoom(req.socket.id),
+      },
+    });
+  }
+  RedTetris.unsetSocket(req.socket.id);
+
+  resInfos();
+};
+
+const error = (req) => {
+  logger.info(`socket: ${req.socket.id} error.`);
 };
 
 export default {
-    infos,
-    login,
-    logout
+  connect,
+  disconnect,
+  error,
+  login,
+  logout,
 };

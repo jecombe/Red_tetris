@@ -5,7 +5,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import { ConnectedRouter } from 'connected-react-router';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import './index.css';
+// import './index.css';
 import store, { history } from './store';
 import theme from './theme';
 import App from './containers/App';
@@ -13,13 +13,13 @@ import App from './containers/App';
 console.log('jecombe && dzonda - 42 Lyon');
 
 ReactDom.render(
-    <Provider store={store}>
-        <ThemeProvider theme={theme}>
-            <ConnectedRouter history={history}>
-                <CssBaseline />
-                <App />
-            </ConnectedRouter>
-        </ThemeProvider>
-    </Provider>,
-    document.getElementById('tetris')
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <ConnectedRouter history={history}>
+        <CssBaseline />
+        <App />
+      </ConnectedRouter>
+    </ThemeProvider>
+  </Provider>,
+  document.getElementById('tetris'),
 );

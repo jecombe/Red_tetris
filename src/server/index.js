@@ -1,3 +1,19 @@
-import server from './server';
+import 'regenerator-runtime/runtime';
+import express from 'express';
 
-server(3000);
+import params from '../shared/params';
+import logger from './utils/logger';
+import redTetris from './socket';
+
+const { host, port } = params.server;
+
+const app = express();
+app.use(express.static('build'));
+
+const server = require('http').createServer(app);
+
+redTetris(server);
+
+server.listen({ host, port }, () => {
+  logger.info(`Listening on port ${port}!`);
+});

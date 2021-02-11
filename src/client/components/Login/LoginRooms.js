@@ -15,54 +15,59 @@ import { appStateProp } from '../../reducers/reducers.types';
 import RedIconButton from '../Common/RedIconButton';
 
 const LoginGamesMap = (games, onClickRoom) => {
-    if (games.length === 0) {
-        return (
-            <Grid container item justify="center">
-                No rooms available
-            </Grid>
-        );
-    }
+  if (games.length === 0) {
+    return (
+      <Grid container item justify="center">
+        No rooms available
+      </Grid>
+    );
+  }
 
-    return games.map((game) => (
-        <ListItem value={game} key={game.room}>
-            <ListItemText primary={`${game.room}`} secondary={`Owned by ${game.owner}`} />
-            <ListItemText
-                primary={game.started ? 'Game started' : 'Game not started'}
-                secondary={`${Object.keys(game.players).length} players`}
-            />
-            <ListItemSecondaryAction>
-                <RedIconButton onClick={() => onClickRoom({ target: { value: game.room } })}>
-                    <FileCopyOutlinedIcon />
-                </RedIconButton>
-            </ListItemSecondaryAction>
-        </ListItem>
-    ));
+  return games.map((game) => (
+    <ListItem value={game} key={game.room}>
+      <ListItemText
+        primary={`${game.room}`}
+        secondary={`Owned by ${game.owner}`}
+      />
+      <ListItemText
+        primary={game.started ? 'Game started' : 'Game not started'}
+        secondary={`${Object.keys(game.players).length} players`}
+      />
+      <ListItemSecondaryAction>
+        <RedIconButton
+          onClick={() => onClickRoom({ target: { value: game.room } })}
+        >
+          <FileCopyOutlinedIcon />
+        </RedIconButton>
+      </ListItemSecondaryAction>
+    </ListItem>
+  ));
 };
 
 const LoginRooms = (props) => {
-    const { games, onClickRoom } = props;
+  const { games, onClickRoom } = props;
 
-    return (
-        <Grid container justify="center" alignItems="center" spacing={10}>
-            <Grid item xs={12}>
-                <Card>
-                    <CardHeader title="Available rooms" />
-                    <CardContent>
-                        <Grid item xs={12} style={{ maxHeight: 350, overflow: 'auto' }}>
-                            <List style={{ maxHeight: '100%' }}>
-                                {LoginGamesMap(games, onClickRoom)}
-                            </List>
-                        </Grid>
-                    </CardContent>
-                </Card>
+  return (
+    <Grid container justify="center" alignItems="center" spacing={10}>
+      <Grid item xs={12}>
+        <Card>
+          <CardHeader title="Available rooms" />
+          <CardContent>
+            <Grid item xs={12} style={{ maxHeight: 350, overflow: 'auto' }}>
+              <List style={{ maxHeight: '100%' }}>
+                {LoginGamesMap(games, onClickRoom)}
+              </List>
             </Grid>
-        </Grid>
-    );
+          </CardContent>
+        </Card>
+      </Grid>
+    </Grid>
+  );
 };
 
 LoginRooms.propTypes = {
-    games: appStateProp.games.isRequired,
-    onClickRoom: PropTypes.func.isRequired
+  games: appStateProp.games.isRequired,
+  onClickRoom: PropTypes.func.isRequired,
 };
 
 export default LoginRooms;

@@ -10,37 +10,42 @@ import Main from './Main';
 import Footer from '../components/Footer/Footer';
 
 const App = (props) => {
-    const { connected, reqConnect } = props;
-    const { host, port } = params.server;
+  const { connected, reqConnect } = props;
+  const { host, port } = params.server;
 
-    if (!connected) reqConnect({ host, port });
+  if (!connected) reqConnect({ host, port });
 
-    return (
-        <Grid container direction="column" justify="space-between" style={{ height: '100vh' }}>
-            <Grid item style={{ height: '7vh', border: '1px solid red' }}>
-                <Header />
-            </Grid>
-            <Grid item style={{ height: '65vh', border: '1px solid red' }}>
-                <Main connected={connected} />
-            </Grid>
-            <Grid item style={{ height: '5vh', border: '1px solid red' }}>
-                <Footer />
-            </Grid>
-        </Grid>
-    );
+  return (
+    <Grid
+      container
+      direction="column"
+      justify="space-between"
+      style={{ height: '100vh' }}
+    >
+      <Grid item style={{ height: '7vh', border: '1px solid red' }}>
+        <Header />
+      </Grid>
+      <Grid item style={{ height: '65vh', border: '1px solid red' }}>
+        <Main connected={connected} />
+      </Grid>
+      <Grid item style={{ height: '5vh', border: '1px solid red' }}>
+        <Footer />
+      </Grid>
+    </Grid>
+  );
 };
 
 App.propTypes = {
-    connected: PropTypes.bool.isRequired,
-    reqConnect: PropTypes.func.isRequired
+  connected: PropTypes.bool.isRequired,
+  reqConnect: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-    connected: state.app.connected
+  connected: state.app.connected,
 });
 
 const mapDispatchToProps = {
-    reqConnect: actions.reqConnect
+  reqConnect: actions.reqConnect,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

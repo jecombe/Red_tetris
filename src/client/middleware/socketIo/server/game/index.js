@@ -3,4 +3,9 @@ import resGameSettings from './resUpdateGameSettings';
 import resUpdateGameChat from './resUpdateGameChat';
 import resStartGame from './resStartGame';
 
-export default [resUpdateGame, resGameSettings, resUpdateGameChat, resStartGame];
+export default [
+  resUpdateGame,
+  resGameSettings,
+  resUpdateGameChat,
+  resStartGame,
+];

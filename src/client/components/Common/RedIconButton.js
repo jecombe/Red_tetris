@@ -4,33 +4,37 @@ import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
-    RedIconButton: {
-        color: 'grey',
-        '&:hover': {
-            color: 'red'
-        }
-    }
+  RedIconButton: {
+    color: 'grey',
+    '&:hover': {
+      color: 'red',
+    },
+  },
 });
 
 const RedIconButton = (props) => {
-    const { onClick, disabled, children } = props;
-    const classes = useStyles();
+  const { onClick, disabled, children } = props;
+  const classes = useStyles();
 
-    return (
-        <IconButton onClick={onClick} disabled={disabled} className={classes.RedIconButton}>
-            {children}
-        </IconButton>
-    );
+  return (
+    <IconButton
+      onClick={onClick}
+      disabled={disabled}
+      className={classes.RedIconButton}
+    >
+      {children}
+    </IconButton>
+  );
 };
 
 RedIconButton.defaultProps = {
-    disabled: false
+  disabled: false,
 };
 
 RedIconButton.propTypes = {
-    onClick: PropTypes.func.isRequired,
-    disabled: PropTypes.bool,
-    children: PropTypes.node.isRequired
+  onClick: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+  children: PropTypes.node.isRequired,
 };
 
 export default RedIconButton;

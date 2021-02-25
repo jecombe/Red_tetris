@@ -4,26 +4,19 @@
 
 Set host in `params.js` to be accessible across network
 
+## Install 
+
 ## Dev
 
-`$ npm run client-dev` and `$ npm run srv-dev`
+`npm run dev`
 
-or
+## Prod
+
+`npm run build && npm run start`
+
+## Docker
 
 `docker-compose up`
 
-In case of conflicts with dependencies in docker:
-
-`$ docker system prune`
-
-`$ docker-compose up --build`
 
 ## Test
-
-### Socket
-
-Open two terminals:
-
-`$ npm run srv-dev`
-
-`$ npm test`

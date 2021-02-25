@@ -1,6 +1,6 @@
 version: '3'
 services:
-  red-tetris:
+  red_tetris:
     build:
       dockerfile: Dockerfile
       context: ./
@@ -8,5 +8,4 @@ services:
       - /app/node_modules
       - ./:/app
     ports:
-      - '8080:8080'
       - '3000:3000'

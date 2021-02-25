@@ -7,10 +7,7 @@ export const STAGE_HEIGHT = 20;
 export const STAGE_WIDTH_SMALL = 8;
 export const STAGE_HEIGHT_SMALL = 8;
 
-export const createStage = () =>
-  Array.from(Array(STAGE_HEIGHT), () =>
-    new Array(STAGE_WIDTH).fill([0, 'clear']),
-  );
+export const createStage = () => Array.from(Array(STAGE_HEIGHT), () => new Array(STAGE_WIDTH).fill([0, 'clear']));
 
 export const calcScore = (level, lines) => {
   switch (lines) {
@@ -31,14 +28,12 @@ export const calcLevel = (lines) => Math.trunc(lines / 10) + 1;
 
 export const rotate = (matrix, dir) => {
   // Make the rows to become cols (transpose)
-  const rotatedTetro = matrix.map((_, index) =>
-    matrix.map((col) => col[index]),
-  );
+  const rotatedTetro = matrix.map((_, index) => matrix.map((col) => col[index]));
   // Reverse each row to get a rotated matrix
 
   if (dir > 0) {
     const rotated = rotatedTetro.map((row) => row.reverse());
-    console.log(rotated);
+    // console.log(rotated);
 
     return rotated;
   }
@@ -92,9 +87,7 @@ export const moveTetroUp = (stage, piece, position, dir) => {
   const pos = position.x;
   let pos2 = position.x;
   let offset = 1;
-  while (
-    checkCollision(clonedPiece, stage, { x: 0, y: 0 }, position.x, position.y)
-  ) {
+  while (checkCollision(clonedPiece, stage, { x: 0, y: 0 }, position.x, position.y)) {
     pos2 += offset;
     offset = -(offset + (offset > 0 ? 1 : -1));
     if (offset > clonedPiece.form.shape[0].length) {

@@ -34,8 +34,7 @@ const LoginContainer = (props) => {
     });
   };
 
-  const handleSubmit = () =>
-    reqLogin({ name: loginNameState.value, room: loginRoomState.value });
+  const handleSubmit = () => reqLogin({ name: loginNameState.value, room: loginRoomState.value });
 
   return (
     <>
@@ -62,6 +61,4 @@ const mapDispatchToProps = {
   reqLogin: actions.reqLogin,
 };
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(LoginContainer),
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginContainer));

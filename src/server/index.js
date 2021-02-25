@@ -14,6 +14,12 @@ const server = require('http').createServer(app);
 
 redTetris(server);
 
-server.listen({ host, port }, () => {
-  logger.info(`Listening on port ${port}!`);
-});
+// process.on('SIGTERM', () => {
+//   server.close();
+// });
+
+// server.listen({ host, port }, () => {
+//   logger.info(`Listening on port ${port}!`);
+// });
+
+export default server;

@@ -7,10 +7,7 @@ import Slide from '@material-ui/core/Slide';
 import Paper from '@material-ui/core/Paper';
 
 import { TABLE_PLAYERS_RANK } from '../../../constants/tables';
-import {
-  settingsProp,
-  playersStatePropTypes,
-} from '../../../reducers/reducers.types';
+import { settingsProp, playersStatePropTypes } from '../../../reducers/reducers.types';
 
 import VirtualizedList from '../../Common/VirtualizedList';
 
@@ -47,13 +44,7 @@ const GameRankingList = (props) => {
   };
 
   return (
-    <Dialog
-      open={open}
-      TransitionComponent={Transition}
-      keepMounted
-      onClose={handleClose}
-      fullWidth
-    >
+    <Dialog open={open} TransitionComponent={Transition} keepMounted onClose={handleClose} fullWidth>
       <DialogTitle>Game Ranking</DialogTitle>
       <DialogContent>
         <Paper variant="outlined" className={classes.paper} elevation={0}>

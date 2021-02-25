@@ -23,14 +23,7 @@ const GameChatContainer = (props) => {
     setMessage('');
   };
 
-  return (
-    <GameChat
-      chat={chat}
-      message={message}
-      handleMessage={handleMessage}
-      handleSubmit={handleSubmit}
-    />
-  );
+  return <GameChat chat={chat} message={message} handleMessage={handleMessage} handleSubmit={handleSubmit} />;
 };
 
 GameChatContainer.propTypes = {

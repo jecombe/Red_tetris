@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
-  input: {
+  chatBoxInput: {
     marginLeft: theme.spacing(1),
     flex: 1,
   },
@@ -28,7 +28,8 @@ const GameChatBox = (props) => {
   return (
     <Paper elevation={0} className={classes.root}>
       <InputBase
-        className={classes.input}
+        id="chatBoxInput"
+        className={classes.chatBoxInput}
         placeholder="message..."
         value={message}
         onChange={handleMessage}
@@ -38,7 +39,7 @@ const GameChatBox = (props) => {
           }
         }}
       />
-      <RedIconButton onClick={handleSubmit}>
+      <RedIconButton className="chatBoxButton" onClick={handleSubmit}>
         <Telegram />
       </RedIconButton>
     </Paper>

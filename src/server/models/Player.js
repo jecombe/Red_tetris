@@ -1,9 +1,4 @@
-import {
-  createStage,
-  flushUpdate,
-  checkCollision,
-  updateRows,
-} from '../../shared/stage';
+import { createStage, flushUpdate, checkCollision, updateRows } from '../../shared/stage';
 
 import { calcScore, calcLevel, keys } from '../helpers/gameHelper';
 
@@ -32,29 +27,29 @@ export default class Player {
     return this.name;
   }
 
-  setScore(score) {
-    this.score = score;
-  }
+  // setScore(score) {
+  //   this.score = score;
+  // }
 
-  setPiece(piece) {
-    this.piece = piece;
-  }
+  // setPiece(piece) {
+  //   this.piece = piece;
+  // }
 
   setLevel(level) {
     this.score = level;
   }
 
-  setLines(lines) {
-    this.lines = lines;
-  }
+  // setLines(lines) {
+  //   this.lines = lines;
+  // }
 
   setStage(stage) {
     this.stage = stage;
   }
 
-  setLoose(loose) {
-    this.loose = loose;
-  }
+  // setLoose(loose) {
+  //   this.loose = loose;
+  // }
 
   setRank(nbLoosers, nbPlayers) {
     this.rank = nbPlayers - nbLoosers;
@@ -74,13 +69,7 @@ export default class Player {
   start(piece) {
     this.initPlayer();
     this.piece = piece;
-    this.stage = flushUpdate(
-      this.piece,
-      this.stage,
-      this.position.x,
-      this.position.y,
-      false,
-    );
+    this.stage = flushUpdate(this.piece, this.stage, this.position.x, this.position.y, false);
   }
 
   updateStage(position, collided) {
@@ -88,10 +77,7 @@ export default class Player {
     this.piece.form.shape.forEach((row, fy) => {
       row.forEach((value, fx) => {
         if (value !== 0) {
-          this.stage[fy + y][fx + x] = [
-            value,
-            `${collided ? 'merged' : 'clear'}`,
-          ];
+          this.stage[fy + y][fx + x] = [value, `${collided ? 'merged' : 'clear'}`];
         }
       });
     });
@@ -99,48 +85,18 @@ export default class Player {
 
   updateCollision(pieces) {
     this.position = { x: 10 / 2 - 2, y: 0 };
-    this.setPiece(pieces[this.nbPiece]);
-    this.setStage(
-      flushUpdate(
-        this.piece,
-        this.stage,
-        this.position.x,
-        this.position.y,
-        false,
-      ),
-    );
+    this.piece = pieces[this.nbPiece];
+    this.setStage(flushUpdate(this.piece, this.stage, this.position.x, this.position.y, false));
   }
 
   dropTetro() {
-    if (
-      !checkCollision(
-        this.piece,
-        this.stage,
-        { x: 0, y: 1 },
-        this.position.x,
-        this.position.y,
-      )
-    ) {
-      this.stage = flushUpdate(
-        this.piece,
-        this.stage,
-        this.position.x,
-        this.position.y + 1,
-        false,
-      );
+    if (!checkCollision(this.piece, this.stage, { x: 0, y: 1 }, this.position.x, this.position.y)) {
+      this.stage = flushUpdate(this.piece, this.stage, this.position.x, this.position.y + 1, false);
       this.position = { x: this.position.x, y: this.position.y + 1 };
       return { collided: false, loose: false };
     }
 
-    const { stage, lines } = updateRows(
-      flushUpdate(
-        this.piece,
-        this.stage,
-        this.position.x,
-        this.position.y,
-        true,
-      ),
-    );
+    const { stage, lines } = updateRows(flushUpdate(this.piece, this.stage, this.position.x, this.position.y, true));
 
     this.stage = stage;
     this.score += calcScore(this.level, lines);
@@ -156,22 +112,8 @@ export default class Player {
   }
 
   moveTetro(dir) {
-    if (
-      !checkCollision(
-        this.piece,
-        this.stage,
-        { x: dir, y: 0 },
-        this.position.x,
-        this.position.y,
-      )
-    ) {
-      this.stage = flushUpdate(
-        this.piece,
-        this.stage,
-        this.position.x + dir,
-        this.position.y,
-        false,
-      );
+    if (!checkCollision(this.piece, this.stage, { x: dir, y: 0 }, this.position.x, this.position.y)) {
+      this.stage = flushUpdate(this.piece, this.stage, this.position.x + dir, this.position.y, false);
       this.position = { x: this.position.x + dir, y: this.position.y };
 
       return {
@@ -195,15 +137,7 @@ export default class Player {
     const pos = this.position.x;
     let pos2 = this.position.x;
     let offset = 1;
-    while (
-      checkCollision(
-        clonedPiece,
-        this.stage,
-        { x: 0, y: 0 },
-        this.position.x,
-        this.position.y,
-      )
-    ) {
+    while (checkCollision(clonedPiece, this.stage, { x: 0, y: 0 }, this.position.x, this.position.y)) {
       pos2 += offset;
       offset = -(offset + (offset > 0 ? 1 : -1));
       if (offset > clonedPiece.form.shape[0].length) {
@@ -217,13 +151,7 @@ export default class Player {
       }
     }
 
-    this.stage = flushUpdate(
-      clonedPiece,
-      this.stage,
-      pos2,
-      this.position.y,
-      false,
-    );
+    this.stage = flushUpdate(clonedPiece, this.stage, pos2, this.position.y, false);
     this.position = { x: pos2, y: this.position.y };
     this.piece = clonedPiece;
     return {
@@ -255,13 +183,7 @@ export default class Player {
   }
 
   move(keyCode) {
-    const gameAllowedKeys = [
-      keys.KDOWN,
-      keys.KLEFT,
-      keys.KRIGHT,
-      keys.KUP,
-      keys.KSPACE,
-    ];
+    const gameAllowedKeys = [keys.KDOWN, keys.KLEFT, keys.KRIGHT, keys.KUP, keys.KSPACE];
 
     if (!gameAllowedKeys.includes(keyCode)) {
       throw new Error(`Key not allowed: ${keyCode}`);
@@ -292,14 +214,6 @@ export default class Player {
       this.stage.push(new Array(10).fill(['M', 'mallus']));
       lines -= 1;
     }
-    this.setStage(
-      flushUpdate(
-        this.piece,
-        this.stage,
-        this.position.x,
-        this.position.y,
-        false,
-      ),
-    );
+    this.setStage(flushUpdate(this.piece, this.stage, this.position.x, this.position.y, false));
   }
 }

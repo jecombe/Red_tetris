@@ -4,10 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Divider from '@material-ui/core/Divider';
 
-import {
-  playerStatePropTypes,
-  settingsProp,
-} from '../../reducers/reducers.types';
+import { playerStatePropTypes, settingsProp } from '../../reducers/reducers.types';
 
 import GameBoardScore from './GameBoard/GameBoardScore';
 import GameBoardPieces from './GameBoard/GameBoardPieces';
@@ -27,37 +24,23 @@ const GameBoard = (props) => {
 
   return (
     <Card>
-      <Grid
-        container
-        justify="center"
-        alignItems="center"
-        className={classes.root}
-      >
+      <Grid container justify="center" alignItems="center" className={classes.root}>
         <Grid item xs={8}>
           <GameBoardStage stage={player.stage} />
         </Grid>
         <Grid item xs={4}>
-          <Grid container direction="column" justify="flex-start">
-            <Grid item xs>
+          <Grid container direction="column">
+            <Grid item>
               <GameBoardPieces pieces={pieces} nbPiece={player.nbPiece} />
             </Grid>
             <Divider variant="middle" />
-            <Grid item xs>
-              <GameBoardScore
-                score={player.score}
-                level={player.level}
-                lines={player.lines}
-                mallus={player.mallus}
-              />
+            <Grid item>
+              <GameBoardScore score={player.score} level={player.level} lines={player.lines} mallus={player.mallus} />
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-      <GameBoardLoose
-        loose={player.loose}
-        rank={player.rank}
-        nbPlayers={nbPlayers}
-      />
+      <GameBoardLoose loose={player.loose} rank={player.rank} nbPlayers={nbPlayers} />
     </Card>
   );
 };

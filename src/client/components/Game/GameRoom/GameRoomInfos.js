@@ -4,11 +4,7 @@ import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 
-import {
-  playerStateProp,
-  settingsProp,
-  roomStateProp,
-} from '../../../reducers/reducers.types';
+import { playerStateProp, settingsProp, roomStateProp } from '../../../reducers/reducers.types';
 
 import BoxInfo from '../../Common/BoxInfo';
 import RedButton from '../../Common/RedButton';
@@ -28,13 +24,7 @@ const GameRoomInfos = (props) => {
 
   return (
     <Box className={classes.box}>
-      <Grid
-        container
-        direction="column"
-        justify="center"
-        spacing={2}
-        className={classes.grid}
-      >
+      <Grid container direction="column" justify="center" spacing={2} className={classes.grid}>
         <Grid item container direction="row" justify="space-evenly">
           <Grid item xs={12}>
             <BoxInfo field="Logged as" value={name} />
@@ -48,11 +38,7 @@ const GameRoomInfos = (props) => {
         </Grid>
         <Grid item container justify="center">
           <Grid item xs={10}>
-            <RedButton
-              name="start game"
-              handleSubmit={handleStart}
-              disabled={started || !(name === owner)}
-            />
+            <RedButton className="startButton" name="start game" handleSubmit={handleStart} disabled={started || !(name === owner)} />
           </Grid>
         </Grid>
       </Grid>

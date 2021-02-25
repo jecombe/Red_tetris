@@ -7,13 +7,7 @@ export const keys = {
   KENTER: 13,
 };
 
-export const gameAllowedKeys = [
-  keys.KDOWN,
-  keys.KLEFT,
-  keys.KRIGHT,
-  keys.KUP,
-  keys.KSPACE,
-];
+export const gameAllowedKeys = [keys.KDOWN, keys.KLEFT, keys.KRIGHT, keys.KUP, keys.KSPACE];
 
 export default {
   keys,

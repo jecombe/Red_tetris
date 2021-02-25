@@ -9,10 +9,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 
-import {
-  playerStateProp,
-  settingsProp,
-} from '../../../reducers/reducers.types';
+import { playerStateProp, settingsProp } from '../../../reducers/reducers.types';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -32,13 +29,7 @@ const GameBoardLoose = (props) => {
 
   return (
     <>
-      <Dialog
-        open={open}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleClose}
-        fullWidth
-      >
+      <Dialog open={open} TransitionComponent={Transition} keepMounted onClose={handleClose} fullWidth>
         <DialogTitle>Game Over!</DialogTitle>
         <DialogContent>
           <DialogContentText>{`Rank: ${rank}/${nbPlayers}`}</DialogContentText>

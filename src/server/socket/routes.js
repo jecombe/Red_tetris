@@ -14,10 +14,10 @@ const routes = () => [
     event: 'disconnect',
     handler: appController.disconnect,
   },
-  {
-    event: 'error',
-    handler: appController.error,
-  },
+  // {
+  //   event: 'error',
+  //   handler: appController.error,
+  // },
   // {
   //   event: ev.req_UPDATE_APP_INFOS,
   //   handler: appController.infos,

@@ -10,10 +10,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 
-import {
-  settingsProp,
-  playersStatePropTypes,
-} from '../../../reducers/reducers.types';
+import { settingsProp, playersStatePropTypes } from '../../../reducers/reducers.types';
 import RedIconButton from '../../Common/RedIconButton';
 
 const useStyles = makeStyles({
@@ -47,15 +44,16 @@ const GameSettingsRoomOwner = (props) => {
       <RedIconButton disabled={disabled} onClick={handleClickOpen}>
         <SupervisorAccountIcon fontSize="small" />
       </RedIconButton>
-      <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+      <Dialog open={true} onClose={handleClose} maxWidth="sm" fullWidth>
         <DialogTitle>Set new room owner</DialogTitle>
         <List>
           {playersList.map((player) => (
             <ListItem
               button
-              disabled={owner === player[1].name}
+              // disabled={owner === player[1].name}
               onClick={() => handleListItemClick(player[1])}
               key={player[1].name}
+              className={`playair-${player[1].name}`}
             >
               <ListItemIcon>
                 <PersonAddIcon className={classes.icon} />

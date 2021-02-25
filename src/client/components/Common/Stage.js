@@ -74,20 +74,14 @@ const Stage = (props) => {
 
   return (
     <Paper className={classes.stage}>
-      {stage.map((row) =>
-        row.map((cell, x) => <CellMemo key={x} type={cell[0]} />),
-      )}
+      {stage.map((row) => row.map((cell, x) => <CellMemo key={x} type={cell[0]} />))}
     </Paper>
   );
 };
 
 Stage.propTypes = {
   stage: PropTypes.arrayOf(
-    PropTypes.arrayOf(
-      PropTypes.arrayOf(
-        PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-      ),
-    ),
+    PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string]))),
   ).isRequired,
   type: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 };

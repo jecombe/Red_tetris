@@ -14,14 +14,7 @@ const logger = createLogger();
 
 const store = createStore(
   rootReducer(history),
-  composeWithDevTools(
-    applyMiddleware(
-      routerMiddleware(history),
-      thunk,
-      socketIoMiddleware,
-      logger,
-    ),
-  ),
+  composeWithDevTools(applyMiddleware(routerMiddleware(history), thunk, socketIoMiddleware, logger)),
 );
 
 export default store;

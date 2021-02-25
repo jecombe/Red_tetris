@@ -7,19 +7,8 @@ const RedButton = (props) => {
   const { name, handleSubmit, disabled } = props;
 
   return (
-    <Button
-      color="primary"
-      variant="contained"
-      size="small"
-      onClick={handleSubmit}
-      disabled={disabled}
-      fullWidth
-    >
-      <Typography
-        variant="button"
-        color="textPrimary"
-        style={{ fontWeight: 'bold' }}
-      >
+    <Button color="primary" variant="contained" size="small" onClick={handleSubmit} disabled={disabled} fullWidth>
+      <Typography variant="button" color="textPrimary" style={{ fontWeight: 'bold' }}>
         {name}
       </Typography>
     </Button>

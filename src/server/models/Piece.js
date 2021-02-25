@@ -65,31 +65,28 @@ class Piece {
       },
     };
     const tetrominos = 'IJLOSTZ';
-    const randTetromino =
-      tetrominos[Math.floor(Math.random() * tetrominos.length)];
+    const randTetromino = tetrominos[Math.floor(Math.random() * tetrominos.length)];
     this.form = TETROMINOS[randTetromino];
   }
 
-  cleanPiece(newStage) {
-    this.form.shape.forEach((row, y) => {
-      row.forEach((value, x) => {
-        if (value !== 0) {
-          newStage[y + 0][x + 3] = [value, `${'clear'}`];
-        }
-      });
-    });
-  }
+  // cleanPiece(newStage) {
+  //   this.form.shape.forEach((row, y) => {
+  //     row.forEach((value, x) => {
+  //       if (value !== 0) {
+  //         newStage[y + 0][x + 3] = [value, `${'clear'}`];
+  //       }
+  //     });
+  //   });
+  // }
 
   rotate(dir) {
     // Make the rows to become cols (transpose)
-    const rotatedTetro = this.form.shape.map((_, index) =>
-      this.form.shape.map((col) => col[index]),
-    );
+    const rotatedTetro = this.form.shape.map((_, index) => this.form.shape.map((col) => col[index]));
     // Reverse each row to get a rotated matrix
 
     if (dir > 0) {
       const rotated = rotatedTetro.map((row) => row.reverse());
-      console.log(rotated);
+      // console.log(rotated);
       this.form.shape = rotated;
 
       // return rotated;

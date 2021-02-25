@@ -48,14 +48,7 @@ const styles = (theme) => ({
 });
 
 const MuiVirtualizedTable = (props) => {
-  const {
-    classes,
-    owner,
-    columns,
-    rowHeight,
-    headerHeight,
-    ...tableProps
-  } = props;
+  const { classes, owner, columns, rowHeight, headerHeight, ...tableProps } = props;
 
   const getRowClassName = ({ index }) => {
     const { classes } = props;
@@ -71,18 +64,10 @@ const MuiVirtualizedTable = (props) => {
     return (
       <TableCell
         component="div"
-        className={clsx(
-          classes.tableCell,
-          classes.flexContainer,
-          classes.noClick,
-        )}
+        className={clsx(classes.tableCell, classes.flexContainer, classes.noClick)}
         variant="body"
         style={{ height: rowHeight }}
-        align={
-          (columnIndex != null && columns[columnIndex].numeric) || false
-            ? 'right'
-            : 'left'
-        }
+        align={(columnIndex != null && columns[columnIndex].numeric) || false ? 'right' : 'left'}
       >
         {columns[columnIndex].dataKey === 'stage' ? (
           <Stage stage={cellData || createStage()} type="stagePlayers" />
@@ -104,12 +89,7 @@ const MuiVirtualizedTable = (props) => {
     return (
       <TableCell
         component="div"
-        className={clsx(
-          classes.tableCell,
-          classes.tableCellHeader,
-          classes.flexContainer,
-          classes.noClick,
-        )}
+        className={clsx(classes.tableCell, classes.tableCellHeader, classes.flexContainer, classes.noClick)}
         variant="head"
         style={{ height: headerHeight }}
         align={columns[columnIndex].numeric || false ? 'right' : 'left'}

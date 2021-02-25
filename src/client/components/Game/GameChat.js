@@ -40,21 +40,14 @@ const GameChat = (props) => {
             <Grid item xs>
               <List className={classes.list}>
                 {chat.map((entryMessage) => (
-                  <GameChatMessage
-                    key={entryMessage.id}
-                    message={entryMessage}
-                  />
+                  <GameChatMessage key={entryMessage.id} message={entryMessage} />
                 ))}
                 <div ref={scrollRef} />
               </List>
               <CardContent>
                 <Grid container>
                   <Grid item xs>
-                    <GameChatBox
-                      message={message}
-                      handleMessage={handleMessage}
-                      handleSubmit={handleSubmit}
-                    />
+                    <GameChatBox message={message} handleMessage={handleMessage} handleSubmit={handleSubmit} />
                   </Grid>
                 </Grid>
               </CardContent>

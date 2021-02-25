@@ -14,12 +14,10 @@ const redTetris = (server) => {
   RedTetris.setIo(io);
 
   io.on('connect', (socket) => {
-    appController.connect({ socket }, {});
+    appController.connect({ socket }, { io });
 
     routes().map((route) =>
-      socket.on(route.event, (data, callback) =>
-        route.handler({ socket, data }, { callback }),
-      ),
+      socket.on(route.event, (data, callback) => route.handler({ socket, data }, { io, callback })),
     );
   });
 };

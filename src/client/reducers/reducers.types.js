@@ -3,21 +3,13 @@ import PropTypes from 'prop-types';
 /* Common  */
 
 export const stagePropTypes = PropTypes.arrayOf(
-  PropTypes.arrayOf(
-    PropTypes.arrayOf(
-      PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    ),
-  ),
+  PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string]))),
 );
 
 export const piecePropTypes = PropTypes.shape({
   form: PropTypes.shape({
     color: PropTypes.string.isRequired,
-    shape: PropTypes.arrayOf(
-      PropTypes.arrayOf(
-        PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-      ),
-    ),
+    shape: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number]))),
   }),
 });
 

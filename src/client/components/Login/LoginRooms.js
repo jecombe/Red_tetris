@@ -25,18 +25,13 @@ const LoginGamesMap = (games, onClickRoom) => {
 
   return games.map((game) => (
     <ListItem value={game} key={game.room}>
-      <ListItemText
-        primary={`${game.room}`}
-        secondary={`Owned by ${game.owner}`}
-      />
+      <ListItemText primary={`${game.room}`} secondary={`Owned by ${game.owner}`} />
       <ListItemText
         primary={game.started ? 'Game started' : 'Game not started'}
         secondary={`${Object.keys(game.players).length} players`}
       />
       <ListItemSecondaryAction>
-        <RedIconButton
-          onClick={() => onClickRoom({ target: { value: game.room } })}
-        >
+        <RedIconButton onClick={() => onClickRoom({ target: { value: game.room } })}>
           <FileCopyOutlinedIcon />
         </RedIconButton>
       </ListItemSecondaryAction>
@@ -54,9 +49,7 @@ const LoginRooms = (props) => {
           <CardHeader title="Available rooms" />
           <CardContent>
             <Grid item xs={12} style={{ maxHeight: 350, overflow: 'auto' }}>
-              <List style={{ maxHeight: '100%' }}>
-                {LoginGamesMap(games, onClickRoom)}
-              </List>
+              <List style={{ maxHeight: '100%' }}>{LoginGamesMap(games, onClickRoom)}</List>
             </Grid>
           </CardContent>
         </Card>

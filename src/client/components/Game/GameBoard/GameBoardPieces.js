@@ -7,10 +7,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 
 import { createStagePiece, updateStage } from '../../../../shared/stage';
-import {
-  playerStateProp,
-  settingsProp,
-} from '../../../reducers/reducers.types';
+import { playerStateProp, settingsProp } from '../../../reducers/reducers.types';
 
 import Stage from '../../Common/Stage';
 
@@ -45,9 +42,9 @@ const GameBoardPieces = (props) => {
 
   return (
     <Box>
-      <Typography align="center" className={classes.subheader}>
+      {/* <Typography align="center" className={classes.subheader}>
         Next
-      </Typography>
+      </Typography> */}
       <Card elevation={0} square>
         <CardContent>
           <Grid container direction="column" spacing={1}>

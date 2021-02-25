@@ -21,11 +21,7 @@ const dispatch = (socket, store, next, action) => () => {
 
   if (router.location.pathname !== '/') {
     const room = router.location.pathname.split('/')[1].split('[')[0].trim();
-    const name = router.location.pathname
-      .split('/')[1]
-      .split('[')[1]
-      .split(']')[0]
-      .trim();
+    const name = router.location.pathname.split('/')[1].split('[')[1].split(']')[0].trim();
 
     if (room && name) {
       store.dispatch({

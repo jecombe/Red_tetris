@@ -32,26 +32,14 @@ const Game = () => {
 
   return (
     <Container className={classes.container}>
-      <Grid
-        container
-        justify="center"
-        alignItems="center"
-        className={classes.grid}
-      >
-        <Grid
-          item
-          container
-          justify="space-evenly"
-          className={classes.gridItem}
-        >
+      <Grid container justify="center" alignItems="center" className={classes.grid}>
+        <Grid item container justify="space-evenly" className={classes.gridItem}>
           <Grid item xs={3}>
             <GameRoomContainer />
           </Grid>
-          {/* <Divider orientation="vertical" variant="middle" /> */}
           <Grid item xs={5}>
             <GameBoardContainer />
           </Grid>
-          {/* <Divider orientation="vertical" variant="middle" /> */}
           <Grid item xs={3}>
             <GameChatContainer />
           </Grid>

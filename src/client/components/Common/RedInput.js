@@ -18,15 +18,7 @@ const RedInput = (props) => {
 
   return (
     <FormControl className={classes.form}>
-      <TextField
-        id={name}
-        fullWidth
-        label={label}
-        name={name}
-        value={value}
-        onChange={onChange}
-        disabled={disabled}
-      />
+      <TextField id={name} fullWidth label={label} name={name} value={value} onChange={onChange} disabled={disabled} />
     </FormControl>
   );
 };

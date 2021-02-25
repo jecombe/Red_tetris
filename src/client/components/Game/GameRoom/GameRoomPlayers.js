@@ -10,11 +10,7 @@ import AppBar from '@material-ui/core/AppBar';
 
 import { TABLE_PLAYERS_COLUMNS } from '../../../constants/tables';
 
-import {
-  playerStateProp,
-  settingsProp,
-  playersStatePropTypes,
-} from '../../../reducers/reducers.types';
+import { playerStateProp, settingsProp, playersStatePropTypes } from '../../../reducers/reducers.types';
 
 import VirtualizedList from '../../Common/VirtualizedList';
 import GameRoomOwner from './GameRoomOwner';
@@ -43,21 +39,11 @@ const GameRoomPlayers = (props) => {
         <Grid container justify="space-between" alignItems="center">
           <Grid item>
             <Tabs value={0} indicatorColor="primary" textColor="primary">
-              <Tab
-                disabled
-                className={classes.tab}
-                label="Players"
-                style={{ color: 'red' }}
-              />
+              <Tab disabled className={classes.tab} label="Players" style={{ color: 'red' }} />
             </Tabs>
           </Grid>
           <Grid item>
-            <GameRoomOwner
-              disabled={!(name === owner)}
-              owner={owner}
-              players={players}
-              onClickOwner={handleSetOwner}
-            />
+            <GameRoomOwner disabled={!(name === owner)} owner={owner} players={players} onClickOwner={handleSetOwner} />
           </Grid>
         </Grid>
       </AppBar>

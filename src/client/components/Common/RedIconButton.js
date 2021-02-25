@@ -17,11 +17,7 @@ const RedIconButton = (props) => {
   const classes = useStyles();
 
   return (
-    <IconButton
-      onClick={onClick}
-      disabled={disabled}
-      className={classes.RedIconButton}
-    >
+    <IconButton onClick={onClick} disabled={disabled} className={classes.RedIconButton}>
       {children}
     </IconButton>
   );

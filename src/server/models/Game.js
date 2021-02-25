@@ -22,52 +22,8 @@ export default class Game {
     return this.room;
   }
 
-  /* Settings */
-
-  getSettings() {
-    return this.settings;
-  }
-
-  getSettingsOwner() {
-    return this.settings.owner;
-  }
-
-  getStarted() {
-    return this.settings.started;
-  }
-
-  getTetros() {
-    return this.settings.pieces;
-  }
-
-  getDropTime() {
-    return this.settings.dropTime;
-  }
-
-  /* Loosers */
-
-  getLoosers() {
-    return this.settings.nbLoosers;
-  }
-
-  setStarted(started) {
-    this.settings.started = started;
-  }
-
-  setTetro() {
-    this.settings.pieces.push(new Piece());
-  }
-
-  setLoosers() {
-    this.settings.loosers += 1;
-  }
-
-  setLoosersNull() {
-    this.settings.loosers = 0;
-  }
-
   isOwner(name) {
-    return this.getSettingsOwner() === name;
+    return this.settings.owner === name;
   }
 
   /* Players */
@@ -78,16 +34,6 @@ export default class Game {
 
   getPlayer(id) {
     return this.players[id];
-  }
-
-  setPlayer(id, name) {
-    this.players[id] = new Player(name);
-    this.settings.nbPlayers += 1;
-  }
-
-  unsetPlayer(name) {
-    delete this.players[name];
-    this.nbPlayers -= 1;
   }
 
   isEmpty() {
@@ -104,7 +50,9 @@ export default class Game {
   }
 
   logout(id, name) {
-    // this.unsetPlayer(id);
+    if (!this.getPlayer(id)) {
+      throw new Error('[logout]: No player found');
+    }
     delete this.players[id];
     this.settings.nbPlayers -= 1;
     this.setMessage('server', `${name} leaved the room`);
@@ -121,9 +69,7 @@ export default class Game {
       id: uuidv4(),
       user,
       text,
-      date: `${new Date().getHours()}h : ${
-        new Date().getMinutes() < 10 ? '0' : ''
-      }${new Date().getMinutes()}`,
+      date: `${new Date().getHours()}h : ${new Date().getMinutes() < 10 ? '0' : ''}${new Date().getMinutes()}`,
     });
   }
 
@@ -175,16 +121,16 @@ export default class Game {
     const { collided, loose, lines } = this.getPlayer(name).move(keyCode);
 
     if (collided === true) {
-      if (!this.getTetros()[this.getPlayer(name).nbPiece + 2]) {
+      if (!this.settings.pieces[this.getPlayer(name).nbPiece + 2]) {
         this.settings.pieces.push(new Piece());
       }
       this.getPlayer(name).updateCollision(this.settings.pieces);
       this.setMallus(name, lines);
     }
     if (loose === true) {
-      this.getPlayer(name).setLoose(true);
+      this.getPlayer(name).loose = true;
       this.settings.nbLoosers += 1;
-      if (this.getLoosers() === this.getSettings().nbPlayers) {
+      if (this.settings.nbLoosers === this.settings.nbPlayers) {
         this.end();
       }
     }

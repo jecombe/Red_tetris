@@ -19,11 +19,7 @@ function useKey(callback) {
   };
 
   useEffect(() => {
-    const canUseDOM = !!(
-      typeof window !== 'undefined' &&
-      window.document &&
-      window.document.createElement
-    );
+    const canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
     if (!canUseDOM) {
       console.error('Window is not defined');
       return null;

@@ -208,11 +208,13 @@ export default class Player {
   }
 
   setMallus(lines) {
+    let i = lines;
+
     this.mallus += lines;
     this.setStage(this.stage.slice(lines, 20));
-    while (lines) {
+    while (i) {
       this.stage.push(new Array(10).fill(['M', 'mallus']));
-      lines -= 1;
+      i -= 1;
     }
     this.setStage(flushUpdate(this.piece, this.stage, this.position.x, this.position.y, false));
   }

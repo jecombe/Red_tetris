@@ -14,14 +14,6 @@ const resInfos = (io) => {
       games: RedTetris.getGames(),
     },
   });
-  // RedTetris.emitToAll(ev.res_UPDATE_APP_INFOS, {
-  //   status: 200,
-  //   payload: {
-  //     nbPlayers: RedTetris.getNbSockets(),
-  //     nbGames: RedTetris.getNbGames(),
-  //     games: RedTetris.getGames(),
-  //   },
-  // });
 };
 
 const login = (req, res) => {
@@ -29,25 +21,16 @@ const login = (req, res) => {
   const { name, room } = req.data;
 
   try {
-    // if (!RedTetris.getGame(room)) {
-    //   RedTetris.setGame(room, name);
-    // }
-
     RedTetris.reqLogin(req, res);
-
-    // RedTetris.getSocket(socket.id).join(room);
-    // RedTetris.setSocketRoom(socket.id, room);
-
-    /* Responses */
-
-    emitToSocket(socket, ev.res_LOGIN, {
-      status: 200,
-      payload: { name, room },
-    });
 
     emitToRoom(res.io, room, ev.res_UPDATE_GAME, {
       status: 200,
       payload: { game: RedTetris.getGame(room) },
+    });
+
+    emitToSocket(socket, ev.res_LOGIN, {
+      status: 200,
+      payload: { name, room },
     });
 
     resInfos(res.io);
@@ -63,23 +46,10 @@ const login = (req, res) => {
 
 const logout = (req, res) => {
   const { socket } = req;
-  const { name, room } = req.data;
+  const { room } = req.data;
 
   try {
-    // if (!RedTetris.getGame(room) || !RedTetris.getGame(room).getPlayer(socket.id)) {
-    //   throw new Error("Can't logout");
-    // }
-
     RedTetris.reqLogout(req, res);
-
-    // if (RedTetris.getGame(room).isEmpty()) {
-    //   RedTetris.unsetGame(room);
-    // }
-
-    // RedTetris.getSocket(socket.id).leave(room);
-    // RedTetris.unsetSocketRoom(socket.id);
-
-    /* Responses */
 
     if (socket) {
       emitToSocket(socket, ev.res_LOGOUT, {
@@ -94,7 +64,6 @@ const logout = (req, res) => {
     });
 
     resInfos(res.io);
-    // console.log('[reqLogout] success');
   } catch (err) {
     logger.error('[logout] ', err);
 

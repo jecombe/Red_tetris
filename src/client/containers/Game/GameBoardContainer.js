@@ -15,11 +15,13 @@ const GameBoardContainer = (props) => {
   const { started, pieces, dropTime, nbPlayers } = settings;
   const { loose } = player;
 
+  // if (started) {
   useInterval(() => reqMove({ keyCode: keys.KDOWN }), dropTime, {
     started,
     loose,
   });
   useKey((event) => reqMove({ keyCode: event.keyCode }), { started, loose });
+  // }
 
   return <GameBoard player={player} pieces={pieces} nbPlayers={nbPlayers} />;
 };

@@ -1,6 +1,6 @@
 import ev from '../../shared/events';
 import logger from '../utils/logger';
-import { emitToAll, emitToSocket, emitToRoom } from '../helpers/emitHelper';
+import { emitToSocket, emitToRoom } from '../helpers/emitHelper';
 
 import RedTetris from '../models';
 // import redTetris from '../socket';
@@ -39,28 +39,23 @@ import RedTetris from '../models';
 // };
 
 const reqStart = async (req, res) => {
-  const { name, room } = req.data;
+  const { room } = req.data;
 
   try {
-    // if (!RedTetris.getGame(room) || !RedTetris.getGame(room).isOwner(name)) {
-    //   throw new Error("Can't start game");
-    // }
-
-    // RedTetris.getGame(room).start(name);
-
     RedTetris.reqStart(req, res);
+
     emitToRoom(res.io, room, ev.res_START_GAME, {
       status: 200,
       payload: {
         message: 'Game started!',
       },
     });
-    // RedTetris.emitToRoom(room, ev.res_UPDATE_GAME, {
-    //   status: 200,
-    //   payload: {
-    //     game: RedTetris.getGame(room),
-    //   },
-    // });
+    RedTetris.emitToRoom(room, ev.res_UPDATE_GAME, {
+      status: 200,
+      payload: {
+        game: RedTetris.getGame(room),
+      },
+    });
     // setTimeout(countdown, 100, req, res, 3);
     logger.info('[reqStart] ', 'success');
   } catch (err) {
@@ -75,7 +70,7 @@ const reqStart = async (req, res) => {
 };
 
 const reqOwner = async (req, res) => {
-  const { name, room, newOwner } = req.data;
+  const { room } = req.data;
 
   try {
     RedTetris.reqOwner(req, res);
@@ -99,7 +94,7 @@ const reqOwner = async (req, res) => {
 };
 
 const reqChat = async (req, res) => {
-  const { room, name, text } = req.data;
+  const { room } = req.data;
 
   try {
     RedTetris.reqChat(req, res);

@@ -8,25 +8,24 @@ const reqMove = (req, res) => {
   const { room, name, keyCode } = req.data;
 
   try {
-    // const { collided, loose } = RedTetris.getGame(room).move(name, keyCode);
+    const { collided, loose } = RedTetris.reqMove(req, res);
 
-    RedTetris.reqMove(req, res);
-    // if (collided || loose) {
-    //   emitToRoom(res.io, room, ev.res_UPDATE_GAME, {
-    //     status: 200,
-    //     payload: {
-    //       game: RedTetris.getGame(room),
-    //     },
-    //   });
-    // } else {
-    emitToSocket(req.socket, ev.res_UPDATE_PLAYER, {
-      status: 200,
-      message: '',
-      payload: {
-        player: RedTetris.getGame(room).getPlayer(name),
-      },
-    });
-    // }
+    if (collided || loose) {
+      emitToRoom(res.io, room, ev.res_UPDATE_GAME, {
+        status: 200,
+        payload: {
+          game: RedTetris.getGame(room),
+        },
+      });
+    } else {
+      emitToSocket(req.socket, ev.res_UPDATE_PLAYER, {
+        status: 200,
+        message: '',
+        payload: {
+          player: RedTetris.getGame(room).getPlayer(name),
+        },
+      });
+    }
 
     logger.info('[move]', 'success');
   } catch (err) {

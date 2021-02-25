@@ -87,7 +87,7 @@ export default class IoGame {
 
   /* App */
 
-  reqLogin(req, res) {
+  reqLogin(req) {
     const { socket } = req;
     const { name, room } = req.data;
 
@@ -104,7 +104,7 @@ export default class IoGame {
     this.setSocketRoom(socket.id, room);
   }
 
-  reqLogout(req, res) {
+  reqLogout(req) {
     const { socket } = req;
     const { name, room } = req.data;
 
@@ -124,7 +124,7 @@ export default class IoGame {
 
   /* Game */
 
-  reqStart(req, res) {
+  reqStart(req) {
     const { name, room } = req.data;
 
     if (!this.getGame(room)) {
@@ -134,7 +134,7 @@ export default class IoGame {
     this.getGame(room).start(name);
   }
 
-  reqOwner(req, res) {
+  reqOwner(req) {
     const { name, room, newOwner } = req.data;
 
     if (!this.getGame(room) || !this.getGame(room).isOwner(name)) {
@@ -144,7 +144,7 @@ export default class IoGame {
     this.getGame(room).setNewOwner(name, newOwner);
   }
 
-  reqChat(req, res) {
+  reqChat(req) {
     const { room, name, text } = req.data;
 
     if (!this.getGame(room) || !this.getGame(room).getPlayer(req.socket.id)) {
@@ -156,12 +156,14 @@ export default class IoGame {
 
   /* Player */
 
-  reqMove(req, res) {
+  reqMove(req) {
     const { room, name, keyCode } = req.data;
 
     if (!this.getGame(room)) {
       throw new Error('Game not exist');
     }
     const { collided, loose } = this.getGame(room).move(name, keyCode);
+
+    return { collided, loose };
   }
 }

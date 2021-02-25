@@ -38,7 +38,12 @@ const GameRoomInfos = (props) => {
         </Grid>
         <Grid item container justify="center">
           <Grid item xs={10}>
-            <RedButton className="startButton" name="start game" handleSubmit={handleStart} disabled={started || !(name === owner)} />
+            <RedButton
+              className="startButton"
+              name="start game"
+              handleSubmit={handleStart}
+              disabled={started || !(name === owner)}
+            />
           </Grid>
         </Grid>
       </Grid>

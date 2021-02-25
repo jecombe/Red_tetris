@@ -20,7 +20,7 @@ const GameBoardLoose = (props) => {
   const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
-    setOpen(loose);
+    if (loose === true) setOpen(loose);
   }, [loose]);
 
   const handleClose = () => {

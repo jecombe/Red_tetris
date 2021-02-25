@@ -18,13 +18,13 @@ export const createStage = () => Array.from(Array(STAGE_HEIGHT), () => new Array
 export const calcScore = (level, lines) => {
   switch (lines) {
     case 1:
-      return level * 40;
+      return 40;
     case 2:
-      return level * 100;
+      return 100;
     case 3:
-      return level * 300;
+      return 300;
     case 4:
-      return level * 1200;
+      return 1200;
     default:
       return 0;
   }

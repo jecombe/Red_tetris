@@ -44,13 +44,13 @@ const GameSettingsRoomOwner = (props) => {
       <RedIconButton disabled={disabled} onClick={handleClickOpen}>
         <SupervisorAccountIcon fontSize="small" />
       </RedIconButton>
-      <Dialog open={true} onClose={handleClose} maxWidth="sm" fullWidth>
+      <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
         <DialogTitle>Set new room owner</DialogTitle>
         <List>
           {playersList.map((player) => (
             <ListItem
               button
-              // disabled={owner === player[1].name}
+              disabled={owner === player[1].name}
               onClick={() => handleListItemClick(player[1])}
               key={player[1].name}
               className={`playair-${player[1].name}`}

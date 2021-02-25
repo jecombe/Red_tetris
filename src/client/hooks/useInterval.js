@@ -13,13 +13,11 @@ export default function useInterval(callback, delay, conditions) {
       savedCallback.current();
     }
     if (delay !== null && delay !== 0) {
-      if (conditions.started && !conditions.loose) {
-        const id = setInterval(tick, delay);
+      const id = setInterval(tick, delay);
 
-        return () => {
-          clearInterval(id);
-        };
-      }
+      return () => {
+        clearInterval(id);
+      };
     }
   }, [delay, conditions]);
 }

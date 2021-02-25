@@ -1,11 +1,11 @@
 import 'regenerator-runtime/runtime';
 import express from 'express';
 
-import params from '../shared/params';
-import logger from './utils/logger';
+// import params from '../shared/params';
+// import logger from './utils/logger';
 import redTetris from './socket';
 
-const { host, port } = params.server;
+// const { host, port } = params.server;
 
 const app = express();
 app.use(express.static('build'));

@@ -35,9 +35,13 @@ const GameRankingList = (props) => {
 
   const playersList = Object.values(players);
 
+  console.log('ranking: ', nbLoosers, nbPlayers);
+
   useEffect(() => {
+    console.log('useEffect');
     if (nbLoosers === nbPlayers) setOpen(true);
-  }, [nbLoosers]);
+    else setOpen(false);
+  }, [nbLoosers, nbPlayers]);
 
   const handleClose = () => {
     setOpen(false);

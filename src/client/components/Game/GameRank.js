@@ -1,15 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import Slide from '@material-ui/core/Slide';
 import Paper from '@material-ui/core/Paper';
+import DialogActions from '@material-ui/core/DialogActions';
+import Button from '@material-ui/core/Button';
 
-import { TABLE_PLAYERS_RANK } from '../../../constants/tables';
-import { settingsProp, playersStatePropTypes } from '../../../reducers/reducers.types';
+import { TABLE_PLAYERS_RANK } from '../../constants/tables';
+import { playersStatePropTypes } from '../../reducers/reducers.types';
 
-import VirtualizedList from '../../Common/VirtualizedList';
+import VirtualizedList from '../Common/VirtualizedList';
 
 const useStyles = makeStyles({
   box: {
@@ -28,24 +31,11 @@ const Transition = React.forwardRef((props, ref) => (
   <Slide direction="up" ref={ref} {...props} />
 ));
 
-const GameRankingList = (props) => {
-  const { players, nbPlayers, nbLoosers } = props;
-  const [open, setOpen] = React.useState(false);
+const GameRank = (props) => {
+  const { players, open, handleSetOwner, handleClose } = props;
   const classes = useStyles();
 
   const playersList = Object.values(players);
-
-  console.log('ranking: ', nbLoosers, nbPlayers);
-
-  useEffect(() => {
-    console.log('useEffect');
-    if (nbLoosers === nbPlayers) setOpen(true);
-    else setOpen(false);
-  }, [nbLoosers, nbPlayers]);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   return (
     <Dialog open={open} TransitionComponent={Transition} keepMounted onClose={handleClose} fullWidth>
@@ -56,17 +46,24 @@ const GameRankingList = (props) => {
             rowCount={playersList.length}
             rowGetter={({ index }) => playersList[index]}
             columns={TABLE_PLAYERS_RANK}
+            handleSetOwner={handleSetOwner}
           />
         </Paper>
       </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose} color="primary" autoFocus>
+          Close
+        </Button>
+      </DialogActions>
     </Dialog>
   );
 };
 
-GameRankingList.propTypes = {
+GameRank.propTypes = {
   players: playersStatePropTypes.isRequired,
-  nbLoosers: settingsProp.nbLoosers.isRequired,
-  nbPlayers: settingsProp.nbPlayers.isRequired,
+  open: PropTypes.bool.isRequired,
+  handleSetOwner: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired,
 };
 
-export default GameRankingList;
+export default GameRank;

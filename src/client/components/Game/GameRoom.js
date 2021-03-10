@@ -2,12 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Box from '@material-ui/core/Box';
+import Paper from '@material-ui/core/Paper';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 
-import { playerStateProp, roomStatePropTypes } from '../../reducers/reducers.types';
+import { TABLE_PLAYERS_COLUMNS } from '../../constants/tables';
 
-import GameRoomInfos from './GameRoom/GameRoomInfos';
-import GameRoomPlayers from './GameRoom/GameRoomPlayers';
-import GameRoomRanking from './GameRoom/GameRoomRanking';
+import { playerStateProp, settingsProp, gameStateProp } from '../../reducers/reducers.types';
+import RedIconButton from '../Common/RedIconButton';
+import BoxInfo from '../Common/BoxInfo';
+import RedButton from '../Common/RedButton';
+
+import VirtualizedList from '../Common/VirtualizedList';
 
 const useStyles = makeStyles({
   grid: {
@@ -16,41 +25,100 @@ const useStyles = makeStyles({
   gridItemInfos: {
     height: '33%',
   },
+  box: {
+    height: '100%',
+  },
+  tab: {
+    fontWeight: 'bold',
+  },
+  paper: {
+    height: '30vh',
+  },
+  boxRanking: {
+    height: '100%',
+  },
+  tabRanking: {
+    fontWeight: 'bold',
+  },
+  paperRanking: {
+    height: '33vh',
+  },
 });
 
 const GameRoom = (props) => {
-  const { name, game, handleStart, handleSetOwner } = props;
+  const { name, room, owner, started, players, handleStart, handleOpen } = props;
   const classes = useStyles();
+  const playersList = Object.values(players);
+
+  const renderPlayersHeader = () => {
+    return (
+      <AppBar position="static" color="default">
+        <Grid container justify="space-between" alignItems="center">
+          <Grid item>
+            <Tabs value={0} indicatorColor="primary" textColor="primary">
+              <Tab disabled className={classes.tabRanking} label="Players" style={{ color: 'red' }} />
+            </Tabs>
+          </Grid>
+          <Grid item>
+            <RedIconButton onClick={handleOpen}>
+              <SupervisorAccountIcon fontSize="small" />
+            </RedIconButton>
+          </Grid>
+        </Grid>
+      </AppBar>
+    );
+  };
 
   return (
-    <Grid container direction="column" className={classes.grid}>
-      <Grid item xs className={classes.gridItemInfos}>
-        <GameRoomInfos
-          name={name}
-          room={game.room}
-          owner={game.settings.owner}
-          started={game.settings.started}
-          handleStart={handleStart}
-        />
+    <Grid container justify="center" alignItems="center" className={classes.grid}>
+      <Grid item sm={6} md={10}>
+        <Box className={classes.box}>
+          <Grid container spacing={1}>
+            <Grid item xs={12}>
+              <BoxInfo field="Logged as" value={name} />
+            </Grid>
+            <Grid item xs={6}>
+              <BoxInfo field="room name" value={room} />
+            </Grid>
+            <Grid item xs={6}>
+              <BoxInfo field="room owner" value={owner} />
+            </Grid>
+            <Grid item xs={12}>
+              <RedButton
+                className="startButton"
+                name="start game"
+                handleSubmit={handleStart}
+                disabled={started || !(name === owner)}
+              />
+            </Grid>
+          </Grid>
+        </Box>
       </Grid>
-      <Grid item xs>
-        <GameRoomPlayers
-          name={name}
-          owner={game.settings.owner}
-          players={game.players}
-          handleSetOwner={handleSetOwner}
-        />
+      <Grid item sm={6} md={12}>
+        <Box className={classes.box}>
+          {renderPlayersHeader()}
+          <Paper variant="outlined" className={classes.paper} elevation={0}>
+            <VirtualizedList
+              owner={owner}
+              rowCount={playersList.length}
+              rowGetter={({ index }) => playersList[index]}
+              columns={TABLE_PLAYERS_COLUMNS}
+            />
+          </Paper>
+        </Box>
       </Grid>
-      <GameRoomRanking nbPlayers={game.settings.nbPlayers} nbLoosers={game.settings.nbLoosers} players={game.players} />
     </Grid>
   );
 };
 
 GameRoom.propTypes = {
   name: playerStateProp.name.isRequired,
-  game: roomStatePropTypes.isRequired,
+  room: gameStateProp.room.isRequired,
+  owner: settingsProp.owner.isRequired,
+  started: settingsProp.started.isRequired,
+  players: gameStateProp.players.isRequired,
   handleStart: PropTypes.func.isRequired,
-  handleSetOwner: PropTypes.func.isRequired,
+  handleOpen: PropTypes.func.isRequired,
 };
 
 export default GameRoom;

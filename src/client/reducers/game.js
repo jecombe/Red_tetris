@@ -40,11 +40,14 @@ const gameReducer = (state = gameState, action) => {
       };
     }
     case ev.UPDATE_GAME_PLAYERS: {
-      const { players } = action.payload;
+      const { id, player } = action.payload;
 
       return {
         ...state,
-        players,
+        players: {
+          ...state.players,
+          [id]: player,
+        },
       };
     }
     case ev.UPDATE_GAME_CHAT: {

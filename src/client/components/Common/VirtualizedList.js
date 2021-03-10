@@ -9,8 +9,10 @@ import TableCell from '@material-ui/core/TableCell';
 import { AutoSizer, Column, Table } from 'react-virtualized';
 import Icon from '@material-ui/core/Icon';
 import EmojiFlagsIcon from '@material-ui/icons/EmojiFlags';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 import { createStage } from '../../../shared/stage';
+import RedIconButton from './RedIconButton';
 
 import Stage from './Stage';
 
@@ -45,10 +47,13 @@ const styles = (theme) => ({
   noClick: {
     cursor: 'initial',
   },
+  icon: {
+    color: 'red',
+  },
 });
 
 const MuiVirtualizedTable = (props) => {
-  const { classes, owner, columns, rowHeight, headerHeight, ...tableProps } = props;
+  const { classes, owner, handleSetOwner, columns, rowHeight, headerHeight, ...tableProps } = props;
 
   const getRowClassName = ({ index }) => {
     const { classes } = props;
@@ -58,18 +63,45 @@ const MuiVirtualizedTable = (props) => {
     });
   };
 
+  const renderCellData = ({ dataKey, cellData }) => {
+    if (dataKey === 'stage') return <Stage stage={cellData || createStage()} type="stagePlayers" />;
+    if (dataKey === 'name')
+      return (
+        <>
+          {cellData}
+          {cellData === owner ? (
+            <Icon fontSize="small" color="primary">
+              <EmojiFlagsIcon fontSize="small" />
+            </Icon>
+          ) : null}
+          {cellData !== owner && handleSetOwner !== undefined ? (
+            <RedIconButton onClick={() => handleSetOwner(cellData)}>
+              <PersonAddIcon fontSize="small" />
+            </RedIconButton>
+          ) : null}
+        </>
+      );
+    return cellData;
+  };
+
   const cellRenderer = ({ cellData, columnIndex }) => {
     const { columns, classes, rowHeight } = props;
 
     return (
       <TableCell
         component="div"
-        className={clsx(classes.tableCell, classes.flexContainer, classes.noClick)}
+        className={clsx(classes.tableCell, classes.tableCellHeader, classes.flexContainer, classes.noClick)}
         variant="body"
         style={{ height: rowHeight }}
         align={(columnIndex != null && columns[columnIndex].numeric) || false ? 'right' : 'left'}
       >
-        {columns[columnIndex].dataKey === 'stage' ? (
+        {renderCellData({ dataKey: columns[columnIndex].dataKey, cellData })}
+        {/* {columns[columnIndex].dataKey === 'stage' ? (
+          <Stage stage={cellData || createStage()} type="stagePlayers" />
+        ) : (
+          cellData
+        )}
+        {columns[columnIndex].dataKey === 'owner' ? (
           <Stage stage={cellData || createStage()} type="stagePlayers" />
         ) : (
           cellData
@@ -78,7 +110,7 @@ const MuiVirtualizedTable = (props) => {
           <Icon fontSize="small" color="primary">
             <EmojiFlagsIcon fontSize="small" />
           </Icon>
-        ) : null}
+        ) : null} */}
       </TableCell>
     );
   };
@@ -108,6 +140,7 @@ const MuiVirtualizedTable = (props) => {
           rowHeight={rowHeight}
           gridStyle={{
             direction: 'inherit',
+            outline: 'none',
           }}
           headerHeight={headerHeight}
           className={classes.table}
@@ -137,8 +170,9 @@ const MuiVirtualizedTable = (props) => {
 
 MuiVirtualizedTable.defaultProps = {
   headerHeight: 48,
-  rowHeight: 48,
+  rowHeight: 60,
   owner: '',
+  handleSetOwner: undefined,
 };
 
 MuiVirtualizedTable.propTypes = {
@@ -154,6 +188,7 @@ MuiVirtualizedTable.propTypes = {
   headerHeight: PropTypes.number,
   rowHeight: PropTypes.number,
   owner: PropTypes.string,
+  handleSetOwner: PropTypes.func,
 };
 
 export default withStyles(styles)(MuiVirtualizedTable);

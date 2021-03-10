@@ -8,16 +8,18 @@ export const dispatch = (action, data, dispatch) => {
 
   // dispatch(actions.updatePlayer({ game }));
 
-  dispatch({
-    type: ev.UPDATE_LOG,
-    payload: {
-      isLoading: false,
-      snackbar: {
-        message,
-        variant: status === 100 ? 'warning' : 'info',
+  if (status !== 200) {
+    dispatch({
+      type: ev.UPDATE_LOG,
+      payload: {
+        isLoading: false,
+        snackbar: {
+          message,
+          variant: status === 100 ? 'info' : 'error',
+        },
       },
-    },
-  });
+    });
+  }
 };
 
 export default {

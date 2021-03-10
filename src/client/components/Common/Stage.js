@@ -79,11 +79,15 @@ const Stage = (props) => {
   );
 };
 
+Stage.defaultProps = {
+  type: '',
+};
+
 Stage.propTypes = {
   stage: PropTypes.arrayOf(
     PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.number, PropTypes.string]))),
   ).isRequired,
-  type: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  type: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 export default React.memo(Stage);

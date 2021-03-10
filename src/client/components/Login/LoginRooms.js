@@ -25,9 +25,9 @@ const LoginGamesMap = (games, onClickRoom) => {
 
   return games.map((game) => (
     <ListItem value={game} key={game.room}>
-      <ListItemText primary={`${game.room}`} secondary={`Owned by ${game.owner}`} />
+      <ListItemText primary={`${game.room}`} secondary={`Owned by ${game.settings.owner}`} />
       <ListItemText
-        primary={game.started ? 'Game started' : 'Game not started'}
+        primary={game.settings.started ? 'Game started' : 'Game not started'}
         secondary={`${Object.keys(game.players).length} players`}
       />
       <ListItemSecondaryAction>

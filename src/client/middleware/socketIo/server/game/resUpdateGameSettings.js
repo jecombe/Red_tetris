@@ -2,11 +2,11 @@ import ev from '../../../../../shared/events';
 
 // eslint-disable-next-line no-shadow
 export const dispatch = (action, data, dispatch) => {
-  const { settings } = data;
+  const { status, payload } = data;
 
   dispatch({
     type: ev.UPDATE_GAME_SETTINGS,
-    payload: { settings },
+    payload: { settings: payload.settings },
   });
 };
 

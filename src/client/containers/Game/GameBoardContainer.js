@@ -9,21 +9,42 @@ import { playerStateProp, settingsProp } from '../../reducers/reducers.types';
 import actions from '../../actions';
 
 import GameBoard from '../../components/Game/GameBoard';
+import GameLoose from '../../components/Game/GameLoose';
 
 const GameBoardContainer = (props) => {
   const { settings, player, reqMove } = props;
-  const { started, pieces, dropTime, nbPlayers } = settings;
-  const { loose } = player;
+  const [open, setOpen] = React.useState(false);
 
-  // if (started) {
-  useInterval(() => reqMove({ keyCode: keys.KDOWN }), dropTime, {
-    started,
-    loose,
-  });
-  useKey((event) => reqMove({ keyCode: event.keyCode }), { started, loose });
-  // }
+  React.useEffect(() => {
+    if (player.loose === true) setOpen(player.loose);
+  }, [player.loose]);
 
-  return <GameBoard player={player} pieces={pieces} nbPlayers={nbPlayers} />;
+  const handleCloseLoose = () => {
+    setOpen(false);
+  };
+
+  useInterval(() => reqMove({ keyCode: keys.KDOWN }), player.dropTime);
+  useKey((event) => reqMove({ keyCode: event.keyCode }));
+
+  return (
+    <>
+      <GameBoard
+        stage={player.stage}
+        pieceOne={player.stagePiece[0]}
+        pieceTwo={player.stagePiece[1]}
+        score={player.score}
+        lines={player.lines}
+        mallus={player.mallus}
+      />
+      <GameLoose
+        loose={player.loose}
+        rank={player.rank}
+        nbPlayers={settings.nbPlayers}
+        open={open}
+        handleClose={handleCloseLoose}
+      />
+    </>
+  );
 };
 
 GameBoardContainer.propTypes = {

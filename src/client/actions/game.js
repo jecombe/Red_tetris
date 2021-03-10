@@ -1,22 +1,22 @@
 import ev from '../../shared/events';
 
-export const updateGame = (payload) => (dispatch, getState) => {
-  const { id } = getState().app;
+// export const updateGame = (payload) => (dispatch, getState) => {
+//   const { id } = getState().app;
 
-  dispatch({
-    type: ev.UPDATE_PLAYER,
-    payload: {
-      player: payload.game.players[id],
-    },
-  });
+//   dispatch({
+//     type: ev.UPDATE_PLAYER,
+//     payload: {
+//       player: payload.game.players[id],
+//     },
+//   });
 
-  dispatch({
-    type: ev.UPDATE_GAME,
-    payload: {
-      game: payload.game,
-    },
-  });
-};
+//   dispatch({
+//     type: ev.UPDATE_GAME,
+//     payload: {
+//       game: payload.game,
+//     },
+//   });
+// };
 
 export const reqOwner = (payload) => ({
   type: ev.req_UPDATE_GAME_OWNER,

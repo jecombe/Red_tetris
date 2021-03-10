@@ -25,7 +25,6 @@ export const messagePropTypes = PropTypes.shape({
 export const playerStateProp = {
   name: PropTypes.string,
   score: PropTypes.number,
-  level: PropTypes.number,
   lines: PropTypes.number,
   mallus: PropTypes.number,
   rank: PropTypes.number,

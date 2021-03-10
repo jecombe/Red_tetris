@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-export default function useInterval(callback, delay, conditions) {
+export default function useInterval(callback, delay) {
   const savedCallback = useRef();
 
   useEffect(() => {
@@ -19,5 +19,5 @@ export default function useInterval(callback, delay, conditions) {
         clearInterval(id);
       };
     }
-  }, [delay, conditions]);
+  }, [delay]);
 }

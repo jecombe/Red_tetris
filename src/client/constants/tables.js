@@ -13,15 +13,15 @@ export const TABLE_PLAYERS_COLUMNS = [
     numeric: true,
   },
   {
-    dataKey: 'level',
-    label: 'Level',
+    dataKey: 'lines',
+    label: 'Lines',
     width: 120,
     numeric: true,
   },
   {
     dataKey: 'stage',
     label: '',
-    width: 120,
+    width: 70,
   },
 ];
 
@@ -29,7 +29,7 @@ export const TABLE_PLAYERS_RANK = [
   {
     dataKey: 'name',
     label: 'Name',
-    width: 120,
+    width: 200,
   },
   {
     dataKey: 'score',
@@ -38,20 +38,14 @@ export const TABLE_PLAYERS_RANK = [
     numeric: true,
   },
   {
-    dataKey: 'level',
-    label: 'Level',
+    dataKey: 'lines',
+    label: 'Lines',
     width: 120,
     numeric: true,
   },
   {
     dataKey: 'mallus',
     label: 'Mallus',
-    width: 120,
-    numeric: true,
-  },
-  {
-    dataKey: 'lines',
-    label: 'Lines',
     width: 120,
     numeric: true,
   },

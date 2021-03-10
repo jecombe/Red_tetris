@@ -1,13 +1,28 @@
 import ev from '../../../../../shared/events';
 
-import actions from '../../../../actions';
-
 // eslint-disable-next-line no-shadow
 export const dispatch = (action, data, dispatch) => {
   const { status, payload } = data;
 
   if (status === 200) {
-    dispatch(actions.updateGame({ game: payload.game }));
+    // eslint-disable-next-line no-shadow
+    dispatch((dispatch, getState) => {
+      const { id } = getState().app;
+
+      dispatch({
+        type: ev.UPDATE_PLAYER,
+        payload: {
+          player: payload.game.players[id],
+        },
+      });
+
+      dispatch({
+        type: ev.UPDATE_GAME,
+        payload: {
+          game: payload.game,
+        },
+      });
+    });
   }
 };
 

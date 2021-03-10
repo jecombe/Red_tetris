@@ -10,7 +10,7 @@ import GameChatContainer from '../../containers/Game/GameChatContainer';
 const useStyles = makeStyles({
   container: {
     height: '100%',
-    width: '75%',
+    width: '100%',
   },
   card: {
     height: '100%',
@@ -19,10 +19,10 @@ const useStyles = makeStyles({
     height: '100%',
   },
   game: {
-    height: '100%',
+    height: '97%',
   },
   gridItem: {
-    height: '95%',
+    height: '100%',
     width: '100%',
   },
 });
@@ -32,19 +32,19 @@ const Game = () => {
 
   return (
     <Container className={classes.container}>
-      <Grid container justify="center" alignItems="center" className={classes.grid}>
-        <Grid item container justify="space-evenly" className={classes.gridItem}>
-          <Grid item xs={3}>
-            <GameRoomContainer />
-          </Grid>
-          <Grid item xs={5}>
-            <GameBoardContainer />
-          </Grid>
-          <Grid item xs={3}>
-            <GameChatContainer />
-          </Grid>
+      {/* <Grid container justify="center" alignItems="center" className={classes.grid}> */}
+      <Grid container spacing={2} alignItems="center" justify="center" className={classes.gridItem}>
+        <Grid item sm={12} md className={classes.game}>
+          <GameRoomContainer />
+        </Grid>
+        <Grid item sm={6} md={4} className={classes.game}>
+          <GameBoardContainer />
+        </Grid>
+        <Grid item sm={6} md>
+          <GameChatContainer className={classes.game} />
         </Grid>
       </Grid>
+      {/* </Grid> */}
     </Container>
   );
 };

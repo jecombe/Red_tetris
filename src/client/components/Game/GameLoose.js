@@ -16,7 +16,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const GameBoardLoose = (props) => {
-  const { loose, rank, nbPlayers, open, handleClose } = props;
+  const { rank, nbPlayers, open, handleClose } = props;
 
   return (
     <Dialog open={open} TransitionComponent={Transition} keepMounted onClose={handleClose} fullWidth>
@@ -34,7 +34,6 @@ const GameBoardLoose = (props) => {
 };
 
 GameBoardLoose.propTypes = {
-  loose: playerStateProp.loose.isRequired,
   rank: playerStateProp.rank.isRequired,
   nbPlayers: settingsProp.nbPlayers.isRequired,
   open: PropTypes.bool.isRequired,

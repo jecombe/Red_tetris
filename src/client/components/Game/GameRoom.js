@@ -75,7 +75,7 @@ const GameRoom = (props) => {
         <Box className={classes.box}>
           <Grid container spacing={1}>
             <Grid item xs={12}>
-              <BoxInfo field="Logged as" value={name} />
+              <BoxInfo field="Logged as" value={name} className="roomName" />
             </Grid>
             <Grid item xs={6}>
               <BoxInfo field="room name" value={room} />

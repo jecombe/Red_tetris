@@ -12,7 +12,11 @@ const GameRoomContainer = (props) => {
   const { name, game, reqStartGame, reqOwner } = props;
   const [open, setOpen] = React.useState(false);
 
-  const handleStart = () => reqStartGame({ name, room: game.room });
+  const handleStart = () => {
+    console.log('here');
+    reqStartGame({ name, room: game.room });
+  };
+
   const handleSetOwner = (newOwner) => {
     console.log(newOwner);
     reqOwner({ newOwner });

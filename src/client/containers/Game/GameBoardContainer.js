@@ -36,13 +36,7 @@ const GameBoardContainer = (props) => {
         lines={player.lines}
         mallus={player.mallus}
       />
-      <GameLoose
-        loose={player.loose}
-        rank={player.rank}
-        nbPlayers={settings.nbPlayers}
-        open={open}
-        handleClose={handleCloseLoose}
-      />
+      <GameLoose rank={player.rank} nbPlayers={settings.nbPlayers} open={open} handleClose={handleCloseLoose} />
     </>
   );
 };

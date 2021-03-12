@@ -18,12 +18,32 @@ export default class Game {
     this.chat = [];
   }
 
+  /* Room */
+
   getRoom() {
     return this.room;
   }
 
   isOwner(name) {
     return this.settings.owner === name;
+  }
+
+  /* Settings */
+
+  setStarted(started) {
+    this.settings.started = started;
+  }
+
+  getStarted() {
+    return this.settings.started;
+  }
+
+  setPiece(piece) {
+    this.settings.pieces.push(piece);
+  }
+
+  setDropTime(dropTime) {
+    this.settings.dropTime = dropTime;
   }
 
   /* Players */
@@ -42,20 +62,45 @@ export default class Game {
 
   /* Login */
 
-  login(id, name) {
+  setLogin(id, name) {
     // this.setPlayer(id, name);
+    if (this.settings.started === true) {
+      throw new Error('Game is started');
+    }
+
     this.players[id] = new Player(name);
     this.settings.nbPlayers += 1;
     this.setMessage('server', `${name} joined the room`);
   }
 
-  logout(id, name) {
+  setLogout(id, name) {
     if (!this.getPlayer(id)) {
-      throw new Error('[logout]: No player found');
+      throw new Error('No player found');
     }
     delete this.players[id];
     this.settings.nbPlayers -= 1;
     this.setMessage('server', `${name} leaved the room`);
+  }
+
+  /* Owner */
+
+  setOwner(name) {
+    this.settings.owner = name;
+    this.setMessage('server', `${this.settings.owner} is the new owner`);
+  }
+
+  setRandomOwner() {
+    const players = Object.keys(this.players);
+    this.setOwner(players[Math.floor(Math.random() * players.length)]);
+  }
+
+  setNewOwner(name, newOwner) {
+    if (!this.isOwner(name)) {
+      throw new Error('Not owner');
+    }
+
+    if (newOwner === '') this.setRandomOwner();
+    else this.setOwner(newOwner);
   }
 
   /* Chat */
@@ -73,75 +118,85 @@ export default class Game {
     });
   }
 
-  /* Owner */
+  /* Game */
 
-  setOwner(name) {
-    this.settings.owner = name;
-    this.setMessage('server', `${this.settings.owner} is the new owner`);
-  }
-
-  setRandomOwner() {
-    const players = Object.keys(this.players);
-    this.setOwner(players[Math.floor(Math.random() * players.length)]);
-  }
-
-  setNewOwner(name, owner) {
-    if (!this.isOwner(name)) {
-      throw new Error('Not owner');
-    }
-
-    if (owner === '') this.setRandomOwner();
-    else this.setOwner(owner);
-  }
-
-  /* Players */
-
-  start(name) {
+  setStart(name) {
     if (!this.isOwner(name) || this.settings.started === true) {
-      throw new Error("You can't start the game");
+      throw new Error("Can't start the game");
     }
 
-    this.settings.started = true;
-    this.settings.pieces = [new Piece(), new Piece(), new Piece()];
-    this.settings.dropTime = 1000;
+    this.setStarted(true);
+    this.setPiece(new Piece());
+    this.setPiece(new Piece());
+    this.setPiece(new Piece());
+    this.setDropTime(1000);
     this.settings.nbLoosers = 0;
     Object.values(this.players).forEach((player) => {
-      player.start(this.settings.pieces[0]);
+      player.setStart(this.settings);
     });
+
+    this.setMessage('server', `${name} started the game`);
   }
 
-  end() {
-    this.settings.started = false;
-  }
-
-  move(name, keyCode) {
+  setMove(name, keyCode) {
     if (this.settings.started === false) {
       throw new Error('Game not started');
     }
-    const { collided, loose, lines } = this.getPlayer(name).move(keyCode);
 
-    if (collided === true) {
-      if (!this.settings.pieces[this.getPlayer(name).nbPiece + 2]) {
-        this.settings.pieces.push(new Piece());
-      }
-      this.getPlayer(name).updateCollision(this.settings.pieces);
-      this.setMallus(name, lines);
-    }
-    if (loose === true) {
-      this.getPlayer(name).loose = true;
-      this.settings.nbLoosers += 1;
-      if (this.settings.nbLoosers === this.settings.nbPlayers) {
-        this.end();
-      }
-    }
-    return { collided, loose };
+    this.getPlayer(name).setMove(keyCode);
+
+    const { collided } = this.getPlayer(name);
+
+    if (this.getPlayer(name).collided === true) this.updateCollision(name);
+    if (this.getPlayer(name).loose === true) this.updateLoose(name);
+    // const { collided, loose, lines } = this.getPlayer(name).move(keyCode);
+
+    // if (collided === true) {
+    //   if (!this.settings.pieces[this.getPlayer(name).nbPiece + 2]) {
+    //     this.settings.pieces.push(new Piece());
+    //   }
+    //   this.getPlayer(name).updateCollision(this.settings.pieces);
+    //   this.setMallus(name, lines);
+    // }
+    // if (this.getPlayer(name).loose === true) {
+    //   // this.getPlayer(name).loose = true;
+    //   this.settings.nbLoosers += 1;
+    //   this.getPlayer(name).setRank(this.settings.nbLoosers, this.settings.nbPlayers);
+    //   if (this.settings.nbLoosers === this.settings.nbPlayers) {
+    //     this.end();
+    //   }
+    // }
+    return { collided, loose: false };
   }
 
-  setMallus(name, mallus) {
-    if (mallus > 1) {
+  updateCollision(name) {
+    if (!this.settings.pieces[this.getPlayer(name).nbPiece + 3]) {
+      this.settings.pieces.push(new Piece());
+    }
+
+    const { lines } = this.getPlayer(name).setCollision(this.settings.pieces);
+    if (lines > 1) {
       Object.entries(this.players).forEach((entry) => {
-        if (entry[0] !== name) entry[1].setMallus(mallus - 1);
+        if (entry[0] !== name) entry[1].setMallus(lines - 1);
       });
     }
   }
+
+  updateLoose(name) {
+    this.getPlayer(name).setLoose(this.settings.nbLoosers, this.settings.nbPlayers);
+    this.settings.nbLoosers += 1;
+    console.log('re');
+    if (this.settings.nbLoosers === this.settings.nbPlayers) {
+      this.settings.started = false;
+      this.settings.pieces = [];
+    }
+  }
+
+  // setMallus(name, mallus) {
+  //   if (mallus > 1) {
+  //     Object.entries(this.players).forEach((entry) => {
+  //       if (entry[0] !== name) entry[1].setMallus(mallus - 1);
+  //     });
+  //   }
+  // }
 }

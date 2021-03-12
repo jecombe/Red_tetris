@@ -1,6 +1,5 @@
 import ev from '../../shared/events';
 
-// import socketController from '../controllers/socket';
 import appController from '../controllers/app';
 import gameController from '../controllers/game';
 import playerController from '../controllers/player';
@@ -14,37 +13,29 @@ const routes = () => [
     event: 'disconnect',
     handler: appController.disconnect,
   },
-  // {
-  //   event: 'error',
-  //   handler: appController.error,
-  // },
-  // {
-  //   event: ev.req_UPDATE_APP_INFOS,
-  //   handler: appController.infos,
-  // },
   {
     event: ev.req_LOGIN,
-    handler: appController.login,
+    handler: appController.resLogin,
   },
   {
     event: ev.req_LOGOUT,
-    handler: appController.logout,
+    handler: appController.reslogout,
   },
   {
     event: ev.req_START_GAME,
-    handler: gameController.reqStart,
+    handler: gameController.resStart,
   },
   {
     event: ev.req_UPDATE_GAME_OWNER,
-    handler: gameController.reqOwner,
+    handler: gameController.resOwner,
   },
   {
     event: ev.req_UPDATE_GAME_CHAT,
-    handler: gameController.reqChat,
+    handler: gameController.resChat,
   },
   {
     event: ev.req_UPDATE_PLAYER,
-    handler: playerController.reqMove,
+    handler: playerController.resMove,
   },
 ];
 

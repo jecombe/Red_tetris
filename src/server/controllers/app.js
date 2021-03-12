@@ -16,12 +16,24 @@ const resInfos = (io) => {
   });
 };
 
-const login = (req, res) => {
+const resLogin = (req, res) => {
   const { socket } = req;
   const { name, room } = req.data;
 
   try {
-    RedTetris.reqLogin(req, res);
+    if (!name || !room || name === '' || room === '') {
+      throw new Error('Invalid name or room');
+    }
+
+    let Game = RedTetris.getGame(room);
+    if (!Game) {
+      Game = RedTetris.createGame(room, name);
+    }
+
+    Game.setLogin(socket.id, name);
+
+    RedTetris.getSocket(socket.id).join(room);
+    RedTetris.setSocketRoom(socket.id, room);
 
     emitToRoom(res.io, room, ev.res_UPDATE_GAME, {
       status: 200,
@@ -34,22 +46,40 @@ const login = (req, res) => {
     });
 
     resInfos(res.io);
+    logger.info('login:', 'success');
   } catch (err) {
     logger.error('[login] ', err);
 
     emitToSocket(socket, ev.res_LOGIN, {
       status: 500,
+      message: err.message,
       payload: {},
     });
   }
 };
 
-const logout = (req, res) => {
+const reslogout = (req, res) => {
   const { socket } = req;
-  const { room } = req.data;
+  const { name, room } = req.data;
 
   try {
-    RedTetris.reqLogout(req, res);
+    if (!name || !room || name === '' || room === '') {
+      throw new Error('Invalid name or room');
+    }
+
+    const Game = RedTetris.getGame(room);
+    if (!Game) {
+      throw new Error('Game not exists');
+    }
+
+    Game.setLogout(socket.id, name);
+
+    if (Game.isEmpty()) {
+      RedTetris.unsetGame(room);
+    }
+
+    RedTetris.getSocket(socket.id).leave(room);
+    RedTetris.unsetSocketRoom(socket.id);
 
     if (socket) {
       emitToSocket(socket, ev.res_LOGOUT, {
@@ -88,7 +118,7 @@ const disconnect = (req, res) => {
   logger.info(`socket: ${req.socket.id} disconnected.`);
 
   if (RedTetris.getSocketRoom(req.socket.id)) {
-    logout(
+    reslogout(
       {
         socket: req.socket,
         data: {
@@ -105,8 +135,9 @@ const disconnect = (req, res) => {
 };
 
 export default {
+  resInfos,
   connect,
   disconnect,
-  login,
-  logout,
+  resLogin,
+  reslogout,
 };

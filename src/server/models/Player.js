@@ -1,6 +1,6 @@
-import { createStage, flushUpdate, checkCollision, updateRows } from '../../shared/stage';
+import { createStage, createStagePiece, flushUpdate, checkCollision, STAGE_WIDTH } from '../../shared/stage';
 
-import { calcScore, calcLevel, keys } from '../helpers/gameHelper';
+import { calcScore, keys } from '../helpers/gameHelper';
 
 export default class Player {
   constructor(name) {
@@ -10,15 +10,16 @@ export default class Player {
 
   initPlayer() {
     this.score = 0;
-    this.level = 0;
     this.lines = 0;
     this.mallus = 0;
     this.rank = 0;
     this.stage = createStage();
+    this.stagePiece = [createStagePiece(), createStagePiece()];
     this.piece = null;
     this.position = { x: 10 / 2 - 2, y: 0 };
     this.nbPiece = 0;
-    this.dropTime = 1000;
+    this.dropTime = 0;
+    this.collided = false;
     this.loose = false;
     this.win = false;
   }
@@ -31,101 +32,87 @@ export default class Player {
   //   this.score = score;
   // }
 
-  // setPiece(piece) {
-  //   this.piece = piece;
-  // }
-
-  setLevel(level) {
-    this.score = level;
+  setPiece(piece) {
+    this.piece = piece;
   }
 
   // setLines(lines) {
   //   this.lines = lines;
   // }
 
+  /* Stage */
+
   setStage(stage) {
     this.stage = stage;
   }
 
-  // setLoose(loose) {
-  //   this.loose = loose;
-  // }
-
-  setRank(nbLoosers, nbPlayers) {
-    this.rank = nbPlayers - nbLoosers;
-  }
-
-  setPlayerNull() {
-    this.collided = false;
-    this.position = { x: 0, y: 0 };
-    this.piece = null;
-    this.index = 0;
-    this.mallus = 0;
-    this.lineFull = 0;
-    this.losing = false;
-    this.win = false;
-  }
-
-  start(piece) {
-    this.initPlayer();
-    this.piece = piece;
-    this.stage = flushUpdate(this.piece, this.stage, this.position.x, this.position.y, false);
-  }
-
-  updateStage(position, collided) {
-    const { x, y } = position;
+  setUpdateStage() {
     this.piece.form.shape.forEach((row, fy) => {
       row.forEach((value, fx) => {
         if (value !== 0) {
-          this.stage[fy + y][fx + x] = [value, `${collided ? 'merged' : 'clear'}`];
+          this.stage[fy + this.position.y][fx + this.position.x] = [value, `${this.collided ? 'merged' : 'clear'}`];
         }
       });
     });
   }
 
-  updateCollision(pieces) {
-    this.position = { x: 10 / 2 - 2, y: 0 };
-    this.piece = pieces[this.nbPiece];
-    this.setStage(flushUpdate(this.piece, this.stage, this.position.x, this.position.y, false));
+  setFlushUpdate() {
+    this.stage = this.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
+    this.setUpdateStage();
   }
+
+  setUpdateRows() {
+    // Pour la hauteur verifie si une ligne est pleine
+    let lines = 0;
+
+    this.stage.forEach((row) => {
+      const isFull = row.every((cell) => cell[1] === 'merged');
+      if (isFull === true) {
+        lines += 1;
+        // objPlayer.setLineFull();
+        // Check l'index de la ligne pleine;
+        const index = this.stage.indexOf(row);
+        // Met la ligne a 0
+        row.fill([0, 'clear']);
+        // Supprime la ligne avec l'index et decalle e tableau, il restera non pas 20 de hauteur mais 19
+        this.stage.splice(index, 1);
+        // Ajoute au debut du tableau un nouveau tableau de 10 a 0
+        this.stage.unshift(new Array(STAGE_WIDTH).fill([0, 'clear']));
+        // setMallusToPlayers(objGame.getPlayers(), objPlayer.getLogin(), redGame.socketClient, objGame, objPlayer);
+      }
+    });
+    return { lines };
+  }
+
+  /* StagePiece */
+
+  setStagePiece(index, piece) {
+    this.stagePiece[index] = createStagePiece();
+
+    piece.form.shape.forEach((row, fy) => {
+      row.forEach((value, fx) => {
+        if (value !== 0) {
+          this.stagePiece[index][fy][fx] = [value, 'merged'];
+        }
+      });
+    });
+  }
+
+  /* Piece */
 
   dropTetro() {
     if (!checkCollision(this.piece, this.stage, { x: 0, y: 1 }, this.position.x, this.position.y)) {
-      this.stage = flushUpdate(this.piece, this.stage, this.position.x, this.position.y + 1, false);
       this.position = { x: this.position.x, y: this.position.y + 1 };
-      return { collided: false, loose: false };
+    } else {
+      this.collided = true;
+      this.loose = this.position.y < 1;
     }
-
-    const { stage, lines } = updateRows(flushUpdate(this.piece, this.stage, this.position.x, this.position.y, true));
-
-    this.stage = stage;
-    this.score += calcScore(this.level, lines);
-    this.lines += lines;
-    this.level = calcLevel(this.lines);
-    this.nbPiece += 1;
-
-    return {
-      collided: true,
-      lines,
-      loose: this.position.y < 1,
-    };
   }
 
   moveTetro(dir) {
     if (!checkCollision(this.piece, this.stage, { x: dir, y: 0 }, this.position.x, this.position.y)) {
-      this.stage = flushUpdate(this.piece, this.stage, this.position.x + dir, this.position.y, false);
       this.position = { x: this.position.x + dir, y: this.position.y };
-
-      return {
-        collided: false,
-        loose: false,
-      };
     }
-
-    return {
-      collided: false,
-      loose: false,
-    };
   }
 
   moveTetroUp(dir) {
@@ -144,67 +131,78 @@ export default class Player {
         clonedPiece.rotate(-dir);
         // rotate(clonedPiece.form.shape, -dir);
         pos2 = pos;
-        return {
-          collided: false,
-          loose: false,
-        };
+        return;
       }
     }
-
-    this.stage = flushUpdate(clonedPiece, this.stage, pos2, this.position.y, false);
     this.position = { x: pos2, y: this.position.y };
     this.piece = clonedPiece;
-    return {
-      collided: false,
-      loose: false,
-    };
   }
 
   moveDownTetro() {
     let i = 0;
-    let drop = this.dropTetro(this.stage, this.piece, this.position);
+    this.dropTetro(this.stage, this.piece, this.position);
 
-    while (!drop.collided) {
+    while (!this.collided) {
       i += 1;
-      drop = this.dropTetro(this.stage, this.piece, {
+      this.dropTetro(this.stage, this.piece, {
         x: this.position.x,
         y: this.position.y + i,
       });
     }
-
-    // this.setStage(flushUpdate(this.piece, this.stage, this.position.x, this.position.y + i, true));
-    // this.position = { x: this.position.x, y: this.position.y + i };
-
-    return {
-      collided: drop.collided,
-      loose: drop.loose,
-      lines: drop.lines,
-    };
   }
 
-  move(keyCode) {
-    const gameAllowedKeys = [keys.KDOWN, keys.KLEFT, keys.KRIGHT, keys.KUP, keys.KSPACE];
+  getCollided() {
+    return this.collided;
+  }
 
-    if (!gameAllowedKeys.includes(keyCode)) {
-      throw new Error(`Key not allowed: ${keyCode}`);
-    }
+  getFinish() {
+    return this.loose || this.win;
+  }
 
-    switch (keyCode) {
-      case keys.KDOWN:
-        return this.dropTetro();
-      case keys.KLEFT:
-        return this.moveTetro(-1);
-      case keys.KRIGHT:
-        return this.moveTetro(1);
-      case keys.KUP:
-        return this.moveTetroUp();
-      case keys.KSPACE:
-        return this.moveDownTetro();
-      default:
-        break;
-    }
+  setRank(nbLoosers, nbPlayers) {
+    this.rank = nbPlayers - nbLoosers;
+  }
+
+  /* Game */
+
+  setStart({ pieces, dropTime }) {
+    this.initPlayer();
+    [this.piece] = pieces;
+    this.setStagePiece(0, pieces[this.nbPiece + 1]);
+    this.setStagePiece(1, pieces[this.nbPiece + 2]);
+    this.dropTime = dropTime;
+    this.setFlushUpdate();
+  }
+
+  setMove(keyCode) {
+    if (this.loose === true || this.win === true) throw new Error("You can't play");
+
+    if (keyCode === keys.KDOWN) this.dropTetro();
+    if (keyCode === keys.KLEFT) this.moveTetro(-1);
+    if (keyCode === keys.KRIGHT) this.moveTetro(1);
+    if (keyCode === keys.KUP) this.moveTetroUp();
+    if (keyCode === keys.KSPACE) this.moveDownTetro();
+
+    this.setFlushUpdate();
 
     return { collided: null, loose: null };
+  }
+
+  setCollision(pieces) {
+    this.setFlushUpdate();
+    const { lines } = this.setUpdateRows();
+    this.collided = false;
+
+    this.score += calcScore(this.level, lines);
+    this.lines += lines;
+    this.nbPiece += 1;
+    this.position = { x: 10 / 2 - 2, y: 0 };
+    this.piece = pieces[this.nbPiece];
+    this.setStagePiece(0, pieces[this.nbPiece + 1]);
+    this.setStagePiece(1, pieces[this.nbPiece + 2]);
+
+    // this.setFlushUpdate();
+    return { lines };
   }
 
   setMallus(lines) {
@@ -217,5 +215,13 @@ export default class Player {
       i -= 1;
     }
     this.setStage(flushUpdate(this.piece, this.stage, this.position.x, this.position.y, false));
+  }
+
+  setLoose(nbLoosers, nbPlayers) {
+    this.loose = false;
+    this.dropTime = 0;
+    this.rank = nbPlayers - nbLoosers;
+    if (this.rank === 1) this.win = true;
+    else this.loose = true;
   }
 }

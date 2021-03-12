@@ -1,6 +1,6 @@
 import socketIO from 'socket.io';
 
-import RedTetris from '../models';
+// import RedTetris from '../models';
 import appController from '../controllers/app';
 
 import routes from './routes';
@@ -11,7 +11,7 @@ const redTetris = (server) => {
     pingTimeout: 15000,
   });
 
-  RedTetris.setIo(io);
+  // RedTetris.setIo(io);
 
   io.on('connect', (socket) => {
     appController.connect({ socket }, { io });

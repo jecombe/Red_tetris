@@ -3,60 +3,44 @@ import logger from '../utils/logger';
 import { emitToSocket, emitToRoom } from '../helpers/emitHelper';
 
 import RedTetris from '../models';
-// import redTetris from '../socket';
 
-// const countdown = (req, res, count) => {
-//   const { room } = req.data;
+import app from './app';
 
-//   // logger.info('[start]', `romm ${room} start in ${count}s...`);
-
-//   if (count > 0) {
-//     // RedTetris.getGame(room).setMessage('server', `Game will start in ${count}`);
-
-//     setTimeout(countdown, 1000, req, res, count - 1);
-
-//     // RedTetris.emitToRoom(room, ev.res_START_GAME, {
-//     //   status: 100,
-//     //   payload: {
-//     //     message: `Game will start in ${count}s...`,
-//     //   },
-//     // });
-//   } else {
-//     RedTetris.emitToRoom(room, ev.res_START_GAME, {
-//       status: 200,
-//       payload: {
-//         message: 'Game started!',
-//       },
-//     });
-
-//     // RedTetris.emitToRoom(room, ev.res_UPDATE_GAME, {
-//     //   status: 200,
-//     //   payload: {
-//     //     game: RedTetris.getGame(room),
-//     //   },
-//     // });
-//   }
-// };
-
-const reqStart = async (req, res) => {
+const countdown = (req, res, count) => {
   const { room } = req.data;
 
-  try {
-    RedTetris.reqStart(req, res);
+  if (count > 0) {
+    setTimeout(countdown, 1000, req, res, count - 1);
 
     emitToRoom(res.io, room, ev.res_START_GAME, {
-      status: 200,
+      status: 100,
       payload: {
-        message: 'Game started!',
+        message: `Game will start in ${count}s...`,
       },
     });
-    RedTetris.emitToRoom(room, ev.res_UPDATE_GAME, {
+  } else {
+    emitToRoom(res.io, room, ev.res_UPDATE_GAME, {
       status: 200,
       payload: {
         game: RedTetris.getGame(room),
       },
     });
-    // setTimeout(countdown, 100, req, res, 3);
+
+    app.resInfos(res.io);
+  }
+};
+
+const resStart = async (req, res) => {
+  const { room } = req.data;
+
+  try {
+    const Game = RedTetris.getGame(room);
+    if (!Game) throw new Error('Game not exists');
+
+    Game.setStart(req.data.name);
+
+    setTimeout(countdown, 100, req, res, 3);
+
     logger.info('[reqStart] ', 'success');
   } catch (err) {
     logger.error('[reqStart] ', err);
@@ -69,11 +53,18 @@ const reqStart = async (req, res) => {
   }
 };
 
-const reqOwner = async (req, res) => {
-  const { room } = req.data;
+const resOwner = async (req, res) => {
+  const { id } = req.socket;
+  const { name, room, newOwner } = req.data;
 
   try {
-    RedTetris.reqOwner(req, res);
+    const Game = RedTetris.getGame(room);
+    if (!Game) throw new Error('Game not exists');
+
+    const Player = RedTetris.getGame(room).getPlayer(id);
+    if (!Player) throw new Error('Player not exists');
+
+    Game.setNewOwner(name, newOwner);
 
     emitToRoom(res.io, room, ev.res_UPDATE_GAME, {
       status: 200,
@@ -87,17 +78,21 @@ const reqOwner = async (req, res) => {
 
     emitToSocket(req.socket, ev.res_UPDATE_PLAYER, {
       status: 500,
-      message: err,
+      message: err.message,
       payload: {},
     });
   }
 };
 
-const reqChat = async (req, res) => {
-  const { room } = req.data;
+const resChat = async (req, res) => {
+  const { name, room, text } = req.data;
 
   try {
-    RedTetris.reqChat(req, res);
+    // RedTetris.reqChat(req, res);
+    const Game = RedTetris.getGame(room);
+    if (!Game) throw new Error('Game not exists');
+
+    Game.setMessage(name, text);
 
     emitToRoom(res.io, room, ev.res_UPDATE_GAME_CHAT, {
       status: 200,
@@ -110,14 +105,14 @@ const reqChat = async (req, res) => {
 
     emitToSocket(req.socket, ev.res_UPDATE_PLAYER, {
       status: 500,
-      message: err,
+      message: err.message,
       payload: {},
     });
   }
 };
 
 export default {
-  reqStart,
-  reqOwner,
-  reqChat,
+  resStart,
+  resOwner,
+  resChat,
 };

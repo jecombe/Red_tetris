@@ -1,5 +1,4 @@
 const io = require('socket.io-client');
-const logger = require('../../../src/server/utils/logger');
 
 // initSocket returns a promise
 // success: resolve a new socket object
@@ -29,7 +28,7 @@ export const initSocket = (port) =>
 // success: resolve true
 // fail: resolve false
 export const destroySocket = (socket) =>
-  new Promise((resolve, reject) => {
+  new Promise((resolve) => {
     // check if socket connected
     if (socket.connected) {
       // disconnect socket
@@ -44,9 +43,9 @@ export const destroySocket = (socket) =>
   });
 
 export const handleResponse = (socket, event) => {
-  return new Promise((resolve, reject) => {
-    socket.on(event, (d) => {
-      resolve(d);
+  return new Promise((resolve) => {
+    socket.on(event, (data) => {
+      resolve(data);
     });
   });
 };

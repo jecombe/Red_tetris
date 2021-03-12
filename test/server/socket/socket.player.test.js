@@ -68,18 +68,28 @@ describe('# Socket Tests - Player Events', () => {
 
       payload.keyCode = keys.KSPACE;
       socket.emit(ev.req_UPDATE_PLAYER, payload);
-      data = await handleResponse(socket, ev.res_UPDATE_PLAYER);
+      data = await handleResponse(socket, ev.res_UPDATE_GAME_PLAYERS);
       expect(data.status).toBe(200);
 
       payload.keyCode = keys.KSPACE;
       socket.emit(ev.req_UPDATE_PLAYER, payload);
-      data = await handleResponse(socket, ev.res_UPDATE_PLAYER);
+      data = await handleResponse(socket, ev.res_UPDATE_GAME_PLAYERS);
       expect(data.status).toBe(200);
+    });
 
-      payload.keyCode = 99;
-      socket.emit(ev.req_UPDATE_PLAYER, payload);
-      data = await handleResponse(socket, ev.res_UPDATE_PLAYER);
-      expect(data.status).toBe(500);
+    it('should handle finish', async () => {
+      const payload = {
+        name: socket.id,
+        room: 'room',
+        keyCode: keys.KSPACE,
+      };
+
+      for (let i = 0; i < 15; i += 1) {
+        socket.emit(ev.req_UPDATE_PLAYER, payload);
+      }
+
+      const data = await handleResponse(socket, ev.res_START_GAME);
+      expect(data.status).toBe(100);
     });
   });
 });

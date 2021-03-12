@@ -37,7 +37,7 @@ describe('# Socket Tests - Game Events', () => {
   });
 
   describe('## Game Events', () => {
-    it('should start success', async () => {
+    it('should start timer success', async () => {
       const payload = {
         name: 'name',
         room: 'room',
@@ -45,6 +45,17 @@ describe('# Socket Tests - Game Events', () => {
 
       socket.emit(ev.req_START_GAME, payload);
       const data = await handleResponse(socket, ev.res_START_GAME);
+      expect(data.status).toBe(100);
+    });
+
+    it('should start success', async () => {
+      const payload = {
+        name: 'name',
+        room: 'room',
+      };
+
+      socket.emit(ev.req_START_GAME, payload);
+      const data = await handleResponse(socket, ev.res_UPDATE_GAME);
       expect(data.status).toBe(200);
     });
 
@@ -64,11 +75,25 @@ describe('# Socket Tests - Game Events', () => {
   });
 
   describe('## Owner Events', () => {
+    // it('should owner success', async () => {
+    //   const payload = {
+    //     name: 'name',
+    //     room: 'room',
+    //     newOwner: '',
+    //   };
+
+    //   socket.emit(ev.req_UPDATE_GAME_OWNER, payload);
+
+    //   const data = await handleResponse(socket, ev.res_UPDATE_GAME);
+
+    //   expect(data.status).toBe(200);
+    // });
+
     it('should owner success', async () => {
       const payload = {
         name: 'name',
         room: 'room',
-        newOwner: '',
+        newOwner: 'newName',
       };
 
       socket.emit(ev.req_UPDATE_GAME_OWNER, payload);

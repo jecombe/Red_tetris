@@ -1,5 +1,5 @@
 {
-    "name": "react-express-webpack-babel-setup",
+    "name": "red-tetris",
     "version": "1.0.0",
     "description": "",
     "scripts": {
@@ -9,7 +9,7 @@
         "server:dev": "nodemon --exec babel-node ./src/server/server.js",
         "dev": "concurrently --kill-others \"npm run client:dev\" \"npm run server:dev\"",
         "build": "npm run client:dist && npm run server:dist",
-        "start": "node dist/server/index.js",
+        "start": "node dist/server/server.js",
         "lint": "eslint src",
         "lint:fix": "eslint --fix src",
         "format": "prettier './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.json",

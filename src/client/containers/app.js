@@ -17,13 +17,13 @@ const App = (props) => {
 
   return (
     <Grid container direction="column" justify="space-between" style={{ height: '100vh' }}>
-      <Grid item style={{ height: '7vh', border: '1px solid red' }}>
+      <Grid item style={{ height: '7vh' }}>
         <Header />
       </Grid>
-      <Grid item style={{ height: '65vh', border: '1px solid red' }}>
+      <Grid item style={{ height: '65vh' }}>
         <Main connected={connected} />
       </Grid>
-      <Grid item style={{ height: '5vh', border: '1px solid red' }}>
+      <Grid item style={{ height: '5vh' }}>
         <Footer />
       </Grid>
     </Grid>

@@ -73,13 +73,13 @@ export default class Game {
     this.setMessage('server', `${name} joined the room`);
   }
 
-  setLogout(id, name) {
+  setLogout(id) {
     if (!this.getPlayer(id)) {
       throw new Error('No player found');
     }
+    this.setMessage('server', `${this.getPlayer(id).name} leaved the room`);
     delete this.players[id];
     this.settings.nbPlayers -= 1;
-    this.setMessage('server', `${name} leaved the room`);
   }
 
   /* Owner */

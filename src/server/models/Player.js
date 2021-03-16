@@ -116,32 +116,24 @@ export default class Player {
   }
 
   moveTetroUp(dir) {
-    // let clonedPiece = JSON.parse(JSON.stringify(this.piece));
-    // clonedPiece.form.shape = rotate(clonedPiece.form.shape, dir);
-    const clonedPiece = this.piece;
-    // console.log(clonedPiece);
-    clonedPiece.rotate(dir);
     const pos = this.position.x;
-    let pos2 = this.position.x;
     let offset = 1;
-    while (checkCollision(clonedPiece, this.stage, { x: 0, y: 0 }, this.position.x, this.position.y)) {
-      pos2 += offset;
+
+    this.piece.rotate(dir);
+    while (checkCollision(this.piece, this.stage, { x: 0, y: 0 }, this.position.x, this.position.y)) {
+      this.position.x += offset;
       offset = -(offset + (offset > 0 ? 1 : -1));
-      if (offset > clonedPiece.form.shape[0].length) {
-        clonedPiece.rotate(-dir);
-        // rotate(clonedPiece.form.shape, -dir);
-        pos2 = pos;
-        return;
+      if (offset > this.piece.form.shape[0].length) {
+        this.piece.rotate(-dir);
+        this.position.x = pos;
       }
     }
-    this.position = { x: pos2, y: this.position.y };
-    this.piece = clonedPiece;
   }
 
   moveDownTetro() {
     let i = 0;
-    this.dropTetro(this.stage, this.piece, this.position);
 
+    this.dropTetro(this.stage, this.piece, this.position);
     while (!this.collided) {
       i += 1;
       this.dropTetro(this.stage, this.piece, {

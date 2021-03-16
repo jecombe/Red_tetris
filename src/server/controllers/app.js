@@ -60,10 +60,10 @@ const resLogin = (req, res) => {
 
 const reslogout = (req, res) => {
   const { socket } = req;
-  const { name, room } = req.data;
+  const { room } = req.data;
 
   try {
-    if (!name || !room || name === '' || room === '') {
+    if (!room || room === '') {
       throw new Error('Invalid name or room');
     }
 
@@ -72,7 +72,7 @@ const reslogout = (req, res) => {
       throw new Error('Game not exists');
     }
 
-    Game.setLogout(socket.id, name);
+    Game.setLogout(socket.id);
 
     if (Game.isEmpty()) {
       RedTetris.unsetGame(room);
@@ -117,13 +117,13 @@ const connect = (req, res) => {
 const disconnect = (req, res) => {
   logger.info(`socket: ${req.socket.id} disconnected.`);
 
-  if (RedTetris.getSocketRoom(req.socket.id)) {
+  const room = RedTetris.getSocketRoom(req.socket.id);
+  if (room) {
     reslogout(
       {
         socket: req.socket,
         data: {
-          name: req.socket.id,
-          room: RedTetris.getSocketRoom(req.socket.id),
+          room,
         },
       },
       res,

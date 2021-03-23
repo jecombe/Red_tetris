@@ -11,7 +11,6 @@ import Icon from '@material-ui/core/Icon';
 import EmojiFlagsIcon from '@material-ui/icons/EmojiFlags';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
-import { createStage } from '../../../shared/stage';
 import RedIconButton from './RedIconButton';
 
 import Stage from './Stage';
@@ -69,7 +68,7 @@ const MuiVirtualizedTable = (props) => {
 
     let cell = cellData;
 
-    if (dataKey === 'stage') cell = <Stage stage={cellData || createStage()} type="stagePlayers" />;
+    if (dataKey === 'stage') cell = <Stage stage={cellData} type="stagePlayers" />;
     if (dataKey === 'name') {
       cell = (
         <>

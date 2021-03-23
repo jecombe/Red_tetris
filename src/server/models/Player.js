@@ -1,6 +1,3 @@
-// import { createStage, createStagePiece, flushUpdate, checkCollision, STAGE_WIDTH } from '../../shared/stage';
-// import { } from '../helpers/gameHelper';
-
 import { calcScore, keys, createStage, createStagePiece, STAGE_WIDTH } from '../helpers/gameHelper';
 
 export default class Player {

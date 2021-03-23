@@ -179,9 +179,6 @@ export default class Game {
     this.getPlayersAsArray().forEach((player) => {
       player.initPlayer();
     });
-    // this.getPlayersAsArray().forEach((player) => {
-    //   player.setStart(this.settings);
-    // });
   }
 
   setGameStart() {

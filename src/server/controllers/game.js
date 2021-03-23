@@ -18,7 +18,6 @@ const countdown = (req, res, count) => {
 
     resUpdateGameStartRoom(res.io, Game, 100, `Game will start in ${count}s...`);
   } else {
-    Game.setGameStart();
     resUpdateGameSettings(res.io, Game);
     resUpdateGameStartRoom(res.io, Game, 200, '');
     resUpdateAppInfos(res.io, RedTetris);
@@ -30,10 +29,13 @@ const resStart = async (req, res) => {
 
   try {
     const Game = RedTetris.getCreatedGame(id);
-    if (!Game) throw new Error("Can't get the game");
+    if (!Game) throw new Error('Game not found');
+
+    console.log(Game);
 
     Game.initGameStart(id);
     resUpdateGame(res.io, Game);
+    Game.setGameStart();
 
     setTimeout(countdown, 100, { ...req, Game }, res, 3);
   } catch (err) {

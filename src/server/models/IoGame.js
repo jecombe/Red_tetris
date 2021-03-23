@@ -60,6 +60,7 @@ export default class IoGame {
   }
 
   getCreatedGame(id) {
+    if (!this.getSocket(id)) return null;
     return this.getGame(this.getSocketRoom(id));
   }
 }

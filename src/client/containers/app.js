@@ -1,23 +1,46 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Connexion from '../components/Connexion';
-import { Route, Switch } from 'react-router-dom'
-import Tetris from '../components/Tetris';
+import Grid from '@material-ui/core/Grid';
 
-function App() {
+import params from '../../shared/params';
+import actions from '../actions';
+import Header from '../components/Header/Header';
+import Main from './Main';
+import Footer from '../components/Footer/Footer';
 
+const App = (props) => {
+  const { connected, reqConnect } = props;
+  const { host, port } = params.server;
+
+  if (!connected) reqConnect({ host, port });
 
   return (
-    <div className="App">
-
-    <Route exact path="/" component={Connexion} />
-    <Route exact path="/:room[:playerName]" component={Tetris} />
-
-    </div>
+    <Grid container direction="column" justify="space-between" style={{ height: '100vh' }}>
+      <Grid item style={{ height: '7vh' }}>
+        <Header />
+      </Grid>
+      <Grid item style={{ height: '65vh' }}>
+        <Main connected={connected} />
+      </Grid>
+      <Grid item style={{ height: '5vh' }}>
+        <Footer />
+      </Grid>
+    </Grid>
   );
-}
+};
+
+App.propTypes = {
+  connected: PropTypes.bool.isRequired,
+  reqConnect: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = (state) => ({
-  message: state.message,
+  connected: state.app.connected,
 });
 
-export default connect(mapStateToProps, null)(App);
+const mapDispatchToProps = {
+  reqConnect: actions.reqConnect,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

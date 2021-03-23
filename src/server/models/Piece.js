@@ -1,71 +1,5 @@
 class Piece {
   constructor() {
-
-
-
-
-
-
-
-
-    /*const randomPiece = [
-      {
-        0: [[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]],
-        1: [[0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0], [0, 0, 1, 0]],
-        2: [[0, 0, 0, 0], [0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0]],
-        3: [[0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 1, 0, 0]]
-      },
-      {
-        0: [[2, 0, 0], [2, 2, 2], [0, 0, 0]],
-        1: [[0, 2, 2], [0, 2, 0], [0, 2, 0]],
-        2: [[0, 0, 0], [2, 2, 2], [0, 0, 2]],
-        3: [[0, 2, 0], [0, 2, 0], [0, 2, 2]]
-      },
-      {
-        0: [[0, 0, 3], [3, 3, 3], [0, 0, 0]],
-        1: [[0, 3, 0], [0, 3, 0], [0, 3, 3]],
-        2: [[0, 0, 0], [3, 3, 3], [3, 0, 0]],
-        3: [[3, 3, 0], [0, 3, 0], [0, 3, 0]]
-      },
-      {
-        0: [[0, 4, 4, 0], [0, 4, 4, 0], [0, 0, 0, 0]],
-        1: [[0, 4, 4, 0], [0, 4, 4, 0], [0, 0, 0, 0]],
-        2: [[0, 4, 4, 0], [0, 4, 4, 0], [0, 0, 0, 0]],
-        3: [[0, 4, 4, 0], [0, 4, 4, 0], [0, 0, 0, 0]]
-      },
-      {
-        0: [[0, 5, 5], [5, 5, 0], [0, 0, 0]],
-        1: [[0, 5, 0], [0, 5, 5], [0, 0, 5]],
-        2: [[0, 0, 0], [0, 5, 5], [5, 5, 0]],
-        3: [[5, 0, 0], [5, 5, 0], [0, 5, 0]]
-      },
-      {
-        0: [[0, 5, 5], [5, 5, 0], [0, 0, 0]],
-        1: [[0, 5, 0], [0, 5, 5], [0, 0, 5]],
-        2: [[0, 0, 0], [0, 5, 5], [5, 5, 0]],
-        3: [[5, 0, 0], [5, 5, 0], [0, 5, 0]]
-      },
-      {
-        0: [[0, 6, 0], [6, 6, 6], [0, 0, 0]],
-        1: [[0, 6, 0], [0, 6, 6], [0, 6, 0]],
-        2: [[0, 0, 0], [6, 6, 6], [0, 6, 0]],
-        3: [[0, 6, 0], [6, 6, 0], [0, 6, 0]]
-      },
-      {
-        0: [[7, 7, 0], [0, 7, 7], [0, 0, 0]],
-        1: [[0, 0, 7], [0, 7, 7], [0, 7, 0]],
-        2: [[0, 0, 0], [7, 7, 0], [0, 7, 7]],
-        3: [[0, 7, 0], [7, 7, 0], [7, 0, 0]]
-      }
-    ];*/
-
-
-
-
-
-
-
-
     const TETROMINOS = {
       0: { shape: [[0]], color: '0, 0, 0' },
       I: {
@@ -79,17 +13,17 @@ class Piece {
       },
       J: {
         shape: [
-          [0, 'J', 0],
-          [0, 'J', 0],
-          ['J', 'J', 0],
+          ['J', 0, 0],
+          ['J', 'J', 'J'],
+          [0, 0, 0],
         ],
         color: '36, 95, 223',
       },
       L: {
         shape: [
-          [0, 'L', 0],
-          [0, 'L', 0],
-          [0, 'L', 'L'],
+          [0, 0, 'L'],
+          ['L', 'L', 'L'],
+          [0, 0, 0],
         ],
         color: '223, 173, 36',
       },
@@ -109,10 +43,15 @@ class Piece {
         color: '48, 211, 56',
       },
       T: {
+        // shape: [
+        //   [0, 0, 0],
+        //   ['T', 'T', 'T'],
+        //   [0, 'T', 0],
+        // ],
         shape: [
-          [0, 0, 0],
-          ['T', 'T', 'T'],
           [0, 'T', 0],
+          ['T', 'T', 'T'],
+          [0, 0, 0],
         ],
         color: '132, 61, 198',
       },
@@ -125,11 +64,36 @@ class Piece {
         color: '227, 78, 78',
       },
     };
-    
- 
-      const tetrominos = 'IJLOSTZ';
-      const randTetromino = tetrominos[Math.floor(Math.random() * tetrominos.length)];
-      this.form = TETROMINOS[randTetromino];
+    const tetrominos = 'IJLOSTZ';
+    const randTetromino = tetrominos[Math.floor(Math.random() * tetrominos.length)];
+    this.form = TETROMINOS[randTetromino];
+  }
+
+  // cleanPiece(newStage) {
+  //   this.form.shape.forEach((row, y) => {
+  //     row.forEach((value, x) => {
+  //       if (value !== 0) {
+  //         newStage[y + 0][x + 3] = [value, `${'clear'}`];
+  //       }
+  //     });
+  //   });
+  // }
+
+  rotate(dir) {
+    // Make the rows to become cols (transpose)
+    const rotatedTetro = this.form.shape.map((_, index) => this.form.shape.map((col) => col[index]));
+    // Reverse each row to get a rotated matrix
+
+    if (dir > 0) {
+      const rotated = rotatedTetro.map((row) => row.reverse());
+      // console.log(rotated);
+      this.form.shape = rotated;
+
+      // return rotated;
+    }
+    const rotated = rotatedTetro.reverse();
+    this.form.shape = rotated;
+    // return rotated;
   }
 }
 

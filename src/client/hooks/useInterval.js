@@ -1,26 +1,23 @@
 import { useEffect, useRef } from 'react';
 
-export function useInterval(callback, delay) {
+export default function useInterval(callback, started, delay) {
   const savedCallback = useRef();
-  // Get callback function (drop)
+
   useEffect(() => {
-    // `current` points to the mounted element
     savedCallback.current = callback;
   }, [callback]);
 
-  // Set up the interval.
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
     function tick() {
-      // Call callback function drop()
       savedCallback.current();
     }
-    if (delay !== null) {
-      // Increment timer every 1000ms (1s).
+    if (started && delay !== null && delay !== 0) {
       const id = setInterval(tick, delay);
+
       return () => {
-        // Stop timer to stop call function drop()
         clearInterval(id);
       };
     }
-  }, [delay]);
+  }, [started, delay]);
 }

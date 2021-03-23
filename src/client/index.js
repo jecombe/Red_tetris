@@ -1,35 +1,25 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import './index.css';
-import { createLogger } from 'redux-logger';
-import thunk from 'redux-thunk';
-import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import createSocketIoMiddleware from 'redux-socket.io';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { ThemeProvider } from '@material-ui/core/styles';
+import { ConnectedRouter } from 'connected-react-router';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
-import io from 'socket.io-client';
-import reducer from './reducers';
-import App from './containers/app';
-import { alert } from './actions/alert';
-import { HashRouter } from 'react-router-dom';
-import rootReducer from './rootReducer';
+// import './index.css';
+import store, { history } from './store';
+import theme from './theme';
+import App from './containers/App';
 
-const socket = io('http://localhost:3011');
-const socketIoMiddleware = createSocketIoMiddleware(socket, 'server/');
+console.log('jecombe && dzonda - 42 Lyon');
 
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(thunk, socketIoMiddleware))
-);
-
-
-
-ReactDom.render((
-<HashRouter hashType={'noslash'}>
+ReactDom.render(
   <Provider store={store}>
-    <App />
-  </Provider>
-  </HashRouter>
-), document.getElementById('app'));
-
+    <ThemeProvider theme={theme}>
+      <ConnectedRouter history={history}>
+        <CssBaseline />
+        <App />
+      </ConnectedRouter>
+    </ThemeProvider>
+  </Provider>,
+  document.getElementById('tetris'),
+);

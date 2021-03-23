@@ -20,27 +20,20 @@ describe('# Socket Tests - Player Events', () => {
     server.listen({ host, port: 3003 }, () => {
       logger.info(`Listening on port ${port}!`);
     });
+
+    socket = await initSocket(3003);
+    const payload = { name: randomstring.generate(7), room: randomstring.generate(7) };
+    socket.emit(ev.req_LOGIN, payload);
+    socket.emit(ev.req_START_GAME, payload);
+    setTimeout(4);
   });
 
   afterAll(() => {
+    destroySocket(socket);
     server.close();
   });
 
-  beforeEach(async () => {
-    socket = await initSocket(3003);
-
-    const payload = { name: randomstring.generate(7), room: 'room' };
-
-    socket.emit(ev.req_LOGIN, payload);
-    socket.emit(ev.req_START_GAME, payload);
-    setTimeout(3);
-  });
-
-  afterEach(() => {
-    destroySocket(socket);
-  });
-
-  describe('## Game Events', () => {
+  describe('## Player Events', () => {
     it('should handle move', async () => {
       const payload = {
         name: socket.id,

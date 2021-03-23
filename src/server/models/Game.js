@@ -24,10 +24,6 @@ export default class Game {
     return this.room;
   }
 
-  isOwner(name) {
-    return this.settings.owner === name;
-  }
-
   /* Settings */
 
   setStarted(started) {
@@ -42,11 +38,67 @@ export default class Game {
     this.settings.pieces.push(piece);
   }
 
+  setPiecesNull() {
+    this.settings.pieces = [];
+  }
+
+  getPieces() {
+    return this.settings.pieces;
+  }
+
   setDropTime(dropTime) {
     this.settings.dropTime = dropTime;
   }
 
+  setNbPlayers(nbPlayers) {
+    this.settings.nbPlayers = nbPlayers;
+  }
+
+  getNbPlayers() {
+    return this.settings.nbPlayers;
+  }
+
+  setNbLoosers(nbLoosers) {
+    this.settings.nbLoosers = nbLoosers;
+  }
+
+  getNbLoosers() {
+    return this.settings.nbLoosers;
+  }
+
   /* Players */
+
+  setPlayer(id, name) {
+    if (this.getStarted() === true) {
+      throw new Error('Game is started');
+    }
+
+    this.getPlayersAsArray().forEach((player) => {
+      if (player.getName() === name) {
+        throw new Error('Player already logged with same name');
+      }
+    });
+
+    this.getPlayers()[id] = new Player(name);
+    this.setNbPlayers(this.getNbPlayers() + 1);
+    this.setMessage('server', `${name} joined the room`);
+  }
+
+  unsetPlayer(id) {
+    if (!this.getPlayer(id)) {
+      throw new Error('No player found');
+    }
+
+    const name = this.getPlayer(id).getName();
+
+    this.setMessage('server', `${this.getPlayer(id).name} leaved the room`);
+    delete this.getPlayers()[id];
+    this.setNbPlayers(this.getNbPlayers() - 1);
+
+    if (this.getNbPlayers() && this.isOwner(name)) {
+      this.setRandomOwner();
+    }
+  }
 
   getPlayers() {
     return this.players;
@@ -60,26 +112,8 @@ export default class Game {
     return Object.keys(this.getPlayers()).length === 0;
   }
 
-  /* Login */
-
-  setLogin(id, name) {
-    // this.setPlayer(id, name);
-    if (this.settings.started === true) {
-      throw new Error('Game is started');
-    }
-
-    this.players[id] = new Player(name);
-    this.settings.nbPlayers += 1;
-    this.setMessage('server', `${name} joined the room`);
-  }
-
-  setLogout(id) {
-    if (!this.getPlayer(id)) {
-      throw new Error('No player found');
-    }
-    this.setMessage('server', `${this.getPlayer(id).name} leaved the room`);
-    delete this.players[id];
-    this.settings.nbPlayers -= 1;
+  getPlayersAsArray() {
+    return Object.values(this.getPlayers());
   }
 
   /* Owner */
@@ -90,12 +124,12 @@ export default class Game {
   }
 
   setRandomOwner() {
-    const players = Object.keys(this.players);
-    this.setOwner(players[Math.floor(Math.random() * players.length)]);
+    const players = Object.values(this.players);
+    this.setOwner(players[Math.floor(Math.random() * players.length)].getName());
   }
 
-  setNewOwner(name, newOwner) {
-    if (!this.isOwner(name)) {
+  setNewOwner(id, newOwner) {
+    if (!this.isOwner(this.getPlayer(id).getName())) {
       throw new Error('Not owner');
     }
 
@@ -103,11 +137,15 @@ export default class Game {
     else this.setOwner(newOwner);
   }
 
-  /* Chat */
-
-  getMessages() {
-    return this.chat;
+  getOwner() {
+    return this.settings.owner;
   }
+
+  isOwner(name) {
+    return this.settings.owner === name;
+  }
+
+  /* Chat */
 
   setMessage(user, text) {
     this.chat.push({
@@ -118,85 +156,72 @@ export default class Game {
     });
   }
 
+  getMessages() {
+    return this.chat;
+  }
+
   /* Game */
 
-  setStart(name) {
-    if (!this.isOwner(name) || this.settings.started === true) {
+  initGameStart(id) {
+    if (!this.isOwner(this.getPlayer(id).getName()) || this.getStarted() === true) {
       throw new Error("Can't start the game");
     }
 
     this.setStarted(true);
+    this.setPiecesNull();
     this.setPiece(new Piece());
     this.setPiece(new Piece());
     this.setPiece(new Piece());
     this.setDropTime(1000);
-    this.settings.nbLoosers = 0;
-    Object.values(this.players).forEach((player) => {
+    this.setNbLoosers(0);
+    this.setMessage('server', `${this.getOwner()} started the game`);
+
+    this.getPlayersAsArray().forEach((player) => {
+      player.initPlayer();
+    });
+    // this.getPlayersAsArray().forEach((player) => {
+    //   player.setStart(this.settings);
+    // });
+  }
+
+  setGameStart() {
+    this.setStarted(true);
+    this.setDropTime(1000);
+    this.getPlayersAsArray().forEach((player) => {
       player.setStart(this.settings);
     });
-
-    this.setMessage('server', `${name} started the game`);
   }
 
-  setMove(name, keyCode) {
-    if (this.settings.started === false) {
-      throw new Error('Game not started');
+  updateCollision(id) {
+    const lines = this.getPlayer(id).getLines();
+
+    /* Check the nbPiece of player */
+    if (!this.getPieces[this.getPlayer(id).getNbPiece() + 3]) {
+      this.setPiece(new Piece());
     }
 
-    this.getPlayer(name).setMove(keyCode);
+    this.getPlayer(id).setCollision(this.getPieces());
 
-    const { collided } = this.getPlayer(name);
-
-    if (this.getPlayer(name).collided === true) this.updateCollision(name);
-    if (this.getPlayer(name).loose === true) this.updateLoose(name);
-    // const { collided, loose, lines } = this.getPlayer(name).move(keyCode);
-
-    // if (collided === true) {
-    //   if (!this.settings.pieces[this.getPlayer(name).nbPiece + 2]) {
-    //     this.settings.pieces.push(new Piece());
-    //   }
-    //   this.getPlayer(name).updateCollision(this.settings.pieces);
-    //   this.setMallus(name, lines);
-    // }
-    // if (this.getPlayer(name).loose === true) {
-    //   // this.getPlayer(name).loose = true;
-    //   this.settings.nbLoosers += 1;
-    //   this.getPlayer(name).setRank(this.settings.nbLoosers, this.settings.nbPlayers);
-    //   if (this.settings.nbLoosers === this.settings.nbPlayers) {
-    //     this.end();
-    //   }
-    // }
-    return { collided, loose: false };
-  }
-
-  updateCollision(name) {
-    if (!this.settings.pieces[this.getPlayer(name).nbPiece + 3]) {
-      this.settings.pieces.push(new Piece());
-    }
-
-    const { lines } = this.getPlayer(name).setCollision(this.settings.pieces);
-    if (lines > 1) {
+    /* Mallus */
+    const mallus = this.getPlayer(id).getLines() - lines;
+    if (mallus > 1) {
       Object.entries(this.players).forEach((entry) => {
-        if (entry[0] !== name) entry[1].setMallus(lines - 1);
+        if (entry[0] !== id) entry[1].setMallus(mallus - 1);
       });
     }
   }
 
-  updateLoose(name) {
-    this.getPlayer(name).setLoose(this.settings.nbLoosers, this.settings.nbPlayers);
-    this.settings.nbLoosers += 1;
-    console.log('re');
-    if (this.settings.nbLoosers === this.settings.nbPlayers) {
-      this.settings.started = false;
-      this.settings.pieces = [];
+  updateLoose(id) {
+    this.getPlayer(id).setLoose(this.getNbPlayers() - this.getNbLoosers());
+    this.setNbLoosers(this.getNbLoosers() + 1);
+    if (this.getNbPlayers() === 1) {
+      this.setStarted(false);
+    } else if (this.getNbLoosers() + 1 === this.getNbPlayers()) {
+      this.getPlayersAsArray().forEach((player) => {
+        if (player.getFinish() === false) player.setLoose(this.getNbPlayers() - this.getNbLoosers());
+      });
+      this.setStarted(false);
+      this.setNbLoosers(this.getNbLoosers() + 1);
     }
   }
-
-  // setMallus(name, mallus) {
-  //   if (mallus > 1) {
-  //     Object.entries(this.players).forEach((entry) => {
-  //       if (entry[0] !== name) entry[1].setMallus(mallus - 1);
-  //     });
-  //   }
-  // }
 }

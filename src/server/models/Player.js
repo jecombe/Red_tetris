@@ -1,6 +1,7 @@
-import { createStage, createStagePiece, flushUpdate, checkCollision, STAGE_WIDTH } from '../../shared/stage';
+// import { createStage, createStagePiece, flushUpdate, checkCollision, STAGE_WIDTH } from '../../shared/stage';
+// import { } from '../helpers/gameHelper';
 
-import { calcScore, keys } from '../helpers/gameHelper';
+import { calcScore, keys, createStage, createStagePiece, STAGE_WIDTH } from '../helpers/gameHelper';
 
 export default class Player {
   constructor(name) {
@@ -17,6 +18,7 @@ export default class Player {
     this.stagePiece = [createStagePiece(), createStagePiece()];
     this.piece = null;
     this.position = { x: 10 / 2 - 2, y: 0 };
+    this.positionDown = { x: 10 / 2 - 2, y: 0 };
     this.nbPiece = 0;
     this.dropTime = 0;
     this.collided = false;
@@ -28,17 +30,17 @@ export default class Player {
     return this.name;
   }
 
-  // setScore(score) {
-  //   this.score = score;
-  // }
-
   setPiece(piece) {
     this.piece = piece;
   }
 
-  // setLines(lines) {
-  //   this.lines = lines;
-  // }
+  getNbPiece() {
+    return this.nbPiece;
+  }
+
+  getLines() {
+    return this.lines;
+  }
 
   /* Stage */
 
@@ -46,101 +48,16 @@ export default class Player {
     this.stage = stage;
   }
 
-  setUpdateStage() {
-    this.piece.form.shape.forEach((row, fy) => {
-      row.forEach((value, fx) => {
-        if (value !== 0) {
-          this.stage[fy + this.position.y][fx + this.position.x] = [value, `${this.collided ? 'merged' : 'clear'}`];
-        }
-      });
-    });
-  }
-
-  setFlushUpdate() {
-    this.stage = this.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear'] : cell)));
-    this.setUpdateStage();
-  }
-
-  setUpdateRows() {
-    // Pour la hauteur verifie si une ligne est pleine
-    let lines = 0;
-
-    this.stage.forEach((row) => {
-      const isFull = row.every((cell) => cell[1] === 'merged');
-      if (isFull === true) {
-        lines += 1;
-        // objPlayer.setLineFull();
-        // Check l'index de la ligne pleine;
-        const index = this.stage.indexOf(row);
-        // Met la ligne a 0
-        row.fill([0, 'clear']);
-        // Supprime la ligne avec l'index et decalle e tableau, il restera non pas 20 de hauteur mais 19
-        this.stage.splice(index, 1);
-        // Ajoute au debut du tableau un nouveau tableau de 10 a 0
-        this.stage.unshift(new Array(STAGE_WIDTH).fill([0, 'clear']));
-        // setMallusToPlayers(objGame.getPlayers(), objPlayer.getLogin(), redGame.socketClient, objGame, objPlayer);
-      }
-    });
-    return { lines };
-  }
-
-  /* StagePiece */
-
   setStagePiece(index, piece) {
     this.stagePiece[index] = createStagePiece();
 
     piece.form.shape.forEach((row, fy) => {
       row.forEach((value, fx) => {
         if (value !== 0) {
-          this.stagePiece[index][fy][fx] = [value, 'merged'];
+          this.stagePiece[index][fy][fx] = [value, 'merged', 'blank'];
         }
       });
     });
-  }
-
-  /* Piece */
-
-  dropTetro() {
-    if (!checkCollision(this.piece, this.stage, { x: 0, y: 1 }, this.position.x, this.position.y)) {
-      this.position = { x: this.position.x, y: this.position.y + 1 };
-    } else {
-      this.collided = true;
-      this.loose = this.position.y < 1;
-    }
-  }
-
-  moveTetro(dir) {
-    if (!checkCollision(this.piece, this.stage, { x: dir, y: 0 }, this.position.x, this.position.y)) {
-      this.position = { x: this.position.x + dir, y: this.position.y };
-    }
-  }
-
-  moveTetroUp(dir) {
-    const pos = this.position.x;
-    let offset = 1;
-
-    this.piece.rotate(dir);
-    while (checkCollision(this.piece, this.stage, { x: 0, y: 0 }, this.position.x, this.position.y)) {
-      this.position.x += offset;
-      offset = -(offset + (offset > 0 ? 1 : -1));
-      if (offset > this.piece.form.shape[0].length) {
-        this.piece.rotate(-dir);
-        this.position.x = pos;
-      }
-    }
-  }
-
-  moveDownTetro() {
-    let i = 0;
-
-    this.dropTetro(this.stage, this.piece, this.position);
-    while (!this.collided) {
-      i += 1;
-      this.dropTetro(this.stage, this.piece, {
-        x: this.position.x,
-        y: this.position.y + i,
-      });
-    }
   }
 
   getCollided() {
@@ -176,25 +93,27 @@ export default class Player {
     if (keyCode === keys.KSPACE) this.moveDownTetro();
 
     this.setFlushUpdate();
-
-    return { collided: null, loose: null };
   }
 
   setCollision(pieces) {
     this.setFlushUpdate();
-    const { lines } = this.setUpdateRows();
-    this.collided = false;
+    this.setUpdateRows();
 
-    this.score += calcScore(this.level, lines);
-    this.lines += lines;
+    this.collided = false;
     this.nbPiece += 1;
     this.position = { x: 10 / 2 - 2, y: 0 };
     this.piece = pieces[this.nbPiece];
     this.setStagePiece(0, pieces[this.nbPiece + 1]);
     this.setStagePiece(1, pieces[this.nbPiece + 2]);
 
+    // this.setShadow();
+    while (this.checkCollision(0, 0)) {
+      // this.collided = true;
+      this.loose = true;
+      this.piece.form.shape.shift();
+    }
+
     // this.setFlushUpdate();
-    return { lines };
   }
 
   setMallus(lines) {
@@ -206,14 +125,128 @@ export default class Player {
       this.stage.push(new Array(10).fill(['M', 'mallus']));
       i -= 1;
     }
-    this.setStage(flushUpdate(this.piece, this.stage, this.position.x, this.position.y, false));
+    this.setFlushUpdate();
   }
 
-  setLoose(nbLoosers, nbPlayers) {
+  setLoose(rank) {
     this.loose = false;
     this.dropTime = 0;
-    this.rank = nbPlayers - nbLoosers;
+    this.rank = rank;
     if (this.rank === 1) this.win = true;
     else this.loose = true;
+  }
+
+  /* Piece move functions */
+
+  /* keydown */
+  dropTetro() {
+    if (!this.checkCollision(0, 1)) {
+      this.position = { x: this.position.x, y: this.position.y + 1 };
+    } else if (this.position.y < 1) {
+      this.loose = this.position.y < 1;
+    } else {
+      this.collided = true;
+    }
+  }
+
+  /* keyleft or keyright */
+  moveTetro(dir) {
+    if (!this.checkCollision(dir, 0)) {
+      this.position = { x: this.position.x + dir, y: this.position.y };
+    }
+  }
+
+  /* keyup */
+  moveTetroUp(dir) {
+    const pos = this.position.x;
+    let offset = 1;
+
+    this.piece.rotate(dir);
+    while (this.checkCollision(0, 0)) {
+      this.position.x += offset;
+      offset = -(offset + (offset > 0 ? 1 : -1));
+      if (offset > this.piece.form.shape[0].length) {
+        this.piece.rotate(-dir);
+        this.position.x = pos;
+      }
+    }
+  }
+
+  /* space */
+  moveDownTetro() {
+    this.dropTetro();
+    while (!this.collided) this.dropTetro();
+  }
+
+  /* Stage update functions */
+
+  setFlushUpdate() {
+    this.stage = this.stage.map((row) => row.map((cell) => (cell[1] === 'clear' ? [0, 'clear', 'blank'] : cell)));
+
+    // Update the shadow
+    this.positionDown = { x: this.position.x, y: this.position.y };
+
+    let i = 1;
+    while (!this.checkCollision(0, i)) {
+      this.positionDown = { ...this.positionDown, y: (this.positionDown.y += 1) };
+      i += 1;
+    }
+
+    // Update the stage
+    this.piece.form.shape.forEach((row, fy) => {
+      row.forEach((value, fx) => {
+        if (value !== 0) {
+          this.stage[fy + this.positionDown.y][fx + this.positionDown.x] = [value, 'clear', 'shadow'];
+          this.stage[fy + this.position.y][fx + this.position.x] = [
+            value,
+            `${this.collided ? 'merged' : 'clear'}`,
+            'blank',
+          ];
+        }
+      });
+    });
+  }
+
+  setUpdateRows() {
+    // Pour la hauteur verifie si une ligne est pleine
+    let lines = 0;
+
+    this.stage.forEach((row) => {
+      const isFull = row.every((cell) => cell[1] === 'merged');
+      if (isFull === true) {
+        lines += 1;
+        // Check l'index de la ligne pleine;
+        const index = this.stage.indexOf(row);
+        // Met la ligne a 0
+        row.fill([0, 'clear', 'blank']);
+        // Supprime la ligne avec l'index et decalle e tableau, il restera non pas 20 de hauteur mais 19
+        this.stage.splice(index, 1);
+        // Ajoute au debut du tableau un nouveau tableau de 10 a 0
+        this.stage.unshift(new Array(STAGE_WIDTH).fill([0, 'clear', 'blank']));
+      }
+    });
+
+    this.score += calcScore(this.level, lines);
+    this.lines += lines;
+
+    return { lines };
+  }
+
+  checkCollision(moveX, moveY) {
+    for (let y = 0; y < this.piece.form.shape.length; y += 1) {
+      for (let x = 0; x < this.piece.form.shape[y].length; x += 1) {
+        if (this.piece.form.shape[y][x] !== 0) {
+          if (
+            !this.stage[y + this.position.y + moveY] ||
+            !this.stage[y + this.position.y + moveY][x + this.position.x + moveX] ||
+            (this.stage[y + this.position.y + moveY][x + this.position.x + moveX][1] !== 'clear' &&
+              this.stage[y + this.position.y + moveY][x + this.position.x + moveX][1] !== 'shadow')
+          ) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
   }
 }

@@ -1,20 +1,7 @@
-import ev from '../../shared/events';
 import logger from '../utils/logger';
+import { resUpdateAppInfos, resUpdateAppLogin, resUpdateAppLogout, resUpdateGame } from '../helpers/emitHelper';
 
 import RedTetris from '../models';
-
-import { emitToAll, emitToSocket, emitToRoom } from '../helpers/emitHelper';
-
-const resInfos = (io) => {
-  emitToAll(io, ev.res_UPDATE_APP_INFOS, {
-    status: 200,
-    payload: {
-      nbPlayers: RedTetris.getNbSockets(),
-      nbGames: RedTetris.getNbGames(),
-      games: RedTetris.getGames(),
-    },
-  });
-};
 
 const resLogin = (req, res) => {
   const { socket } = req;
@@ -30,94 +17,68 @@ const resLogin = (req, res) => {
       Game = RedTetris.createGame(room, name);
     }
 
-    Game.setLogin(socket.id, name);
+    Game.setPlayer(socket.id, name);
 
-    RedTetris.getSocket(socket.id).join(room);
-    RedTetris.setSocketRoom(socket.id, room);
+    socket.join(room);
+    socket.redTetris = { name, room };
+    RedTetris.setSocket(socket);
+    // RedTetris.getSocket(socket.id).join(room);
+    // RedTetris.setSocketRoom(socket.id, room, name);
 
-    emitToRoom(res.io, room, ev.res_UPDATE_GAME, {
-      status: 200,
-      payload: { game: RedTetris.getGame(room) },
-    });
-
-    emitToSocket(socket, ev.res_LOGIN, {
-      status: 200,
-      payload: { name, room },
-    });
-
-    resInfos(res.io);
+    resUpdateGame(res.io, Game);
+    resUpdateAppLogin(socket, 200, { name, room });
+    resUpdateAppInfos(res.io, RedTetris);
     logger.info('login:', 'success');
   } catch (err) {
     logger.error('[login] ', err);
 
-    emitToSocket(socket, ev.res_LOGIN, {
-      status: 500,
-      message: err.message,
-      payload: {},
-    });
+    resUpdateAppLogin(socket, 500, { name: '', room: '' });
   }
 };
 
 const reslogout = (req, res) => {
   const { socket } = req;
-  const { room } = req.data;
 
   try {
-    if (!room || room === '') {
-      throw new Error('Invalid name or room');
+    if (!RedTetris.getSocket(socket.id) || !RedTetris.getSocketRoom(socket.id)) {
+      throw new Error('Socket error');
     }
 
-    const Game = RedTetris.getGame(room);
-    if (!Game) {
-      throw new Error('Game not exists');
-    }
+    const Game = RedTetris.getGame(RedTetris.getSocketRoom(socket.id));
+    if (!Game) throw new Error('Game not exists');
 
-    Game.setLogout(socket.id);
+    Game.unsetPlayer(socket.id);
+    socket.leave(Game.getRoom());
+    delete socket.redTetris;
+    RedTetris.unsetSocket(socket.id);
 
-    if (Game.isEmpty()) {
-      RedTetris.unsetGame(room);
-    }
+    if (Game.isEmpty()) RedTetris.unsetGame(Game.getRoom());
+    else resUpdateGame(res.io, Game);
 
-    RedTetris.getSocket(socket.id).leave(room);
-    RedTetris.unsetSocketRoom(socket.id);
+    /* Socket is undefined when the user disconnect */
+    if (socket) resUpdateAppLogout(socket, 200);
 
-    if (socket) {
-      emitToSocket(socket, ev.res_LOGOUT, {
-        status: 200,
-        payload: {},
-      });
-    }
-
-    emitToRoom(res.io, room, ev.res_UPDATE_GAME, {
-      status: 200,
-      payload: { game: RedTetris.getGame(room) },
-    });
-
-    resInfos(res.io);
+    resUpdateAppInfos(res.io, RedTetris);
   } catch (err) {
     logger.error('[logout] ', err);
 
-    if (socket) {
-      emitToSocket(socket, ev.res_LOGOUT, {
-        status: 500,
-        payload: {},
-      });
-    }
+    if (socket) resUpdateAppLogout(socket, 500);
   }
 };
 
 const connect = (req, res) => {
   logger.info(`socket: ${req.socket.id} connected`);
 
-  RedTetris.setSocket(req.socket);
+  // RedTetris.setSocket(req.socket);
 
-  resInfos(res.io);
+  resUpdateAppInfos(res.io, RedTetris);
 };
 
 const disconnect = (req, res) => {
   logger.info(`socket: ${req.socket.id} disconnected.`);
 
-  const room = RedTetris.getSocketRoom(req.socket.id);
+  // const room = RedTetris.getSocketRoom(req.socket.id);
+  const room = req.socket.redTetrisRoom;
   if (room) {
     reslogout(
       {
@@ -129,13 +90,14 @@ const disconnect = (req, res) => {
       res,
     );
   }
-  RedTetris.unsetSocket(req.socket.id);
+  // RedTetris.unsetSocket(req.socket.id);
 
-  resInfos(res.io);
+  // resInfos(res.io);
+  resUpdateAppInfos(res.io, RedTetris);
 };
 
 export default {
-  resInfos,
+  // resInfos,
   connect,
   disconnect,
   resLogin,

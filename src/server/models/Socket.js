@@ -1,22 +1,21 @@
 import Game from './Game';
 
-export default class IoGame {
-  constructor() {
-    this.sockets = {};
-    this.games = {};
+export default class Socket {
+  constructor(socket, name, room) {
+    this.socket = socket;
+    this.name = name;
+    this.room = room;
   }
 
-  /* Sockets */
-
-  getSockets() {
-    return this.sockets;
+  getSocket() {
+    return this.socket;
   }
 
-  getNbSockets() {
+  getName() {
     return Object.keys(this.getSockets()).length;
   }
 
-  getSocket(id) {
+  getRoom(id) {
     return this.sockets[id];
   }
 
@@ -26,6 +25,14 @@ export default class IoGame {
 
   setSocket(socket) {
     this.sockets[socket.id] = socket;
+  }
+
+  setSocketRoom(id, room, name) {
+    this.sockets[id].redTetris = { name, room };
+  }
+
+  unsetSocketRoom(id) {
+    delete this.sockets[id].room;
   }
 
   unsetSocket(id) {
@@ -57,6 +64,10 @@ export default class IoGame {
   createGame(room, owner) {
     this.setGame(room, owner);
     return this.getGame(room);
+  }
+
+  getLoggedPlayer(id) {
+    return this.getGame(this.getSocketRoom(id)).getPlayer(id);
   }
 
   getCreatedGame(id) {

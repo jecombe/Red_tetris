@@ -15,8 +15,8 @@
         "format": "prettier './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.json",
         "format:fix": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
         "test": "npm run test:all",
-        "test:all": "jest test/**/**/*.test.js --verbose --coverage",
-        "test:client": "jest test/client/**/*.test.js --verbose --coverage",
+        "test:all": "jest test/**/**/*.*.test.js --verbose --coverage",
+        "test:client": "jest test/client/**/*.*.test.js --verbose --coverage",
         "test:server": "jest test/server/**/*.test.js --verbose --coverage",
         "test:watch": "npm test -- --watch-All"
     },
@@ -65,6 +65,7 @@
         "css-loader": "^3.6.0",
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.6",
+        "enzyme-to-json": "^3.6.1",
         "eslint": "^6.8.0",
         "eslint-config-airbnb": "^18.2.1",
         "eslint-config-node": "^4.1.0",

@@ -11,20 +11,21 @@ import { TETROMINOS } from '../../helpers/tetrominos';
 const useCellStyles = makeStyles({
   cell: (props) => ({
     width: 'auto',
-    background: `rgba(${props.color}, 0.8)`,
+    background: props.variant !== 'shadow' ? `rgba(${props.color}, 0.8)` : `rgb(0, 0, 0, 0.1)`,
     border: `${props.type === 0 ? '0px solid' : '1px solid'}`,
-    borderBottomColor: `rgba(${props.color}, 0.1)`,
-    borderRightColor: `rgba(${props.color}, 1)`,
-    borderTopColor: `rgba(${props.color}, 1)`,
-    borderLeftColor: `rgba(${props.color}, 0.3)`,
+    borderBottomColor: props.variant !== 'shadow' ? `rgba(${props.color}, 0.1)` : `rgb(${props.color}, 0.8)`,
+    borderRightColor: props.variant !== 'shadow' ? `rgba(${props.color}, 1)` : `rgb(${props.color}, 0.8)`,
+    borderTopColor: props.variant !== 'shadow' ? `rgba(${props.color}, 1)` : `rgb(${props.color}, 0.8)`,
+    borderLeftColor: props.variant !== 'shadow' ? `rgba(${props.color}, 0.3)` : `rgb(${props.color}, 0.8)`,
   }),
 });
 
 const Cell = (props) => {
-  const { type } = props;
+  const { type, variant } = props;
   const style = {
     type,
     color: TETROMINOS[type].color,
+    variant,
   };
   const classes = useCellStyles(style);
 
@@ -37,6 +38,7 @@ Cell.defaultProps = {
 
 Cell.propTypes = {
   type: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  variant: PropTypes.string.isRequired,
 };
 
 const CellMemo = React.memo(Cell);
@@ -61,8 +63,8 @@ const Stage = (props) => {
   const { stage, type } = props;
 
   let size = 30;
-  if (type === 'stagePlayers') size = 2;
-  if (type === 'stagePiece') size = 8;
+  if (type === 'stagePlayers') size = 3;
+  if (type === 'stagePiece') size = 9;
   const style = {
     width: stage[0].length,
     height: stage.length,
@@ -74,7 +76,7 @@ const Stage = (props) => {
 
   return (
     <Paper className={classes.stage}>
-      {stage.map((row) => row.map((cell, x) => <CellMemo key={x} type={cell[0]} />))}
+      {stage.map((row) => row.map((cell, x) => <CellMemo key={x} type={cell[0]} variant={cell[2]} />))}
     </Paper>
   );
 };

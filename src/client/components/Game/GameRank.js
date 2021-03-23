@@ -10,7 +10,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 
 import { TABLE_PLAYERS_RANK } from '../../constants/tables';
-import { playersStatePropTypes } from '../../reducers/reducers.types';
+import { gameStateProp } from '../../reducers/reducers.types';
 
 import VirtualizedList from '../Common/VirtualizedList';
 
@@ -32,10 +32,11 @@ const Transition = React.forwardRef((props, ref) => (
 ));
 
 const GameRank = (props) => {
-  const { players, open, handleSetOwner, handleClose } = props;
+  const { settings, players, open, handleSetOwner, handleClose } = props;
+  const { owner } = settings;
   const classes = useStyles();
 
-  const playersList = Object.values(players);
+  const playersList = Object.values(players).sort((a, b) => a.rank - b.rank);
 
   return (
     <Dialog open={open} TransitionComponent={Transition} keepMounted onClose={handleClose} fullWidth>
@@ -43,6 +44,7 @@ const GameRank = (props) => {
       <DialogContent>
         <Paper variant="outlined" className={classes.paper} elevation={0}>
           <VirtualizedList
+            owner={owner}
             rowCount={playersList.length}
             rowGetter={({ index }) => playersList[index]}
             columns={TABLE_PLAYERS_RANK}
@@ -60,7 +62,8 @@ const GameRank = (props) => {
 };
 
 GameRank.propTypes = {
-  players: playersStatePropTypes.isRequired,
+  settings: gameStateProp.settings.isRequired,
+  players: gameStateProp.players.isRequired,
   open: PropTypes.bool.isRequired,
   handleSetOwner: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,

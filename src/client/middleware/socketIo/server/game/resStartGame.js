@@ -8,16 +8,29 @@ export const dispatch = (action, data, dispatch) => {
 
   // dispatch(actions.updatePlayer({ game }));
 
-  if (status !== 200) {
+  if (status === 100) {
     dispatch({
       type: ev.UPDATE_LOG,
       payload: {
         isLoading: false,
         snackbar: {
           message,
-          variant: status === 100 ? 'info' : 'error',
+          variant: 'info',
         },
       },
+    });
+  }
+  if (status === 200) {
+    // eslint-disable-next-line no-shadow
+    dispatch((dispatch, getState) => {
+      const { id } = getState().app;
+
+      dispatch({
+        type: ev.UPDATE_PLAYER,
+        payload: {
+          player: payload.players[id],
+        },
+      });
     });
   }
 };

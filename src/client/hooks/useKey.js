@@ -2,19 +2,32 @@ import { useEffect } from 'react';
 
 const keyevent = 'keydown';
 
-function useKey(callback) {
+const keys = {
+  KDOWN: 40,
+  KLEFT: 37,
+  KRIGHT: 39,
+  KUP: 38,
+  KSPACE: 32,
+  KENTER: 13,
+};
+
+const allowedKeys = [keys.KDOWN, keys.KLEFT, keys.KRIGHT, keys.KUP, keys.KSPACE];
+
+function useKey(callback, started, loose) {
   let lastKeyCode = null;
   let lastKeyTime = Date.now();
 
   const handleEvent = (event) => {
     const currentTime = Date.now();
 
-    if (event.keyCode !== lastKeyCode || currentTime - lastKeyTime > 10) {
-      // if (conditions.started && !conditions.loose) {
-      callback(event);
-      lastKeyCode = event.keyCode;
-      lastKeyTime = currentTime;
-      // }
+    if (started && !loose) {
+      if (allowedKeys.includes(event.keyCode)) {
+        if (event.keyCode !== lastKeyCode || currentTime - lastKeyTime > 10) {
+          callback(event);
+          lastKeyCode = event.keyCode;
+          lastKeyTime = currentTime;
+        }
+      }
     }
   };
 
@@ -29,7 +42,7 @@ function useKey(callback) {
     return () => {
       window.removeEventListener(keyevent, handleEvent);
     };
-  }, []);
+  }, [started, loose]);
 }
 
 export default useKey;

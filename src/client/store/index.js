@@ -12,9 +12,12 @@ export const history = createHashHistory();
 
 const logger = createLogger();
 
-const store = createStore(
-  rootReducer(history),
-  composeWithDevTools(applyMiddleware(routerMiddleware(history), thunk, socketIoMiddleware, logger)),
-);
+let middleware = [routerMiddleware(history), thunk, socketIoMiddleware];
+
+if (process.env.NODE_ENV === 'development') {
+  middleware = [...middleware, logger];
+}
+
+const store = createStore(rootReducer(history), composeWithDevTools(applyMiddleware(...middleware)));
 
 export default store;

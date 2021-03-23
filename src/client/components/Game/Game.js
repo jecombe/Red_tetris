@@ -32,7 +32,6 @@ const Game = () => {
 
   return (
     <Container className={classes.container}>
-      {/* <Grid container justify="center" alignItems="center" className={classes.grid}> */}
       <Grid container spacing={2} alignItems="center" justify="center" className={classes.gridItem}>
         <Grid item sm={12} md className={classes.game}>
           <GameRoomContainer />
@@ -44,7 +43,6 @@ const Game = () => {
           <GameChatContainer className={classes.game} />
         </Grid>
       </Grid>
-      {/* </Grid> */}
     </Container>
   );
 };

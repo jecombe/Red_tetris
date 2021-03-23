@@ -63,29 +63,30 @@ const MuiVirtualizedTable = (props) => {
     });
   };
 
-  const renderCellData = ({ dataKey, cellData }) => {
-    if (dataKey === 'stage') return <Stage stage={cellData || createStage()} type="stagePlayers" />;
-    if (dataKey === 'name')
-      return (
+  const cellRenderer = ({ cellData, columnIndex }) => {
+    const { columns, classes, rowHeight } = props;
+    const { dataKey } = columns[columnIndex];
+
+    let cell = cellData;
+
+    if (dataKey === 'stage') cell = <Stage stage={cellData || createStage()} type="stagePlayers" />;
+    if (dataKey === 'name') {
+      cell = (
         <>
-          {cellData}
-          {cellData === owner ? (
+          {cell}
+          {cell === owner ? (
             <Icon fontSize="small" color="primary">
               <EmojiFlagsIcon fontSize="small" />
             </Icon>
           ) : null}
-          {cellData !== owner && handleSetOwner !== undefined ? (
+          {cell !== owner && handleSetOwner !== undefined ? (
             <RedIconButton onClick={() => handleSetOwner(cellData)}>
               <PersonAddIcon fontSize="small" />
             </RedIconButton>
           ) : null}
         </>
       );
-    return cellData;
-  };
-
-  const cellRenderer = ({ cellData, columnIndex }) => {
-    const { columns, classes, rowHeight } = props;
+    }
 
     return (
       <TableCell
@@ -95,22 +96,7 @@ const MuiVirtualizedTable = (props) => {
         style={{ height: rowHeight }}
         align={(columnIndex != null && columns[columnIndex].numeric) || false ? 'right' : 'left'}
       >
-        {renderCellData({ dataKey: columns[columnIndex].dataKey, cellData })}
-        {/* {columns[columnIndex].dataKey === 'stage' ? (
-          <Stage stage={cellData || createStage()} type="stagePlayers" />
-        ) : (
-          cellData
-        )}
-        {columns[columnIndex].dataKey === 'owner' ? (
-          <Stage stage={cellData || createStage()} type="stagePlayers" />
-        ) : (
-          cellData
-        )}
-        {columns[columnIndex].dataKey === 'name' && cellData === owner ? (
-          <Icon fontSize="small" color="primary">
-            <EmojiFlagsIcon fontSize="small" />
-          </Icon>
-        ) : null} */}
+        {cell}
       </TableCell>
     );
   };
@@ -170,7 +156,7 @@ const MuiVirtualizedTable = (props) => {
 
 MuiVirtualizedTable.defaultProps = {
   headerHeight: 48,
-  rowHeight: 60,
+  rowHeight: 70,
   owner: '',
   handleSetOwner: undefined,
 };

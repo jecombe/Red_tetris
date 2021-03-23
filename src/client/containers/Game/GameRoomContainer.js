@@ -1,31 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { playerStateProp, gameStatePropTypes } from '../../reducers/reducers.types';
+import { playerStateProp, gameStateProp } from '../../reducers/reducers.types';
 import actions from '../../actions';
 
 import GameRoom from '../../components/Game/GameRoom';
 import GameRank from '../../components/Game/GameRank';
 
 const GameRoomContainer = (props) => {
-  const { name, game, reqStartGame, reqOwner } = props;
-  const [open, setOpen] = React.useState(false);
+  const { name, room, settings, players, reqStartGame, reqOwner } = props;
+  const { nbPlayers, nbLoosers } = settings;
+  const [open, setOpen] = useState(false);
 
-  const handleStart = () => {
-    console.log('here');
-    reqStartGame({ name, room: game.room });
-  };
+  const handleStart = () => reqStartGame({ name, room });
 
-  const handleSetOwner = (newOwner) => {
-    console.log(newOwner);
-    reqOwner({ newOwner });
-  };
+  const handleSetOwner = (newOwner) => reqOwner({ newOwner });
 
-  React.useEffect(() => {
-    if (game.settings.nbPlayers !== 0 && game.settings.nbLoosers === game.settings.nbPlayers) setOpen(true);
+  useEffect(() => {
+    if (nbPlayers !== 0 && nbLoosers === nbPlayers) setOpen(true);
     else setOpen(false);
-  }, [game.settings.nbLoosers, game.settings.nbPlayers]);
+  }, [nbLoosers, nbPlayers]);
 
   const handleOpenRank = () => {
     setOpen(true);
@@ -39,18 +34,15 @@ const GameRoomContainer = (props) => {
     <>
       <GameRoom
         name={name}
-        game={game}
-        room={game.room}
-        owner={game.settings.owner}
-        started={game.settings.started}
-        players={game.players}
+        room={room}
+        settings={settings}
+        players={players}
         handleStart={handleStart}
         handleOpen={handleOpenRank}
       />
       <GameRank
-        nbPlayers={game.settings.nbPlayers}
-        nbLoosers={game.settings.nbLoosers}
-        players={game.players}
+        settings={settings}
+        players={players}
         open={open}
         handleClose={handleCloseRank}
         handleSetOwner={handleSetOwner}
@@ -61,14 +53,18 @@ const GameRoomContainer = (props) => {
 
 GameRoomContainer.propTypes = {
   name: playerStateProp.name.isRequired,
-  game: gameStatePropTypes.isRequired,
+  room: gameStateProp.room.isRequired,
+  settings: gameStateProp.settings.isRequired,
+  players: gameStateProp.players.isRequired,
   reqStartGame: PropTypes.func.isRequired,
   reqOwner: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   name: state.player.name,
-  game: state.game,
+  room: state.game.room,
+  settings: state.game.settings,
+  players: state.game.players,
 });
 
 const mapDispatchToProps = {

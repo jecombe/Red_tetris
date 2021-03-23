@@ -11,7 +11,7 @@ import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 
 import { TABLE_PLAYERS_COLUMNS } from '../../constants/tables';
 
-import { playerStateProp, settingsProp, gameStateProp } from '../../reducers/reducers.types';
+import { gameStateProp, playerStateProp } from '../../reducers/reducers.types';
 import RedIconButton from '../Common/RedIconButton';
 import BoxInfo from '../Common/BoxInfo';
 import RedButton from '../Common/RedButton';
@@ -46,7 +46,8 @@ const useStyles = makeStyles({
 });
 
 const GameRoom = (props) => {
-  const { name, room, owner, started, players, handleStart, handleOpen } = props;
+  const { name, room, settings, players, handleStart, handleOpen } = props;
+  const { owner, started } = settings;
   const classes = useStyles();
   const playersList = Object.values(players);
 
@@ -114,8 +115,7 @@ const GameRoom = (props) => {
 GameRoom.propTypes = {
   name: playerStateProp.name.isRequired,
   room: gameStateProp.room.isRequired,
-  owner: settingsProp.owner.isRequired,
-  started: settingsProp.started.isRequired,
+  settings: gameStateProp.settings.isRequired,
   players: gameStateProp.players.isRequired,
   handleStart: PropTypes.func.isRequired,
   handleOpen: PropTypes.func.isRequired,

@@ -1,23 +1,23 @@
-import { LOCATION_CHANGE } from 'connected-react-router';
+// import { LOCATION_CHANGE } from 'connected-react-router';
 
-import ev from '../../../../../shared/events';
+// import ev from '../../../../../shared/events';
 
-export const dispatch = (socket, store, action) => {
-  if (action) {
-    const state = store.getState();
-    const { name } = state.player;
-    const { room } = state.game;
+// export const dispatch = (socket, store, action) => {
+//   if (action) {
+//     const state = store.getState();
+//     const { name } = state.player;
+//     const { room } = state.game;
 
-    if (action.payload.location.pathname === '/' && state.game.room !== '') {
-      socket.emit(ev.req_LOGOUT, {
-        name,
-        room,
-      });
-    }
-  }
-};
+//     if (action.payload.location.pathname === '/' && state.game.room !== '') {
+//       socket.emit(ev.req_LOGOUT, {
+//         name,
+//         room,
+//       });
+//     }
+//   }
+// };
 
-export default {
-  action: LOCATION_CHANGE,
-  dispatch,
-};
+// export default {
+//   action: LOCATION_CHANGE,
+//   dispatch,
+// };

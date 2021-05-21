@@ -4,7 +4,7 @@ import ev from '../../../../../shared/events';
 
 // eslint-disable-next-line no-shadow
 export const dispatch = (action, data, dispatch) => {
-  const { status, message, payload } = data;
+  const { status, payload } = data;
 
   if (status === 200) {
     dispatch({

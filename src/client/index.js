@@ -8,7 +8,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 // import './index.css';
 import store, { history } from './store';
 import theme from './theme';
-import App from './containers/App';
+import App from './containers/app';
 
 console.log('jecombe && dzonda - 42 Lyon');
 

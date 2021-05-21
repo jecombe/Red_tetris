@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import params from '../../shared/params';
 import actions from '../actions';
 import Header from '../components/Header/Header';
-import Main from './Main';
+import Main from './main';
 import Footer from '../components/Footer/Footer';
 
 const App = (props) => {

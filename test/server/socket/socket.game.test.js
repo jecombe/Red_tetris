@@ -53,7 +53,6 @@ describe('# Socket Tests - Game Events', () => {
       socketMalicious.emit(ev.req_START_GAME, payload);
       const data = await handleResponse(socketMalicious, ev.res_UPDATE_PLAYER);
       expect(data.status).toBe(500);
-      console.log(data.payload);
     });
   });
 

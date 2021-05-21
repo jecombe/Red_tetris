@@ -95,7 +95,6 @@ describe('# Socket Tests - App Events', () => {
     it('should logout error', async () => {
       socket.emit(ev.req_LOGOUT, {});
       const data = await await handleResponse(socket, ev.res_LOGOUT);
-      console.log(data);
       expect(data.status).toBe(500);
     });
   });

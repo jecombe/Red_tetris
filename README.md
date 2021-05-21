@@ -6,17 +6,14 @@ Set host in `params.js` to be accessible across network
 
 ## Install 
 
-## Dev
+### Dev
 
 `npm run dev`
 
-## Prod
+### Prod
 
 `npm run build && npm run start`
 
-## Docker
+### Docker
 
 `docker-compose up`
-
-
-## Test

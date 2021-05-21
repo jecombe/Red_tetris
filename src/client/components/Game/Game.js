@@ -31,15 +31,15 @@ const Game = () => {
   const classes = useStyles();
 
   return (
-    <Container className={classes.container}>
+    <Container maxWidth="lg" className={classes.container}>
       <Grid container spacing={2} alignItems="center" justify="center" className={classes.gridItem}>
-        <Grid item sm={12} md className={classes.game}>
+        <Grid item sm={12} md lg className={classes.game}>
           <GameRoomContainer />
         </Grid>
-        <Grid item sm={6} md={4} className={classes.game}>
+        <Grid item sm={6} md={4} lg={5} className={classes.game}>
           <GameBoardContainer />
         </Grid>
-        <Grid item sm={6} md>
+        <Grid item sm={6} md lg>
           <GameChatContainer className={classes.game} />
         </Grid>
       </Grid>

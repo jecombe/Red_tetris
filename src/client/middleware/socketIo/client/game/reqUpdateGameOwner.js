@@ -3,7 +3,6 @@ import ev from '../../../../../shared/events';
 export const dispatch = (socket, store, action) => {
   const { name } = store.getState().player;
   const { room } = store.getState().game;
-  // console.log('handle');
 
   const payload = {
     name,

@@ -47,7 +47,7 @@ const resMove = (req, res) => {
 
     resUpdatePlayer(req.socket, 200, '', Player);
   } catch (err) {
-    logger.error('[resMove] ', err);
+    logger.error('[resMove] ');
   }
 };
 

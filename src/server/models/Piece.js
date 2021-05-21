@@ -86,7 +86,6 @@ class Piece {
 
     if (dir > 0) {
       const rotated = rotatedTetro.map((row) => row.reverse());
-      // console.log(rotated);
       this.form.shape = rotated;
 
       // return rotated;

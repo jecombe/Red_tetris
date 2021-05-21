@@ -40,7 +40,7 @@ const GameBoard = (props) => {
           </Box>
         </Grid>
         <Grid item xs={4}>
-          <Grid container direction="column" justify="space-between">
+          <Grid container direction="column">
             <Grid item>
               <CardContent>
                 <Grid container direction="column" spacing={1}>

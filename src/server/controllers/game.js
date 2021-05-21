@@ -31,15 +31,13 @@ const resStart = async (req, res) => {
     const Game = RedTetris.getCreatedGame(id);
     if (!Game) throw new Error('Game not found');
 
-    console.log(Game);
-
     Game.initGameStart(id);
     resUpdateGame(res.io, Game);
     Game.setGameStart();
 
     setTimeout(countdown, 100, { ...req, Game }, res, 3);
   } catch (err) {
-    logger.error('[reqStart] ', err);
+    logger.error('[reqStart] ');
 
     resUpdatePlayer(req.socket, 500, err.message, null);
   }
@@ -57,7 +55,7 @@ const resOwner = async (req, res) => {
 
     resUpdateGame(res.io, Game);
   } catch (err) {
-    logger.error('[reqOwner] ', err);
+    logger.error('[reqOwner] ');
 
     resUpdatePlayer(req.socket, 500, err.message, null);
   }
@@ -75,7 +73,7 @@ const resChat = async (req, res) => {
 
     resUpdateGameChat(res.io, Game);
   } catch (err) {
-    logger.error('[reqChat] ', err);
+    logger.error('[reqChat] ');
 
     resUpdatePlayer(req.socket, 500, err.message, null);
   }

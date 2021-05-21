@@ -10,7 +10,7 @@ const dispatch = (socket, store, next, action) => () => {
   store.dispatch({
     type: ev.UPDATE_CONNECTION,
     payload: {
-      // id: socket.id,
+      id: socket.id,
       connected: true,
       snackbar: {
         message: 'socket: Connected',

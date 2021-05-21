@@ -30,7 +30,7 @@ const resLogin = (req, res) => {
     resUpdateAppInfos(res.io, RedTetris);
     logger.info('login:', 'success');
   } catch (err) {
-    logger.error('[login] ', err);
+    logger.error('[login] ');
 
     resUpdateAppLogin(socket, 500, { name: '', room: '' });
   }
@@ -60,7 +60,7 @@ const reslogout = (req, res) => {
 
     resUpdateAppInfos(res.io, RedTetris);
   } catch (err) {
-    logger.error('[logout] ', err);
+    logger.error('[logout] ');
 
     if (socket) resUpdateAppLogout(socket, 500);
   }

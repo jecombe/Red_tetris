@@ -31,8 +31,6 @@ const resStart = async (req, res) => {
     const Game = RedTetris.getCreatedGame(id);
     if (!Game) throw new Error('Game not found');
 
-    console.log(Game);
-
     Game.initGameStart(id);
     resUpdateGame(res.io, Game);
     Game.setGameStart();

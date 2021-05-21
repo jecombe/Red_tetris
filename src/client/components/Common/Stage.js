@@ -63,7 +63,7 @@ const Stage = (props) => {
   const { stage, type } = props;
 
   let size = 30;
-  if (type === 'stagePlayers') size = 3;
+  if (type === 'stagePlayers') size = 2.5;
   if (type === 'stagePiece') size = 9;
   const style = {
     width: stage[0].length,

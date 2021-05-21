@@ -33,7 +33,6 @@ export const rotate = (matrix, dir) => {
 
   if (dir > 0) {
     const rotated = rotatedTetro.map((row) => row.reverse());
-    // console.log(rotated);
 
     return rotated;
   }

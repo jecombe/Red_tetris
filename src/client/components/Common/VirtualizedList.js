@@ -68,7 +68,7 @@ const MuiVirtualizedTable = (props) => {
 
     let cell = cellData;
 
-    if (dataKey === 'stage') cell = <Stage stage={cellData} type="stagePlayers" />;
+    if (dataKey === 'stage') cell = <Stage style={{ padding: '2px' }} stage={cellData} type="stagePlayers" />;
     if (dataKey === 'name') {
       cell = (
         <>
@@ -85,6 +85,9 @@ const MuiVirtualizedTable = (props) => {
           ) : null}
         </>
       );
+    }
+    if (dataKey === 'rank') {
+      cell = `#${cellData}`;
     }
 
     return (

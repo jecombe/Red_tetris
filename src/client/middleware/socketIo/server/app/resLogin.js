@@ -25,7 +25,7 @@ export const dispatch = (action, data, dispatch) => {
       payload: {
         isLoading: false,
         snackbar: {
-          message: `login: ${message}`,
+          message: `login: Error`,
           variant: 'error',
         },
       },

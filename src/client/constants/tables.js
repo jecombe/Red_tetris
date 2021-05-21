@@ -9,19 +9,19 @@ export const TABLE_PLAYERS_COLUMNS = [
   {
     dataKey: 'score',
     label: 'Score',
-    width: 120,
+    width: 80,
     numeric: true,
   },
   {
     dataKey: 'lines',
     label: 'Lines',
-    width: 120,
+    width: 80,
     numeric: true,
   },
   {
     dataKey: 'stage',
     label: '',
-    width: 70,
+    width: 80,
   },
 ];
 
